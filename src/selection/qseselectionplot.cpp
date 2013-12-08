@@ -22,6 +22,7 @@ QseSelectionPlot::QseSelectionPlot(QObject *parent)
 {
     m_brush = Qt::blue;
     m_opacity = 0.5;
+    m_selection = 0;
 }
 
 void QseSelectionPlot::setBrush(const QBrush &brush)
