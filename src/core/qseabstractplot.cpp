@@ -31,10 +31,8 @@ void QseAbstractPlot::reset()
 {
 }
 
-bool QseAbstractPlot::isVisible(const QRect &rect, const QseGeometry &geometry)
+bool QseAbstractPlot::isVisible(const QRect &, const QseGeometry &)
 {
-    Q_UNUSED(rect);
-    Q_UNUSED(geometry);
     return true;
 }
 
@@ -45,4 +43,5 @@ bool QseAbstractPlot::hasChanges(const QRect &, const QseGeometry &)
 
 void QseAbstractPlot::draw(QPainter *, const QRect &, const QseGeometry &)
 {
+    m_updateOnce = false;
 }
