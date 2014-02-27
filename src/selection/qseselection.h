@@ -29,6 +29,7 @@ public:
     inline bool isNull() const;
     inline qint64 left() const;
     inline qint64 right() const;
+    inline qint64 count() const;
     inline qint64 maximum() const;
 signals:    
     void changed();
@@ -56,6 +57,18 @@ qint64 QseSelection::left() const
 qint64 QseSelection::right() const
 {
     return m_right;
+}
+
+qint64 QseSelection::count() const
+{
+    if (isNull())
+    {
+        return 0;
+    }
+    else
+    {
+        return m_right - m_left;
+    }
 }
 
 qint64 QseSelection::maximum() const
