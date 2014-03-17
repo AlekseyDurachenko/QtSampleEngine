@@ -5,6 +5,7 @@ HEADERS +=                                                          \
     $$PWD/src/axis/qsecoverplot.h                                   \
     $$PWD/src/axis/qsehorizontalcontroller.h                        \
     $$PWD/src/axis/qsetimemetricprovider.h                          \
+    $$PWD/src/axis/qselinemetricprovider.h                          \
     $$PWD/src/core/qseabstractcontroller.h                          \
     $$PWD/src/core/qseabstractplot.h                                \
     $$PWD/src/core/qseabstractwidget.h                              \
@@ -28,6 +29,7 @@ SOURCES +=                                                          \
     $$PWD/src/axis/qsecoverplot.cpp                                 \
     $$PWD/src/axis/qsehorizontalcontroller.cpp                      \
     $$PWD/src/axis/qsetimemetricprovider.cpp                        \
+    $$PWD/src/axis/qselinemetricprovider.cpp                        \
     $$PWD/src/core/qseabstractcontroller.cpp                        \
     $$PWD/src/core/qseabstractplot.cpp                              \
     $$PWD/src/core/qseabstractwidget.cpp                            \
