@@ -18,6 +18,7 @@
 QseSingleSignalAbstractPlot::QseSingleSignalAbstractPlot(QObject *parent) :
     QseAbstractPlot(parent)
 {
+    qRegisterMetaType<QList<float> >("QList<float>");
     m_pen.setColor(Qt::darkBlue);
     m_opacity = 0.9;
     m_peakReader = 0;

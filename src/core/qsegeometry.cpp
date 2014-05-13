@@ -17,6 +17,7 @@
 
 QseGeometry::QseGeometry(qint64 x, double y, qint64 samplePerPixel, double height)
 {
+    qRegisterMetaType<QseGeometry>("QseGeometry");
     setX(x);
     setY(y);
     setSamplePerPixel(samplePerPixel);
