@@ -19,7 +19,8 @@
 QseCoverPlot::QseCoverPlot(QObject *parent) :
     QseAbstractPlot(parent)
 {
-    m_horizontalProvider = m_verticalProvider = 0;
+    m_horizontalProvider = 0;
+    m_verticalProvider = 0;
 
     m_clPen.setColor(Qt::blue);
     m_lPen.setColor(Qt::gray);
@@ -118,8 +119,12 @@ void QseCoverPlot::draw(QPainter *painter, const QRect &rect, const QseGeometry 
     painter->fillRect(rect, m_backgroundColor);
 
     // fetch metric list
-    QList<QseMetricItem> vMetricList = m_verticalProvider->create(geometry, rect.height());
-    QList<QseMetricItem> hMetricList = m_horizontalProvider->create(geometry, rect.width());
+    QList<QseMetricItem> vMetricList;
+    if (m_verticalProvider)
+        vMetricList = m_verticalProvider->create(geometry, rect.height());
+    QList<QseMetricItem> hMetricList;
+    if (m_horizontalProvider)
+        hMetricList = m_horizontalProvider->create(geometry, rect.width());
 
     // draw center lines (with level 0)
     painter->setPen(m_clPen);
