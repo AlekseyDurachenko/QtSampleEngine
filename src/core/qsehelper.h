@@ -1,4 +1,4 @@
-// Copyright 2013, Durachenko Aleksey V. <durachenko.aleksey@gmail.com>
+// Copyright 2013-2015, Durachenko Aleksey V. <durachenko.aleksey@gmail.com>
 //
 // This library is free software; you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public
@@ -16,20 +16,20 @@
 #ifndef QSEFUNC_H
 #define QSEFUNC_H
 
-#include <QtGlobal>
-#include "qsegeometry.h"
+// ----------------------------------------------------------------------
+namespace Qse {
+// ----------------------------------------------------------------------
 
 
-class QseFunc
-{
-public:
-    static bool isSampleVisible(qint64 sample, qint64 plotX, qint64 samplePerPixel, int width);
-    static int mapSampleToWidget(qint64 sample, qint64 plotX, qint64 samplePerPixel);
-    static qint64 mapWidgetToSample(int n, qint64 plotX, qint64 samplePerPixel);
-    static qint64 width(qint64 samplePerPixel, qint64 frames);
-    static void findLineIntersection(const double& p11x, const double& p11y, const double& p12x, const double& p12y,
-        const double& p21x, const double& p21y, const double& p22x, const double& p22y, double& x, double& y);
-};
+void calcIntersection(const double& p11x, const double& p11y,
+                      const double& p12x, const double& p12y,
+                      const double& p21x, const double& p21y,
+                      const double& p22x, const double& p22y,
+                      double& x, double& y);
 
+
+// ----------------------------------------------------------------------
+} // namespace Qse
+// ----------------------------------------------------------------------
 
 #endif // QSEFUNC_H

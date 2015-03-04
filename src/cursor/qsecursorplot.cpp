@@ -14,7 +14,7 @@
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 #include "qsecursorplot.h"
-#include "qsefunc.h"
+#include "qsehelper.h"
 
 
 QseCursorPlot::QseCursorPlot(QObject *parent) :
@@ -60,19 +60,21 @@ void QseCursorPlot::setPen(const QPen &pen)
 
 bool QseCursorPlot::isVisible(const QRect &rect, const QseGeometry &geometry)
 {
-    if (m_cursor)
-        return (!m_cursor->isNull() &&
-                QseFunc::isSampleVisible(m_cursor->index(), geometry.x(), geometry.samplePerPixel(), rect.width()));
-    else
+    if (m_cursor == 0)
         return false;
+
+    if (m_cursor->isNull())
+        return false;
+
+    return geometry.isSampleVisible(m_cursor->index(), rect.width());
 }
 
 void QseCursorPlot::draw(QPainter *painter, const QRect &rect, const QseGeometry &geometry)
 {
     if (m_cursor && !m_cursor->isNull() &&
-            QseFunc::isSampleVisible(m_cursor->index(), geometry.x(), geometry.samplePerPixel(), rect.width()))
+            geometry.isSampleVisible(m_cursor->index(), rect.width()))
     {
-        int wpos = QseFunc::mapSampleToWidget(m_cursor->index(), geometry.x(), geometry.samplePerPixel());
+        int wpos = geometry.toWidgetOffset(m_cursor->index());
 
         painter->setPen(m_pen);
         painter->setOpacity(m_opacity);

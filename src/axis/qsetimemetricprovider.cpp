@@ -49,7 +49,7 @@ QList<QseMetricItem> QseTimeMetricProvider::create(const QseGeometry &geometry, 
     QList<QseMetricItem> items;
 
     // parameters for current metrics
-    double offset = geometry.toAbsoluteOffset(1.0 / m_sampleRate);
+    double offset = geometry.toAbsoluteSampleOffset(1.0 / m_sampleRate);
     double unitPerPixel = geometry.toAbsoluteSamplePerPixel(1.0 / m_sampleRate);
 
     // Value Of Division

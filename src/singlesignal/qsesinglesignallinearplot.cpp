@@ -14,7 +14,7 @@
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 #include "qsesinglesignallinearplot.h"
-#include "qsefunc.h"
+#include "qsehelper.h"
 
 QseSingleSignalLinearPlot::QseSingleSignalLinearPlot(QObject *parent) :
     QseSingleSignalAbstractPlot(parent)
@@ -50,13 +50,13 @@ void QseSingleSignalLinearPlot::drawAsLine(QPainter *painter, const QList<float>
         double xx2 = x2;
 
         if (y1 >= rect.height())
-            QseFunc::findLineIntersection(x1, y1, x2, y2, x1, rect.height()-1, x2, rect.height()-1, xx1, yy1);
+            Qse::calcIntersection(x1, y1, x2, y2, x1, rect.height()-1, x2, rect.height()-1, xx1, yy1);
         if (y2 >= rect.height())
-            QseFunc::findLineIntersection(x1, y1, x2, y2, x1, rect.height()-1, x2, rect.height()-1, xx2, yy2);
+            Qse::calcIntersection(x1, y1, x2, y2, x1, rect.height()-1, x2, rect.height()-1, xx2, yy2);
         if (y1 < 0)
-            QseFunc::findLineIntersection(x1, y1, x2, y2, x1, 0, x2, 0, xx1, yy1);
+            Qse::calcIntersection(x1, y1, x2, y2, x1, 0, x2, 0, xx1, yy1);
         if (y2 < 0)
-            QseFunc::findLineIntersection(x1, y1, x2, y2, x1, 0, x2, 0, xx2, yy2);
+            Qse::calcIntersection(x1, y1, x2, y2, x1, 0, x2, 0, xx2, yy2);
 
         painter->drawLine(QPointF(xx1, yy1), QPointF(xx2, yy2));
     }

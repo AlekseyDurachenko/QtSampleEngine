@@ -14,7 +14,7 @@
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 #include "qseselectionplot.h"
-#include "qsefunc.h"
+#include "qsehelper.h"
 
 
 QseSelectionPlot::QseSelectionPlot(QObject *parent)
@@ -65,8 +65,8 @@ bool QseSelectionPlot::isVisible(const QRect &rect, const QseGeometry &geometry)
     if (m_selection->isNull())
         return false;
 
-    qint64 sl = QseFunc::mapSampleToWidget(m_selection->left(), geometry.x(), geometry.samplePerPixel());
-    qint64 sr = QseFunc::mapSampleToWidget(m_selection->right(), geometry.x(), geometry.samplePerPixel());
+    qint64 sl = geometry.toWidgetOffset(m_selection->left());
+    qint64 sr = geometry.toWidgetOffset(m_selection->right());
 
     if ((sl < 0 && sr < 0) || (sl >= rect.width() && sr >= rect.width()))
         return false;
@@ -78,8 +78,8 @@ void QseSelectionPlot::draw(QPainter *painter, const QRect &rect, const QseGeome
 {
     if (m_selection && !m_selection->isNull())
     {
-        qint64 sl = QseFunc::mapSampleToWidget(m_selection->left(), geometry.x(), geometry.samplePerPixel());
-        qint64 sr = QseFunc::mapSampleToWidget(m_selection->right(), geometry.x(), geometry.samplePerPixel());
+        qint64 sl = geometry.toWidgetOffset(m_selection->left());
+        qint64 sr = geometry.toWidgetOffset(m_selection->right());
 
         if ((sl < 0 && sr < 0) || (sl >= rect.width() && sr >= rect.width()))
             return;

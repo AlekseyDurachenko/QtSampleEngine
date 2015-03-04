@@ -62,12 +62,38 @@ double QseGeometry::toAbsoluteSamplePerPixel(double factor) const
         return (1.0 / -m_samplePerPixel * factor);
 }
 
-double QseGeometry::toAbsoluteOffset(double factor) const
+double QseGeometry::toAbsoluteSampleOffset(double factor) const
 {
     if (m_samplePerPixel > 0)
         return (m_x * factor * m_samplePerPixel);
     else
         return (m_x * factor);
+}
+
+bool QseGeometry::isSampleVisible(qint64 sampleIndex, int width) const
+{
+    if (m_samplePerPixel > 0)
+        return (m_x*m_samplePerPixel <= sampleIndex)
+                && (sampleIndex < (m_x+width)*m_samplePerPixel);
+    else
+        return (m_x <= sampleIndex)
+                && (sampleIndex < m_x-width/m_samplePerPixel);
+}
+
+int QseGeometry::toWidgetOffset(qint64 sampleIndex) const
+{
+    if (m_samplePerPixel > 0)
+        return (sampleIndex - m_x*m_samplePerPixel) / m_samplePerPixel;
+    else
+        return (sampleIndex - m_x) * qAbs(m_samplePerPixel);
+}
+
+qint64 QseGeometry::toSampleIndex(int widgetOffset) const
+{
+    if (m_samplePerPixel > 0)
+        return (m_x + widgetOffset) * m_samplePerPixel;
+    else
+        return m_x + qRound(static_cast<qreal>(widgetOffset) / qAbs(m_samplePerPixel));
 }
 
 bool operator == (const QseGeometry &left, const QseGeometry &right)

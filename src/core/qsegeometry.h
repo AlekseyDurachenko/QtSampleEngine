@@ -44,16 +44,26 @@ public:
     QseGeometry(qint64 x = 0, double y = 0, qint64 samplePerPixel = -1, double height = 2.0);
 
     inline qint64 x() const;
-    inline double y() const;
-    inline qint64 samplePerPixel() const;
-    inline double height() const;
     void setX(qint64 x);
+
+    inline double y() const;
     void setY(double y);
+
+    inline qint64 samplePerPixel() const;
     void setSamplePerPixel(qint64 samplePerPixel);
+
+    inline double height() const;
     void setHeight(double height);
+
     QseGeometry addX(qint64 x) const;
+
     double toAbsoluteSamplePerPixel(double factor = 1.0) const;
-    double toAbsoluteOffset(double factor = 1.0) const;
+    double toAbsoluteSampleOffset(double factor = 1.0) const;
+
+    bool isSampleVisible(qint64 sampleIndex, int width) const;
+    int toWidgetOffset(qint64 sampleIndex) const;
+    qint64 toSampleIndex(int widgetOffset) const;
+
     friend bool operator == (const QseGeometry &left, const QseGeometry &right);
     friend bool operator != (const QseGeometry &left, const QseGeometry &right);
 private:

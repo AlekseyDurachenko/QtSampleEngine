@@ -1,0 +1,3 @@
+[submodule "examples/onethreadsinglewaveform/submodules/QtAttoDateTime"]
+	path = examples/onethreadsinglewaveform/submodules/QtAttoDateTime
+	url = https://github.com/AlekseyDurachenko/QtAttoDateTime.git
