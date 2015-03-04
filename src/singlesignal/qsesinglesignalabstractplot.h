@@ -16,6 +16,7 @@
 #ifndef QSESINGLESIGNALABSTRACTPLOT_H
 #define QSESINGLESIGNALABSTRACTPLOT_H
 
+#include <QPen>
 #include "qseabstractplot.h"
 #include "qsesinglesignalabstractpeakreader.h"
 

@@ -1,4 +1,4 @@
-// Copyright 2013, Durachenko Aleksey V. <durachenko.aleksey@gmail.com>
+// Copyright 2013-2015, Durachenko Aleksey V. <durachenko.aleksey@gmail.com>
 //
 // This library is free software; you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public
@@ -14,6 +14,7 @@
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 #include "qsegeometry.h"
+
 
 QseGeometry::QseGeometry(qint64 x, double y, qint64 samplePerPixel, double height)
 {

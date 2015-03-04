@@ -1,4 +1,4 @@
-// Copyright 2013, Durachenko Aleksey V. <durachenko.aleksey@gmail.com>
+// Copyright 2013-2015, Durachenko Aleksey V. <durachenko.aleksey@gmail.com>
 //
 // This library is free software; you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public
@@ -21,31 +21,39 @@ QseAbstractController::QseAbstractController(QObject *parent) :
 {
 }
 
+/*! The default cursor for the widget, which use this controller
+ */
 QCursor QseAbstractController::defaultCursor() const
 {
     return QCursor();
 }
 
-void QseAbstractController::mouseMoveEvent(QMouseEvent *, const QRect &, const QseGeometry &)
+void QseAbstractController::mouseMoveEvent(QMouseEvent *, const QRect &,
+        const QseGeometry &)
 {
 }
 
-void QseAbstractController::mousePressEvent(QMouseEvent *, const QRect &, const QseGeometry &)
+void QseAbstractController::mousePressEvent(QMouseEvent *, const QRect &,
+        const QseGeometry &)
 {
 }
 
-void QseAbstractController::mouseReleaseEvent(QMouseEvent *, const QRect &, const QseGeometry &)
+void QseAbstractController::mouseReleaseEvent(QMouseEvent *, const QRect &,
+        const QseGeometry &)
 {
 }
 
-void QseAbstractController::wheelEvent(QWheelEvent *, const QRect &, const QseGeometry &)
+void QseAbstractController::wheelEvent(QWheelEvent *, const QRect &,
+        const QseGeometry &)
 {
 }
 
-void QseAbstractController::keyPressEvent(QKeyEvent *, const QRect &, const QseGeometry &)
+void QseAbstractController::keyPressEvent(QKeyEvent *, const QRect &,
+        const QseGeometry &)
 {
 }
 
-void QseAbstractController::keyReleaseEvent(QKeyEvent *, const QRect &, const QseGeometry &)
+void QseAbstractController::keyReleaseEvent(QKeyEvent *, const QRect &,
+        const QseGeometry &)
 {
 }

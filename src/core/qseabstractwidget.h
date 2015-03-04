@@ -1,4 +1,4 @@
-// Copyright 2013, Durachenko Aleksey V. <durachenko.aleksey@gmail.com>
+// Copyright 2013-2015, Durachenko Aleksey V. <durachenko.aleksey@gmail.com>
 //
 // This library is free software; you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public
@@ -17,8 +17,8 @@
 #define QSEABSTRACTWIDGET_H
 
 #include <QWidget>
-#include "qseabstractcontroller.h"
 #include "qsegeometry.h"
+class QseAbstractController;
 
 
 class QseAbstractWidget : public QWidget
@@ -29,16 +29,15 @@ public:
 
     inline bool isUpdateOnce() const;
     inline const QseGeometry &geometry() const;
-    inline const QseAbstractController *controller() const;
 
+    inline const QseAbstractController *controller() const;
     void setController(QseAbstractController *controller);
 public slots:
-    /*! This method set flag isUpdateOnce() to true, and call the update() method.
-     */
     void setUpdateOnce(bool need = true);
     void setGeometry(const QseGeometry& geometry);
 private slots:
     void setCurrentCursor(const QCursor &cursor);
+    void controller_destroyed();
 protected:
     void mouseMoveEvent(QMouseEvent *event);
     void mousePressEvent(QMouseEvent *event);
@@ -51,7 +50,6 @@ private:
     QseGeometry m_geometry;
     bool m_updateOnce;
 };
-
 
 bool QseAbstractWidget::isUpdateOnce() const
 {

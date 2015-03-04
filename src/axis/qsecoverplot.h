@@ -16,6 +16,8 @@
 #ifndef QSECOVERPLOT_H
 #define QSECOVERPLOT_H
 
+#include <QPen>
+#include <QColor>
 #include "qseabstractplot.h"
 #include "qseabstractmetricprovider.h"
 

@@ -14,7 +14,9 @@
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 #include "qsesinglesignallinearplot.h"
+#include <QPainter>
 #include "qsehelper.h"
+
 
 QseSingleSignalLinearPlot::QseSingleSignalLinearPlot(QObject *parent) :
     QseSingleSignalAbstractPlot(parent)
@@ -64,7 +66,7 @@ void QseSingleSignalLinearPlot::drawAsLine(QPainter *painter, const QList<float>
 
 void QseSingleSignalLinearPlot::drawAsPeak(QPainter *painter, const QList<float> &minimums,
     const QList<float> &maximums, const QRect &rect, const QseGeometry &geometry, int offset)
-{    
+{
     int space = 0; // skip pixel from left bound
     int first = 0; // index of first visible minimum(maximum)
     if (offset < 0)

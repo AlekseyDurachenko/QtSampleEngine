@@ -1,4 +1,4 @@
-// Copyright 2013, Durachenko Aleksey V. <durachenko.aleksey@gmail.com>
+// Copyright 2013-2015, Durachenko Aleksey V. <durachenko.aleksey@gmail.com>
 //
 // This library is free software; you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public
@@ -14,6 +14,7 @@
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 #include "qseabstractwidget.h"
+#include "qseabstractcontroller.h"
 
 
 QseAbstractWidget::QseAbstractWidget(QWidget *parent)
@@ -25,11 +26,40 @@ QseAbstractWidget::QseAbstractWidget(QWidget *parent)
 
 void QseAbstractWidget::setGeometry(const QseGeometry &geometry)
 {
-    if (geometry != m_geometry)
+    if (m_geometry == geometry)
+        return;
+
+    m_geometry = geometry;
+    setUpdateOnce(true);
+}
+
+void QseAbstractWidget::setController(QseAbstractController *controller)
+{
+    if (m_controller)
+        disconnect(m_controller, 0, this, 0);
+
+    m_controller = controller;
+    if (m_controller)
     {
-        m_geometry = geometry;
-        setUpdateOnce(true);
+        connect(m_controller, SIGNAL(cursorChanged(QCursor)),
+                this, SLOT(setCurrentCursor(QCursor)));
+        connect(m_controller, SIGNAL(destroyed()),
+                this, SLOT(controller_destroyed()));
+        setCurrentCursor(m_controller->defaultCursor());
     }
+}
+
+/*! This method set flag isUpdateOnce() to true,
+ *  and call the update() method.
+ */
+void QseAbstractWidget::setUpdateOnce(bool need)
+{
+    if (m_updateOnce)
+        return;
+
+    m_updateOnce = need;
+    if (m_updateOnce)
+        update();
 }
 
 void QseAbstractWidget::setCurrentCursor(const QCursor &cursor)
@@ -37,24 +67,9 @@ void QseAbstractWidget::setCurrentCursor(const QCursor &cursor)
     setCursor(cursor);
 }
 
-void QseAbstractWidget::setController(QseAbstractController *controller)
+void QseAbstractWidget::controller_destroyed()
 {
-    if (m_controller)
-        disconnect(m_controller, SIGNAL(cursorChanged(QCursor)), this, 0);
-
-    m_controller = controller;
-    if (m_controller)
-    {
-        connect(m_controller, SIGNAL(cursorChanged(QCursor)), this, SLOT(setCurrentCursor(QCursor)));
-        setCurrentCursor(m_controller->defaultCursor());
-    }
-}
-
-void QseAbstractWidget::setUpdateOnce(bool need)
-{
-    m_updateOnce = need;
-    if (m_updateOnce)
-        update();
+    m_controller = 0;
 }
 
 void QseAbstractWidget::mouseMoveEvent(QMouseEvent *event)
