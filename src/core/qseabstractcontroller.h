@@ -18,36 +18,36 @@
 
 #include <QObject>
 #include <QCursor>
-#include "qsesppgeometry.h"
 class QMouseEvent;
 class QWheelEvent;
 class QKeyEvent;
-class QseAbstractWidget;
+template<class Geometry> class QseAbstractWidget;
 
 
+template<class Geometry>
 class QseAbstractController : public QObject
 {
     Q_OBJECT
-    friend class QseAbstractWidget;
+    friend class QseAbstractWidget<Geometry>;
 public:
     explicit QseAbstractController(QObject *parent = 0);
 
     virtual QCursor defaultCursor() const;
 private:
     virtual void mouseMoveEvent(QMouseEvent *event, const QRect &rect,
-                                const QseSppGeometry &geometry);
+                                const Geometry &geometry);
     virtual void mousePressEvent(QMouseEvent *event, const QRect &rect,
-                                 const QseSppGeometry &geometry);
+                                 const Geometry &geometry);
     virtual void mouseReleaseEvent(QMouseEvent *event, const QRect &rect,
-                                   const QseSppGeometry &geometry);
+                                   const Geometry &geometry);
     virtual void wheelEvent(QWheelEvent *event, const QRect &rect,
-                            const QseSppGeometry &geometry);
+                            const Geometry &geometry);
     virtual void keyPressEvent(QKeyEvent *event, const QRect &rect,
-                               const QseSppGeometry &geometry);
+                               const Geometry &geometry);
     virtual void keyReleaseEvent(QKeyEvent *event, const QRect &rect,
-                                 const QseSppGeometry &geometry);
+                                 const Geometry &geometry);
 signals:
-    void geometryChanged(const QseSppGeometry &geometry);
+    void geometryChanged(const Geometry &geometry);
     void cursorChanged(const QCursor &cursor);
 };
 

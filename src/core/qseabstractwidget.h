@@ -17,10 +17,10 @@
 #define QSEABSTRACTWIDGET_H
 
 #include <QWidget>
-#include "qsesppgeometry.h"
-class QseAbstractController;
+template<class Geometry> class QseAbstractController;
 
 
+template<class Geometry>
 class QseAbstractWidget : public QWidget
 {
     Q_OBJECT
@@ -28,13 +28,13 @@ public:
     explicit QseAbstractWidget(QWidget *parent = 0);
 
     inline bool isUpdateOnce() const;
-    inline const QseSppGeometry &geometry() const;
+    inline const Geometry &geometry() const;
 
-    inline const QseAbstractController *controller() const;
-    void setController(QseAbstractController *controller);
+    inline const QseAbstractController<Geometry> *controller() const;
+    void setController(QseAbstractController<Geometry> *controller);
 public slots:
     void setUpdateOnce(bool need = true);
-    void setGeometry(const QseSppGeometry& geometry);
+    void setGeometry(const Geometry& geometry);
 private slots:
     void setCurrentCursor(const QCursor &cursor);
     void controller_destroyed();
@@ -46,22 +46,25 @@ protected:
     void keyPressEvent(QKeyEvent *event);
     void keyReleaseEvent(QKeyEvent *event);
 private:
-    QseAbstractController *m_controller;
-    QseSppGeometry m_geometry;
+    QseAbstractController<Geometry> *m_controller;
+    Geometry m_geometry;
     bool m_updateOnce;
 };
 
-bool QseAbstractWidget::isUpdateOnce() const
+template<class Geometry>
+bool QseAbstractWidget<Geometry>::isUpdateOnce() const
 {
     return m_updateOnce;
 }
 
-const QseSppGeometry &QseAbstractWidget::geometry() const
+template<class Geometry>
+const Geometry &QseAbstractWidget<Geometry>::geometry() const
 {
     return m_geometry;
 }
 
-const QseAbstractController *QseAbstractWidget::controller() const
+template<class Geometry>
+const QseAbstractController<Geometry> *QseAbstractWidget<Geometry>::controller() const
 {
     return m_controller;
 }

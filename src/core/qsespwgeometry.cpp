@@ -21,8 +21,8 @@ QseSpwGeometry::QseSpwGeometry(qint64 x, double y, qint64 samplesPerWindow,
 {
     m_x = x;
     m_y = y;
-    if (m_samplesPerWindow > 0)
-        m_samplesPerWindow = samplesPerWindow;;
+    if (samplesPerWindow > 0)
+        m_samplesPerWindow = samplesPerWindow;
     else
         m_samplesPerWindow = 1;
     m_height = height;
@@ -40,8 +40,8 @@ void QseSpwGeometry::setY(double y)
 
 void QseSpwGeometry::setSamplesPerWindow(qint64 samplesPerWindow)
 {
-    if (m_samplesPerWindow > 0)
-        m_samplesPerWindow = samplesPerWindow;;
+    if (samplesPerWindow > 0)
+        m_samplesPerWindow = samplesPerWindow;
     else
         m_samplesPerWindow = 1;
 }

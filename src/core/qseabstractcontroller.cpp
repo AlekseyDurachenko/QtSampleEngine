@@ -16,44 +16,52 @@
 #include "qseabstractcontroller.h"
 
 
-QseAbstractController::QseAbstractController(QObject *parent) :
+template<class Geometry>
+QseAbstractController<Geometry>::QseAbstractController(QObject *parent) :
     QObject(parent)
 {
 }
 
 /*! The default cursor for the widget, which use this controller
  */
-QCursor QseAbstractController::defaultCursor() const
+template<class Geometry>
+QCursor QseAbstractController<Geometry>::defaultCursor() const
 {
     return QCursor();
 }
 
-void QseAbstractController::mouseMoveEvent(QMouseEvent *, const QRect &,
-        const QseSppGeometry &)
+template<class Geometry>
+void QseAbstractController<Geometry>::mouseMoveEvent(QMouseEvent *, const QRect &,
+        const Geometry &)
 {
 }
 
-void QseAbstractController::mousePressEvent(QMouseEvent *, const QRect &,
-        const QseSppGeometry &)
+template<class Geometry>
+void QseAbstractController<Geometry>::mousePressEvent(QMouseEvent *, const QRect &,
+        const Geometry &)
 {
 }
 
-void QseAbstractController::mouseReleaseEvent(QMouseEvent *, const QRect &,
-        const QseSppGeometry &)
+template<class Geometry>
+void QseAbstractController<Geometry>::mouseReleaseEvent(QMouseEvent *, const QRect &,
+        const Geometry &)
 {
 }
 
-void QseAbstractController::wheelEvent(QWheelEvent *, const QRect &,
-        const QseSppGeometry &)
+template<class Geometry>
+void QseAbstractController<Geometry>::wheelEvent(QWheelEvent *, const QRect &,
+        const Geometry &)
 {
 }
 
-void QseAbstractController::keyPressEvent(QKeyEvent *, const QRect &,
-        const QseSppGeometry &)
+template<class Geometry>
+void QseAbstractController<Geometry>::keyPressEvent(QKeyEvent *, const QRect &,
+        const Geometry &)
 {
 }
 
-void QseAbstractController::keyReleaseEvent(QKeyEvent *, const QRect &,
-        const QseSppGeometry &)
+template<class Geometry>
+void QseAbstractController<Geometry>::keyReleaseEvent(QKeyEvent *, const QRect &,
+        const Geometry &)
 {
 }

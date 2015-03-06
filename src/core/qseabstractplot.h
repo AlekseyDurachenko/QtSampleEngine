@@ -18,10 +18,10 @@
 
 #include <QObject>
 #include <QRect>
-#include "qsesppgeometry.h"
 class QPainter;
 
 
+template<class Geometry>
 class QseAbstractPlot : public QObject
 {
     Q_OBJECT
@@ -30,10 +30,10 @@ public:
 
     inline bool isUpdateOnce() const;
 
-    virtual bool isVisible(const QRect &rect, const QseSppGeometry &geometry);
-    virtual bool hasChanges(const QRect &rect, const QseSppGeometry &geometry);
+    virtual bool isVisible(const QRect &rect, const Geometry &geometry);
+    virtual bool hasChanges(const QRect &rect, const Geometry &geometry);
     virtual void draw(QPainter *painter, const QRect &rect,
-                      const QseSppGeometry &geometry);
+                      const Geometry &geometry);
 public slots:
     void setUpdateOnce(bool need = true);
     virtual void reset();
@@ -43,7 +43,8 @@ private:
     bool m_updateOnce;
 };
 
-bool QseAbstractPlot::isUpdateOnce() const
+template<class Geometry>
+bool QseAbstractPlot<Geometry>::isUpdateOnce() const
 {
     return m_updateOnce;
 }
