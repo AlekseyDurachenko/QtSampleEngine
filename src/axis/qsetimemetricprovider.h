@@ -26,7 +26,7 @@ public:
     explicit QseTimeMetricProvider(QObject *parent = 0);
     ~QseTimeMetricProvider();
     int maximumTextLenght() const;
-    QList<QseMetricItem> create(const QseGeometry &geometry, int size) const;
+    QList<QseMetricItem> create(const QseSppGeometry &geometry, int size) const;
 public slots:
     void setSampleRate(double sampleRate);
 private:

@@ -28,7 +28,7 @@ QCursor QseHorizontalController::defaultCursor() const
     return QCursor(Qt::OpenHandCursor);
 }
 
-void QseHorizontalController::mouseMoveEvent(QMouseEvent *event, const QRect &, const QseGeometry &geometry)
+void QseHorizontalController::mouseMoveEvent(QMouseEvent *event, const QRect &, const QseSppGeometry &geometry)
 {
     // if left button is pressed, we shuld move the Y axis of the plotter
     if (m_dragAction)
@@ -45,7 +45,7 @@ void QseHorizontalController::mouseMoveEvent(QMouseEvent *event, const QRect &, 
     }
 }
 
-void QseHorizontalController::mousePressEvent(QMouseEvent *event, const QRect &, const QseGeometry &)
+void QseHorizontalController::mousePressEvent(QMouseEvent *event, const QRect &, const QseSppGeometry &)
 {
     if (event->button() == Qt::LeftButton && event->modifiers() == Qt::NoModifier)
     {
@@ -55,7 +55,7 @@ void QseHorizontalController::mousePressEvent(QMouseEvent *event, const QRect &,
     }
 }
 
-void QseHorizontalController::mouseReleaseEvent(QMouseEvent *event, const QRect &, const QseGeometry &)
+void QseHorizontalController::mouseReleaseEvent(QMouseEvent *event, const QRect &, const QseSppGeometry &)
 {
     // after left button of the mouse will be release
     // we should finished the moving

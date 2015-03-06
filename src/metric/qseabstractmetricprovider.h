@@ -21,7 +21,7 @@
 #include <QList>
 #include <QFont>
 #include "qsemetricitem.h"
-#include "qsegeometry.h"
+#include "qsesppgeometry.h"
 
 /*! \brief The QseAbstractMetricProvider class provides the metric model
  *
@@ -55,7 +55,7 @@ public:
      * \param minStep the minimum step between main (level 1) metrics
      * \param size the width/height of the widget
      */
-    virtual QList<QseMetricItem> create(const QseGeometry &geometry, int size) const = 0;
+    virtual QList<QseMetricItem> create(const QseSppGeometry &geometry, int size) const = 0;
 signals:
     /*! \brief indicates that representation of the metric is changed
      *

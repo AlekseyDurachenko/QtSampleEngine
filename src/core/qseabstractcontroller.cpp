@@ -29,31 +29,31 @@ QCursor QseAbstractController::defaultCursor() const
 }
 
 void QseAbstractController::mouseMoveEvent(QMouseEvent *, const QRect &,
-        const QseGeometry &)
+        const QseSppGeometry &)
 {
 }
 
 void QseAbstractController::mousePressEvent(QMouseEvent *, const QRect &,
-        const QseGeometry &)
+        const QseSppGeometry &)
 {
 }
 
 void QseAbstractController::mouseReleaseEvent(QMouseEvent *, const QRect &,
-        const QseGeometry &)
+        const QseSppGeometry &)
 {
 }
 
 void QseAbstractController::wheelEvent(QWheelEvent *, const QRect &,
-        const QseGeometry &)
+        const QseSppGeometry &)
 {
 }
 
 void QseAbstractController::keyPressEvent(QKeyEvent *, const QRect &,
-        const QseGeometry &)
+        const QseSppGeometry &)
 {
 }
 
 void QseAbstractController::keyReleaseEvent(QKeyEvent *, const QRect &,
-        const QseGeometry &)
+        const QseSppGeometry &)
 {
 }

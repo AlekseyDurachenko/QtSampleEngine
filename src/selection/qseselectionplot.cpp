@@ -57,7 +57,7 @@ void QseSelectionPlot::setSelection(QseSelection *selection)
     m_selection = selection;
 }
 
-bool QseSelectionPlot::isVisible(const QRect &rect, const QseGeometry &geometry)
+bool QseSelectionPlot::isVisible(const QRect &rect, const QseSppGeometry &geometry)
 {
     if (m_selection == 0)
         return false;
@@ -74,7 +74,7 @@ bool QseSelectionPlot::isVisible(const QRect &rect, const QseGeometry &geometry)
     return true;
 }
 
-void QseSelectionPlot::draw(QPainter *painter, const QRect &rect, const QseGeometry &geometry)
+void QseSelectionPlot::draw(QPainter *painter, const QRect &rect, const QseSppGeometry &geometry)
 {
     if (m_selection && !m_selection->isNull())
     {

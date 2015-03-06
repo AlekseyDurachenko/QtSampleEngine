@@ -17,7 +17,7 @@
 #define QSESINGLESIGNALABSTRACTPEAKREADER_H
 
 #include <QObject>
-#include "qsegeometry.h"
+#include "qsesppgeometry.h"
 
 class QseSingleSignalAbstractPeakReader : public QObject
 {
@@ -26,10 +26,10 @@ public:
     explicit QseSingleSignalAbstractPeakReader(QObject *parent = 0);
 
     virtual void abort() = 0;
-    virtual int start(const QseGeometry &geometry, int width) = 0;
+    virtual int start(const QseSppGeometry &geometry, int width) = 0;
 
 signals:
-    void peakReaded(int id, const QseGeometry &geometry, QList<float> minimums, QList<float> maximums);
+    void peakReaded(int id, const QseSppGeometry &geometry, QList<float> minimums, QList<float> maximums);
 
 };
 

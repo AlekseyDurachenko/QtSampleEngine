@@ -32,7 +32,7 @@ int QseAbsoluteMetricProvider::maximumTextLenght() const
     return 8;
 }
 
-QList<QseMetricItem> QseAbsoluteMetricProvider::create(const QseGeometry &geometry, int size) const
+QList<QseMetricItem> QseAbsoluteMetricProvider::create(const QseSppGeometry &geometry, int size) const
 {
     QList<QseMetricItem> items;
 

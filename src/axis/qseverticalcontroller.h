@@ -26,9 +26,9 @@ public:
     explicit QseVerticalController(QObject *parent = 0);
 
     QCursor defaultCursor() const;
-    void mouseMoveEvent(QMouseEvent *event, const QRect &rect, const QseGeometry &geometry);
-    void mousePressEvent(QMouseEvent *event, const QRect &rect, const QseGeometry &geometry);
-    void mouseReleaseEvent(QMouseEvent *event, const QRect &rect, const QseGeometry &geometry);
+    void mouseMoveEvent(QMouseEvent *event, const QRect &rect, const QseSppGeometry &geometry);
+    void mousePressEvent(QMouseEvent *event, const QRect &rect, const QseSppGeometry &geometry);
+    void mouseReleaseEvent(QMouseEvent *event, const QRect &rect, const QseSppGeometry &geometry);
 private:
     // true  -- ready to move
     // false -- not ready to move

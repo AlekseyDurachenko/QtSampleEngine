@@ -24,7 +24,7 @@ QseAbstractWidget::QseAbstractWidget(QWidget *parent)
     m_updateOnce = true;
 }
 
-void QseAbstractWidget::setGeometry(const QseGeometry &geometry)
+void QseAbstractWidget::setGeometry(const QseSppGeometry &geometry)
 {
     if (m_geometry == geometry)
         return;

@@ -34,28 +34,28 @@ public:
     inline QseSingleSignalAbstractPeakReader *peakReader();
     void setPeakReader(QseSingleSignalAbstractPeakReader *peakReader);
 
-    bool hasChanges(const QRect &rect, const QseGeometry &geometry);
-    void draw(QPainter *painter, const QRect &rect, const QseGeometry &geometry);
+    bool hasChanges(const QRect &rect, const QseSppGeometry &geometry);
+    void draw(QPainter *painter, const QRect &rect, const QseSppGeometry &geometry);
 
 public slots:
     void reset();
 
 private slots:
-    void slot_peakReaded(int id, const QseGeometry &geometry, QList<float> minimums, QList<float> maximums);
+    void slot_peakReaded(int id, const QseSppGeometry &geometry, QList<float> minimums, QList<float> maximums);
 
 private:
     virtual void drawAsLine(QPainter *painter, const QList<float> &points, const QRect &rect,
-            const QseGeometry &geometry, int offset = 0) = 0;
+            const QseSppGeometry &geometry, int offset = 0) = 0;
     virtual void drawAsPeak(QPainter *painter, const QList<float> &minimums, const QList<float> &maximums,
-            const QRect &rect, const QseGeometry &geometry, int offset = 0) = 0;
+            const QRect &rect, const QseSppGeometry &geometry, int offset = 0) = 0;
 
 private:
     QseSingleSignalAbstractPeakReader *m_peakReader;
     QList<float> m_minimums, m_maximums;
     QPen m_pen;
     qreal m_opacity;
-    QseGeometry m_lastGeometry;
-    QseGeometry m_cacheGeometry;
+    QseSppGeometry m_lastGeometry;
+    QseSppGeometry m_cacheGeometry;
     QRect m_lastRect;
     int m_id;
     int m_lastId;

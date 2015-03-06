@@ -18,7 +18,7 @@
 
 #include <QObject>
 #include <QPainter>
-#include "qsegeometry.h"
+#include "qsesppgeometry.h"
 #include "qseabstractplot.h"
 #include "qsecursor.h"
 
@@ -38,8 +38,8 @@ public:
     void setOpacity(qreal opacity);
     void setCursor(QseCursor *cursor);
 
-    bool isVisible(const QRect &rect, const QseGeometry &geometry);
-    void draw(QPainter *painter, const QRect &rect, const QseGeometry &geometry);
+    bool isVisible(const QRect &rect, const QseSppGeometry &geometry);
+    void draw(QPainter *painter, const QRect &rect, const QseSppGeometry &geometry);
 signals:
     void changed();
 private slots:

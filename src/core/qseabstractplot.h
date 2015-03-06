@@ -18,7 +18,7 @@
 
 #include <QObject>
 #include <QRect>
-#include "qsegeometry.h"
+#include "qsesppgeometry.h"
 class QPainter;
 
 
@@ -30,10 +30,10 @@ public:
 
     inline bool isUpdateOnce() const;
 
-    virtual bool isVisible(const QRect &rect, const QseGeometry &geometry);
-    virtual bool hasChanges(const QRect &rect, const QseGeometry &geometry);
+    virtual bool isVisible(const QRect &rect, const QseSppGeometry &geometry);
+    virtual bool hasChanges(const QRect &rect, const QseSppGeometry &geometry);
     virtual void draw(QPainter *painter, const QRect &rect,
-                      const QseGeometry &geometry);
+                      const QseSppGeometry &geometry);
 public slots:
     void setUpdateOnce(bool need = true);
     virtual void reset();

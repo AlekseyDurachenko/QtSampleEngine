@@ -21,7 +21,7 @@
 #include <QBrush>
 #include <QPen>
 #include "qseabstractplot.h"
-#include "qsegeometry.h"
+#include "qsesppgeometry.h"
 #include "qseselection.h"
 
 /*! \brief The QseSelection class shows the selected range of the sound
@@ -44,8 +44,8 @@ public:
      *  visible or not. Why? because it can be useful for optimize
      *  the the drawing the result widget
      */
-    bool isVisible(const QRect &rect, const QseGeometry &geometry);
-    void draw(QPainter *painter, const QRect &rect, const QseGeometry &geometry);
+    bool isVisible(const QRect &rect, const QseSppGeometry &geometry);
+    void draw(QPainter *painter, const QRect &rect, const QseSppGeometry &geometry);
 signals:
     /*! This signal emited when one of the waveform parameters is changed,
      *  after this signal, we should update the widget which show the

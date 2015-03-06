@@ -29,7 +29,7 @@ public:
     virtual ~QseLineMetricProvider();
     virtual int maximumTextLenght() const;
     inline Orientation orientation() const;
-    QList<QseMetricItem> create(const QseGeometry &geometry, int size) const;
+    QList<QseMetricItem> create(const QseSppGeometry &geometry, int size) const;
 public slots:
     void setCoeff(double coeff);
 private:

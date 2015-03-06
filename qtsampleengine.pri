@@ -9,7 +9,6 @@ HEADERS +=                                                          \
     $$PWD/src/core/qseabstractcontroller.h                          \
     $$PWD/src/core/qseabstractplot.h                                \
     $$PWD/src/core/qseabstractwidget.h                              \
-    $$PWD/src/core/qsegeometry.h                                    \
     $$PWD/src/cursor/qsecursorplot.h                                \
     $$PWD/src/cursor/qsecursor.h                                    \
     $$PWD/src/metric/qseabstractmetricprovider.h                    \
@@ -21,6 +20,7 @@ HEADERS +=                                                          \
     $$PWD/src/singlesignal/qsesinglesignalabstractpeakreader.h      \
     $$PWD/src/singlesignal/qsesinglesignalabstractplot.h            \
     $$PWD/src/core/qsehelper.h                                      \
+    $$PWD/src/core/qsesppgeometry.h
 
 SOURCES +=                                                          \
     $$PWD/src/axis/qseabsolutemetricprovider.cpp                    \
@@ -33,7 +33,6 @@ SOURCES +=                                                          \
     $$PWD/src/core/qseabstractcontroller.cpp                        \
     $$PWD/src/core/qseabstractplot.cpp                              \
     $$PWD/src/core/qseabstractwidget.cpp                            \
-    $$PWD/src/core/qsegeometry.cpp                                  \
     $$PWD/src/cursor/qsecursorplot.cpp                              \
     $$PWD/src/cursor/qsecursor.cpp                                  \
     $$PWD/src/metric/qseabstractmetricprovider.cpp                  \
@@ -45,6 +44,7 @@ SOURCES +=                                                          \
     $$PWD/src/singlesignal/qsesinglesignalabstractpeakreader.cpp    \
     $$PWD/src/singlesignal/qsesinglesignalabstractplot.cpp          \
     $$PWD/src/core/qsehelper.cpp                                    \
+    $$PWD/src/core/qsesppgeometry.cpp
 
 OTHER_FILES +=                                                      \
     $$PWD/README                                                    \

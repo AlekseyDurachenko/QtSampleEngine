@@ -27,19 +27,19 @@ QCursor QseVerticalController::defaultCursor() const
     return QCursor(Qt::OpenHandCursor);
 }
 
-void QseVerticalController::mouseMoveEvent(QMouseEvent *event, const QRect &rect, const QseGeometry &geometry)
+void QseVerticalController::mouseMoveEvent(QMouseEvent *event, const QRect &rect, const QseSppGeometry &geometry)
 {
     // if left button is pressed, we shuld move the Y axis of the plotter
     if (m_dragAction)
     {
-        QseGeometry ng = geometry;
+        QseSppGeometry ng = geometry;
         ng.setY(ng.y() - (event->y() - m_dragPrevPos.y())/static_cast<double>(rect.height())*geometry.height());
         m_dragPrevPos = event->pos();
         emit geometryChanged(ng);
     }
 }
 
-void QseVerticalController::mousePressEvent(QMouseEvent *event, const QRect &, const QseGeometry &)
+void QseVerticalController::mousePressEvent(QMouseEvent *event, const QRect &, const QseSppGeometry &)
 {
     if (event->button() == Qt::LeftButton && event->modifiers() == Qt::NoModifier)
     {
@@ -49,7 +49,7 @@ void QseVerticalController::mousePressEvent(QMouseEvent *event, const QRect &, c
     }
 }
 
-void QseVerticalController::mouseReleaseEvent(QMouseEvent *event, const QRect &, const QseGeometry &)
+void QseVerticalController::mouseReleaseEvent(QMouseEvent *event, const QRect &, const QseSppGeometry &)
 {
     // after left button of the mouse will be release
     // we should finished the moving

@@ -18,7 +18,7 @@
 
 #include <QObject>
 #include <QCursor>
-#include "qsegeometry.h"
+#include "qsesppgeometry.h"
 class QMouseEvent;
 class QWheelEvent;
 class QKeyEvent;
@@ -35,19 +35,19 @@ public:
     virtual QCursor defaultCursor() const;
 private:
     virtual void mouseMoveEvent(QMouseEvent *event, const QRect &rect,
-                                const QseGeometry &geometry);
+                                const QseSppGeometry &geometry);
     virtual void mousePressEvent(QMouseEvent *event, const QRect &rect,
-                                 const QseGeometry &geometry);
+                                 const QseSppGeometry &geometry);
     virtual void mouseReleaseEvent(QMouseEvent *event, const QRect &rect,
-                                   const QseGeometry &geometry);
+                                   const QseSppGeometry &geometry);
     virtual void wheelEvent(QWheelEvent *event, const QRect &rect,
-                            const QseGeometry &geometry);
+                            const QseSppGeometry &geometry);
     virtual void keyPressEvent(QKeyEvent *event, const QRect &rect,
-                               const QseGeometry &geometry);
+                               const QseSppGeometry &geometry);
     virtual void keyReleaseEvent(QKeyEvent *event, const QRect &rect,
-                                 const QseGeometry &geometry);
+                                 const QseSppGeometry &geometry);
 signals:
-    void geometryChanged(const QseGeometry &geometry);
+    void geometryChanged(const QseSppGeometry &geometry);
     void cursorChanged(const QCursor &cursor);
 };
 

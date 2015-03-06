@@ -27,7 +27,7 @@ public:
     explicit QseAbsoluteMetricProvider(QObject *parent = 0);
     ~QseAbsoluteMetricProvider();
     int maximumTextLenght() const;
-    QList<QseMetricItem> create(const QseGeometry &geometry, int size) const;
+    QList<QseMetricItem> create(const QseSppGeometry &geometry, int size) const;
 private:
     QseMetricMapper *m_mapper;
 };

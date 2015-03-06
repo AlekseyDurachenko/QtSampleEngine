@@ -17,7 +17,7 @@
 #define QSEABSTRACTWIDGET_H
 
 #include <QWidget>
-#include "qsegeometry.h"
+#include "qsesppgeometry.h"
 class QseAbstractController;
 
 
@@ -28,13 +28,13 @@ public:
     explicit QseAbstractWidget(QWidget *parent = 0);
 
     inline bool isUpdateOnce() const;
-    inline const QseGeometry &geometry() const;
+    inline const QseSppGeometry &geometry() const;
 
     inline const QseAbstractController *controller() const;
     void setController(QseAbstractController *controller);
 public slots:
     void setUpdateOnce(bool need = true);
-    void setGeometry(const QseGeometry& geometry);
+    void setGeometry(const QseSppGeometry& geometry);
 private slots:
     void setCurrentCursor(const QCursor &cursor);
     void controller_destroyed();
@@ -47,7 +47,7 @@ protected:
     void keyReleaseEvent(QKeyEvent *event);
 private:
     QseAbstractController *m_controller;
-    QseGeometry m_geometry;
+    QseSppGeometry m_geometry;
     bool m_updateOnce;
 };
 
@@ -56,7 +56,7 @@ bool QseAbstractWidget::isUpdateOnce() const
     return m_updateOnce;
 }
 
-const QseGeometry &QseAbstractWidget::geometry() const
+const QseSppGeometry &QseAbstractWidget::geometry() const
 {
     return m_geometry;
 }

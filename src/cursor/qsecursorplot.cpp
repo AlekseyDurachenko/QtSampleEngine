@@ -58,7 +58,7 @@ void QseCursorPlot::setPen(const QPen &pen)
 }
 
 
-bool QseCursorPlot::isVisible(const QRect &rect, const QseGeometry &geometry)
+bool QseCursorPlot::isVisible(const QRect &rect, const QseSppGeometry &geometry)
 {
     if (m_cursor == 0)
         return false;
@@ -69,7 +69,7 @@ bool QseCursorPlot::isVisible(const QRect &rect, const QseGeometry &geometry)
     return geometry.isSampleVisible(m_cursor->index(), rect.width());
 }
 
-void QseCursorPlot::draw(QPainter *painter, const QRect &rect, const QseGeometry &geometry)
+void QseCursorPlot::draw(QPainter *painter, const QRect &rect, const QseSppGeometry &geometry)
 {
     if (m_cursor && !m_cursor->isNull() &&
             geometry.isSampleVisible(m_cursor->index(), rect.width()))

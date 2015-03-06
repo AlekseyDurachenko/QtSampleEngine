@@ -34,7 +34,7 @@ int QseLineMetricProvider::maximumTextLenght() const
     return 8;
 }
 
-QList<QseMetricItem> QseLineMetricProvider::create(const QseGeometry &geometry,
+QList<QseMetricItem> QseLineMetricProvider::create(const QseSppGeometry &geometry,
         int size) const
 {
     QList<QseMetricItem> items;

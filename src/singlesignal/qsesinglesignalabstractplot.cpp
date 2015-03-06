@@ -55,8 +55,8 @@ void QseSingleSignalAbstractPlot::setPeakReader(QseSingleSignalAbstractPeakReade
         }
         if (peakReader)
         {
-            connect(peakReader, SIGNAL(peakReaded(int,QseGeometry,QList<float>,QList<float>)),
-                    this, SLOT(slot_peakReaded(int,QseGeometry,QList<float>,QList<float>)));
+            connect(peakReader, SIGNAL(peakReaded(int,QseSppGeometry,QList<float>,QList<float>)),
+                    this, SLOT(slot_peakReaded(int,QseSppGeometry,QList<float>,QList<float>)));
         }
         m_peakReader = peakReader;
         setUpdateOnce(true);
@@ -69,12 +69,12 @@ void QseSingleSignalAbstractPlot::reset()
     setUpdateOnce(true);
 }
 
-bool QseSingleSignalAbstractPlot::hasChanges(const QRect &rect, const QseGeometry &geometry)
+bool QseSingleSignalAbstractPlot::hasChanges(const QRect &rect, const QseSppGeometry &geometry)
 {
     return (m_lastGeometry != geometry || rect != m_lastRect || isUpdateOnce());
 }
 
-void QseSingleSignalAbstractPlot::draw(QPainter *painter, const QRect &rect, const QseGeometry &geometry)
+void QseSingleSignalAbstractPlot::draw(QPainter *painter, const QRect &rect, const QseSppGeometry &geometry)
 {
     if (m_peakReader && (m_lastGeometry != geometry || rect != m_lastRect || m_readNeeded))
     {
@@ -99,7 +99,7 @@ void QseSingleSignalAbstractPlot::draw(QPainter *painter, const QRect &rect, con
     {
         painter->setPen(m_pen);
         painter->setOpacity(m_opacity);
-        QseGeometry gm = geometry;
+        QseSppGeometry gm = geometry;
         gm.setX(m_cacheGeometry.x());
         gm.setSamplePerPixel(m_cacheGeometry.samplePerPixel());
         if (gm.samplePerPixel() < 0)
@@ -120,7 +120,7 @@ void QseSingleSignalAbstractPlot::draw(QPainter *painter, const QRect &rect, con
     QseAbstractPlot::draw(painter, rect, geometry);
 }
 
-void QseSingleSignalAbstractPlot::slot_peakReaded(int id, const QseGeometry &geometry, QList<float> minimums, QList<float> maximums)
+void QseSingleSignalAbstractPlot::slot_peakReaded(int id, const QseSppGeometry &geometry, QList<float> minimums, QList<float> maximums)
 {
     m_id = id;
     m_minimums = minimums;

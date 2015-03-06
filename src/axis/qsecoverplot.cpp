@@ -109,12 +109,12 @@ void QseCoverPlot::reset()
     setUpdateOnce(true);
 }
 
-bool QseCoverPlot::hasChanges(const QRect &rect, const QseGeometry &geometry)
+bool QseCoverPlot::hasChanges(const QRect &rect, const QseSppGeometry &geometry)
 {
     return (isUpdateOnce() || rect != m_lastRect || geometry != m_lastGeometry);
 }
 
-void QseCoverPlot::draw(QPainter *painter, const QRect &rect, const QseGeometry &geometry)
+void QseCoverPlot::draw(QPainter *painter, const QRect &rect, const QseSppGeometry &geometry)
 {
     painter->fillRect(rect, m_backgroundColor);
 

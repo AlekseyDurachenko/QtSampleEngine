@@ -40,17 +40,17 @@ void QseAbstractPlot::reset()
 {
 }
 
-bool QseAbstractPlot::isVisible(const QRect &, const QseGeometry &)
+bool QseAbstractPlot::isVisible(const QRect &, const QseSppGeometry &)
 {
     return true;
 }
 
-bool QseAbstractPlot::hasChanges(const QRect &, const QseGeometry &)
+bool QseAbstractPlot::hasChanges(const QRect &, const QseSppGeometry &)
 {
     return false;
 }
 
-void QseAbstractPlot::draw(QPainter *, const QRect &, const QseGeometry &)
+void QseAbstractPlot::draw(QPainter *, const QRect &, const QseSppGeometry &)
 {
     m_updateOnce = false;
 }

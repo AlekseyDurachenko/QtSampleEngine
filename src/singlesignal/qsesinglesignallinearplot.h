@@ -26,9 +26,9 @@ public:
 
 protected:
     void drawAsLine(QPainter *painter, const QList<float> &points, const QRect &rect,
-            const QseGeometry &geometry, int offset = 0);
+            const QseSppGeometry &geometry, int offset = 0);
     void drawAsPeak(QPainter *painter, const QList<float> &minimums, const QList<float> &maximums,
-            const QRect &rect, const QseGeometry &geometry, int offset = 0);
+            const QRect &rect, const QseSppGeometry &geometry, int offset = 0);
 
 };
 

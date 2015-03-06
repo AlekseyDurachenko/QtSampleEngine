@@ -44,8 +44,8 @@ public:
     void setHorizontalMetricProvider(QseAbstractMetricProvider *hMetricProvider);
 
     void reset();
-    bool hasChanges(const QRect &rect, const QseGeometry &geometry);
-    void draw(QPainter *painter, const QRect &rect, const QseGeometry &geometry);
+    bool hasChanges(const QRect &rect, const QseSppGeometry &geometry);
+    void draw(QPainter *painter, const QRect &rect, const QseSppGeometry &geometry);
 private slots:
     void verticalMetricProviderDestroyed();
     void horizontalMetricProviderDestroyed();
@@ -58,7 +58,7 @@ private:
     QColor m_backgroundColor;
 
     QRect m_lastRect;
-    QseGeometry m_lastGeometry;
+    QseSppGeometry m_lastGeometry;
 };
 
 

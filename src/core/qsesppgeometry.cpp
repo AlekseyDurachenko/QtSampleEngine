@@ -13,29 +13,29 @@
 // You should have received a copy of the GNU Lesser General Public
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
-#include "qsegeometry.h"
+#include "qsesppgeometry.h"
 
 
-QseGeometry::QseGeometry(qint64 x, double y, qint64 samplePerPixel, double height)
+QseSppGeometry::QseSppGeometry(qint64 x, double y, qint64 samplePerPixel, double height)
 {
-    qRegisterMetaType<QseGeometry>("QseGeometry");
+    qRegisterMetaType<QseSppGeometry>("QseSppGeometry");
     setX(x);
     setY(y);
     setSamplePerPixel(samplePerPixel);
     setHeight(height);
 }
 
-void QseGeometry::setX(qint64 x)
+void QseSppGeometry::setX(qint64 x)
 {
     m_x = x;
 }
 
-void QseGeometry::setY(double y)
+void QseSppGeometry::setY(double y)
 {
     m_y = y;
 }
 
-void QseGeometry::setSamplePerPixel(qint64 samplePerPixel)
+void QseSppGeometry::setSamplePerPixel(qint64 samplePerPixel)
 {
     if (samplePerPixel == 1)
         m_samplePerPixel = -1;
@@ -45,17 +45,17 @@ void QseGeometry::setSamplePerPixel(qint64 samplePerPixel)
         m_samplePerPixel = samplePerPixel;
 }
 
-void QseGeometry::setHeight(double height)
+void QseSppGeometry::setHeight(double height)
 {
     m_height = height;
 }
 
-QseGeometry QseGeometry::addX(qint64 x) const
+QseSppGeometry QseSppGeometry::addX(qint64 x) const
 {
-    return QseGeometry(m_x+x, m_y, m_samplePerPixel, m_height);
+    return QseSppGeometry(m_x+x, m_y, m_samplePerPixel, m_height);
 }
 
-double QseGeometry::toAbsoluteSamplePerPixel(double factor) const
+double QseSppGeometry::toAbsoluteSamplePerPixel(double factor) const
 {
     if (m_samplePerPixel > 0)
         return (m_samplePerPixel * factor);
@@ -63,7 +63,7 @@ double QseGeometry::toAbsoluteSamplePerPixel(double factor) const
         return (1.0 / -m_samplePerPixel * factor);
 }
 
-double QseGeometry::toAbsoluteSampleOffset(double factor) const
+double QseSppGeometry::toAbsoluteSampleOffset(double factor) const
 {
     if (m_samplePerPixel > 0)
         return (m_x * factor * m_samplePerPixel);
@@ -71,7 +71,7 @@ double QseGeometry::toAbsoluteSampleOffset(double factor) const
         return (m_x * factor);
 }
 
-bool QseGeometry::isSampleVisible(qint64 sampleIndex, int width) const
+bool QseSppGeometry::isSampleVisible(qint64 sampleIndex, int width) const
 {
     if (m_samplePerPixel > 0)
         return (m_x*m_samplePerPixel <= sampleIndex)
@@ -81,7 +81,7 @@ bool QseGeometry::isSampleVisible(qint64 sampleIndex, int width) const
                 && (sampleIndex < m_x-width/m_samplePerPixel);
 }
 
-int QseGeometry::toWidgetOffset(qint64 sampleIndex) const
+int QseSppGeometry::toWidgetOffset(qint64 sampleIndex) const
 {
     if (m_samplePerPixel > 0)
         return (sampleIndex - m_x*m_samplePerPixel) / m_samplePerPixel;
@@ -89,7 +89,7 @@ int QseGeometry::toWidgetOffset(qint64 sampleIndex) const
         return (sampleIndex - m_x) * qAbs(m_samplePerPixel);
 }
 
-qint64 QseGeometry::toSampleIndex(int widgetOffset) const
+qint64 QseSppGeometry::toSampleIndex(int widgetOffset) const
 {
     if (m_samplePerPixel > 0)
         return (m_x + widgetOffset) * m_samplePerPixel;
@@ -97,7 +97,7 @@ qint64 QseGeometry::toSampleIndex(int widgetOffset) const
         return m_x + qRound(static_cast<qreal>(widgetOffset) / qAbs(m_samplePerPixel));
 }
 
-bool operator == (const QseGeometry &left, const QseGeometry &right)
+bool operator == (const QseSppGeometry &left, const QseSppGeometry &right)
 {
     return left.x() == right.x()
         && left.y() == right.y()
@@ -105,7 +105,7 @@ bool operator == (const QseGeometry &left, const QseGeometry &right)
         && left.height() == right.height();
 }
 
-bool operator != (const QseGeometry &left, const QseGeometry &right)
+bool operator != (const QseSppGeometry &left, const QseSppGeometry &right)
 {
     return left.x() != right.x()
         || left.y() != right.y()
