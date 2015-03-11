@@ -14,49 +14,18 @@
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
 #include "qseabstractwidget.h"
-#include "qseabstractcontroller.h"
 
 
-template<class Geometry>
-QseAbstractWidget<Geometry>::QseAbstractWidget(QWidget *parent)
-    : QWidget(parent)
+QseAbstractWidget::QseAbstractWidget(QWidget *parent, Qt::WindowFlags f) :
+    QWidget(parent, f)
 {
-    m_controller = 0;
     m_updateOnce = true;
-}
-
-template<class Geometry>
-void QseAbstractWidget<Geometry>::setGeometry(const Geometry &geometry)
-{
-    if (m_geometry == geometry)
-        return;
-
-    m_geometry = geometry;
-    setUpdateOnce(true);
-}
-
-template<class Geometry>
-void QseAbstractWidget<Geometry>::setController(QseAbstractController<Geometry> *controller)
-{
-    if (m_controller)
-        disconnect(m_controller, 0, this, 0);
-
-    m_controller = controller;
-    if (m_controller)
-    {
-        connect(m_controller, SIGNAL(cursorChanged(QCursor)),
-                this, SLOT(setCurrentCursor(QCursor)));
-        connect(m_controller, SIGNAL(destroyed()),
-                this, SLOT(controller_destroyed()));
-        setCurrentCursor(m_controller->defaultCursor());
-    }
 }
 
 /*! This method set flag isUpdateOnce() to true,
  *  and call the update() method.
  */
-template<class Geometry>
-void QseAbstractWidget<Geometry>::setUpdateOnce(bool need)
+void QseAbstractWidget::setUpdateOnce(bool need)
 {
     if (m_updateOnce)
         return;
@@ -66,56 +35,7 @@ void QseAbstractWidget<Geometry>::setUpdateOnce(bool need)
         update();
 }
 
-template<class Geometry>
-void QseAbstractWidget<Geometry>::setCurrentCursor(const QCursor &cursor)
+void QseAbstractWidget::setCurrentCursor(const QCursor &cursor)
 {
     setCursor(cursor);
-}
-
-template<class Geometry>
-void QseAbstractWidget<Geometry>::controller_destroyed()
-{
-    m_controller = 0;
-}
-
-template<class Geometry>
-void QseAbstractWidget<Geometry>::mouseMoveEvent(QMouseEvent *event)
-{
-    if (m_controller)
-        m_controller->mouseMoveEvent(event, rect(), geometry());
-}
-
-template<class Geometry>
-void QseAbstractWidget<Geometry>::mousePressEvent(QMouseEvent *event)
-{
-    if (m_controller)
-        m_controller->mousePressEvent(event, rect(), geometry());
-}
-
-template<class Geometry>
-void QseAbstractWidget<Geometry>::mouseReleaseEvent(QMouseEvent *event)
-{
-    if (m_controller)
-        m_controller->mouseReleaseEvent(event, rect(), geometry());
-}
-
-template<class Geometry>
-void QseAbstractWidget<Geometry>::wheelEvent(QWheelEvent *event)
-{
-    if (m_controller)
-        m_controller->wheelEvent(event, rect(), geometry());
-}
-
-template<class Geometry>
-void QseAbstractWidget<Geometry>::keyPressEvent(QKeyEvent *event)
-{
-    if (m_controller)
-        m_controller->keyPressEvent(event, rect(), geometry());
-}
-
-template<class Geometry>
-void QseAbstractWidget<Geometry>::keyReleaseEvent(QKeyEvent *event)
-{
-    if (m_controller)
-        m_controller->keyReleaseEvent(event, rect(), geometry());
 }

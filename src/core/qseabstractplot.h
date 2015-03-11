@@ -17,11 +17,8 @@
 #define QSEABSTRACTPLOT_H
 
 #include <QObject>
-#include <QRect>
-class QPainter;
 
 
-template<class Geometry>
 class QseAbstractPlot : public QObject
 {
     Q_OBJECT
@@ -29,22 +26,16 @@ public:
     explicit QseAbstractPlot(QObject *parent = 0);
 
     inline bool isUpdateOnce() const;
-
-    virtual bool isVisible(const QRect &rect, const Geometry &geometry);
-    virtual bool hasChanges(const QRect &rect, const Geometry &geometry);
-    virtual void draw(QPainter *painter, const QRect &rect,
-                      const Geometry &geometry);
+signals:
+    void changed();
 public slots:
     void setUpdateOnce(bool need = true);
     virtual void reset();
-signals:
-    void changed();
 private:
     bool m_updateOnce;
 };
 
-template<class Geometry>
-bool QseAbstractPlot<Geometry>::isUpdateOnce() const
+bool QseAbstractPlot::isUpdateOnce() const
 {
     return m_updateOnce;
 }

@@ -13,31 +13,26 @@
 // You should have received a copy of the GNU Lesser General Public
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
-#ifndef QSEABSTRACTWIDGET_H
-#define QSEABSTRACTWIDGET_H
+#ifndef QSEABSTRACTSPWPLOT_H
+#define QSEABSTRACTSPWPLOT_H
 
-#include <QWidget>
+#include <QRect>
+#include "qseabstractplot.h"
+#include "qsespwgeometry.h"
+class QPainter;
 
 
-class QseAbstractWidget : public QWidget
+class QseAbstractSpwPlot : public QseAbstractPlot
 {
     Q_OBJECT
 public:
-    explicit QseAbstractWidget(QWidget *parent = 0, Qt::WindowFlags f = 0);
+    explicit QseAbstractSpwPlot(QObject *parent = 0);
 
-    inline bool isUpdateOnce() const;
-public slots:
-    void setUpdateOnce(bool need = true);
-protected slots:
-    void setCurrentCursor(const QCursor &cursor);
-private:
-    bool m_updateOnce;
+    virtual bool isVisible(const QRect &rect, const QseSpwGeometry &geometry);
+    virtual bool hasChanges(const QRect &rect, const QseSpwGeometry &geometry);
+    virtual void draw(QPainter *painter, const QRect &rect,
+                      const QseSpwGeometry &geometry);
 };
 
-bool QseAbstractWidget::isUpdateOnce() const
-{
-    return m_updateOnce;
-}
 
-
-#endif // QSEABSTRACTWIDGET_H
+#endif // QSEABSTRACTSPWPLOT_H

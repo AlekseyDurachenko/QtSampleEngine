@@ -12,9 +12,9 @@
 //
 // You should have received a copy of the GNU Lesser General Public
 // License along with this library; if not, write to the Free Software
-// Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
-#ifndef QSEFUNC_H
-#define QSEFUNC_H
+// Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
+#ifndef QSEHELPER_H
+#define QSEHELPER_H
 
 // ----------------------------------------------------------------------
 namespace Qse {
@@ -32,4 +32,4 @@ void calcIntersection(const double& p11x, const double& p11y,
 } // namespace Qse
 // ----------------------------------------------------------------------
 
-#endif // QSEFUNC_H
+#endif // QSEHELPER_H

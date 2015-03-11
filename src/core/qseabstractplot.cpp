@@ -16,16 +16,13 @@
 #include "qseabstractplot.h"
 
 
-template<class Geometry>
-QseAbstractPlot<Geometry>::QseAbstractPlot(QObject *parent) :
-    QObject(parent)
+QseAbstractPlot::QseAbstractPlot(QObject *parent) : QObject(parent)
 {
 }
 
 /*! This method set flag isUpdateOnce() to true, and emit changed()
  */
-template<class Geometry>
-void QseAbstractPlot<Geometry>::setUpdateOnce(bool need)
+void QseAbstractPlot::setUpdateOnce(bool need)
 {
     if (m_updateOnce)
         return;
@@ -38,25 +35,6 @@ void QseAbstractPlot<Geometry>::setUpdateOnce(bool need)
 /*! This method used for reset the cached values of the plotter,
  *  we should realize it in the children class
  */
-template<class Geometry>
-void QseAbstractPlot<Geometry>::reset()
+void QseAbstractPlot::reset()
 {
-}
-
-template<class Geometry>
-bool QseAbstractPlot<Geometry>::isVisible(const QRect &, const Geometry &)
-{
-    return true;
-}
-
-template<class Geometry>
-bool QseAbstractPlot<Geometry>::hasChanges(const QRect &, const Geometry &)
-{
-    return false;
-}
-
-template<class Geometry>
-void QseAbstractPlot<Geometry>::draw(QPainter *, const QRect &, const Geometry &)
-{
-    m_updateOnce = false;
 }

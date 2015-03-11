@@ -16,52 +16,15 @@
 #include "qseabstractcontroller.h"
 
 
-template<class Geometry>
-QseAbstractController<Geometry>::QseAbstractController(QObject *parent) :
+QseAbstractController::QseAbstractController(QObject *parent) :
     QObject(parent)
 {
 }
 
 /*! The default cursor for the widget, which use this controller
  */
-template<class Geometry>
-QCursor QseAbstractController<Geometry>::defaultCursor() const
+QCursor QseAbstractController::defaultCursor() const
 {
     return QCursor();
 }
 
-template<class Geometry>
-void QseAbstractController<Geometry>::mouseMoveEvent(QMouseEvent *, const QRect &,
-        const Geometry &)
-{
-}
-
-template<class Geometry>
-void QseAbstractController<Geometry>::mousePressEvent(QMouseEvent *, const QRect &,
-        const Geometry &)
-{
-}
-
-template<class Geometry>
-void QseAbstractController<Geometry>::mouseReleaseEvent(QMouseEvent *, const QRect &,
-        const Geometry &)
-{
-}
-
-template<class Geometry>
-void QseAbstractController<Geometry>::wheelEvent(QWheelEvent *, const QRect &,
-        const Geometry &)
-{
-}
-
-template<class Geometry>
-void QseAbstractController<Geometry>::keyPressEvent(QKeyEvent *, const QRect &,
-        const Geometry &)
-{
-}
-
-template<class Geometry>
-void QseAbstractController<Geometry>::keyReleaseEvent(QKeyEvent *, const QRect &,
-        const Geometry &)
-{
-}
