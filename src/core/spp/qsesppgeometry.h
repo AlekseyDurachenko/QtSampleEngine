@@ -41,7 +41,8 @@
 class QseSppGeometry
 {
 public:
-    QseSppGeometry(qint64 x = 0, double y = 0, qint64 samplePerPixel = -1, double height = 2.0);
+    QseSppGeometry(qint64 x = 0, double y = 0, qint64 samplesPerPixel = -1,
+                   double height = 2.0);
 
     inline qint64 x() const;
     void setX(qint64 x);
@@ -49,26 +50,36 @@ public:
     inline double y() const;
     void setY(double y);
 
-    inline qint64 samplePerPixel() const;
-    void setSamplePerPixel(qint64 samplePerPixel);
+    inline qint64 samplesPerPixel() const;
+    void setSamplesPerPixel(qint64 samplesPerPixel);
 
     inline double height() const;
     void setHeight(double height);
 
     QseSppGeometry addX(qint64 x) const;
+    QseSppGeometry addY(double y) const;
+    QseSppGeometry addSamplesPerPixel(qint64 samplesPerPixel) const;
+    QseSppGeometry addHeight(double height) const;
 
+    QseSppGeometry replaceX(qint64 x) const;
+    QseSppGeometry replaceY(double y) const;
+    QseSppGeometry replaceSamplesPerPixel(qint64 samplesPerPixel) const;
+    QseSppGeometry replaceHeight(double height) const;
+
+    friend bool operator ==(const QseSppGeometry &l, const QseSppGeometry &r);
+    friend bool operator !=(const QseSppGeometry &l, const QseSppGeometry &r);
+private:
     double toAbsoluteSamplePerPixel(double factor = 1.0) const;
     double toAbsoluteSampleOffset(double factor = 1.0) const;
 
     bool isSampleVisible(qint64 sampleIndex, int width) const;
     int toWidgetOffset(qint64 sampleIndex) const;
     qint64 toSampleIndex(int widgetOffset) const;
-
-    friend bool operator == (const QseSppGeometry &left, const QseSppGeometry &right);
-    friend bool operator != (const QseSppGeometry &left, const QseSppGeometry &right);
 private:
-    qint64 m_x, m_samplePerPixel;
-    double m_y, m_height;
+    qint64 m_x;
+    double m_y;
+    qint64 m_samplesPerPixel;
+    double m_height;
 };
 Q_DECLARE_METATYPE(QseSppGeometry)
 
@@ -82,9 +93,9 @@ double QseSppGeometry::y() const
     return m_y;
 }
 
-qint64 QseSppGeometry::samplePerPixel() const
+qint64 QseSppGeometry::samplesPerPixel() const
 {
-    return m_samplePerPixel;
+    return m_samplesPerPixel;
 }
 
 double QseSppGeometry::height() const

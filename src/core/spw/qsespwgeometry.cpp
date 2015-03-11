@@ -19,13 +19,12 @@
 QseSpwGeometry::QseSpwGeometry(qint64 x, double y, qint64 samplesPerWindow,
         double height)
 {
+    qRegisterMetaType<QseSpwGeometry>("QseSpwGeometry");
+
     m_x = x;
     m_y = y;
-    if (samplesPerWindow > 0)
-        m_samplesPerWindow = samplesPerWindow;
-    else
-        m_samplesPerWindow = 1;
     m_height = height;
+    setSamplesPerWindow(samplesPerWindow);
 }
 
 void QseSpwGeometry::setX(qint64 x)
@@ -53,43 +52,43 @@ void QseSpwGeometry::setHeight(double height)
 
 QseSpwGeometry QseSpwGeometry::addX(qint64 x) const
 {
-    return replaceX(this->x() + x);
+    return replaceX(m_x + x);
 }
 
 QseSpwGeometry QseSpwGeometry::addY(double y) const
 {
-    return replaceY(this->y() + y);
+    return replaceY(m_y + y);
 }
 
 QseSpwGeometry QseSpwGeometry::addSamplesPerWindow(qint64 samplesPerWindow) const
 {
-    return replaceSamplesPerWindow(this->samplesPerWindow() + samplesPerWindow);
+    return replaceSamplesPerWindow(m_samplesPerWindow + samplesPerWindow);
 }
 
 QseSpwGeometry QseSpwGeometry::addHeight(double height) const
 {
-    return replaceHeight(this->height() + height);
+    return replaceHeight(m_height + height);
 }
 
 QseSpwGeometry QseSpwGeometry::replaceX(qint64 x) const
 {
-    return QseSpwGeometry(x, y(), samplesPerWindow(), height());
+    return QseSpwGeometry(x, m_y, m_samplesPerWindow, m_height);
 }
 
 QseSpwGeometry QseSpwGeometry::replaceY(double y) const
 {
-    return QseSpwGeometry(x(), y, samplesPerWindow(), height());
+    return QseSpwGeometry(m_x, y, m_samplesPerWindow, m_height);
 }
 
 QseSpwGeometry QseSpwGeometry::replaceSamplesPerWindow(
         qint64 samplesPerWindow) const
 {
-    return QseSpwGeometry(x(), y(), samplesPerWindow, height());
+    return QseSpwGeometry(m_x, m_y, samplesPerWindow, m_height);
 }
 
 QseSpwGeometry QseSpwGeometry::replaceHeight(double height) const
 {
-    return QseSpwGeometry(x(), y(), samplesPerWindow(), height);
+    return QseSpwGeometry(m_x, m_y, m_samplesPerWindow, height);
 }
 
 bool operator ==(const QseSpwGeometry &l, const QseSpwGeometry &r)

@@ -19,10 +19,11 @@
 QseSppGeometry::QseSppGeometry(qint64 x, double y, qint64 samplePerPixel, double height)
 {
     qRegisterMetaType<QseSppGeometry>("QseSppGeometry");
-    setX(x);
-    setY(y);
-    setSamplePerPixel(samplePerPixel);
-    setHeight(height);
+
+    m_x = x;
+    m_y = y;
+    m_height = height;
+    setSamplesPerPixel(samplePerPixel);
 }
 
 void QseSppGeometry::setX(qint64 x)
@@ -35,14 +36,14 @@ void QseSppGeometry::setY(double y)
     m_y = y;
 }
 
-void QseSppGeometry::setSamplePerPixel(qint64 samplePerPixel)
+void QseSppGeometry::setSamplesPerPixel(qint64 samplePerPixel)
 {
     if (samplePerPixel == 1)
-        m_samplePerPixel = -1;
+        m_samplesPerPixel = -1;
     else if (samplePerPixel == 0)
-        m_samplePerPixel = 2;
+        m_samplesPerPixel = 2;
     else
-        m_samplePerPixel = samplePerPixel;
+        m_samplesPerPixel = samplePerPixel;
 }
 
 void QseSppGeometry::setHeight(double height)
@@ -52,56 +53,50 @@ void QseSppGeometry::setHeight(double height)
 
 QseSppGeometry QseSppGeometry::addX(qint64 x) const
 {
-    return QseSppGeometry(m_x+x, m_y, m_samplePerPixel, m_height);
+    return replaceX(m_x + x);
 }
 
-double QseSppGeometry::toAbsoluteSamplePerPixel(double factor) const
+QseSppGeometry QseSppGeometry::addY(double y) const
 {
-    if (m_samplePerPixel > 0)
-        return (m_samplePerPixel * factor);
-    else
-        return (1.0 / -m_samplePerPixel * factor);
+    return replaceY(m_y + y);
 }
 
-double QseSppGeometry::toAbsoluteSampleOffset(double factor) const
+QseSppGeometry QseSppGeometry::addSamplesPerPixel(qint64 samplesPerPixel) const
 {
-    if (m_samplePerPixel > 0)
-        return (m_x * factor * m_samplePerPixel);
-    else
-        return (m_x * factor);
+    return replaceSamplesPerPixel(m_samplesPerPixel + samplesPerPixel);
 }
 
-bool QseSppGeometry::isSampleVisible(qint64 sampleIndex, int width) const
+QseSppGeometry QseSppGeometry::addHeight(double height) const
 {
-    if (m_samplePerPixel > 0)
-        return (m_x*m_samplePerPixel <= sampleIndex)
-                && (sampleIndex < (m_x+width)*m_samplePerPixel);
-    else
-        return (m_x <= sampleIndex)
-                && (sampleIndex < m_x-width/m_samplePerPixel);
+    return QseSppGeometry(m_height + height);
 }
 
-int QseSppGeometry::toWidgetOffset(qint64 sampleIndex) const
+QseSppGeometry QseSppGeometry::replaceX(qint64 x) const
 {
-    if (m_samplePerPixel > 0)
-        return (sampleIndex - m_x*m_samplePerPixel) / m_samplePerPixel;
-    else
-        return (sampleIndex - m_x) * qAbs(m_samplePerPixel);
+    return QseSppGeometry(x, m_y, m_samplesPerPixel, m_height);
 }
 
-qint64 QseSppGeometry::toSampleIndex(int widgetOffset) const
+QseSppGeometry QseSppGeometry::replaceY(double y) const
 {
-    if (m_samplePerPixel > 0)
-        return (m_x + widgetOffset) * m_samplePerPixel;
-    else
-        return m_x + qRound(static_cast<qreal>(widgetOffset) / qAbs(m_samplePerPixel));
+    return QseSppGeometry(m_x, y, m_samplesPerPixel, m_height);
+}
+
+QseSppGeometry QseSppGeometry::replaceSamplesPerPixel(
+        qint64 samplesPerPixel) const
+{
+    return QseSppGeometry(m_x, m_y, samplesPerPixel, m_height);
+}
+
+QseSppGeometry QseSppGeometry::replaceHeight(double height) const
+{
+    return QseSppGeometry(m_x, m_y, m_samplesPerPixel, height);
 }
 
 bool operator == (const QseSppGeometry &left, const QseSppGeometry &right)
 {
     return left.x() == right.x()
         && left.y() == right.y()
-        && left.samplePerPixel() == right.samplePerPixel()
+        && left.samplesPerPixel() == right.samplesPerPixel()
         && left.height() == right.height();
 }
 
@@ -109,6 +104,48 @@ bool operator != (const QseSppGeometry &left, const QseSppGeometry &right)
 {
     return left.x() != right.x()
         || left.y() != right.y()
-        || left.samplePerPixel() != right.samplePerPixel()
+        || left.samplesPerPixel() != right.samplesPerPixel()
         || left.height() != right.height();
+}
+
+double QseSppGeometry::toAbsoluteSamplePerPixel(double factor) const
+{
+    if (m_samplesPerPixel > 0)
+        return (m_samplesPerPixel * factor);
+    else
+        return (1.0 / -m_samplesPerPixel * factor);
+}
+
+double QseSppGeometry::toAbsoluteSampleOffset(double factor) const
+{
+    if (m_samplesPerPixel > 0)
+        return (m_x * factor * m_samplesPerPixel);
+    else
+        return (m_x * factor);
+}
+
+bool QseSppGeometry::isSampleVisible(qint64 sampleIndex, int width) const
+{
+    if (m_samplesPerPixel > 0)
+        return (m_x*m_samplesPerPixel <= sampleIndex)
+                && (sampleIndex < (m_x+width)*m_samplesPerPixel);
+    else
+        return (m_x <= sampleIndex)
+                && (sampleIndex < m_x-width/m_samplesPerPixel);
+}
+
+int QseSppGeometry::toWidgetOffset(qint64 sampleIndex) const
+{
+    if (m_samplesPerPixel > 0)
+        return (sampleIndex - m_x*m_samplesPerPixel) / m_samplesPerPixel;
+    else
+        return (sampleIndex - m_x) * qAbs(m_samplesPerPixel);
+}
+
+qint64 QseSppGeometry::toSampleIndex(int widgetOffset) const
+{
+    if (m_samplesPerPixel > 0)
+        return (m_x + widgetOffset) * m_samplesPerPixel;
+    else
+        return m_x + qRound(static_cast<qreal>(widgetOffset) / qAbs(m_samplesPerPixel));
 }
