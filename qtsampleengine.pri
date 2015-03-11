@@ -1,4 +1,17 @@
 HEADERS +=                                                          \
+    $$PWD/src/qse_deprecated.h                                      \
+    $$PWD/src/core/qsehelper.h                                      \
+    $$PWD/src/core/qseabstractcontroller.h                          \
+    $$PWD/src/core/qseabstractplot.h                                \
+    $$PWD/src/core/qseabstractwidget.h                              \
+    $$PWD/src/core/spp/qsesppgeometry.h                             \
+    $$PWD/src/core/spp/qseabstractsppcontroller.h                   \
+    $$PWD/src/core/spp/qseabstractsppplot.h                         \
+    $$PWD/src/core/spp/qseabstractsppwidget.h                       \
+    $$PWD/src/core/spw/qsespwgeometry.h                             \
+    $$PWD/src/core/spw/qseabstractspwcontroller.h                   \
+    $$PWD/src/core/spw/qseabstractspwplot.h                         \
+    $$PWD/src/core/spw/qseabstractspwwidget.h                       \
     #$$PWD/src/axis/qseabsolutemetricprovider.h                      \
     #$$PWD/src/axis/qseverticalcontroller.h                          \
     #$$PWD/src/axis/qseaxiswidget.h                                  \
@@ -17,20 +30,20 @@ HEADERS +=                                                          \
     #$$PWD/src/singlesignal/qsesinglesignalabstractpeakreader.h      \
     #$$PWD/src/singlesignal/qsesinglesignalabstractplot.h            \
     #$$PWD/src/core/qsehelper.h                                      \
-    $$PWD/src/core/spp/qsesppgeometry.h \
-    $$PWD/src/core/spw/qsespwgeometry.h \
-    $$PWD/src/core/spp/qseabstractsppcontroller.h \
-    $$PWD/src/core/spp/qseabstractsppplot.h \
-    $$PWD/src/core/spp/qseabstractsppwidget.h \
-    $$PWD/src/core/qseabstractcontroller.h \
-    $$PWD/src/core/qseabstractplot.h \
-    $$PWD/src/core/qseabstractwidget.h \
-    $$PWD/src/core/qsehelper.h \
-    $$PWD/src/core/spw/qseabstractspwcontroller.h \
-    $$PWD/src/core/spw/qseabstractspwplot.h \
-    $$PWD/src/core/spw/qseabstractspwwidget.h
 
 SOURCES +=                                                          \
+    $$PWD/src/core/qsehelper.cpp                                    \
+    $$PWD/src/core/qseabstractcontroller.cpp                        \
+    $$PWD/src/core/qseabstractplot.cpp                              \
+    $$PWD/src/core/qseabstractwidget.cpp                            \
+    $$PWD/src/core/spp/qsesppgeometry.cpp                           \
+    $$PWD/src/core/spp/qseabstractsppcontroller.cpp                 \
+    $$PWD/src/core/spp/qseabstractsppplot.cpp                       \
+    $$PWD/src/core/spp/qseabstractsppwidget.cpp                     \
+    $$PWD/src/core/spw/qsespwgeometry.cpp                           \
+    $$PWD/src/core/spw/qseabstractspwcontroller.cpp                 \
+    $$PWD/src/core/spw/qseabstractspwplot.cpp                       \
+    $$PWD/src/core/spw/qseabstractspwwidget.cpp                     \
     #$$PWD/src/axis/qseabsolutemetricprovider.cpp                    \
     #$$PWD/src/axis/qseverticalcontroller.cpp                        \
     #$$PWD/src/axis/qseaxiswidget.cpp                                \
@@ -49,33 +62,20 @@ SOURCES +=                                                          \
     #$$PWD/src/singlesignal/qsesinglesignalabstractpeakreader.cpp    \
     #$$PWD/src/singlesignal/qsesinglesignalabstractplot.cpp          \
     #$$PWD/src/core/qsehelper.cpp                                    \
-    $$PWD/src/core/spp/qsesppgeometry.cpp \
-    $$PWD/src/core/spw/qsespwgeometry.cpp \
-    $$PWD/src/core/spp/qseabstractsppcontroller.cpp \
-    $$PWD/src/core/spp/qseabstractsppplot.cpp \
-    $$PWD/src/core/spp/qseabstractsppwidget.cpp \
-    $$PWD/src/core/qseabstractcontroller.cpp \
-    $$PWD/src/core/qseabstractplot.cpp \
-    $$PWD/src/core/qseabstractwidget.cpp \
-    $$PWD/src/core/qsehelper.cpp \
-    $$PWD/src/core/spw/qseabstractspwcontroller.cpp \
-    $$PWD/src/core/spw/qseabstractspwplot.cpp \
-    $$PWD/src/core/spw/qseabstractspwwidget.cpp
 
 OTHER_FILES +=                                                      \
-    $$PWD/README                                                    \
+    $$PWD/README.md                                                 \
     $$PWD/CHANGELOG                                                 \
     $$PWD/AUTHORS                                                   \
     $$PWD/LICENSE                                                   \
-    $$PWD/README.md                                                 \
     $$PWD/S-Docs/DOC_RU.md                                          \
 
 INCLUDEPATH +=                                                      \
     $$PWD/src                                                       \
-    $$PWD/src/axis                                                  \
     $$PWD/src/core                                                  \
     $$PWD/src/core/spp                                              \
     $$PWD/src/core/spw                                              \
+    $$PWD/src/axis                                                  \
     $$PWD/src/cursor                                                \
     $$PWD/src/metric                                                \
     $$PWD/src/selection                                             \

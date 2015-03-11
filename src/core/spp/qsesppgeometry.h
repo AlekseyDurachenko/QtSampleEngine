@@ -66,15 +66,15 @@ public:
     QseSppGeometry replaceSamplesPerPixel(qint64 samplesPerPixel) const;
     QseSppGeometry replaceHeight(double height) const;
 
+    double toRealSamplesPerPixel() const;
+
     friend bool operator ==(const QseSppGeometry &l, const QseSppGeometry &r);
     friend bool operator !=(const QseSppGeometry &l, const QseSppGeometry &r);
 private:
-    double toAbsoluteSamplePerPixel(double factor = 1.0) const;
-    double toAbsoluteSampleOffset(double factor = 1.0) const;
-
-    bool isSampleVisible(qint64 sampleIndex, int width) const;
-    int toWidgetOffset(qint64 sampleIndex) const;
-    qint64 toSampleIndex(int widgetOffset) const;
+    static bool checkSampleIndexVisibility(const QseSppGeometry &geometry,
+                                           qint64 sampleIndex, int width);
+    static int calcOffset(const QseSppGeometry &geometry, qint64 sampleIndex);
+    static qint64 calcSampleIndex(const QseSppGeometry &geometry, int offset);
 private:
     qint64 m_x;
     double m_y;
