@@ -21,11 +21,11 @@ QseCursor::QseCursor(QObject *parent) : QObject(parent)
     m_index = -1;
 }
 
-void QseCursor::setAvailableRange(const QseRange &range)
+void QseCursor::setAvailableRange(const QseRange &availableRange)
 {
-    if (range != m_range)
+    if (availableRange != m_availableRange)
     {
-        m_range = range;
+        m_availableRange = availableRange;
         setIndex(m_index);
     }
 }
@@ -33,12 +33,12 @@ void QseCursor::setAvailableRange(const QseRange &range)
 void QseCursor::setIndex(qint64 index)
 {
     qint64 newIndex = index;
-    if (newIndex < 0 || m_range.isNull())
+    if (m_availableRange.isNull())
         newIndex = -1;
-    else if (newIndex < m_range.first())
-        newIndex = m_range.first();
-    else if (newIndex > m_range.last())
-        newIndex = m_range.last();
+    else if (newIndex < m_availableRange.first())
+        newIndex = m_availableRange.first();
+    else if (newIndex > m_availableRange.last())
+        newIndex = m_availableRange.last();
 
     if (newIndex != m_index)
     {
@@ -47,9 +47,14 @@ void QseCursor::setIndex(qint64 index)
     }
 }
 
+void QseCursor::resetAvailableRange()
+{
+    setAvailableRange(QseRange());
+}
+
 /*! set index to null
  */
-void QseCursor::reset()
+void QseCursor::resetIndex()
 {
     if (m_index != -1)
     {

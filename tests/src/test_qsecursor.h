@@ -13,17 +13,23 @@
 // You should have received a copy of the GNU Lesser General Public
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
+#ifndef TESTQSECURSOR_H
+#define TESTQSECURSOR_H
+
+#include <QObject>
 #include <QtTest>
-#include "test_qserange.h"
-#include "test_qsecursor.h"
 
 
-int main(int argc, char *argv[])
+class TestQseCursor : public QObject
 {
-    if (QTest::qExec(new TestQseRange, argc, argv))
-        return -1;
-    if (QTest::qExec(new TestQseCursor, argc, argv))
-        return -1;
+    Q_OBJECT
+public:
+    explicit TestQseCursor(QObject *parent = 0);
+private slots:
+    void setAvailableRange();
+    void setIndex();
+    void resetIndex();
+};
 
-    return 0;
-}
+
+#endif // TESTQSECURSOR_H

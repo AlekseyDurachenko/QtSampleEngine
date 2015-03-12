@@ -34,10 +34,11 @@ signals:
 public slots:
     void setAvailableRange(const QseRange &range);
     void setIndex(qint64 index);
-    void reset();
+    void resetAvailableRange();
+    void resetIndex();
 private:
     qint64 m_index;
-    QseRange m_range;
+    QseRange m_availableRange;
 };
 
 /*! \retval true if index() is "-1",
@@ -55,7 +56,7 @@ qint64 QseCursor::index() const
 
 const QseRange &QseCursor::availableRange() const
 {
-    return m_range;
+    return m_availableRange;
 }
 
 
