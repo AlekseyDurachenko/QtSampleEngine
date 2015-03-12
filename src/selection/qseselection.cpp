@@ -33,15 +33,20 @@ void QseSelection::setSelectedRange(const QseRange &selectedRange)
 {
     QseRange newSelectedRange = selectedRange;
     if (newSelectedRange.isNull() || m_availableRange.isNull())
+    {
         newSelectedRange.reset();
-    else if (newSelectedRange.first() < m_availableRange.first())
-        newSelectedRange.setFirst(m_availableRange.first());
-    else if (newSelectedRange.last() > m_availableRange.last())
-        newSelectedRange.setLast(m_availableRange.last());
+    }
+    else
+    {
+        if (newSelectedRange.first() < m_availableRange.first())
+            newSelectedRange.setFirst(m_availableRange.first());
+        if (newSelectedRange.last() > m_availableRange.last())
+            newSelectedRange.setLast(m_availableRange.last());
+    }
 
     if (newSelectedRange != m_selectedRange)
     {
-        m_selectedRange = selectedRange;
+        m_selectedRange = newSelectedRange;
         emit changed();
     }
 }

@@ -49,5 +49,15 @@ bool QseSelection::isNull() const
     return m_selectedRange.isNull() || (m_selectedRange.count() == 0);
 }
 
+const QseRange &QseSelection::availableRange() const
+{
+    return m_availableRange;
+}
+
+const QseRange &QseSelection::selectedRange() const
+{
+    return m_selectedRange;
+}
+
 
 #endif // QSESELECTION_H

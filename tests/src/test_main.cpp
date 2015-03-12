@@ -16,6 +16,7 @@
 #include <QtTest>
 #include "test_qserange.h"
 #include "test_qsecursor.h"
+#include "test_qseselection.h"
 
 
 int main(int argc, char *argv[])
@@ -23,6 +24,8 @@ int main(int argc, char *argv[])
     if (QTest::qExec(new TestQseRange, argc, argv))
         return -1;
     if (QTest::qExec(new TestQseCursor, argc, argv))
+        return -1;
+    if (QTest::qExec(new TestQseSelection, argc, argv))
         return -1;
 
     return 0;

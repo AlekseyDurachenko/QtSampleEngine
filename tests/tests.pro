@@ -4,14 +4,16 @@ QT += testlib
 
 include(../qtsampleengine.pri)
 
-INCLUDEPATH +=                              \
-    src                                     \
+HEADERS +=                                  \
+    $$PWD/src/test_qserange.h               \
+    $$PWD/src/test_qsecursor.h              \
+    $$PWD/src/test_qseselection.h           \
 
 SOURCES +=                                  \
-    src/test_main.cpp                       \
-    src/test_qserange.cpp                   \
-    src/test_qsecursor.cpp                  \
+    $$PWD/src/test_main.cpp                 \
+    $$PWD/src/test_qserange.cpp             \
+    $$PWD/src/test_qsecursor.cpp            \
+    $$PWD/src/test_qseselection.cpp         \
 
-HEADERS +=                                  \
-    src/test_qserange.h                     \
-    src/test_qsecursor.h                    \
+INCLUDEPATH +=                              \
+    $$PWD/src                               \

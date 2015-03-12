@@ -31,35 +31,29 @@ void TestQseCursor::setAvailableRange()
     QVERIFY(cursor->availableRange() == QseRange(10, 20));
 
     cursor->setAvailableRange(QseRange());
-    QVERIFY(cursor->availableRange() == QseRange());
+    QVERIFY(cursor->availableRange().isNull());
 }
 
 void TestQseCursor::setIndex()
 {
     QSharedPointer<QseCursor> cursor = QSharedPointer<QseCursor>(new QseCursor);
-    cursor->setAvailableRange(QseRange(0, 20));
 
+    cursor->setAvailableRange(QseRange(0, 20));
     cursor->setIndex(0);
     QVERIFY(cursor->index() == 0);
-
     cursor->setIndex(10);
     QVERIFY(cursor->index() == 10);
-
     cursor->setIndex(20);
     QVERIFY(cursor->index() == 20);
-
     cursor->setIndex(-5);
     QVERIFY(cursor->index() == 0);
-
     cursor->setIndex(25);
     QVERIFY(cursor->index() == 20);
 
     cursor->resetAvailableRange();
     QVERIFY(cursor->isNull() == true);
-
     cursor->setIndex(5);
     QVERIFY(cursor->isNull() == true);
-
     cursor->setIndex(-5);
     QVERIFY(cursor->isNull() == true);
 }
@@ -67,8 +61,19 @@ void TestQseCursor::setIndex()
 void TestQseCursor::resetIndex()
 {
     QSharedPointer<QseCursor> cursor = QSharedPointer<QseCursor>(new QseCursor);
+
     cursor->setAvailableRange(QseRange(0, 20));
     cursor->setIndex(10);
     cursor->resetIndex();
     QVERIFY(cursor->isNull() == true);
+}
+
+void TestQseCursor::resetAvailableRange()
+{
+    QSharedPointer<QseCursor> cursor = QSharedPointer<QseCursor>(new QseCursor);
+
+    cursor->setAvailableRange(QseRange(0, 20));
+    cursor->setIndex(10);
+    cursor->resetAvailableRange();
+    QVERIFY(cursor->isNull() == true && cursor->availableRange().isNull());
 }
