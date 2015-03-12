@@ -1,18 +1,18 @@
 HEADERS +=                                                          \
     $$PWD/src/qse_deprecated.h                                      \
+    $$PWD/src/datatype/qserange.h                                   \
+    $$PWD/src/datatype/qsesppgeometry.h                             \
+    $$PWD/src/datatype/qsespwgeometry.h                             \
     $$PWD/src/core/qsehelper.h                                      \
     $$PWD/src/core/qseabstractcontroller.h                          \
     $$PWD/src/core/qseabstractplot.h                                \
     $$PWD/src/core/qseabstractwidget.h                              \
-    $$PWD/src/core/spp/qsesppgeometry.h                             \
     $$PWD/src/core/spp/qseabstractsppcontroller.h                   \
     $$PWD/src/core/spp/qseabstractsppplot.h                         \
     $$PWD/src/core/spp/qseabstractsppwidget.h                       \
-    $$PWD/src/core/spw/qsespwgeometry.h                             \
     $$PWD/src/core/spw/qseabstractspwcontroller.h                   \
     $$PWD/src/core/spw/qseabstractspwplot.h                         \
     $$PWD/src/core/spw/qseabstractspwwidget.h                       \
-    $$PWD/src/range/qserange.h                                      \
     $$PWD/src/cursor/qsecursor.h                                    \
     $$PWD/src/selection/qseselection.h                              \
     #$$PWD/src/axis/qseabsolutemetricprovider.h                      \
@@ -33,19 +33,19 @@ HEADERS +=                                                          \
     #$$PWD/src/core/qsehelper.h                                      \
 
 SOURCES +=                                                          \
+    $$PWD/src/datatype/qserange.h                                   \
+    $$PWD/src/datatype/qsesppgeometry.h                             \
+    $$PWD/src/datatype/qsespwgeometry.h                             \
     $$PWD/src/core/qsehelper.cpp                                    \
     $$PWD/src/core/qseabstractcontroller.cpp                        \
     $$PWD/src/core/qseabstractplot.cpp                              \
     $$PWD/src/core/qseabstractwidget.cpp                            \
-    $$PWD/src/core/spp/qsesppgeometry.cpp                           \
     $$PWD/src/core/spp/qseabstractsppcontroller.cpp                 \
     $$PWD/src/core/spp/qseabstractsppplot.cpp                       \
     $$PWD/src/core/spp/qseabstractsppwidget.cpp                     \
-    $$PWD/src/core/spw/qsespwgeometry.cpp                           \
     $$PWD/src/core/spw/qseabstractspwcontroller.cpp                 \
     $$PWD/src/core/spw/qseabstractspwplot.cpp                       \
     $$PWD/src/core/spw/qseabstractspwwidget.cpp                     \
-    $$PWD/src/range/qserange.cpp                                    \
     $$PWD/src/cursor/qsecursor.cpp                                  \
     $$PWD/src/selection/qseselection.cpp                            \
     #$$PWD/src/axis/qseabsolutemetricprovider.cpp                    \
@@ -74,10 +74,10 @@ OTHER_FILES +=                                                      \
 
 INCLUDEPATH +=                                                      \
     $$PWD/src                                                       \
+    $$PWD/src/datatype                                              \
     $$PWD/src/core                                                  \
     $$PWD/src/core/spp                                              \
     $$PWD/src/core/spw                                              \
-    $$PWD/src/range                                                 \
     $$PWD/src/axis                                                  \
     $$PWD/src/cursor                                                \
     $$PWD/src/metric                                                \
