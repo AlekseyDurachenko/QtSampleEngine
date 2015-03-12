@@ -1,4 +1,4 @@
-// Copyright 2013, Durachenko Aleksey V. <durachenko.aleksey@gmail.com>
+// Copyright 2013-2015, Durachenko Aleksey V. <durachenko.aleksey@gmail.com>
 //
 // This library is free software; you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public
@@ -12,11 +12,13 @@
 //
 // You should have received a copy of the GNU Lesser General Public
 // License along with this library; if not, write to the Free Software
-// Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+// Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
 #ifndef QSECURSOR_H
 #define QSECURSOR_H
 
 #include <QObject>
+#include "qserange.h"
+
 
 class QseCursor : public QObject
 {
@@ -24,25 +26,23 @@ class QseCursor : public QObject
 public:
     explicit QseCursor(QObject *parent = 0);
 
-    /*! \retval true if index() is "-1",
-     *  \retval false oterwise
-     */
     inline bool isNull() const;
     inline qint64 index() const;
-    inline qint64 maximum() const;
+    inline const QseRange &availableRange() const;
 signals:
     void changed();
 public slots:
-    void setMaximum(qint64 maximum);
+    void setAvailableRange(const QseRange &range);
     void setIndex(qint64 index);
-    /*! This method is equal to setIndex(-1)
-     */
     void reset();
 private:
-    qint64 m_index, m_maximum;
+    qint64 m_index;
+    QseRange m_range;
 };
 
-
+/*! \retval true if index() is "-1",
+ *  \retval false oterwise
+ */
 bool QseCursor::isNull() const
 {
     return (m_index < 0);
@@ -53,9 +53,9 @@ qint64 QseCursor::index() const
     return m_index;
 }
 
-qint64 QseCursor::maximum() const
+const QseRange &QseCursor::availableRange() const
 {
-    return m_maximum;
+    return m_range;
 }
 
 

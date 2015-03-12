@@ -12,6 +12,8 @@ HEADERS +=                                                          \
     $$PWD/src/core/spw/qseabstractspwcontroller.h                   \
     $$PWD/src/core/spw/qseabstractspwplot.h                         \
     $$PWD/src/core/spw/qseabstractspwwidget.h                       \
+    $$PWD/src/cursor/qsecursor.h                                    \
+    $$PWD/src/selection/qseselection.h                              \
     #$$PWD/src/axis/qseabsolutemetricprovider.h                      \
     #$$PWD/src/axis/qseverticalcontroller.h                          \
     #$$PWD/src/axis/qseaxiswidget.h                                  \
@@ -20,16 +22,15 @@ HEADERS +=                                                          \
     #$$PWD/src/axis/qsetimemetricprovider.h                          \
     #$$PWD/src/axis/qselinemetricprovider.h                          \
     #$$PWD/src/cursor/qsecursorplot.h                                \
-    #$$PWD/src/cursor/qsecursor.h                                    \
     #$$PWD/src/metric/qseabstractmetricprovider.h                    \
     #$$PWD/src/metric/qsemetricitem.h                                \
     #$$PWD/src/metric/qsemetricmapper.h                              \
     #$$PWD/src/selection/qseselectionplot.h                          \
-    #$$PWD/src/selection/qseselection.h                              \
     #$$PWD/src/singlesignal/qsesinglesignallinearplot.h              \
     #$$PWD/src/singlesignal/qsesinglesignalabstractpeakreader.h      \
     #$$PWD/src/singlesignal/qsesinglesignalabstractplot.h            \
     #$$PWD/src/core/qsehelper.h                                      \
+    $$PWD/src/core/qserange.h
 
 SOURCES +=                                                          \
     $$PWD/src/core/qsehelper.cpp                                    \
@@ -44,6 +45,8 @@ SOURCES +=                                                          \
     $$PWD/src/core/spw/qseabstractspwcontroller.cpp                 \
     $$PWD/src/core/spw/qseabstractspwplot.cpp                       \
     $$PWD/src/core/spw/qseabstractspwwidget.cpp                     \
+    $$PWD/src/cursor/qsecursor.cpp                                  \
+    $$PWD/src/selection/qseselection.cpp                            \
     #$$PWD/src/axis/qseabsolutemetricprovider.cpp                    \
     #$$PWD/src/axis/qseverticalcontroller.cpp                        \
     #$$PWD/src/axis/qseaxiswidget.cpp                                \
@@ -52,16 +55,15 @@ SOURCES +=                                                          \
     #$$PWD/src/axis/qsetimemetricprovider.cpp                        \
     #$$PWD/src/axis/qselinemetricprovider.cpp                        \
     #$$PWD/src/cursor/qsecursorplot.cpp                              \
-    #$$PWD/src/cursor/qsecursor.cpp                                  \
     #$$PWD/src/metric/qseabstractmetricprovider.cpp                  \
     #$$PWD/src/metric/qsemetricitem.cpp                              \
     #$$PWD/src/metric/qsemetricmapper.cpp                            \
     #$$PWD/src/selection/qseselectionplot.cpp                        \
-    #$$PWD/src/selection/qseselection.cpp                            \
     #$$PWD/src/singlesignal/qsesinglesignallinearplot.cpp            \
     #$$PWD/src/singlesignal/qsesinglesignalabstractpeakreader.cpp    \
     #$$PWD/src/singlesignal/qsesinglesignalabstractplot.cpp          \
     #$$PWD/src/core/qsehelper.cpp                                    \
+    $$PWD/src/core/qserange.cpp
 
 OTHER_FILES +=                                                      \
     $$PWD/README.md                                                 \

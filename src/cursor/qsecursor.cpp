@@ -1,4 +1,4 @@
-// Copyright 2013, Durachenko Aleksey V. <durachenko.aleksey@gmail.com>
+// Copyright 2013-2015, Durachenko Aleksey V. <durachenko.aleksey@gmail.com>
 //
 // This library is free software; you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public
@@ -12,36 +12,48 @@
 //
 // You should have received a copy of the GNU Lesser General Public
 // License along with this library; if not, write to the Free Software
-// Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+// Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
 #include "qsecursor.h"
 
-QseCursor::QseCursor(QObject *parent) :
-    QObject(parent)
+
+QseCursor::QseCursor(QObject *parent) : QObject(parent)
 {
-    m_maximum = m_index = -1;
+    m_index = -1;
+}
+
+void QseCursor::setAvailableRange(const QseRange &range)
+{
+    if (range != m_range)
+    {
+        m_range = range;
+        setIndex(m_index);
+    }
 }
 
 void QseCursor::setIndex(qint64 index)
 {
-    if (index < -1)
-        index = -1;
-    else if (index > m_maximum)
-        index = m_maximum;
+    qint64 newIndex = index;
+    if (newIndex < 0 || m_range.isNull())
+        newIndex = -1;
+    else if (newIndex < m_range.first())
+        newIndex = m_range.first();
+    else if (newIndex > m_range.last())
+        newIndex = m_range.last();
 
-    if (m_index != index)
+    if (newIndex != m_index)
     {
-        m_index = index;
+        m_index = newIndex;
         emit changed();
     }
 }
 
+/*! set index to null
+ */
 void QseCursor::reset()
 {
-    setIndex(-1);
-}
-
-void QseCursor::setMaximum(qint64 maximum)
-{
-    m_maximum = maximum;
-    setIndex(m_index);
+    if (m_index != -1)
+    {
+        m_index = -1;
+        emit changed();
+    }
 }

@@ -16,7 +16,8 @@
 #include "qsesppgeometry.h"
 
 
-QseSppGeometry::QseSppGeometry(qint64 x, double y, qint64 samplePerPixel, double height)
+QseSppGeometry::QseSppGeometry(qint64 x, double y, qint64 samplePerPixel,
+        double height)
 {
     qRegisterMetaType<QseSppGeometry>("QseSppGeometry");
 

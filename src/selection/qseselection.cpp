@@ -1,4 +1,4 @@
-// Copyright 2013, Durachenko Aleksey V. <durachenko.aleksey@gmail.com>
+// Copyright 2013-2015, Durachenko Aleksey V. <durachenko.aleksey@gmail.com>
 //
 // This library is free software; you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public
@@ -12,45 +12,46 @@
 //
 // You should have received a copy of the GNU Lesser General Public
 // License along with this library; if not, write to the Free Software
-// Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+// Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
 #include "qseselection.h"
 
-QseSelection::QseSelection(QObject *parent) :
-    QObject(parent)
+
+QseSelection::QseSelection(QObject *parent) : QObject(parent)
 {
-    m_maximum = m_left = m_right = -1;
 }
 
-void QseSelection::setMaximum(qint64 maximum)
+void QseSelection::setAvailableRange(const QseRange &availableRange)
 {
-    m_maximum = maximum;
-    setSelection(m_left, m_right);
-}
-
-void QseSelection::setSelection(qint64 left, qint64 right)
-{
-    if (left < -1)
-        left = -1;
-    else if (left > m_maximum)
-        left = m_maximum;
-
-    if (right < -1)
-        right = -1;
-    else if (right > m_maximum)
-        right = m_maximum;
-
-    if (left > right)
-        qSwap(left, right);
-
-    if (m_left != left || m_right != right)
+    if (availableRange != m_availableRange)
     {
-        m_left = left;
-        m_right = right;
+        m_availableRange = availableRange;
+        setSelectedRange(m_selectedRange);
+    }
+}
+
+void QseSelection::setSelectedRange(const QseRange &selectedRange)
+{
+    QseRange newSelectedRange = selectedRange;
+    if (newSelectedRange.isNull() || m_availableRange.isNull())
+        newSelectedRange.reset();
+    else if (newSelectedRange.first() < m_availableRange.first())
+        newSelectedRange.setFirst(m_availableRange.first());
+    else if (newSelectedRange.last() > m_availableRange.last())
+        newSelectedRange.setLast(m_availableRange.last());
+
+    if (newSelectedRange != m_selectedRange)
+    {
+        m_selectedRange = selectedRange;
         emit changed();
     }
 }
 
-void QseSelection::reset()
+void QseSelection::resetAvailableRange()
 {
-    setSelection(-1, -1);
+    setAvailableRange(QseRange());
+}
+
+void QseSelection::resetSelectedRange()
+{
+    setSelectedRange(QseRange());
 }
