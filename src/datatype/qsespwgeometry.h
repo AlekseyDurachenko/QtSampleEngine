@@ -47,9 +47,6 @@ public:
     QseSpwGeometry replaceY(double y) const;
     QseSpwGeometry replaceSamplesPerWindow(qint64 samplePerWindow) const;
     QseSpwGeometry replaceHeight(double height) const;
-
-    friend bool operator ==(const QseSpwGeometry &l, const QseSpwGeometry &r);
-    friend bool operator !=(const QseSpwGeometry &l, const QseSpwGeometry &r);
 private:
     qint64 m_x;
     double m_y;
@@ -57,6 +54,9 @@ private:
     double m_height;
 };
 Q_DECLARE_METATYPE(QseSpwGeometry)
+
+bool operator ==(const QseSpwGeometry &l, const QseSpwGeometry &r);
+bool operator !=(const QseSpwGeometry &l, const QseSpwGeometry &r);
 
 qint64 QseSpwGeometry::x() const
 {

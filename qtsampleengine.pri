@@ -33,9 +33,9 @@ HEADERS +=                                                          \
     #$$PWD/src/core/qsehelper.h                                      \
 
 SOURCES +=                                                          \
-    $$PWD/src/datatype/qserange.h                                   \
-    $$PWD/src/datatype/qsesppgeometry.h                             \
-    $$PWD/src/datatype/qsespwgeometry.h                             \
+    $$PWD/src/datatype/qserange.cpp                                 \
+    $$PWD/src/datatype/qsesppgeometry.cpp                           \
+    $$PWD/src/datatype/qsespwgeometry.cpp                           \
     $$PWD/src/core/qsehelper.cpp                                    \
     $$PWD/src/core/qseabstractcontroller.cpp                        \
     $$PWD/src/core/qseabstractplot.cpp                              \

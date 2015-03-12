@@ -67,10 +67,7 @@ public:
     QseSppGeometry replaceHeight(double height) const;
 
     double toRealSamplesPerPixel() const;
-
-    friend bool operator ==(const QseSppGeometry &l, const QseSppGeometry &r);
-    friend bool operator !=(const QseSppGeometry &l, const QseSppGeometry &r);
-private:
+public:
     static bool checkSampleIndexVisibility(const QseSppGeometry &geometry,
                                            qint64 sampleIndex, int width);
     static int calcOffset(const QseSppGeometry &geometry, qint64 sampleIndex);
@@ -82,6 +79,9 @@ private:
     double m_height;
 };
 Q_DECLARE_METATYPE(QseSppGeometry)
+
+bool operator ==(const QseSppGeometry &l, const QseSppGeometry &r);
+bool operator !=(const QseSppGeometry &l, const QseSppGeometry &r);
 
 qint64 QseSppGeometry::x() const
 {

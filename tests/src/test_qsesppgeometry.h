@@ -13,23 +13,39 @@
 // You should have received a copy of the GNU Lesser General Public
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
+#ifndef TESTQSESPPGEOMETRY_H
+#define TESTQSESPPGEOMETRY_H
+
+#include <QObject>
 #include <QtTest>
-#include "test_qserange.h"
-#include "test_qsecursor.h"
-#include "test_qseselection.h"
-#include "test_qsesppgeometry.h"
 
 
-int main(int argc, char *argv[])
+class TestQseSppGeometry : public QObject
 {
-    if (QTest::qExec(new TestQseRange, argc, argv))
-        return -1;
-    if (QTest::qExec(new TestQseCursor, argc, argv))
-        return -1;
-    if (QTest::qExec(new TestQseSelection, argc, argv))
-        return -1;
-    if (QTest::qExec(new TestQseSppGeometry, argc, argv))
-        return -1;
+    Q_OBJECT
+public:
+    explicit TestQseSppGeometry(QObject *parent = 0);
+private slots:
+    void constructor();
+    void setX();
+    void setY();
+    void setSamplesPerPixel();
+    void setHeight();
+    void addX();
+    void addY();
+    void addSamplesPerPixel();
+    void addHeight();
+    void replaceX();
+    void replaceY();
+    void replaceSamplePerPixel();
+    void replaceHeight();
+    void toRealSamplesPerPixel();
+    void operator_eq();
+    void operator_neq();
+    void checkSampleIndexVisibility();
+    void calcOffset();
+    void calcSampleIndex();
+};
 
-    return 0;
-}
+
+#endif // TESTQSESPPGEOMETRY_H

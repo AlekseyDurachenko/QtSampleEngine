@@ -38,14 +38,14 @@ public:
 
     QseRange replaceFirst(qint64 first);
     QseRange replaceLast(qint64 last);
-
-    friend bool operator ==(const QseRange &l, const QseRange &r);
-    friend bool operator !=(const QseRange &l, const QseRange &r);
 private:
     qint64 m_first;
     qint64 m_last;
 };
 Q_DECLARE_METATYPE(QseRange)
+
+bool operator ==(const QseRange &l, const QseRange &r);
+bool operator !=(const QseRange &l, const QseRange &r);
 
 bool QseRange::isNull() const
 {
