@@ -12,6 +12,7 @@ HEADERS +=                                                          \
     $$PWD/src/core/spw/qseabstractspwcontroller.h                   \
     $$PWD/src/core/spw/qseabstractspwplot.h                         \
     $$PWD/src/core/spw/qseabstractspwwidget.h                       \
+    $$PWD/src/range/qserange.h                                      \
     $$PWD/src/cursor/qsecursor.h                                    \
     $$PWD/src/selection/qseselection.h                              \
     #$$PWD/src/axis/qseabsolutemetricprovider.h                      \
@@ -30,7 +31,6 @@ HEADERS +=                                                          \
     #$$PWD/src/singlesignal/qsesinglesignalabstractpeakreader.h      \
     #$$PWD/src/singlesignal/qsesinglesignalabstractplot.h            \
     #$$PWD/src/core/qsehelper.h                                      \
-    $$PWD/src/core/qserange.h
 
 SOURCES +=                                                          \
     $$PWD/src/core/qsehelper.cpp                                    \
@@ -45,6 +45,7 @@ SOURCES +=                                                          \
     $$PWD/src/core/spw/qseabstractspwcontroller.cpp                 \
     $$PWD/src/core/spw/qseabstractspwplot.cpp                       \
     $$PWD/src/core/spw/qseabstractspwwidget.cpp                     \
+    $$PWD/src/range/qserange.cpp                                    \
     $$PWD/src/cursor/qsecursor.cpp                                  \
     $$PWD/src/selection/qseselection.cpp                            \
     #$$PWD/src/axis/qseabsolutemetricprovider.cpp                    \
@@ -63,7 +64,6 @@ SOURCES +=                                                          \
     #$$PWD/src/singlesignal/qsesinglesignalabstractpeakreader.cpp    \
     #$$PWD/src/singlesignal/qsesinglesignalabstractplot.cpp          \
     #$$PWD/src/core/qsehelper.cpp                                    \
-    $$PWD/src/core/qserange.cpp
 
 OTHER_FILES +=                                                      \
     $$PWD/README.md                                                 \
@@ -77,6 +77,7 @@ INCLUDEPATH +=                                                      \
     $$PWD/src/core                                                  \
     $$PWD/src/core/spp                                              \
     $$PWD/src/core/spw                                              \
+    $$PWD/src/range                                                 \
     $$PWD/src/axis                                                  \
     $$PWD/src/cursor                                                \
     $$PWD/src/metric                                                \
