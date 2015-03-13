@@ -23,6 +23,10 @@
 class QseCursor : public QObject
 {
     Q_OBJECT
+    Q_PROPERTY(qint64 index READ index WRITE setIndex
+               RESET resetIndex NOTIFY indexChanged)
+    Q_PROPERTY(QseRange availableRange READ availableRange
+               WRITE setAvailableRange RESET resetAvailableRange)
 public:
     explicit QseCursor(QObject *parent = 0);
 
@@ -30,7 +34,7 @@ public:
     inline qint64 index() const;
     inline const QseRange &availableRange() const;
 signals:
-    void changed();
+    void indexChanged();
 public slots:
     void setAvailableRange(const QseRange &range);
     void setIndex(qint64 index);

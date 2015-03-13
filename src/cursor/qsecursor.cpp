@@ -43,7 +43,7 @@ void QseCursor::setIndex(qint64 index)
     if (newIndex != m_index)
     {
         m_index = newIndex;
-        emit changed();
+        emit indexChanged();
     }
 }
 
@@ -59,6 +59,6 @@ void QseCursor::resetIndex()
     if (m_index != -1)
     {
         m_index = -1;
-        emit changed();
+        emit indexChanged();
     }
 }

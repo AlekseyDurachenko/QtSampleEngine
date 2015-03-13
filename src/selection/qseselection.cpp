@@ -47,7 +47,7 @@ void QseSelection::setSelectedRange(const QseRange &selectedRange)
     if (newSelectedRange != m_selectedRange)
     {
         m_selectedRange = newSelectedRange;
-        emit changed();
+        emit selectionChanged();
     }
 }
 
