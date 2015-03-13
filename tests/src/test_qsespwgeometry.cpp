@@ -59,13 +59,11 @@ void TestQseSpwGeometry::setSamplesPerWindow()
             && g.y()                == 1.0
             && g.samplesPerWindow() == 1
             && g.height()           == 1.0);
-
     g.setSamplesPerWindow(-10);
     QVERIFY(g.x()                   == 1
             && g.y()                == 1.0
             && g.samplesPerWindow() == 1
             && g.height()           == 1.0);
-
     g.setSamplesPerWindow(2);
     QVERIFY(g.x()                   == 1
             && g.y()                == 1.0
