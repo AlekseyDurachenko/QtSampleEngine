@@ -46,6 +46,7 @@ Q_DECLARE_METATYPE(QseRange)
 
 bool operator ==(const QseRange &l, const QseRange &r);
 bool operator !=(const QseRange &l, const QseRange &r);
+QDebug operator<<(QDebug dbg, const QseRange &range);
 
 bool QseRange::isNull() const
 {
