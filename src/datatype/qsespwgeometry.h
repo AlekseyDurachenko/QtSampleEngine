@@ -57,6 +57,7 @@ Q_DECLARE_METATYPE(QseSpwGeometry)
 
 bool operator ==(const QseSpwGeometry &l, const QseSpwGeometry &r);
 bool operator !=(const QseSpwGeometry &l, const QseSpwGeometry &r);
+QDebug operator<<(QDebug dbg, const QseSpwGeometry &geometry);
 
 qint64 QseSpwGeometry::x() const
 {

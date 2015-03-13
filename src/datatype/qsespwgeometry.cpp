@@ -14,6 +14,7 @@
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
 #include "qsespwgeometry.h"
+#include <QDebug>
 
 
 QseSpwGeometry::QseSpwGeometry(qint64 x, double y, qint64 samplesPerWindow,
@@ -105,4 +106,16 @@ bool operator !=(const QseSpwGeometry &l, const QseSpwGeometry &r)
             || l.y() != r.y()
             || l.samplesPerWindow() != r.samplesPerWindow()
             || l.height() != r.height());
+}
+
+
+QDebug operator<<(QDebug dbg, const QseSpwGeometry &geometry)
+{
+    dbg.nospace() << "{";
+    dbg.nospace() << "X: " << geometry.x() << ", ";
+    dbg.nospace() << "Y: " << geometry.y() << ", ";
+    dbg.nospace() << "SamplePerWindow: " << geometry.samplesPerWindow() << ", ";
+    dbg.nospace() << "Height: " << geometry.height();
+    dbg.nospace() << "}";
+    return dbg.space();
 }

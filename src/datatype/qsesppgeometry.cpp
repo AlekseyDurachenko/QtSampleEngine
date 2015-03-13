@@ -14,6 +14,7 @@
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
 #include "qsesppgeometry.h"
+#include <QDebug>
 
 
 QseSppGeometry::QseSppGeometry(qint64 x, double y, qint64 samplePerPixel,
@@ -151,4 +152,16 @@ qint64 QseSppGeometry::calcSampleIndex(const QseSppGeometry &geometry,
         return x + (offset * spp);
     else
         return x + qRound(static_cast<double>(offset) / (-spp));
+}
+
+
+QDebug operator<<(QDebug dbg, const QseSppGeometry &geometry)
+{
+    dbg.nospace() << "{";
+    dbg.nospace() << "X: " << geometry.x() << ", ";
+    dbg.nospace() << "Y: " << geometry.y() << ", ";
+    dbg.nospace() << "SamplePerPixel: " << geometry.samplesPerPixel() << ", ";
+    dbg.nospace() << "Height: " << geometry.height();
+    dbg.nospace() << "}";
+    return dbg.space();
 }
