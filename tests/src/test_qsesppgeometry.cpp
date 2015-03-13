@@ -89,7 +89,8 @@ void TestQseSppGeometry::setSamplesPerPixel()
     QVERIFY(g.x()                   == 1
             && g.y()                == 1.0
             && g.samplesPerPixel()  == 10
-            && g.height()           == 1.0);}
+            && g.height()           == 1.0);
+}
 
 void TestQseSppGeometry::setHeight()
 {
