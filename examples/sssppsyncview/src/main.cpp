@@ -1,4 +1,4 @@
-// Copyright 2015, Durachenko Aleksey V. <durachenko.aleksey@gmail.com>
+// Copyright (C) 2015, Durachenko Aleksey V. <durachenko.aleksey@gmail.com>
 //
 // This library is free software; you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public
@@ -13,21 +13,11 @@
 // You should have received a copy of the GNU Lesser General Public
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
-#ifndef QSEABSTRACTSPPSYNCDATASOURCE_H
-#define QSEABSTRACTSPPSYNCDATASOURCE_H
+#include <QApplication>
 
-#include "qseabstractdatasource.h"
-#include "qsesppgeometry.h"
-#include "qsepeakarray.h"
-
-
-class QseAbstractSppSyncDataSource : public QseAbstractDataSource
+int main(int argc, char **argv)
 {
-    Q_OBJECT
-public:
-    QseAbstractSppSyncDataSource(QObject *parent = 0);
-    virtual QsePeakArray read(const QseSppGeometry &geometry, int width) = 0;
-};
+    QApplication app(argc, argv);
 
-
-#endif // QSEABSTRACTSPPSYNCDATASOURCE_H
+    return app.exec();
+}
