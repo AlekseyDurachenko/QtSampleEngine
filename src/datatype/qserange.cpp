@@ -94,8 +94,9 @@ bool operator !=(const QseRange &l, const QseRange &r)
 QDebug operator<<(QDebug dbg, const QseRange &range)
 {
     if (range.isNull())
-        dbg.nospace() << "[null]";
+        dbg.nospace() << "QseRange()";
     else
-        dbg.nospace() << "[" << range.first() << ";" << range.last() << "]";
+        dbg.nospace() << "QseRange([" << range.first() << ";" << range.last()
+                      << "])";
     return dbg.space();
 }

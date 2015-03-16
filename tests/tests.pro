@@ -10,6 +10,7 @@ HEADERS +=                                  \
     $$PWD/src/test_qseselection.h           \
     $$PWD/src/test_qsesppgeometry.h         \
     $$PWD/src/test_qsespwgeometry.h         \
+    src/test_qsepeakarray.h
 
 SOURCES +=                                  \
     $$PWD/src/test_main.cpp                 \
@@ -18,6 +19,7 @@ SOURCES +=                                  \
     $$PWD/src/test_qseselection.cpp         \
     $$PWD/src/test_qsesppgeometry.cpp       \
     $$PWD/src/test_qsespwgeometry.cpp       \
+    src/test_qsepeakarray.cpp
 
 INCLUDEPATH +=                              \
     $$PWD/src                               \

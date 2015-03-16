@@ -157,11 +157,11 @@ qint64 QseSppGeometry::calcSampleIndex(const QseSppGeometry &geometry,
 
 QDebug operator<<(QDebug dbg, const QseSppGeometry &geometry)
 {
-    dbg.nospace() << "{";
+    dbg.nospace() << "QseSppGeometry({";
     dbg.nospace() << "X: " << geometry.x() << ", ";
     dbg.nospace() << "Y: " << geometry.y() << ", ";
     dbg.nospace() << "SamplePerPixel: " << geometry.samplesPerPixel() << ", ";
     dbg.nospace() << "Height: " << geometry.height();
-    dbg.nospace() << "}";
+    dbg.nospace() << "})";
     return dbg.space();
 }

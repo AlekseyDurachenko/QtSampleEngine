@@ -111,11 +111,11 @@ bool operator !=(const QseSpwGeometry &l, const QseSpwGeometry &r)
 
 QDebug operator<<(QDebug dbg, const QseSpwGeometry &geometry)
 {
-    dbg.nospace() << "{";
+    dbg.nospace() << "QseSpwGeometry({";
     dbg.nospace() << "X: " << geometry.x() << ", ";
     dbg.nospace() << "Y: " << geometry.y() << ", ";
     dbg.nospace() << "SamplePerWindow: " << geometry.samplesPerWindow() << ", ";
     dbg.nospace() << "Height: " << geometry.height();
-    dbg.nospace() << "}";
+    dbg.nospace() << "})";
     return dbg.space();
 }

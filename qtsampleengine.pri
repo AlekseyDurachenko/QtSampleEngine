@@ -31,6 +31,15 @@ HEADERS +=                                                          \
     #$$PWD/src/singlesignal/qsesinglesignalabstractpeakreader.h      \
     #$$PWD/src/singlesignal/qsesinglesignalabstractplot.h            \
     #$$PWD/src/core/qsehelper.h                                      \
+    $$PWD/src/datasource/qseabstractdatasource.h \
+    $$PWD/src/datasource/qseabstractsppsyncdatasource.h \
+    $$PWD/src/datatype/qsepeakarray.h \
+    $$PWD/src/datasource/qseabstractspwsyncdatasource.h \
+    $$PWD/src/datasource/qseabstractsppasyncdatasource.h \
+    $$PWD/src/datasource/qseabstractpeakreply.h \
+    $$PWD/src/datasource/qseabstractspppeakreply.h \
+    $$PWD/src/datasource/qseabstractspwpeakreply.h \
+    $$PWD/src/datasource/qseabstractspwasyncdatasource.h
 
 SOURCES +=                                                          \
     $$PWD/src/datatype/qserange.cpp                                 \
@@ -64,6 +73,15 @@ SOURCES +=                                                          \
     #$$PWD/src/singlesignal/qsesinglesignalabstractpeakreader.cpp    \
     #$$PWD/src/singlesignal/qsesinglesignalabstractplot.cpp          \
     #$$PWD/src/core/qsehelper.cpp                                    \
+    $$PWD/src/datasource/qseabstractdatasource.cpp \
+    $$PWD/src/datasource/qseabstractsppsyncdatasource.cpp \
+    $$PWD/src/datatype/qsepeakarray.cpp \
+    $$PWD/src/datasource/qseabstractspwsyncdatasource.cpp \
+    $$PWD/src/datasource/qseabstractsppasyncdatasource.cpp \
+    $$PWD/src/datasource/qseabstractpeakreply.cpp \
+    $$PWD/src/datasource/qseabstractspppeakreply.cpp \
+    $$PWD/src/datasource/qseabstractspwpeakreply.cpp \
+    $$PWD/src/datasource/qseabstractspwasyncdatasource.cpp
 
 OTHER_FILES +=                                                      \
     $$PWD/README.md                                                 \
@@ -75,6 +93,7 @@ OTHER_FILES +=                                                      \
 INCLUDEPATH +=                                                      \
     $$PWD/src                                                       \
     $$PWD/src/datatype                                              \
+    $$PWD/src/datasource                                            \
     $$PWD/src/core                                                  \
     $$PWD/src/core/spp                                              \
     $$PWD/src/core/spw                                              \
