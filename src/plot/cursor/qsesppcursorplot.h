@@ -1,4 +1,4 @@
-// Copyright 2013, Durachenko Aleksey V. <durachenko.aleksey@gmail.com>
+// Copyright 2013-2015, Durachenko Aleksey V. <durachenko.aleksey@gmail.com>
 //
 // This library is free software; you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public
@@ -13,52 +13,53 @@
 // You should have received a copy of the GNU Lesser General Public
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
-#ifndef QSECURSORPLOT_H
-#define QSECURSORPLOT_H
+#ifndef QSESPPCURSORPLOT_H
+#define QSESPPCURSORPLOT_H
 
-#include <QObject>
-#include <QPainter>
+#include <QPen>
 #include "qsesppgeometry.h"
-#include "qseabstractplot.h"
-#include "qsecursor.h"
+#include "qseabstractsppplot.h"
+class QseCursor;
 
-/*! \brief The QseCursor class shows the position of a cursor
- *
- *  This class draws the vertical line
- */
-class QseCursorPlot : public QseAbstractPlot
+
+class QseSppCursorPlot : public QseAbstractSppPlot
 {
     Q_OBJECT
+    Q_PROPERTY(QPen pen READ pen WRITE setPen)
+    Q_PROPERTY(qreal opacity READ opacity WRITE setOpacity)
 public:
-    explicit QseCursorPlot(QObject *parent = 0);
+    explicit QseSppCursorPlot(QObject *parent = 0);
 
     inline const QPen &pen() const;
-    inline qreal opacity() const;    
     void setPen(const QPen &pen);
+
+    inline qreal opacity() const;
     void setOpacity(qreal opacity);
+
+    inline QseCursor *cursor() const;
     void setCursor(QseCursor *cursor);
 
+    bool hasChanges(const QRect &rect, const QseSppGeometry &geometry);
     bool isVisible(const QRect &rect, const QseSppGeometry &geometry);
-    void draw(QPainter *painter, const QRect &rect, const QseSppGeometry &geometry);
-signals:
-    void changed();
+    void draw(QPainter *painter, const QRect &rect,
+              const QseSppGeometry &geometry);
 private slots:
-    void cursorDestroyed(QObject *obj);
+    void cursor_destroyed(QObject *obj);
 private:
     QseCursor *m_cursor;
     qreal m_opacity;
     QPen m_pen;
 };
 
-
-const QPen &QseCursorPlot::pen() const
+const QPen &QseSppCursorPlot::pen() const
 {
     return m_pen;
 }
 
-qreal QseCursorPlot::opacity() const
+qreal QseSppCursorPlot::opacity() const
 {
     return m_opacity;
 }
 
-#endif // QSECURSOR_H
+
+#endif // QSESPPCURSORPLOT_H

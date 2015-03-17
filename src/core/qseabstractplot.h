@@ -27,7 +27,7 @@ public:
 
     inline bool isUpdateOnce() const;
 signals:
-    void changed();
+    void updateNeeded();
 public slots:
     void setUpdateOnce(bool need = true);
     virtual void reset();

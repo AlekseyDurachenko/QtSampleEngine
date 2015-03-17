@@ -39,7 +39,11 @@ HEADERS +=                                                          \
     $$PWD/src/datasource/qseabstractpeakreply.h \
     $$PWD/src/datasource/qseabstractspppeakreply.h \
     $$PWD/src/datasource/qseabstractspwpeakreply.h \
-    $$PWD/src/datasource/qseabstractspwasyncdatasource.h
+    $$PWD/src/datasource/qseabstractspwasyncdatasource.h \
+    $$PWD/src/widget/sppwidget/qsesppwidget.h \
+    $$PWD/src/plot/cover/qsemonocolorsppcoverplot.h \
+    $$PWD/src/plot/cursor/qsesppcursorplot.h \
+    $$PWD/src/plot/selection/qsesppselectionplot.h
 
 SOURCES +=                                                          \
     $$PWD/src/datatype/qserange.cpp                                 \
@@ -81,7 +85,11 @@ SOURCES +=                                                          \
     $$PWD/src/datasource/qseabstractpeakreply.cpp \
     $$PWD/src/datasource/qseabstractspppeakreply.cpp \
     $$PWD/src/datasource/qseabstractspwpeakreply.cpp \
-    $$PWD/src/datasource/qseabstractspwasyncdatasource.cpp
+    $$PWD/src/datasource/qseabstractspwasyncdatasource.cpp \
+    $$PWD/src/widget/sppwidget/qsesppwidget.cpp \
+    $$PWD/src/plot/cover/qsemonocolorsppcoverplot.cpp \
+    $$PWD/src/plot/cursor/qsesppcursorplot.cpp \
+    $$PWD/src/plot/selection/qsesppselectionplot.cpp
 
 OTHER_FILES +=                                                      \
     $$PWD/README.md                                                 \
@@ -102,5 +110,11 @@ INCLUDEPATH +=                                                      \
     $$PWD/src/metric                                                \
     $$PWD/src/selection                                             \
     $$PWD/src/singlesignal                                          \
+    $$PWD/src/widget/sppwidget                                      \
+    $$PWD/src/plot/cover                                            \
+    $$PWD/src/plot/cursor                                           \
+    $$PWD/src/plot/selection                                        \
+
+
 
 DEFINES +=                                                          \

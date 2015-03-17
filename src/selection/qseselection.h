@@ -24,9 +24,9 @@ class QseSelection : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(QseRange selectedRange READ selectedRange WRITE setSelectedRange
-               RESET resetSelectedRange NOTIFY selectionChanged)
+               RESET resetSelectedRange)
     Q_PROPERTY(QseRange availableRange READ availableRange
-               WRITE setAvailableRange RESET resetAvailableRange)
+               WRITE setAvailableRange)
 public:
     explicit QseSelection(QObject *parent = 0);
 

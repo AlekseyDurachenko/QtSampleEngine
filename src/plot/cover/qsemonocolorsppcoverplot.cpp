@@ -1,4 +1,4 @@
-// Copyright 2013-2015, Durachenko Aleksey V. <durachenko.aleksey@gmail.com>
+// Copyright 2015, Durachenko Aleksey V. <durachenko.aleksey@gmail.com>
 //
 // This library is free software; you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public
@@ -12,16 +12,35 @@
 //
 // You should have received a copy of the GNU Lesser General Public
 // License along with this library; if not, write to the Free Software
-// Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
-#include "qseabstractsppplot.h"
+// Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+#include "qsemonocolorsppcoverplot.h"
+#include <QPainter>
 
 
-QseAbstractSppPlot::QseAbstractSppPlot(QObject *parent) :
-    QseAbstractPlot(parent)
+QseMonocolorSppCoverPlot::QseMonocolorSppCoverPlot(QObject *parent) :
+    QseAbstractSppPlot(parent)
 {
+    m_color = qRgb(230, 230, 230);
 }
 
-bool QseAbstractSppPlot::isVisible(const QRect &rect,
+void QseMonocolorSppCoverPlot::setColor(const QColor &color)
+{
+    if (m_color != color)
+    {
+        m_color = color;
+        setUpdateOnce(true);
+    }
+}
+
+bool QseMonocolorSppCoverPlot::hasChanges(const QRect &rect,
+        const QseSppGeometry &geometry)
+{
+    Q_UNUSED(geometry);
+
+    return (isUpdateOnce() || rect != lastRect());
+}
+
+bool QseMonocolorSppCoverPlot::isVisible(const QRect &rect,
         const QseSppGeometry &geometry)
 {
     Q_UNUSED(rect);
@@ -30,22 +49,10 @@ bool QseAbstractSppPlot::isVisible(const QRect &rect,
     return true;
 }
 
-bool QseAbstractSppPlot::hasChanges(const QRect &rect,
+void QseMonocolorSppCoverPlot::draw(QPainter *painter, const QRect &rect,
         const QseSppGeometry &geometry)
 {
-    Q_UNUSED(rect);
-    Q_UNUSED(geometry);
+    painter->fillRect(rect, m_color);
 
-    return false;
-}
-
-void QseAbstractSppPlot::draw(QPainter *painter, const QRect &rect,
-        const QseSppGeometry &geometry)
-{
-    Q_UNUSED(painter);
-
-    m_lastRect = rect;
-    m_lastGeometry = geometry;
-
-    setUpdateOnce(false);
+    QseAbstractSppPlot::draw(painter, rect, geometry);
 }

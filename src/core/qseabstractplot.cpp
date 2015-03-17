@@ -18,18 +18,19 @@
 
 QseAbstractPlot::QseAbstractPlot(QObject *parent) : QObject(parent)
 {
+    m_updateOnce = true;
 }
 
 /*! This method set flag isUpdateOnce() to true, and emit changed()
  */
 void QseAbstractPlot::setUpdateOnce(bool need)
 {
-    if (m_updateOnce)
+    if (m_updateOnce == need)
         return;
 
     m_updateOnce = need;
     if (m_updateOnce)
-        emit changed();
+        emit updateNeeded();
 }
 
 /*! This method used for reset the cached values of the plotter,

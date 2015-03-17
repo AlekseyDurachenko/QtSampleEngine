@@ -24,7 +24,7 @@ class QseCursor : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(qint64 index READ index WRITE setIndex
-               RESET resetIndex NOTIFY indexChanged)
+               RESET resetIndex)
     Q_PROPERTY(QseRange availableRange READ availableRange
                WRITE setAvailableRange RESET resetAvailableRange)
 public:

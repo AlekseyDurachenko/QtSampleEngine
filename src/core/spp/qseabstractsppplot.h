@@ -28,11 +28,27 @@ class QseAbstractSppPlot : public QseAbstractPlot
 public:
     explicit QseAbstractSppPlot(QObject *parent = 0);
 
+    inline const QRect &lastRect() const;
+    inline const QseSppGeometry &lastGeometry() const;
+
     virtual bool isVisible(const QRect &rect, const QseSppGeometry &geometry);
     virtual bool hasChanges(const QRect &rect, const QseSppGeometry &geometry);
     virtual void draw(QPainter *painter, const QRect &rect,
                       const QseSppGeometry &geometry);
+protected:
+    QRect m_lastRect;
+    QseSppGeometry m_lastGeometry;
 };
+
+const QRect &QseAbstractSppPlot::lastRect() const
+{
+    return m_lastRect;
+}
+
+const QseSppGeometry &QseAbstractSppPlot::lastGeometry() const
+{
+    return m_lastGeometry;
+}
 
 
 #endif // QSEABSTRACTSPPPLOT_H
