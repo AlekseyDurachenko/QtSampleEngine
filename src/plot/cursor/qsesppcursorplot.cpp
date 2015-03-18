@@ -57,6 +57,7 @@ bool QseSppCursorPlot::hasChanges(const QRect &rect,
     Q_UNUSED(rect);
     Q_UNUSED(geometry);
 
+    // TODO: check full state
     return true;
 }
 

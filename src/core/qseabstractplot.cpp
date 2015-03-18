@@ -16,6 +16,14 @@
 #include "qseabstractplot.h"
 
 
+/*!
+ * \fn QseAbstractPlot::updateNeeded()
+ *
+ * This signal emitted each time when update is needed.
+ * Typically this signal should be connected to QWidget::update() slot.
+ */
+
+
 QseAbstractPlot::QseAbstractPlot(QObject *parent) : QObject(parent)
 {
     m_updateOnce = true;
