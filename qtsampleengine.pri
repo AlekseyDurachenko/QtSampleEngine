@@ -32,14 +32,14 @@ HEADERS +=                                                          \
     #$$PWD/src/singlesignal/qsesinglesignalabstractplot.h            \
     #$$PWD/src/core/qsehelper.h                                      \
     $$PWD/src/datasource/qseabstractdatasource.h \
-    $$PWD/src/datasource/qseabstractsppsyncdatasource.h \
+    $$PWD/src/datasource/spp/qseabstractsppsyncdatasource.h \
     $$PWD/src/datatype/qsepeakarray.h \
-    $$PWD/src/datasource/qseabstractspwsyncdatasource.h \
-    $$PWD/src/datasource/qseabstractsppasyncdatasource.h \
+    $$PWD/src/datasource/spw/qseabstractspwsyncdatasource.h \
+    $$PWD/src/datasource/spp/qseabstractsppasyncdatasource.h \
     $$PWD/src/datasource/qseabstractpeakreply.h \
-    $$PWD/src/datasource/qseabstractspppeakreply.h \
-    $$PWD/src/datasource/qseabstractspwpeakreply.h \
-    $$PWD/src/datasource/qseabstractspwasyncdatasource.h \
+    $$PWD/src/datasource/spp/qseabstractspppeakreply.h \
+    $$PWD/src/datasource/spw/qseabstractspwpeakreply.h \
+    $$PWD/src/datasource/spw/qseabstractspwasyncdatasource.h \
     $$PWD/src/widget/sppwidget/qsesppwidget.h \
     $$PWD/src/plot/cover/qsemonocolorsppcoverplot.h \
     $$PWD/src/plot/cursor/qsesppcursorplot.h \
@@ -50,7 +50,7 @@ HEADERS +=                                                          \
     $$PWD/src/metric/qsemetricitem.h \
     $$PWD/src/metric/qsemetricmapper.h \
     $$PWD/src/metric/qseabstractmetricprovider.h \
-    $$PWD/src/metric/qseabstractsppmetricprovider.h
+    $$PWD/src/metric/spp/qseabstractsppmetricprovider.h
 
 SOURCES +=                                                          \
     $$PWD/src/datatype/qserange.cpp                                 \
@@ -85,14 +85,14 @@ SOURCES +=                                                          \
     #$$PWD/src/singlesignal/qsesinglesignalabstractplot.cpp          \
     #$$PWD/src/core/qsehelper.cpp                                    \
     $$PWD/src/datasource/qseabstractdatasource.cpp \
-    $$PWD/src/datasource/qseabstractsppsyncdatasource.cpp \
+    $$PWD/src/datasource/spp/qseabstractsppsyncdatasource.cpp \
     $$PWD/src/datatype/qsepeakarray.cpp \
-    $$PWD/src/datasource/qseabstractspwsyncdatasource.cpp \
-    $$PWD/src/datasource/qseabstractsppasyncdatasource.cpp \
+    $$PWD/src/datasource/spw/qseabstractspwsyncdatasource.cpp \
+    $$PWD/src/datasource/spp/qseabstractsppasyncdatasource.cpp \
     $$PWD/src/datasource/qseabstractpeakreply.cpp \
-    $$PWD/src/datasource/qseabstractspppeakreply.cpp \
-    $$PWD/src/datasource/qseabstractspwpeakreply.cpp \
-    $$PWD/src/datasource/qseabstractspwasyncdatasource.cpp \
+    $$PWD/src/datasource/spp/qseabstractspppeakreply.cpp \
+    $$PWD/src/datasource/spw/qseabstractspwpeakreply.cpp \
+    $$PWD/src/datasource/spw/qseabstractspwasyncdatasource.cpp \
     $$PWD/src/widget/sppwidget/qsesppwidget.cpp \
     $$PWD/src/plot/cover/qsemonocolorsppcoverplot.cpp \
     $$PWD/src/plot/cursor/qsesppcursorplot.cpp \
@@ -103,7 +103,7 @@ SOURCES +=                                                          \
     $$PWD/src/metric/qsemetricitem.cpp \
     $$PWD/src/metric/qsemetricmapper.cpp \
     $$PWD/src/metric/qseabstractmetricprovider.cpp \
-    $$PWD/src/metric/qseabstractsppmetricprovider.cpp
+    $$PWD/src/metric/spp/qseabstractsppmetricprovider.cpp
 
 OTHER_FILES +=                                                      \
     $$PWD/README.md                                                 \
@@ -116,12 +116,16 @@ INCLUDEPATH +=                                                      \
     $$PWD/src                                                       \
     $$PWD/src/datatype                                              \
     $$PWD/src/datasource                                            \
+    $$PWD/src/datasource/spp                                        \
+    $$PWD/src/datasource/spw                                        \
     $$PWD/src/core                                                  \
     $$PWD/src/core/spp                                              \
     $$PWD/src/core/spw                                              \
     $$PWD/src/axis                                                  \
     $$PWD/src/cursor                                                \
     $$PWD/src/metric                                                \
+    $$PWD/src/metric/spp                                            \
+    $$PWD/src/metric/spw                                            \
     $$PWD/src/selection                                             \
     $$PWD/src/singlesignal                                          \
     $$PWD/src/widget/sppwidget                                      \
