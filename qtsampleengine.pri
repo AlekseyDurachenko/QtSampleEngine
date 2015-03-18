@@ -34,7 +34,9 @@ HEADERS +=                                                          \
     $$PWD/src/signal/spp/plot/qseabstractsppsyncsignalplot.h \
     $$PWD/src/signal/spp/plot/qsesppsyncsignallinearplot.h \
     $$PWD/src/widget/sppwidget/qsesppwidget.h \
-    $$PWD/src/qse_deprecated.h
+    $$PWD/src/qse_deprecated.h \
+    $$PWD/src/core/spp/qsesppverticalcontroller.h \
+    $$PWD/src/core/spp/qsespphorizontalcontroller.h
 
 
 SOURCES +=                                                          \
@@ -72,7 +74,9 @@ SOURCES +=                                                          \
     $$PWD/src/signal/spp/plot/qseabstractsppsignalplot.cpp \
     $$PWD/src/signal/spp/plot/qseabstractsppsyncsignalplot.cpp \
     $$PWD/src/signal/spp/plot/qsesppsyncsignallinearplot.cpp \
-    $$PWD/src/widget/sppwidget/qsesppwidget.cpp
+    $$PWD/src/widget/sppwidget/qsesppwidget.cpp \
+    $$PWD/src/core/spp/qsesppverticalcontroller.cpp \
+    $$PWD/src/core/spp/qsespphorizontalcontroller.cpp
 
 
 OTHER_FILES +=                                                      \

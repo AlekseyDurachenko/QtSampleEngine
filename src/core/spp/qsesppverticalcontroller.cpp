@@ -1,4 +1,4 @@
-// Copyright 2013, Durachenko Aleksey V. <durachenko.aleksey@gmail.com>
+// Copyright 2013-2015, Durachenko Aleksey V. <durachenko.aleksey@gmail.com>
 //
 // This library is free software; you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public
@@ -12,42 +12,40 @@
 //
 // You should have received a copy of the GNU Lesser General Public
 // License along with this library; if not, write to the Free Software
-// Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
-#include "qsehorizontalcontroller.h"
+// Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
+#include "qsesppverticalcontroller.h"
 #include <QMouseEvent>
 
 
-QseHorizontalController::QseHorizontalController(QObject *parent) :
-    QseAbstractController(parent)
+QseSppVerticalController::QseSppVerticalController(QObject *parent) :
+    QseAbstractSppController(parent)
 {
     m_dragAction = false;
 }
 
-QCursor QseHorizontalController::defaultCursor() const
+QCursor QseSppVerticalController::defaultCursor() const
 {
     return QCursor(Qt::OpenHandCursor);
 }
 
-void QseHorizontalController::mouseMoveEvent(QMouseEvent *event, const QRect &, const QseSppGeometry &geometry)
+void QseSppVerticalController::mouseMoveEvent(QMouseEvent *event,
+        const QRect &rect, const QseSppGeometry &geometry)
 {
     // if left button is pressed, we shuld move the Y axis of the plotter
     if (m_dragAction)
     {
-        qint64 value = m_dragPrevPos.x() - event->x();
-        if (geometry.samplePerPixel() < 0)
-            value /= qAbs(geometry.samplePerPixel());
-
-        if (value != 0)
-        {
-            m_dragPrevPos = event->pos();
-            emit geometryChanged(geometry.addX(value));
-        }
+        QseSppGeometry ng = geometry;
+        ng.setY(ng.y() - (event->y() - m_dragPrevPos.y())/static_cast<double>(rect.height())*geometry.height());
+        m_dragPrevPos = event->pos();
+        emit geometryChanged(ng);
     }
 }
 
-void QseHorizontalController::mousePressEvent(QMouseEvent *event, const QRect &, const QseSppGeometry &)
+void QseSppVerticalController::mousePressEvent(QMouseEvent *event,
+        const QRect &, const QseSppGeometry &)
 {
-    if (event->button() == Qt::LeftButton && event->modifiers() == Qt::NoModifier)
+    if (event->button() == Qt::LeftButton
+            && event->modifiers() == Qt::NoModifier)
     {
         m_dragAction = true;
         m_dragPrevPos = event->pos();
@@ -55,7 +53,8 @@ void QseHorizontalController::mousePressEvent(QMouseEvent *event, const QRect &,
     }
 }
 
-void QseHorizontalController::mouseReleaseEvent(QMouseEvent *event, const QRect &, const QseSppGeometry &)
+void QseSppVerticalController::mouseReleaseEvent(QMouseEvent *event,
+        const QRect &, const QseSppGeometry &)
 {
     // after left button of the mouse will be release
     // we should finished the moving

@@ -1,4 +1,4 @@
-// Copyright 2013, Durachenko Aleksey V. <durachenko.aleksey@gmail.com>
+// Copyright 2013-2015, Durachenko Aleksey V. <durachenko.aleksey@gmail.com>
 //
 // This library is free software; you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public
@@ -12,23 +12,26 @@
 //
 // You should have received a copy of the GNU Lesser General Public
 // License along with this library; if not, write to the Free Software
-// Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
-#ifndef QSEHORIZONTALCONTROLLER_H
-#define QSEHORIZONTALCONTROLLER_H
+// Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
+#ifndef QSESPPHORIZONTALCONTROLLER_H
+#define QSESPPHORIZONTALCONTROLLER_H
 
-#include "qseabstractcontroller.h"
+#include "qseabstractsppcontroller.h"
 
 
-class QseHorizontalController : public QseAbstractController
+class QseSppHorizontalController : public QseAbstractSppController
 {
     Q_OBJECT
 public:
-    explicit QseHorizontalController(QObject *parent = 0);
+    explicit QseSppHorizontalController(QObject *parent = 0);
 
     QCursor defaultCursor() const;
-    void mouseMoveEvent(QMouseEvent *event, const QRect &rect, const QseSppGeometry &geometry);
-    void mousePressEvent(QMouseEvent *event, const QRect &rect, const QseSppGeometry &geometry);
-    void mouseReleaseEvent(QMouseEvent *event, const QRect &rect, const QseSppGeometry &geometry);
+    void mouseMoveEvent(QMouseEvent *event, const QRect &rect,
+                        const QseSppGeometry &geometry);
+    void mousePressEvent(QMouseEvent *event, const QRect &rect,
+                         const QseSppGeometry &geometry);
+    void mouseReleaseEvent(QMouseEvent *event, const QRect &rect,
+                           const QseSppGeometry &geometry);
 private:
     // true  -- ready to move
     // false -- not ready to move
@@ -37,4 +40,5 @@ private:
     QPoint m_dragPrevPos;
 };
 
-#endif // QSETIMECONTROLLER_H
+
+#endif // QSESPPHORIZONTALCONTROLLER_H
