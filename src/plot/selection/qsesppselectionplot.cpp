@@ -64,11 +64,7 @@ void QseSppSelectionPlot::setSelection(QseSelection *selection)
 bool QseSppSelectionPlot::hasChanges(const QRect &rect,
         const QseSppGeometry &geometry)
 {
-    Q_UNUSED(rect);
-    Q_UNUSED(geometry);
-
-    // TODO: check full state
-    return true;
+    return (isUpdateOnce() || rect != lastRect() || geometry != lastGeometry());
 }
 
 bool QseSppSelectionPlot::isVisible(const QRect &rect,
@@ -108,8 +104,10 @@ void QseSppSelectionPlot::draw(QPainter *painter, const QRect &rect,
         if (sr >= rect.width())
             sr = rect.width()-1;
 
+        painter->save();
         painter->setOpacity(m_opacity);
         painter->fillRect(sl, 0, sr-sl+1, rect.height(), m_brush);
+        painter->restore();
     }
 
     QseAbstractSppPlot::draw(painter, rect, geometry);

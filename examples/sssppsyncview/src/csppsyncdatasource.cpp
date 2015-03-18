@@ -53,9 +53,15 @@ QsePeakArray CSppSyncDataSource::readAsLines(qint64 first, qint64 pps, int width
     if (last >= m_samples.count())
         last = m_samples.count() - 1;
 
+    if (last < 0)
+        return QsePeakArray();
+
+    if (first < 0)
+        first = 0;
+
     QVector<double> points(last-first+1);
     for (qint64 i = first; i <= last; ++i)
-        points[first+i] = m_samples[i];
+        points[i-first] = m_samples[i];
 
     return QsePeakArray(points);
 }
@@ -68,6 +74,12 @@ QsePeakArray CSppSyncDataSource::readAsPeaks(qint64 first, qint64 spp, int width
     qint64 last = first + width*spp;
     if (last >= m_samples.count())
         last = m_samples.count() - 1;
+
+    if (last < 0)
+        return QsePeakArray();
+
+    if (first < 0)
+        first = 0;
 
     const qint64 count = (last-first+1)/spp + (((last-first+1)%spp) ? (1) : (0));
     QVector<double> minimums(count);

@@ -13,29 +13,27 @@
 // You should have received a copy of the GNU Lesser General Public
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
-#include "qseabstractwidget.h"
+#ifndef QSESPPSYNCSIGNALLINEARPLOT_H
+#define QSESPPSYNCSIGNALLINEARPLOT_H
+
+#include "qseabstractsppsyncsignalplot.h"
+#include "qsepeakarray.h"
 
 
-QseAbstractWidget::QseAbstractWidget(QWidget *parent, Qt::WindowFlags f) :
-    QWidget(parent, f)
+class QseSppSyncSignalLinearPlot : public QseAbstractSppSyncSignalPlot
 {
-    m_updateOnce = true;
-}
+    Q_OBJECT
+public:
+    explicit QseSppSyncSignalLinearPlot(QObject *parent = 0);
 
-/*! This method set flag isUpdateOnce() to true,
- *  and call the update() method.
- */
-void QseAbstractWidget::setUpdateOnce(bool need)
-{
-    if (m_updateOnce != need)
-        return;
+    virtual void draw(QPainter *painter, const QRect &rect,
+              const QseSppGeometry &geometry);
+protected:
+    void drawAsLines(QPainter *painter, const QsePeakArray &peaks,
+                     const QRect &rect, const QseSppGeometry &geometry);
+    void drawAsPeaks(QPainter *painter, const QsePeakArray &peaks,
+                     const QRect &rect, const QseSppGeometry &geometry);
 
-    m_updateOnce = need;
-    if (m_updateOnce)
-        update();
-}
+};
 
-void QseAbstractWidget::setCurrentCursor(const QCursor &cursor)
-{
-    setCursor(cursor);
-}
+#endif // QSESPPSYNCSIGNALLINEARPLOT_H

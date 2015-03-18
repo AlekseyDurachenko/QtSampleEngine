@@ -112,7 +112,9 @@ void QseSppWidget::paintEvent(QPaintEvent *event)
             continue;
 
         if (m_caches.at(i).size() != rect().size())
-            m_caches[i] = QImage(rect().size(), QImage::Format_ARGB32);
+            m_caches[i] = QImage(rect().size(),
+                                 QImage::Format_ARGB32_Premultiplied);
+        m_caches[i].fill(0);
 
         QPainter imgPainter(&m_caches[i]);
         m_cachedPlots[i]->draw(&imgPainter, rect(), geometry());

@@ -54,11 +54,7 @@ void QseSppCursorPlot::setCursor(QseCursor *cursor)
 bool QseSppCursorPlot::hasChanges(const QRect &rect,
         const QseSppGeometry &geometry)
 {
-    Q_UNUSED(rect);
-    Q_UNUSED(geometry);
-
-    // TODO: check full state
-    return true;
+    return (isUpdateOnce() || rect != lastRect() || geometry != lastGeometry());
 }
 
 void QseSppCursorPlot::setPen(const QPen &pen)
@@ -90,9 +86,11 @@ void QseSppCursorPlot::draw(QPainter *painter, const QRect &rect,
     if (isVisible(rect, geometry))
     {
         int pos = QseSppGeometry::calcOffset(geometry, m_cursor->index());
+        painter->save();
         painter->setPen(m_pen);
         painter->setOpacity(m_opacity);
         painter->drawLine(pos, 0, pos, rect.height());
+        painter->restore();
     }
 
     QseAbstractSppPlot::draw(painter, rect, geometry);

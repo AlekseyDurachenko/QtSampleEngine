@@ -23,6 +23,7 @@ class QseSppCursorPlot;
 class QseCursor;
 class QseSppSelectionPlot;
 class QseSelection;
+class QseSppSyncSignalLinearPlot;
 
 
 namespace Ui {
@@ -39,7 +40,8 @@ private slots:
     void on_action_Test_moncolorplot_triggered();
     void on_actionAdd_cursor_triggered();
     void on_actionTest_Selection_triggered();
-
+    void scrollBar_valueChanged(int value);
+    void scrollBar2_valueChanged(int value);
 private:
     Ui::CMainWindow *ui;
     QseSppWidget *m_sppWidget;
@@ -48,6 +50,7 @@ private:
     QseCursor *m_cursor;
     QseSppSelectionPlot *m_sppSelectionPlot;
     QseSelection *m_selection;
+    QseSppSyncSignalLinearPlot *m_sppSignalLinearPlot;
 };
 
 

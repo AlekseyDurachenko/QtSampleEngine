@@ -43,7 +43,10 @@ HEADERS +=                                                          \
     $$PWD/src/widget/sppwidget/qsesppwidget.h \
     $$PWD/src/plot/cover/qsemonocolorsppcoverplot.h \
     $$PWD/src/plot/cursor/qsesppcursorplot.h \
-    $$PWD/src/plot/selection/qsesppselectionplot.h
+    $$PWD/src/plot/selection/qsesppselectionplot.h \
+    $$PWD/src/plot/signal/qseabstractsppsignalplot.h \
+    $$PWD/src/plot/signal/qseabstractsppsyncsignalplot.h \
+    $$PWD/src/plot/signal/qsesppsyncsignallinearplot.h
 
 SOURCES +=                                                          \
     $$PWD/src/datatype/qserange.cpp                                 \
@@ -89,7 +92,10 @@ SOURCES +=                                                          \
     $$PWD/src/widget/sppwidget/qsesppwidget.cpp \
     $$PWD/src/plot/cover/qsemonocolorsppcoverplot.cpp \
     $$PWD/src/plot/cursor/qsesppcursorplot.cpp \
-    $$PWD/src/plot/selection/qsesppselectionplot.cpp
+    $$PWD/src/plot/selection/qsesppselectionplot.cpp \
+    $$PWD/src/plot/signal/qseabstractsppsignalplot.cpp \
+    $$PWD/src/plot/signal/qseabstractsppsyncsignalplot.cpp \
+    $$PWD/src/plot/signal/qsesppsyncsignallinearplot.cpp
 
 OTHER_FILES +=                                                      \
     $$PWD/README.md                                                 \
@@ -114,6 +120,7 @@ INCLUDEPATH +=                                                      \
     $$PWD/src/plot/cover                                            \
     $$PWD/src/plot/cursor                                           \
     $$PWD/src/plot/selection                                        \
+    $$PWD/src/plot/signal                                           \
 
 
 

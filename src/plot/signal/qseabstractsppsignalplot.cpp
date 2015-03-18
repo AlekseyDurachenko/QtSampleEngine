@@ -1,4 +1,4 @@
-// Copyright (C) 2015, Durachenko Aleksey V. <durachenko.aleksey@gmail.com>
+// Copyright 2015, Durachenko Aleksey V. <durachenko.aleksey@gmail.com>
 //
 // This library is free software; you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public
@@ -13,16 +13,30 @@
 // You should have received a copy of the GNU Lesser General Public
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
-#include <QApplication>
-#include "cmainwindow.h"
+#include "qseabstractsppsignalplot.h"
 
 
-int main(int argc, char **argv)
+QseAbstractSppSignalPlot::QseAbstractSppSignalPlot(QObject *parent) :
+    QseAbstractSppPlot(parent)
 {
-    QApplication app(argc, argv);
+    m_opacity = 1.0;
+    m_pen = QPen(QColor(Qt::darkBlue));
+}
 
-    CMainWindow mainWindow;
-    mainWindow.show();
+void QseAbstractSppSignalPlot::setOpacity(qreal opacity)
+{
+    if (m_opacity != opacity)
+    {
+        m_opacity = opacity;
+        setUpdateOnce(true);
+    }
+}
 
-    return app.exec();
+void QseAbstractSppSignalPlot::setPen(const QPen &pen)
+{
+    if (m_pen != pen)
+    {
+        m_pen = pen;
+        setUpdateOnce(true);
+    }
 }

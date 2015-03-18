@@ -52,7 +52,9 @@ bool QseMonocolorSppCoverPlot::isVisible(const QRect &rect,
 void QseMonocolorSppCoverPlot::draw(QPainter *painter, const QRect &rect,
         const QseSppGeometry &geometry)
 {
+    painter->save();
     painter->fillRect(rect, m_color);
+    painter->restore();
 
     QseAbstractSppPlot::draw(painter, rect, geometry);
 }
