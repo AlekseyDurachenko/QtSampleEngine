@@ -1,3 +1,3 @@
 TEMPLATE = subdirs
 
-SUBDIRS += onethreadsinglewaveform sssppsyncview
+SUBDIRS += sssppsyncview
