@@ -1,4 +1,4 @@
-// Copyright 2013, Durachenko Aleksey V. <durachenko.aleksey@gmail.com>
+// Copyright 2013-2015, Durachenko Aleksey V. <durachenko.aleksey@gmail.com>
 //
 // This library is free software; you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public
@@ -12,7 +12,7 @@
 //
 // You should have received a copy of the GNU Lesser General Public
 // License along with this library; if not, write to the Free Software
-// Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+// Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
 #include "qsemetricmapper.h"
 
 
@@ -23,19 +23,24 @@ QseMetricMapper::QseMetricMapper()
 
 void QseMetricMapper::init()
 {
+    m_relativeLessOne.reserve(DBL_MAX_10_EXP);
+    m_relativeMoreOne.reserve(DBL_MAX_10_EXP-1);
+
     double valueLess = 0.1;
-    double valueMore = 1.0;
-    for (int pow = 1; pow < 30; ++pow)
+    for (int pow = 1; pow <= DBL_MAX_10_EXP; ++pow)
     {
         m_relativeLessOne.push_back(valueLess * 5);
         m_relativeLessOne.push_back(valueLess * 2);
         m_relativeLessOne.push_back(valueLess);
+        valueLess *= 0.1;
+    }
 
+    double valueMore = 1.0;
+    for (int pow = 1; pow < DBL_MAX_10_EXP; ++pow)
+    {
         m_relativeMoreOne.push_back(valueMore);
         m_relativeMoreOne.push_back(valueMore * 2);
         m_relativeMoreOne.push_back(valueMore * 5);
-
-        valueLess *= 0.1;
         valueMore *= 10.0;
     }
 }
@@ -44,6 +49,7 @@ double QseMetricMapper::calcNearestValue(double unitPerPixel, double minimum)
 {
     double approxIntervalMetric = minimum * unitPerPixel;
 
+    // TODO: binary search for optimization
     if (approxIntervalMetric > 0.5)
     {
         for (int i = 0; i < m_relativeMoreOne.count(); ++i)

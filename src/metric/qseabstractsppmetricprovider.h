@@ -13,32 +13,24 @@
 // You should have received a copy of the GNU Lesser General Public
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
-#ifndef QSEABSTRACTMETRICPROVIDER_H
-#define QSEABSTRACTMETRICPROVIDER_H
+#ifndef QSEABSTRACTSPPMETRICPROVIDER_H
+#define QSEABSTRACTSPPMETRICPROVIDER_H
 
-#include <QObject>
+#include <QList>
+#include "qseabstractmetricprovider.h"
+#include "qsemetricitem.h"
+#include "qsesppgeometry.h"
 
 
-class QseAbstractMetricProvider : public QObject
+class QseAbstractSppMetricProvider : public QseAbstractMetricProvider
 {
     Q_OBJECT
 public:
-    QseAbstractMetricProvider(QObject *parent = 0);
+    QseAbstractSppMetricProvider(QObject *parent = 0);
 
-    inline int minimumStep() const;
-    void setMinimumStep(int step);
-
-    virtual int maximumTextLenght() const = 0;
-signals:
-    void changed();
-private:
-    int m_minimumStep;
+    virtual QList<QseMetricItem> create(const QseSppGeometry &geometry,
+                                        int size) const = 0;
 };
 
-inline int QseAbstractMetricProvider::minimumStep() const
-{
-    return m_minimumStep;
-}
 
-
-#endif // QSEABSTRACTMETRICPROVIDER_H
+#endif // QSEABSTRACTSPPMETRICPROVIDER_H

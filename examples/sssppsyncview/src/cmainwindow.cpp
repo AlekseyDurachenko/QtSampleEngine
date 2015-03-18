@@ -26,12 +26,15 @@
 #include <QDebug>
 #include <math.h>
 #include <QtGui>
+#include <limits>
+#include <limits.h>
+#include <cfloat>
 
 CMainWindow::CMainWindow(QWidget *parent) :
     QMainWindow(parent), ui(new Ui::CMainWindow)
 {
     ui->setupUi(this);
-
+qDebug() << DBL_MAX_10_EXP << 5e307 << 5e-308;
     QVector<double> datasamples(100000);
     for (int i = 0; i < 100000; ++i)
         //datasamples[i] = ((qrand()%1000)/1000.0-0.5)*sin(i);

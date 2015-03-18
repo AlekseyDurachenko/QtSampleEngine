@@ -46,7 +46,11 @@ HEADERS +=                                                          \
     $$PWD/src/plot/selection/qsesppselectionplot.h \
     $$PWD/src/plot/signal/qseabstractsppsignalplot.h \
     $$PWD/src/plot/signal/qseabstractsppsyncsignalplot.h \
-    $$PWD/src/plot/signal/qsesppsyncsignallinearplot.h
+    $$PWD/src/plot/signal/qsesppsyncsignallinearplot.h \
+    $$PWD/src/metric/qsemetricitem.h \
+    $$PWD/src/metric/qsemetricmapper.h \
+    $$PWD/src/metric/qseabstractmetricprovider.h \
+    $$PWD/src/metric/qseabstractsppmetricprovider.h
 
 SOURCES +=                                                          \
     $$PWD/src/datatype/qserange.cpp                                 \
@@ -95,7 +99,11 @@ SOURCES +=                                                          \
     $$PWD/src/plot/selection/qsesppselectionplot.cpp \
     $$PWD/src/plot/signal/qseabstractsppsignalplot.cpp \
     $$PWD/src/plot/signal/qseabstractsppsyncsignalplot.cpp \
-    $$PWD/src/plot/signal/qsesppsyncsignallinearplot.cpp
+    $$PWD/src/plot/signal/qsesppsyncsignallinearplot.cpp \
+    $$PWD/src/metric/qsemetricitem.cpp \
+    $$PWD/src/metric/qsemetricmapper.cpp \
+    $$PWD/src/metric/qseabstractmetricprovider.cpp \
+    $$PWD/src/metric/qseabstractsppmetricprovider.cpp
 
 OTHER_FILES +=                                                      \
     $$PWD/README.md                                                 \
