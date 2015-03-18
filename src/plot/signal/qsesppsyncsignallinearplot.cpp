@@ -32,13 +32,17 @@ void QseSppSyncSignalLinearPlot::draw(QPainter *painter, const QRect &rect,
         QsePeakArray peaks = dataSource()->read(geometry, rect.width());
         if (!peaks.isEmpty())
         {
+            int offset = 0;
+            if (geometry.x() < 0)
+                offset = geometry.x();
+
             painter->save();
             painter->setPen(pen());
             painter->setOpacity(opacity());
             if (peaks.hasMaximums())
-                drawAsPeaks(painter, peaks, rect, geometry);
+                drawAsPeaks(painter, peaks, rect, geometry, offset);
             else
-                drawAsLines(painter, peaks, rect, geometry);
+                drawAsLines(painter, peaks, rect, geometry, offset);
             painter->restore();
         }
     }
@@ -48,15 +52,17 @@ void QseSppSyncSignalLinearPlot::draw(QPainter *painter, const QRect &rect,
 
 void QseSppSyncSignalLinearPlot::drawAsLines(QPainter *painter,
         const QsePeakArray &peaks, const QRect &rect,
-        const QseSppGeometry &geometry)
+        const QseSppGeometry &geometry, int offset)
 {
     const qint64 pps = -geometry.samplesPerPixel();
     const QVector<double> &points = peaks.minimums();
 
     int space = 0; // skip pixel from left bound
     int first = 0; // index of first visible points
-    if (geometry.x() < 0)
-        space = pps * -geometry.x();
+    if (offset < 0)
+        space = pps * -offset;
+    else
+        first = offset;
 
     for (int i = first+1; i < points.count(); ++i)
     {
@@ -91,15 +97,17 @@ void QseSppSyncSignalLinearPlot::drawAsLines(QPainter *painter,
 
 void QseSppSyncSignalLinearPlot::drawAsPeaks(QPainter *painter,
         const QsePeakArray &peaks, const QRect &rect,
-        const QseSppGeometry &geometry)
+        const QseSppGeometry &geometry, int offset)
 {
     const QVector<double> &minimums = peaks.minimums();
     const QVector<double> &maximums = peaks.maximums();
 
     int space = 0; // skip pixel from left bound
     int first = 0; // index of first visible minimum(maximum)
-    if (geometry.x() < 0)
-        space = -geometry.x() / geometry.samplesPerPixel();
+    if (offset < 0)
+        space = -offset / geometry.samplesPerPixel();
+    else
+        first = offset;
 
     if (first >= maximums.count())
         return;

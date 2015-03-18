@@ -29,8 +29,8 @@ public:
     inline QseAbstractSppSyncDataSource *dataSource() const;
     void setDataSource(QseAbstractSppSyncDataSource *dataSource);
 
-    bool hasChanges(const QRect &rect, const QseSppGeometry &geometry);
-    bool isVisible(const QRect &rect, const QseSppGeometry &geometry);
+    virtual bool hasChanges(const QRect &rect, const QseSppGeometry &geometry);
+    virtual bool isVisible(const QRect &rect, const QseSppGeometry &geometry);
 private slots:
     void dataSource_destroyed(QObject *obj);
 private:

@@ -31,9 +31,9 @@ public:
     inline const QColor &color() const;
     void setColor(const QColor &color);
 
-    bool hasChanges(const QRect &rect, const QseSppGeometry &geometry);
-    bool isVisible(const QRect &rect, const QseSppGeometry &geometry);
-    void draw(QPainter *painter, const QRect &rect,
+    virtual bool hasChanges(const QRect &rect, const QseSppGeometry &geometry);
+    virtual bool isVisible(const QRect &rect, const QseSppGeometry &geometry);
+    virtual void draw(QPainter *painter, const QRect &rect,
               const QseSppGeometry &geometry);
 private:
     QColor m_color;

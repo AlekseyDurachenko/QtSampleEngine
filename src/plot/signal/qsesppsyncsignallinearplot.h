@@ -30,9 +30,11 @@ public:
               const QseSppGeometry &geometry);
 protected:
     void drawAsLines(QPainter *painter, const QsePeakArray &peaks,
-                     const QRect &rect, const QseSppGeometry &geometry);
+                     const QRect &rect, const QseSppGeometry &geometry,
+                     int offset = 0);
     void drawAsPeaks(QPainter *painter, const QsePeakArray &peaks,
-                     const QRect &rect, const QseSppGeometry &geometry);
+                     const QRect &rect, const QseSppGeometry &geometry,
+                     int offset = 0);
 
 };
 
