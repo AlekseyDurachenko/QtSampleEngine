@@ -142,6 +142,26 @@ int QseSppGeometry::calcOffset(const QseSppGeometry &geometry,
         return (sampleIndex - x) * (-spp);
 }
 
+int QseSppGeometry::widthFromSamples(const QseSppGeometry &geometry,
+        qint64 count)
+{
+    const qint64 &spp = geometry.samplesPerPixel();
+    if (spp > 0)
+        return count/spp;
+    else
+        return count*(-spp);
+}
+
+qint64 QseSppGeometry::samplesFromWidth(const QseSppGeometry &geometry,
+        int width)
+{
+    const qint64 &spp = geometry.samplesPerPixel();
+    if (spp > 0)
+        return width*spp;
+    else
+        return width/(-spp);
+}
+
 qint64 QseSppGeometry::calcSampleIndex(const QseSppGeometry &geometry,
         int offset)
 {

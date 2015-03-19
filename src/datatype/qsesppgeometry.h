@@ -71,6 +71,8 @@ public:
     static bool checkSampleIndexVisibility(const QseSppGeometry &geometry,
                                            qint64 sampleIndex, int width);
     static int calcOffset(const QseSppGeometry &geometry, qint64 sampleIndex);
+    static int widthFromSamples(const QseSppGeometry &geometry, qint64 count);
+    static qint64 samplesFromWidth(const QseSppGeometry &geometry, int width);
     static qint64 calcSampleIndex(const QseSppGeometry &geometry, int offset);
 private:
     qint64 m_x;

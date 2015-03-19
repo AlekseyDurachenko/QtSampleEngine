@@ -45,6 +45,8 @@ private slots:
     void checkSampleIndexVisibility();
     void calcOffset();
     void calcSampleIndex();
+    void widthFromSamples();
+    void samplesFromWidth();
 };
 
 

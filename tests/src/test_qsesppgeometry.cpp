@@ -319,3 +319,41 @@ void TestQseSppGeometry::calcSampleIndex()
     QVERIFY(QseSppGeometry::calcSampleIndex(g_05, 10) == 400);
     QVERIFY(QseSppGeometry::calcSampleIndex(g_06, 10) == 500);
 }
+
+void TestQseSppGeometry::widthFromSamples()
+{
+    QseSppGeometry g_01(0, 1.0, -5, 1.0);
+    QseSppGeometry g_02(0, 1.0, -1, 1.0);
+    QseSppGeometry g_03(0, 1.0,  5, 1.0);
+
+    QVERIFY(QseSppGeometry::widthFromSamples(g_01,   0) ==   0);
+    QVERIFY(QseSppGeometry::widthFromSamples(g_01,  10) ==  50);
+    QVERIFY(QseSppGeometry::widthFromSamples(g_01, 100) == 500);
+
+    QVERIFY(QseSppGeometry::widthFromSamples(g_02,   0) ==   0);
+    QVERIFY(QseSppGeometry::widthFromSamples(g_02,  10) ==  10);
+    QVERIFY(QseSppGeometry::widthFromSamples(g_02, 100) == 100);
+
+    QVERIFY(QseSppGeometry::widthFromSamples(g_03,   0) ==   0);
+    QVERIFY(QseSppGeometry::widthFromSamples(g_03,  10) ==   2);
+    QVERIFY(QseSppGeometry::widthFromSamples(g_03, 100) ==  20);
+}
+
+void TestQseSppGeometry::samplesFromWidth()
+{
+    QseSppGeometry g_01(0, 1.0, -5, 1.0);
+    QseSppGeometry g_02(0, 1.0, -1, 1.0);
+    QseSppGeometry g_03(0, 1.0,  5, 1.0);
+
+    QVERIFY(QseSppGeometry::samplesFromWidth(g_01,   0) ==   0);
+    QVERIFY(QseSppGeometry::samplesFromWidth(g_01,  10) ==   2);
+    QVERIFY(QseSppGeometry::samplesFromWidth(g_01, 100) ==  20);
+
+    QVERIFY(QseSppGeometry::samplesFromWidth(g_02,   0) ==   0);
+    QVERIFY(QseSppGeometry::samplesFromWidth(g_02,  10) ==  10);
+    QVERIFY(QseSppGeometry::samplesFromWidth(g_02, 100) == 100);
+
+    QVERIFY(QseSppGeometry::samplesFromWidth(g_03,   0) ==   0);
+    QVERIFY(QseSppGeometry::samplesFromWidth(g_03,  10) ==  50);
+    QVERIFY(QseSppGeometry::samplesFromWidth(g_03, 100) == 500);
+}
