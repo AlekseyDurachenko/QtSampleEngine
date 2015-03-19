@@ -29,10 +29,10 @@ void QseSppVerticalController::mouseMoveEvent(QMouseEvent *event,
     // if left button is pressed, we shuld move the Y axis of the plotter
     if (m_dragAction)
     {
-        QseSppGeometry ng = geometry;
-        ng.setY(ng.y() - (event->y() - m_dragPrevPos.y())/static_cast<double>(rect.height())*geometry.height());
+        const int diff = m_dragPrevPos.y() - event->y();
+        const double shift = (diff*geometry.height())/rect.height();
         m_dragPrevPos = event->pos();
-        emit geometryChanged(ng);
+        emit geometryChanged(geometry.addY(shift));
     }
 }
 
