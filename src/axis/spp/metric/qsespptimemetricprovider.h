@@ -13,25 +13,35 @@
 // You should have received a copy of the GNU Lesser General Public
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
-#ifndef QSETIMEMETRICPROVIDER_H
-#define QSETIMEMETRICPROVIDER_H
+#ifndef QSESPPTIMEMETRICPROVIDER_H
+#define QSESPPTIMEMETRICPROVIDER_H
 
-#include "qseabsolutemetricprovider.h"
-#include "qsemetricmapper.h"
+#include "qseabstractsppmetricprovider.h"
+class QseMetricMapper;
 
-class QseTimeMetricProvider : public QseAbstractMetricProvider
+
+class QseSppTimeMetricProvider : public QseAbstractSppMetricProvider
 {
     Q_OBJECT
 public:
-    explicit QseTimeMetricProvider(QObject *parent = 0);
-    ~QseTimeMetricProvider();
-    int maximumTextLenght() const;
-    QList<QseMetricItem> create(const QseSppGeometry &geometry, int size) const;
-public slots:
+    explicit QseSppTimeMetricProvider(QObject *parent = 0);
+    virtual ~QseSppTimeMetricProvider();
+
+    inline double sampleRate() const;
     void setSampleRate(double sampleRate);
+
+    virtual int maximumTextLenght() const;
+    virtual QList<QseMetricItem> create(const QseSppGeometry &geometry,
+                                        int size) const;
 private:
     QseMetricMapper *m_mapper;
     double m_sampleRate;
 };
 
-#endif // QSETIMEMETRICPROVIDER_H
+double QseSppTimeMetricProvider::sampleRate() const
+{
+    return m_sampleRate;
+}
+
+
+#endif // QSESPPTIMEMETRICPROVIDER_H

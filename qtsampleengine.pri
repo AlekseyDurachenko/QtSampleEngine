@@ -40,7 +40,8 @@ HEADERS +=                                                          \
     $$PWD/src/core/spp/qsesppcompositorcontroller.h \
     $$PWD/src/widget/sppaxiswidget/qsesppaxiswidget.h \
     $$PWD/src/axis/spp/metric/qsespplinearmetricprovider.h \
-    $$PWD/src/axis/spp/metric/qsesppsignallinearamplmetricprovider.h
+    $$PWD/src/axis/spp/metric/qsesppsignallinearamplmetricprovider.h \
+    $$PWD/src/axis/spp/metric/qsespptimemetricprovider.h
 
 
 SOURCES +=                                                          \
@@ -84,7 +85,8 @@ SOURCES +=                                                          \
     $$PWD/src/core/spp/qsesppcompositorcontroller.cpp \
     $$PWD/src/widget/sppaxiswidget/qsesppaxiswidget.cpp \
     $$PWD/src/axis/spp/metric/qsespplinearmetricprovider.cpp \
-    $$PWD/src/axis/spp/metric/qsesppsignallinearamplmetricprovider.cpp
+    $$PWD/src/axis/spp/metric/qsesppsignallinearamplmetricprovider.cpp \
+    $$PWD/src/axis/spp/metric/qsespptimemetricprovider.cpp
 
 
 OTHER_FILES +=                                                      \

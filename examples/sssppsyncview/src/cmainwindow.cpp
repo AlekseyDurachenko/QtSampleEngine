@@ -29,6 +29,7 @@
 #include "qsesppaxiswidget.h"
 #include "qsespplinearmetricprovider.h"
 #include "qsesppsignallinearamplmetricprovider.h"
+#include "qsespptimemetricprovider.h"
 #include <QDebug>
 #include <math.h>
 #include <QtGui>
@@ -93,11 +94,13 @@ qDebug() << DBL_MAX_10_EXP << 5e307 << 5e-308;
             new QseSppLinearMetricProvider(QseSppLinearMetricProvider::Vertical, this);
     QseSppSignalLinearAmplMetricProvider *signalLinearAmpl =
             new QseSppSignalLinearAmplMetricProvider(this);
+    QseSppTimeMetricProvider *timeProvider = new QseSppTimeMetricProvider(this);
+    timeProvider->setSampleRate(44100.0);
 
     sppHorizontalLinearMetricProvider->setFactor(1);
     signalLinearAmpl->setFactor(100);
     topAxis->setMetricProvider(sppHorizontalLinearMetricProvider);
-    bottomAxis->setMetricProvider(sppHorizontalLinearMetricProvider);
+    bottomAxis->setMetricProvider(timeProvider);
     leftAxis->setMetricProvider(signalLinearAmpl);
     rightAxis->setMetricProvider(sppVerticalLinearMetricProvider);
     connect(m_sppWidget, SIGNAL(geometryChanged(QseSppGeometry)),

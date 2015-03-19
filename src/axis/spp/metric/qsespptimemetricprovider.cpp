@@ -13,24 +13,25 @@
 // You should have received a copy of the GNU Lesser General Public
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
-#include "qsetimemetricprovider.h"
+#include "qsespptimemetricprovider.h"
+#include "qsemetricmapper.h"
 #include <QFontMetrics>
 #include <QTime>
-#include <QDebug>
 
-QseTimeMetricProvider::QseTimeMetricProvider(QObject *parent) :
-    QseAbstractMetricProvider(parent)
+
+QseSppTimeMetricProvider::QseSppTimeMetricProvider(QObject *parent) :
+    QseAbstractSppMetricProvider(parent)
 {
     m_mapper = new QseMetricMapper();
     m_sampleRate = 1.0;
 }
 
-QseTimeMetricProvider::~QseTimeMetricProvider()
+QseSppTimeMetricProvider::~QseSppTimeMetricProvider()
 {
     delete m_mapper;
 }
 
-void QseTimeMetricProvider::setSampleRate(double sampleRate)
+void QseSppTimeMetricProvider::setSampleRate(double sampleRate)
 {
     if (sampleRate != m_sampleRate)
     {
@@ -39,22 +40,37 @@ void QseTimeMetricProvider::setSampleRate(double sampleRate)
     }
 }
 
-int QseTimeMetricProvider::maximumTextLenght() const
+int QseSppTimeMetricProvider::maximumTextLenght() const
 {
     return 15;
 }
 
-QList<QseMetricItem> QseTimeMetricProvider::create(const QseSppGeometry &geometry, int size) const
+QList<QseMetricItem> QseSppTimeMetricProvider::create(
+        const QseSppGeometry &geometry, int size) const
 {
     QList<QseMetricItem> items;
 
     // parameters for current metrics
-    double offset = geometry.toAbsoluteSampleOffset(1.0 / m_sampleRate);
-    double unitPerPixel = geometry.toAbsoluteSamplePerPixel(1.0 / m_sampleRate);
+    //double offset = geometry.toAbsoluteSampleOffset(1.0 / m_sampleRate);
+    //double unitPerPixel = //geometry.toAbsoluteSamplePerPixel(1.0 / m_sampleRate);
+    double samplingInterval = 1.0 / m_sampleRate;
+
+    double offset;
+    if (geometry.samplesPerPixel() > 0)
+        offset = geometry.x() * samplingInterval;
+    else
+        offset = geometry.x() * samplingInterval;
+
+    double unitPerPixel;
+    if (geometry.samplesPerPixel() > 0)
+        unitPerPixel = geometry.samplesPerPixel() * samplingInterval;
+    else
+        unitPerPixel = 1.0 / -geometry.samplesPerPixel() * samplingInterval;
 
     // Value Of Division
-    double vod = m_mapper->calcNearestValue(unitPerPixel, m_minimumStep);
-    // because QTime cannot show time less then 0.001sec we shoud use 0.001 as minimum vod
+    double vod = m_mapper->calcNearestValue(unitPerPixel, minimumStep());
+    // because QTime cannot show time less then 0.001sec we shoud
+    // use 0.001 as minimum vod
     if (vod < 0.001)
         vod = 0.001;
     // estimate pixel count betweeen metrics
