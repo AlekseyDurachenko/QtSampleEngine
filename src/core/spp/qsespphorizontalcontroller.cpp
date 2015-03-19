@@ -21,11 +21,7 @@ QseSppHorizontalController::QseSppHorizontalController(QObject *parent) :
     QseAbstractSppController(parent)
 {
     m_dragAction = false;
-}
-
-QCursor QseSppHorizontalController::defaultCursor() const
-{
-    return QCursor(Qt::OpenHandCursor);
+    setDefaultCursor(Qt::OpenHandCursor);
 }
 
 void QseSppHorizontalController::mouseMoveEvent(QMouseEvent *event,

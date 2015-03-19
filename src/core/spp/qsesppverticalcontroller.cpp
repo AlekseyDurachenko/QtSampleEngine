@@ -23,11 +23,6 @@ QseSppVerticalController::QseSppVerticalController(QObject *parent) :
     m_dragAction = false;
 }
 
-QCursor QseSppVerticalController::defaultCursor() const
-{
-    return QCursor(Qt::OpenHandCursor);
-}
-
 void QseSppVerticalController::mouseMoveEvent(QMouseEvent *event,
         const QRect &rect, const QseSppGeometry &geometry)
 {

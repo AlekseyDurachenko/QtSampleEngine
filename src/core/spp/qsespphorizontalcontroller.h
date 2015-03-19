@@ -25,7 +25,6 @@ class QseSppHorizontalController : public QseAbstractSppController
 public:
     explicit QseSppHorizontalController(QObject *parent = 0);
 
-    QCursor defaultCursor() const;
     void mouseMoveEvent(QMouseEvent *event, const QRect &rect,
                         const QseSppGeometry &geometry);
     void mousePressEvent(QMouseEvent *event, const QRect &rect,

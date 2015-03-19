@@ -25,7 +25,6 @@ class QseSppVerticalController : public QseAbstractSppController
 public:
     explicit QseSppVerticalController(QObject *parent = 0);
 
-    QCursor defaultCursor() const;
     void mouseMoveEvent(QMouseEvent *event, const QRect &rect,
                         const QseSppGeometry &geometry);
     void mousePressEvent(QMouseEvent *event, const QRect &rect,

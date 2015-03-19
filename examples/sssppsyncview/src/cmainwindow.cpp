@@ -25,6 +25,7 @@
 #include "qsesppsyncsignallinearplot.h"
 #include "qsespphorizontalcontroller.h"
 #include "qsesppverticalcontroller.h"
+#include "qsesppcompositorcontroller.h"
 #include <QDebug>
 #include <math.h>
 #include <QtGui>
@@ -93,8 +94,15 @@ qDebug() << DBL_MAX_10_EXP << 5e307 << 5e-308;
             this, SLOT(scrollBar2_valueChanged(int)));
     setCentralWidget(widget);
 
+    QList<QseAbstractSppController *> sppControllers;
+    sppControllers << new QseSppHorizontalController(this);
+    sppControllers << new QseSppVerticalController(this);
+    QseSppCompositorController *sppCompositorController =
+            new QseSppCompositorController(this);
+    sppCompositorController->setControllers(sppControllers);
+
     m_sppWidget->setGeometry(m_sppWidget->geometry().replaceSamplesPerPixel(-1));
-    m_sppWidget->setController(new QseSppVerticalController(this));
+    m_sppWidget->setController(sppCompositorController);
 
     qDebug() << m_sppWidget->geometry();
 }

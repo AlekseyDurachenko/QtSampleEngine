@@ -1,4 +1,4 @@
-// Copyright 2013-2015, Durachenko Aleksey V. <durachenko.aleksey@gmail.com>
+// Copyright 2015, Durachenko Aleksey V. <durachenko.aleksey@gmail.com>
 //
 // This library is free software; you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public
@@ -13,25 +13,24 @@
 // You should have received a copy of the GNU Lesser General Public
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
-#ifndef QSEABSTRACTSPPCONTROLLER_H
-#define QSEABSTRACTSPPCONTROLLER_H
+#ifndef QSESPPCOMPOSITORCONTROLLER_H
+#define QSESPPCOMPOSITORCONTROLLER_H
 
-#include "qseabstractcontroller.h"
-#include "qsesppgeometry.h"
-class QMouseEvent;
-class QWheelEvent;
-class QKeyEvent;
+#include "qseabstractsppcontroller.h"
 
 
-class QseAbstractSppController : public QseAbstractController
+class QseSppCompositorController : public QseAbstractSppController
 {
     Q_OBJECT
-    friend class QseAbstractSppWidget;
-    friend class QseSppCompositorController;
 public:
-    explicit QseAbstractSppController(QObject *parent = 0);
-signals:
-    void geometryChanged(const QseSppGeometry &geometry);
+    explicit QseSppCompositorController(QObject *parent = 0);
+
+    inline const QList<QseAbstractSppController *> controllers() const;
+    void setControllers(const QList<QseAbstractSppController *> &controllers);
+private slots:
+    void controller_geometryChanged(const QseSppGeometry &geometry);
+    void controller_cursorChanged(const QCursor &cursor);
+    void controller_destroyed(QObject *obj);
 protected:
     virtual void mouseMoveEvent(QMouseEvent *event, const QRect &rect,
                                 const QseSppGeometry &geometry);
@@ -45,7 +44,14 @@ protected:
                                const QseSppGeometry &geometry);
     virtual void keyReleaseEvent(QKeyEvent *event, const QRect &rect,
                                  const QseSppGeometry &geometry);
+private:
+    QList<QseAbstractSppController *> m_controllers;
 };
+
+const QList<QseAbstractSppController *> QseSppCompositorController::controllers() const
+{
+    return m_controllers;
+}
 
 
 #endif // QSEABSTRACTSPPCONTROLLER_H

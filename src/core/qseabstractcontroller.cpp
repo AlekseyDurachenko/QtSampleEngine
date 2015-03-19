@@ -19,12 +19,15 @@
 QseAbstractController::QseAbstractController(QObject *parent) :
     QObject(parent)
 {
+    m_defaultCursor = QCursor();
 }
 
-/*! The default cursor for the widget, which use this controller
- */
 QCursor QseAbstractController::defaultCursor() const
 {
-    return QCursor();
+    return m_defaultCursor;
 }
 
+void QseAbstractController::setDefaultCursor(const QCursor &cursor)
+{
+    m_defaultCursor = cursor;
+}

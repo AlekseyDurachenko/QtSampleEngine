@@ -27,8 +27,11 @@ public:
     explicit QseAbstractController(QObject *parent = 0);
 
     virtual QCursor defaultCursor() const;
+    void setDefaultCursor(const QCursor &cursor);
 signals:
     void cursorChanged(const QCursor &cursor);
+private:
+    QCursor m_defaultCursor;
 };
 
 
