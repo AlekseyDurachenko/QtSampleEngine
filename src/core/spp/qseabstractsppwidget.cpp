@@ -29,6 +29,7 @@ void QseAbstractSppWidget::setGeometry(const QseSppGeometry &geometry)
     {
         m_geometry = geometry;
         setUpdateOnce(true);
+        emit geometryChanged(m_geometry);
     }
 }
 

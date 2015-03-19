@@ -1,4 +1,4 @@
-// Copyright 2014, Durachenko Aleksey V. <durachenko.aleksey@gmail.com>
+// Copyright 2014-2015, Durachenko Aleksey V. <durachenko.aleksey@gmail.com>
 //
 // This library is free software; you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public
@@ -12,30 +12,51 @@
 //
 // You should have received a copy of the GNU Lesser General Public
 // License along with this library; if not, write to the Free Software
-// Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
-#include "qselinemetricprovider.h"
-#include <QDebug>
+// Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
+#include "qsespplinearmetricprovider.h"
+#include "qsemetricmapper.h"
 
-QseLineMetricProvider::QseLineMetricProvider(Orientation orientation,
-    QObject *parent) : QseAbstractMetricProvider(parent)
+
+QseSppLinearMetricProvider::QseSppLinearMetricProvider(Orientation orientation,
+    QObject *parent) : QseAbstractSppMetricProvider(parent)
 {
     m_mapper = new QseMetricMapper();
     m_orientation = orientation;
-    m_coeff = 1.0;
+    m_factor = 1.0;
 }
 
-QseLineMetricProvider::~QseLineMetricProvider()
+QseSppLinearMetricProvider::~QseSppLinearMetricProvider()
 {
     delete m_mapper;
 }
 
-int QseLineMetricProvider::maximumTextLenght() const
+
+void QseSppLinearMetricProvider::setFactor(double factor)
+{
+    if (m_factor != factor)
+    {
+        m_factor = factor;
+        emit changed();
+    }
+}
+
+void QseSppLinearMetricProvider::setOrientation(
+        QseSppLinearMetricProvider::Orientation orientation)
+{
+    if (m_orientation != orientation)
+    {
+        m_orientation = orientation;
+        emit changed();
+    }
+}
+
+int QseSppLinearMetricProvider::maximumTextLenght() const
 {
     return 8;
 }
 
-QList<QseMetricItem> QseLineMetricProvider::create(const QseSppGeometry &geometry,
-        int size) const
+QList<QseMetricItem> QseSppLinearMetricProvider::create(
+        const QseSppGeometry &geometry, int size) const
 {
     QList<QseMetricItem> items;
 
@@ -49,15 +70,15 @@ QList<QseMetricItem> QseLineMetricProvider::create(const QseSppGeometry &geometr
     }
     else
     {
-        offset = geometry.x() * m_coeff;
-        if (geometry.samplePerPixel() > 0)
+        offset = geometry.x() * m_factor;
+        if (geometry.samplesPerPixel() > 0)
         {
-            unitPerPixel = geometry.samplePerPixel() * m_coeff;
-            center = - (offset*geometry.samplePerPixel()) / unitPerPixel;
+            unitPerPixel = geometry.samplesPerPixel() * m_factor;
+            center = - (offset) / unitPerPixel;
         }
         else
         {
-            unitPerPixel = 1.0 / -geometry.samplePerPixel() * m_coeff;
+            unitPerPixel = 1.0 / -geometry.samplesPerPixel() * m_factor;
             center = - offset / unitPerPixel;
         }
     }
@@ -65,7 +86,7 @@ QList<QseMetricItem> QseLineMetricProvider::create(const QseSppGeometry &geometr
     // calculate the absolute position of the central lines
     //double center = - offset / unitPerPixel;
     // value of division
-    double vod = m_mapper->calcNearestValue(unitPerPixel, m_minimumStep);
+    double vod = m_mapper->calcNearestValue(unitPerPixel, minimumStep());
     // estimate pixel count betweeen metrics
     double step = vod / unitPerPixel;
 
@@ -96,13 +117,4 @@ QList<QseMetricItem> QseLineMetricProvider::create(const QseSppGeometry &geometr
     }
 
     return items;
-}
-
-void QseLineMetricProvider::setCoeff(double coeff)
-{
-    if (m_coeff != coeff)
-    {
-        m_coeff = coeff;
-        emit changed();
-    }
 }

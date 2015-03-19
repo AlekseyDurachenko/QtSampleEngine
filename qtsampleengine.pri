@@ -37,7 +37,10 @@ HEADERS +=                                                          \
     $$PWD/src/qse_deprecated.h \
     $$PWD/src/core/spp/qsesppverticalcontroller.h \
     $$PWD/src/core/spp/qsespphorizontalcontroller.h \
-    $$PWD/src/core/spp/qsesppcompositorcontroller.h
+    $$PWD/src/core/spp/qsesppcompositorcontroller.h \
+    $$PWD/src/widget/sppaxiswidget/qsesppaxiswidget.h \
+    $$PWD/src/axis/spp/metric/qsespplinearmetricprovider.h \
+    $$PWD/src/axis/spp/metric/qsesppsignallinearamplmetricprovider.h
 
 
 SOURCES +=                                                          \
@@ -78,7 +81,10 @@ SOURCES +=                                                          \
     $$PWD/src/widget/sppwidget/qsesppwidget.cpp \
     $$PWD/src/core/spp/qsesppverticalcontroller.cpp \
     $$PWD/src/core/spp/qsespphorizontalcontroller.cpp \
-    $$PWD/src/core/spp/qsesppcompositorcontroller.cpp
+    $$PWD/src/core/spp/qsesppcompositorcontroller.cpp \
+    $$PWD/src/widget/sppaxiswidget/qsesppaxiswidget.cpp \
+    $$PWD/src/axis/spp/metric/qsespplinearmetricprovider.cpp \
+    $$PWD/src/axis/spp/metric/qsesppsignallinearamplmetricprovider.cpp
 
 
 OTHER_FILES +=                                                      \
@@ -90,7 +96,8 @@ OTHER_FILES +=                                                      \
 
 INCLUDEPATH +=                                                      \
     $$PWD/src                                                       \
-    $$PWD/axis                                                      \
+    $$PWD/src/axis                                                  \
+    $$PWD/src/axis/spp/metric                                       \
     $$PWD/src/core                                                  \
     $$PWD/src/core/spp                                              \
     $$PWD/src/core/spw                                              \
@@ -111,5 +118,6 @@ INCLUDEPATH +=                                                      \
     $$PWD/src/signal/spp/plot                                       \
     $$PWD/src/widget                                                \
     $$PWD/src/widget/sppwidget                                      \
+    $$PWD/src/widget/sppaxiswidget                                  \
 
 DEFINES +=                                                          \

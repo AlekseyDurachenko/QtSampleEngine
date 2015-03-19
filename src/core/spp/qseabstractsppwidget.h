@@ -31,6 +31,8 @@ public:
     void setController(QseAbstractSppController *controller);
 
     inline const QseSppGeometry &geometry() const;
+signals:
+    void geometryChanged(const QseSppGeometry& geometry);
 public slots:
     void setGeometry(const QseSppGeometry& geometry);
 private slots:

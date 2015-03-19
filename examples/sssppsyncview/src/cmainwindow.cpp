@@ -26,6 +26,9 @@
 #include "qsespphorizontalcontroller.h"
 #include "qsesppverticalcontroller.h"
 #include "qsesppcompositorcontroller.h"
+#include "qsesppaxiswidget.h"
+#include "qsespplinearmetricprovider.h"
+#include "qsesppsignallinearamplmetricprovider.h"
 #include <QDebug>
 #include <math.h>
 #include <QtGui>
@@ -75,11 +78,64 @@ qDebug() << DBL_MAX_10_EXP << 5e307 << 5e-308;
     m_sppWidget->setCachedPlot(cachedPlots);
     m_sppWidget->setPostUncachedPlot(postUncachedPlots);
 
+    QseSppAxisWidget *topAxis = new QseSppAxisWidget(QseSppAxisWidget::Top, this);
+    topAxis->setBackground(QColor(Qt::gray));
+    QseSppAxisWidget *bottomAxis = new QseSppAxisWidget(QseSppAxisWidget::Bottom, this);
+    bottomAxis->setBackground(QColor(Qt::gray));
+    QseSppAxisWidget *leftAxis = new QseSppAxisWidget(QseSppAxisWidget::Left, this);
+    leftAxis->setBackground(QColor(Qt::gray));
+    QseSppAxisWidget *rightAxis = new QseSppAxisWidget(QseSppAxisWidget::Right, this);
+    rightAxis->setBackground(QColor(Qt::gray));
+
+    QseSppLinearMetricProvider *sppHorizontalLinearMetricProvider =
+            new QseSppLinearMetricProvider(QseSppLinearMetricProvider::Horizontal, this);
+    QseSppLinearMetricProvider *sppVerticalLinearMetricProvider =
+            new QseSppLinearMetricProvider(QseSppLinearMetricProvider::Vertical, this);
+    QseSppSignalLinearAmplMetricProvider *signalLinearAmpl =
+            new QseSppSignalLinearAmplMetricProvider(this);
+
+    sppHorizontalLinearMetricProvider->setFactor(1);
+    signalLinearAmpl->setFactor(100);
+    topAxis->setMetricProvider(sppHorizontalLinearMetricProvider);
+    bottomAxis->setMetricProvider(sppHorizontalLinearMetricProvider);
+    leftAxis->setMetricProvider(signalLinearAmpl);
+    rightAxis->setMetricProvider(sppVerticalLinearMetricProvider);
+    connect(m_sppWidget, SIGNAL(geometryChanged(QseSppGeometry)),
+            topAxis, SLOT(setGeometry(QseSppGeometry)));
+    connect(m_sppWidget, SIGNAL(geometryChanged(QseSppGeometry)),
+            bottomAxis, SLOT(setGeometry(QseSppGeometry)));
+    connect(m_sppWidget, SIGNAL(geometryChanged(QseSppGeometry)),
+            leftAxis, SLOT(setGeometry(QseSppGeometry)));
+    connect(m_sppWidget, SIGNAL(geometryChanged(QseSppGeometry)),
+            rightAxis, SLOT(setGeometry(QseSppGeometry)));
+
+//    QHBoxLayout *hbox = new QHBoxLayout;
+//    hbox->setSpacing(0);
+//    hbox->addWidget(leftAxis);
+//    hbox->addWidget(m_sppWidget);
+//    hbox->addWidget(rightAxis);
+
+//    qDebug() << QFontMetrics(font()).boundingRect("01234");
+//    qDebug() << QFontMetrics(font()).boundingRect("...");
+
+    QGridLayout *grid = new QGridLayout;
+    grid->addWidget(topAxis, 0, 1);
+    grid->addWidget(leftAxis, 1, 0);
+    grid->addWidget(m_sppWidget, 1, 1);
+    grid->addWidget(rightAxis, 1, 2);
+    grid->addWidget(bottomAxis, 2, 1);
+
     QVBoxLayout *layout = new QVBoxLayout;
+    //layout->addWidget(m_sppWidget);
+    layout->addItem(grid);
     layout->setSpacing(0);
     QWidget *widget = new QWidget(this);
     widget->setLayout(layout);
-    layout->addWidget(m_sppWidget);
+    //layout->addWidget(topAxis);
+    //layout->addWidget(m_sppWidget);
+    //layout->addItem(hbox);
+    //layout->addWidget(downAxis);
+    m_sppWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     QScrollBar *scrollBar = new QScrollBar(Qt::Horizontal, widget);
     QScrollBar *scrollBar2 = new QScrollBar(Qt::Horizontal, widget);
     layout->addWidget(scrollBar);

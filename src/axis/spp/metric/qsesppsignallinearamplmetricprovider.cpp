@@ -1,4 +1,4 @@
-// Copyright 2013, Durachenko Aleksey V. <durachenko.aleksey@gmail.com>
+// Copyright 2013-2015, Durachenko Aleksey V. <durachenko.aleksey@gmail.com>
 //
 // This library is free software; you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public
@@ -12,38 +12,50 @@
 //
 // You should have received a copy of the GNU Lesser General Public
 // License along with this library; if not, write to the Free Software
-// Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
-#include "qseabsolutemetricprovider.h"
+// Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
+#include "qsesppsignallinearamplmetricprovider.h"
+#include "qsemetricmapper.h"
 #include <QDebug>
 
-QseAbsoluteMetricProvider::QseAbsoluteMetricProvider(QObject *parent) :
-    QseAbstractMetricProvider(parent)
+
+QseSppSignalLinearAmplMetricProvider::QseSppSignalLinearAmplMetricProvider(
+        QObject *parent) : QseAbstractSppMetricProvider(parent)
 {
     m_mapper = new QseMetricMapper();
 }
 
-QseAbsoluteMetricProvider::~QseAbsoluteMetricProvider()
+QseSppSignalLinearAmplMetricProvider::~QseSppSignalLinearAmplMetricProvider()
 {
     delete m_mapper;
 }
 
-int QseAbsoluteMetricProvider::maximumTextLenght() const
+void QseSppSignalLinearAmplMetricProvider::setFactor(double factor)
+{
+    if (m_factor != factor)
+    {
+        m_factor = factor;
+        emit changed();
+    }
+}
+
+int QseSppSignalLinearAmplMetricProvider::maximumTextLenght() const
 {
     return 8;
 }
 
-QList<QseMetricItem> QseAbsoluteMetricProvider::create(const QseSppGeometry &geometry, int size) const
+QList<QseMetricItem> QseSppSignalLinearAmplMetricProvider::create(
+        const QseSppGeometry &geometry, int size) const
 {
     QList<QseMetricItem> items;
 
     // parameters of the metrics
-    double offset = geometry.y();
-    double unitPerPixel = geometry.height() / size;
+    double offset = geometry.y() * m_factor;
+    double unitPerPixel = geometry.height() / size * m_factor;
 
     // calculate the absolute position of the central lines
     double center = size / 2.0 - offset / unitPerPixel;
     // value of division
-    double vod = m_mapper->calcNearestValue(unitPerPixel, m_minimumStep);
+    double vod = m_mapper->calcNearestValue(unitPerPixel, minimumStep());
     // estimate pixel count betweeen metrics
     double step = vod / unitPerPixel;
 
