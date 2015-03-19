@@ -42,6 +42,8 @@ void QseAbstractSppWidget::setController(QseAbstractSppController *controller)
     {
         connect(m_controller, SIGNAL(cursorChanged(QCursor)),
                 this, SLOT(setCurrentCursor(QCursor)));
+        connect(m_controller, SIGNAL(geometryChanged(QseSppGeometry)),
+                this, SLOT(setGeometry(QseSppGeometry)));
         connect(m_controller, SIGNAL(destroyed()),
                 this, SLOT(controller_destroyed()));
         setCurrentCursor(m_controller->defaultCursor());

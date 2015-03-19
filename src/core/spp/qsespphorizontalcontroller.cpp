@@ -35,8 +35,11 @@ void QseSppHorizontalController::mouseMoveEvent(QMouseEvent *event,
     if (m_dragAction)
     {
         qint64 value = m_dragPrevPos.x() - event->x();
+
         if (geometry.samplesPerPixel() < 0)
-            value /= qAbs(geometry.samplesPerPixel());
+            value /= -geometry.samplesPerPixel();
+        else
+            value *= geometry.samplesPerPixel();
 
         if (value != 0)
         {

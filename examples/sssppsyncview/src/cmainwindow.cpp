@@ -23,6 +23,8 @@
 #include "qseselection.h"
 #include "csppsyncdatasource.h"
 #include "qsesppsyncsignallinearplot.h"
+#include "qsespphorizontalcontroller.h"
+#include "qsesppverticalcontroller.h"
 #include <QDebug>
 #include <math.h>
 #include <QtGui>
@@ -92,6 +94,8 @@ qDebug() << DBL_MAX_10_EXP << 5e307 << 5e-308;
     setCentralWidget(widget);
 
     m_sppWidget->setGeometry(m_sppWidget->geometry().replaceSamplesPerPixel(-1));
+    m_sppWidget->setController(new QseSppVerticalController(this));
+
     qDebug() << m_sppWidget->geometry();
 }
 
