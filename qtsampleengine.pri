@@ -41,7 +41,8 @@ HEADERS +=                                                          \
     $$PWD/src/widget/sppaxiswidget/qsesppaxiswidget.h \
     $$PWD/src/axis/spp/metric/qsespplinearmetricprovider.h \
     $$PWD/src/axis/spp/metric/qsesppsignallinearamplmetricprovider.h \
-    $$PWD/src/axis/spp/metric/qsespptimemetricprovider.h
+    $$PWD/src/axis/spp/metric/qsespptimemetricprovider.h \
+    $$PWD/src/cover/spp/plot/qsesppaxiscoverplot.h
 
 
 SOURCES +=                                                          \
@@ -86,7 +87,8 @@ SOURCES +=                                                          \
     $$PWD/src/widget/sppaxiswidget/qsesppaxiswidget.cpp \
     $$PWD/src/axis/spp/metric/qsespplinearmetricprovider.cpp \
     $$PWD/src/axis/spp/metric/qsesppsignallinearamplmetricprovider.cpp \
-    $$PWD/src/axis/spp/metric/qsespptimemetricprovider.cpp
+    $$PWD/src/axis/spp/metric/qsespptimemetricprovider.cpp \
+    $$PWD/src/cover/spp/plot/qsesppaxiscoverplot.cpp
 
 
 OTHER_FILES +=                                                      \

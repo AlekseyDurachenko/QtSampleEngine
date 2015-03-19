@@ -1,4 +1,4 @@
-// Copyright 2013, Durachenko Aleksey V. <durachenko.aleksey@gmail.com>
+// Copyright 2013-2015, Durachenko Aleksey V. <durachenko.aleksey@gmail.com>
 //
 // This library is free software; you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public
@@ -12,12 +12,14 @@
 //
 // You should have received a copy of the GNU Lesser General Public
 // License along with this library; if not, write to the Free Software
-// Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
-#include "qsecoverplot.h"
+// Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
+#include "qsesppaxiscoverplot.h"
+#include "qseabstractsppmetricprovider.h"
 #include <QPainter>
 
-QseCoverPlot::QseCoverPlot(QObject *parent) :
-    QseAbstractPlot(parent)
+
+QseSppAxisCoverPlot::QseSppAxisCoverPlot(QObject *parent) :
+    QseAbstractSppPlot(parent)
 {
     m_horizontalProvider = 0;
     m_verticalProvider = 0;
@@ -30,7 +32,7 @@ QseCoverPlot::QseCoverPlot(QObject *parent) :
     m_backgroundColor = qRgb(230, 230, 230);
 }
 
-void QseCoverPlot::setCenterLinePen(const QPen &pen)
+void QseSppAxisCoverPlot::setCenterLinePen(const QPen &pen)
 {
     if (m_clPen != pen)
     {
@@ -39,7 +41,7 @@ void QseCoverPlot::setCenterLinePen(const QPen &pen)
     }
 }
 
-void QseCoverPlot::setCenterLineOpacity(qreal opacity)
+void QseSppAxisCoverPlot::setCenterLineOpacity(qreal opacity)
 {
     if (m_clOpacity != opacity)
     {
@@ -48,7 +50,7 @@ void QseCoverPlot::setCenterLineOpacity(qreal opacity)
     }
 }
 
-void QseCoverPlot::setLinePen(const QPen &pen)
+void QseSppAxisCoverPlot::setLinePen(const QPen &pen)
 {
     if (m_lPen != pen)
     {
@@ -57,7 +59,7 @@ void QseCoverPlot::setLinePen(const QPen &pen)
     }
 }
 
-void QseCoverPlot::setLineOpacity(qreal opacity)
+void QseSppAxisCoverPlot::setLineOpacity(qreal opacity)
 {
     if (m_lOpacity != opacity)
     {
@@ -67,7 +69,7 @@ void QseCoverPlot::setLineOpacity(qreal opacity)
 }
 
 
-void QseCoverPlot::setBackgroundColor(const QColor &color)
+void QseSppAxisCoverPlot::setBackgroundColor(const QColor &color)
 {
     if (m_backgroundColor != color)
     {
@@ -76,45 +78,50 @@ void QseCoverPlot::setBackgroundColor(const QColor &color)
     }
 }
 
-void QseCoverPlot::setVerticalMetricProvider(QseAbstractMetricProvider *provider)
+void QseSppAxisCoverPlot::setVerticalMetricProvider(
+        QseAbstractSppMetricProvider *provider)
 {
     if (m_verticalProvider)
         disconnect(m_verticalProvider, 0, this, 0);
-    if (provider)
-    {
-        connect(provider, SIGNAL(changed()), this, SLOT(setUpdateOnce()));
-        connect(provider, SIGNAL(destroyed()), this, SLOT(verticalMetricProviderDestroyed()));
-    }
+
     m_verticalProvider = provider;
+    if (m_verticalProvider)
+    {
+        connect(m_verticalProvider, SIGNAL(changed()),
+                this, SLOT(setUpdateOnce()));
+        connect(m_verticalProvider, SIGNAL(destroyed()),
+                this, SLOT(verticalProvider_destroyed()));
+    }
 
     setUpdateOnce(true);
 }
 
-void QseCoverPlot::setHorizontalMetricProvider(QseAbstractMetricProvider *provider)
+void QseSppAxisCoverPlot::setHorizontalMetricProvider(
+        QseAbstractSppMetricProvider *provider)
 {
     if (m_horizontalProvider)
         disconnect(m_horizontalProvider, 0, this, 0);
-    if (provider)
-    {
-        connect(provider, SIGNAL(changed()), this, SLOT(setUpdateOnce()));
-        connect(provider, SIGNAL(destroyed()), this, SLOT(horizontalMetricProviderDestroyed()));
-    }
+
     m_horizontalProvider = provider;
+    if (m_horizontalProvider)
+    {
+        connect(m_horizontalProvider, SIGNAL(changed()),
+                this, SLOT(setUpdateOnce()));
+        connect(m_horizontalProvider, SIGNAL(destroyed()),
+                this, SLOT(horizontalProvider_destroyed()));
+    }
 
     setUpdateOnce(true);
 }
 
-void QseCoverPlot::reset()
-{
-    setUpdateOnce(true);
-}
-
-bool QseCoverPlot::hasChanges(const QRect &rect, const QseSppGeometry &geometry)
+bool QseSppAxisCoverPlot::hasChanges(const QRect &rect,
+        const QseSppGeometry &geometry)
 {
     return (isUpdateOnce() || rect != m_lastRect || geometry != m_lastGeometry);
 }
 
-void QseCoverPlot::draw(QPainter *painter, const QRect &rect, const QseSppGeometry &geometry)
+void QseSppAxisCoverPlot::draw(QPainter *painter, const QRect &rect,
+        const QseSppGeometry &geometry)
 {
     painter->fillRect(rect, m_backgroundColor);
 
@@ -148,15 +155,15 @@ void QseCoverPlot::draw(QPainter *painter, const QRect &rect, const QseSppGeomet
     m_lastGeometry = geometry;
     m_lastRect = rect;
 
-    setUpdateOnce(false);
+    QseAbstractSppPlot::draw(painter, rect, geometry);
 }
 
-void QseCoverPlot::verticalMetricProviderDestroyed()
+void QseSppAxisCoverPlot::verticalProvider_destroyed()
 {
     m_verticalProvider = 0;
 }
 
-void QseCoverPlot::horizontalMetricProviderDestroyed()
+void QseSppAxisCoverPlot::horizontalProvider_destroyed()
 {
     m_horizontalProvider = 0;
 }

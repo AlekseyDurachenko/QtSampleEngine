@@ -30,6 +30,7 @@
 #include "qsespplinearmetricprovider.h"
 #include "qsesppsignallinearamplmetricprovider.h"
 #include "qsespptimemetricprovider.h"
+#include "qsesppaxiscoverplot.h"
 #include <QDebug>
 #include <math.h>
 #include <QtGui>
@@ -49,36 +50,6 @@ qDebug() << DBL_MAX_10_EXP << 5e307 << 5e-308;
         datasamples[i] = (qrand()%100000)/100000.0-0.5;
     CSppSyncDataSource *dataSource = new CSppSyncDataSource(datasamples);
 
-    m_sppWidget = new QseSppWidget(this);
-    m_monocolorCoverSppPlot = new QseMonocolorSppCoverPlot(this);
-
-    m_cursor = new QseCursor(this);
-    m_cursor->setAvailableRange(QseRange(0, 1000));
-    m_sppCursorPlot = new QseSppCursorPlot(this);
-    m_sppCursorPlot->setCursor(m_cursor);
-
-    m_selection = new QseSelection(this);
-    m_selection->setAvailableRange(QseRange(0, 1000));
-    m_sppSelectionPlot = new QseSppSelectionPlot(this);
-    m_sppSelectionPlot->setSelection(m_selection);
-
-    m_sppSignalLinearPlot = new QseSppSyncSignalLinearPlot(this);
-    m_sppSignalLinearPlot->setDataSource(dataSource);
-
-    QList<QseAbstractSppPlot *> preUncachedPlots;
-    preUncachedPlots << m_monocolorCoverSppPlot;
-
-    QList<QseAbstractSppPlot *> cachedPlots;
-    cachedPlots << m_sppSignalLinearPlot;
-
-    QList<QseAbstractSppPlot *> postUncachedPlots;
-    postUncachedPlots << m_sppSelectionPlot;
-    postUncachedPlots << m_sppCursorPlot;
-
-    m_sppWidget->setPreUncachedPlot(preUncachedPlots);
-    m_sppWidget->setCachedPlot(cachedPlots);
-    m_sppWidget->setPostUncachedPlot(postUncachedPlots);
-
     QseSppAxisWidget *topAxis = new QseSppAxisWidget(QseSppAxisWidget::Top, this);
     topAxis->setBackground(QColor(Qt::gray));
     QseSppAxisWidget *bottomAxis = new QseSppAxisWidget(QseSppAxisWidget::Bottom, this);
@@ -96,6 +67,43 @@ qDebug() << DBL_MAX_10_EXP << 5e307 << 5e-308;
             new QseSppSignalLinearAmplMetricProvider(this);
     QseSppTimeMetricProvider *timeProvider = new QseSppTimeMetricProvider(this);
     timeProvider->setSampleRate(44100.0);
+
+    m_sppWidget = new QseSppWidget(this);
+    m_monocolorCoverSppPlot = new QseMonocolorSppCoverPlot(this);
+
+    m_cursor = new QseCursor(this);
+    m_cursor->setAvailableRange(QseRange(0, 1000));
+    m_sppCursorPlot = new QseSppCursorPlot(this);
+    m_sppCursorPlot->setCursor(m_cursor);
+
+    QseSppAxisCoverPlot *axisPlot = new QseSppAxisCoverPlot(this);
+    axisPlot->setHorizontalMetricProvider(sppHorizontalLinearMetricProvider);
+    axisPlot->setVerticalMetricProvider(signalLinearAmpl);
+
+    m_selection = new QseSelection(this);
+    m_selection->setAvailableRange(QseRange(0, 1000));
+    m_sppSelectionPlot = new QseSppSelectionPlot(this);
+    m_sppSelectionPlot->setSelection(m_selection);
+
+    m_sppSignalLinearPlot = new QseSppSyncSignalLinearPlot(this);
+    m_sppSignalLinearPlot->setDataSource(dataSource);
+
+    QList<QseAbstractSppPlot *> preUncachedPlots;
+    preUncachedPlots << m_monocolorCoverSppPlot;
+
+    QList<QseAbstractSppPlot *> cachedPlots;
+    cachedPlots << axisPlot;
+    cachedPlots << m_sppSignalLinearPlot;
+
+    QList<QseAbstractSppPlot *> postUncachedPlots;
+    postUncachedPlots << m_sppSelectionPlot;
+    postUncachedPlots << m_sppCursorPlot;
+
+    m_sppWidget->setPreUncachedPlot(preUncachedPlots);
+    m_sppWidget->setCachedPlot(cachedPlots);
+    m_sppWidget->setPostUncachedPlot(postUncachedPlots);
+
+
 
     sppHorizontalLinearMetricProvider->setFactor(1);
     signalLinearAmpl->setFactor(100);
