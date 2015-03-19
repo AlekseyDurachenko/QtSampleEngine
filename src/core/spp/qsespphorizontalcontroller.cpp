@@ -30,13 +30,8 @@ void QseSppHorizontalController::mouseMoveEvent(QMouseEvent *event,
     // if left button is pressed, we shuld move the Y axis of the plotter
     if (m_dragAction)
     {
-        qint64 value = m_dragPrevPos.x() - event->x();
-
-        if (geometry.samplesPerPixel() < 0)
-            value /= -geometry.samplesPerPixel();
-        else
-            value *= geometry.samplesPerPixel();
-
+        const int width = m_dragPrevPos.x() - event->x();
+        const qint64 value = QseSppGeometry::samplesFromWidth(geometry, width);
         if (value != 0)
         {
             m_dragPrevPos = event->pos();
