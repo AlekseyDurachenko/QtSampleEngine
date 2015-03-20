@@ -38,10 +38,20 @@ void QseSelection::setSelectedRange(const QseRange &selectedRange)
     }
     else
     {
-        if (newSelectedRange.first() < m_availableRange.first())
-            newSelectedRange.setFirst(m_availableRange.first());
-        if (newSelectedRange.last() > m_availableRange.last())
-            newSelectedRange.setLast(m_availableRange.last());
+        if ((newSelectedRange.first() > m_availableRange.last()
+                && newSelectedRange.last() > m_availableRange.last())
+                || (newSelectedRange.first() < m_availableRange.first()
+                    && newSelectedRange.last() < m_availableRange.first()))
+        {
+            newSelectedRange.reset();
+        }
+        else
+        {
+            if (newSelectedRange.first() < m_availableRange.first())
+                newSelectedRange.setFirst(m_availableRange.first());
+            if (newSelectedRange.last() > m_availableRange.last())
+                newSelectedRange.setLast(m_availableRange.last());
+        }
     }
 
     if (newSelectedRange != m_selectedRange)
