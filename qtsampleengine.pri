@@ -43,7 +43,8 @@ HEADERS +=                                                          \
     $$PWD/src/axis/spp/metric/qsesppsignallinearamplmetricprovider.h \
     $$PWD/src/axis/spp/metric/qsespptimemetricprovider.h \
     $$PWD/src/cover/spp/plot/qsesppaxiscoverplot.h \
-    $$PWD/src/core/spp/qsespphorizontalzoomcontroller.h
+    $$PWD/src/core/spp/qsespphorizontalzoomcontroller.h \
+    $$PWD/src/core/spp/qsesppverticalzoomcontroller.h
 
 
 SOURCES +=                                                          \
@@ -90,7 +91,8 @@ SOURCES +=                                                          \
     $$PWD/src/axis/spp/metric/qsesppsignallinearamplmetricprovider.cpp \
     $$PWD/src/axis/spp/metric/qsespptimemetricprovider.cpp \
     $$PWD/src/cover/spp/plot/qsesppaxiscoverplot.cpp \
-    $$PWD/src/core/spp/qsespphorizontalzoomcontroller.cpp
+    $$PWD/src/core/spp/qsespphorizontalzoomcontroller.cpp \
+    $$PWD/src/core/spp/qsesppverticalzoomcontroller.cpp
 
 
 OTHER_FILES +=                                                      \
