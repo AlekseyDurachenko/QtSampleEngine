@@ -178,7 +178,7 @@ qDebug() << DBL_MAX_10_EXP << 5e307 << 5e-308;
     sppControllers << vctrl;
 
     QseSppStandardVerticalZoomController *vzctrl = new QseSppStandardVerticalZoomController(this);
-    vzctrl->setKeyboardModifiers(Qt::NoModifier);
+    vzctrl->setKeyboardModifiers(Qt::ControlModifier);
     sppControllers << vzctrl;
 
     QseSppStandardHorizontalZoomController *hzctrl = new QseSppStandardHorizontalZoomController(this);
@@ -192,7 +192,7 @@ qDebug() << DBL_MAX_10_EXP << 5e307 << 5e-308;
 
     QseSppStandardSelectionController *sctrl = new QseSppStandardSelectionController(this);
     sctrl->setMouseButtons(Qt::LeftButton);
-    sctrl->setKeyboardModifiers(Qt::ShiftModifier);
+    sctrl->setKeyboardModifiers(Qt::NoModifier);
     sctrl->setSelection(m_selection);
     sppControllers << sctrl;
 

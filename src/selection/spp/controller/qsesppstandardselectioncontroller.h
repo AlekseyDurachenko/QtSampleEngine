@@ -41,7 +41,7 @@ protected:
                                  const QseSppGeometry &geometry);
 private:
     void updateCursor(Qt::KeyboardModifiers km, int x,
-                      const QseSppGeometry &geometry);
+                      const QRect &rect, const QseSppGeometry &geometry);
 private:
     QseSelection *m_selection;
     // true  -- ready to move the selection
