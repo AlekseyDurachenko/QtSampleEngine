@@ -13,21 +13,21 @@
 // You should have received a copy of the GNU Lesser General Public
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
-#ifndef QSESPPHORIZONTALZOOMCONTROLLER_H
-#define QSESPPHORIZONTALZOOMCONTROLLER_H
+#ifndef QSESPPSTANDARDHORIZONTALZOOMCONTROLLER_H
+#define QSESPPSTANDARDHORIZONTALZOOMCONTROLLER_H
 
-#include "qseabstractsppcontroller.h"
+#include "qseabstractsppstandardcontroller.h"
 
 
-class QseSppHorizontalZoomController : public QseAbstractSppController
+class QseSppStandardHorizontalZoomController : public QseAbstractSppStandardController
 {
     Q_OBJECT
 public:
-    explicit QseSppHorizontalZoomController(QObject *parent = 0);
+    explicit QseSppStandardHorizontalZoomController(QObject *parent = 0);
 protected:
     virtual void wheelEvent(QWheelEvent *event, const QRect &rect,
                             const QseSppGeometry &geometry);
 };
 
 
-#endif // QSESPPHORIZONTALZOOMCONTROLLER_H
+#endif // QSESPPSTANDARDHORIZONTALZOOMCONTROLLER_H

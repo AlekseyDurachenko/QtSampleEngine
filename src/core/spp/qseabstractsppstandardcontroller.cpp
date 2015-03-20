@@ -1,4 +1,4 @@
-// Copyright 2013-2015, Durachenko Aleksey V. <durachenko.aleksey@gmail.com>
+// Copyright 2015, Durachenko Aleksey V. <durachenko.aleksey@gmail.com>
 //
 // This library is free software; you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public
@@ -13,21 +13,24 @@
 // You should have received a copy of the GNU Lesser General Public
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
-#ifndef QSESPPVERTICALZOOMCONTROLLER_H
-#define QSESPPVERTICALZOOMCONTROLLER_H
-
-#include "qseabstractsppcontroller.h"
+#include "qseabstractsppstandardcontroller.h"
 
 
-class QseSppVerticalZoomController : public QseAbstractSppController
+QseAbstractSppStandardController::QseAbstractSppStandardController(
+        QObject *parent) : QseAbstractSppController(parent)
 {
-    Q_OBJECT
-public:
-    explicit QseSppVerticalZoomController(QObject *parent = 0);
-protected:
-    virtual void wheelEvent(QWheelEvent *event, const QRect &rect,
-                            const QseSppGeometry &geometry);
-};
+    m_mouseButtons = Qt::NoButton;
+    m_keyboardModifiers = Qt::NoModifier;
+}
 
+void QseAbstractSppStandardController::setMouseButtons(
+        Qt::MouseButtons mouseButtons)
+{
+    m_mouseButtons = mouseButtons;
+}
 
-#endif // QSESPPVERTICALZOOMCONTROLLER_H
+void QseAbstractSppStandardController::setKeyboardModifiers(
+        Qt::KeyboardModifiers keyboardModifiers)
+{
+    m_keyboardModifiers = keyboardModifiers;
+}

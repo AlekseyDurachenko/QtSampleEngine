@@ -13,17 +13,17 @@
 // You should have received a copy of the GNU Lesser General Public
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
-#ifndef QSESPPHORIZONTALCONTROLLER_H
-#define QSESPPHORIZONTALCONTROLLER_H
+#ifndef QSESPPSTANDARDHORIZONTALCONTROLLER_H
+#define QSESPPSTANDARDHORIZONTALCONTROLLER_H
 
-#include "qseabstractsppcontroller.h"
+#include "qseabstractsppstandardcontroller.h"
 
 
-class QseSppHorizontalController : public QseAbstractSppController
+class QseSppStandardHorizontalController : public QseAbstractSppStandardController
 {
     Q_OBJECT
 public:
-    explicit QseSppHorizontalController(QObject *parent = 0);
+    explicit QseSppStandardHorizontalController(QObject *parent = 0);
 protected:
     virtual void mouseMoveEvent(QMouseEvent *event, const QRect &rect,
                         const QseSppGeometry &geometry);
@@ -31,6 +31,8 @@ protected:
                          const QseSppGeometry &geometry);
     virtual void mouseReleaseEvent(QMouseEvent *event, const QRect &rect,
                            const QseSppGeometry &geometry);
+    virtual void keyReleaseEvent(QKeyEvent *event, const QRect &rect,
+                                 const QseSppGeometry &geometry);
 private:
     // true  -- ready to move
     // false -- not ready to move
@@ -40,4 +42,4 @@ private:
 };
 
 
-#endif // QSESPPHORIZONTALCONTROLLER_H
+#endif // QSESPPSTANDARDHORIZONTALCONTROLLER_H

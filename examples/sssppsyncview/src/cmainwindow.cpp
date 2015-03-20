@@ -23,17 +23,18 @@
 #include "qseselection.h"
 #include "csppsyncdatasource.h"
 #include "qsesppsyncsignallinearplot.h"
-#include "qsespphorizontalcontroller.h"
-#include "qsesppverticalcontroller.h"
+#include "qsesppstandardhorizontalcontroller.h"
+#include "qsesppstandardverticalcontroller.h"
 #include "qsesppcompositorcontroller.h"
 #include "qsesppaxiswidget.h"
 #include "qsespplinearmetricprovider.h"
 #include "qsesppsignallinearamplmetricprovider.h"
 #include "qsespptimemetricprovider.h"
 #include "qsesppaxiscoverplot.h"
-#include "qsespphorizontalzoomcontroller.h"
-#include "qsesppverticalzoomcontroller.h"
-#include "qsesppcursorcontroller.h"
+#include "qsesppstandardhorizontalzoomcontroller.h"
+#include "qsesppstandardverticalzoomcontroller.h"
+#include "qsesppstandardcursorcontroller.h"
+#include "qsesppstandardselectioncontroller.h"
 #include <QDebug>
 #include <math.h>
 #include <QtGui>
@@ -165,13 +166,45 @@ qDebug() << DBL_MAX_10_EXP << 5e307 << 5e-308;
     setCentralWidget(widget);
 
     QList<QseAbstractSppController *> sppControllers;
-    sppControllers << new QseSppHorizontalController(this);
-    sppControllers << new QseSppVerticalController(this);
-    sppControllers << new QseSppHorizontalZoomController(this);
-    sppControllers << new QseSppVerticalZoomController(this);
-    QseSppCursorController *cursorController = new QseSppCursorController(this);
-    cursorController->setCursor(m_cursor);
-    sppControllers << cursorController;
+
+    QseSppStandardHorizontalController *hctrl = new QseSppStandardHorizontalController(this);
+    hctrl->setKeyboardModifiers(Qt::NoModifier);
+    hctrl->setMouseButtons(Qt::RightButton);
+    sppControllers << hctrl;
+
+    QseSppStandardVerticalController *vctrl = new QseSppStandardVerticalController(this);
+    vctrl->setKeyboardModifiers(Qt::NoModifier);
+    vctrl->setMouseButtons(Qt::RightButton);
+    sppControllers << vctrl;
+
+    QseSppStandardVerticalZoomController *vzctrl = new QseSppStandardVerticalZoomController(this);
+    vzctrl->setKeyboardModifiers(Qt::NoModifier);
+    sppControllers << vzctrl;
+
+    QseSppStandardHorizontalZoomController *hzctrl = new QseSppStandardHorizontalZoomController(this);
+    hzctrl->setKeyboardModifiers(Qt::NoModifier);
+    sppControllers << hzctrl;
+
+//    QseSppStandardCursorController *cctrl = new QseSppStandardCursorController(this);
+//    cctrl->setMouseButtons(Qt::MiddleButton);
+//    cctrl->setCursor(m_cursor);
+//    sppControllers << cctrl;
+
+    QseSppStandardSelectionController *sctrl = new QseSppStandardSelectionController(this);
+    sctrl->setMouseButtons(Qt::LeftButton);
+    sctrl->setKeyboardModifiers(Qt::ShiftModifier);
+    sctrl->setSelection(m_selection);
+    sppControllers << sctrl;
+
+    //sppControllers << new QseSppVerticalController(this);
+    //sppControllers << new QseSppHorizontalZoomController(this);
+    //sppControllers << new QseSppVerticalZoomController(this);
+    //QseSppCursorController *cursorController = new QseSppCursorController(this);
+    //cursorController->setCursor(m_cursor);
+    //sppControllers << cursorController;
+    //QseSppSelectionController *selectionController = new QseSppSelectionController(this);
+    //selectionController->setSelection(m_selection);
+    //sppControllers << selectionController;
 
     QseSppCompositorController *sppCompositorController =
             new QseSppCompositorController(this);

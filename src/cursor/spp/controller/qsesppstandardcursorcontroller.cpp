@@ -13,24 +13,24 @@
 // You should have received a copy of the GNU Lesser General Public
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
-#include "qsesppcursorcontroller.h"
+#include "qsesppstandardcursorcontroller.h"
 #include <QMouseEvent>
 #include "qsesppgeometry.h"
 #include "qsecursor.h"
 
 
-QseSppCursorController::QseSppCursorController(QObject *parent) :
-    QseAbstractSppController(parent)
+QseSppStandardCursorController::QseSppStandardCursorController(
+        QObject *parent) : QseAbstractSppStandardController(parent)
 {
     m_cursor = 0;
 }
 
-void QseSppCursorController::setCursor(QseCursor *cursor)
+void QseSppStandardCursorController::setCursor(QseCursor *cursor)
 {
     m_cursor = cursor;
 }
 
-void QseSppCursorController::mouseMoveEvent(QMouseEvent *event,
+void QseSppStandardCursorController::mouseMoveEvent(QMouseEvent *event,
         const QRect &/*rect*/, const QseSppGeometry &geometry)
 {
     if (m_cursor
@@ -39,37 +39,42 @@ void QseSppCursorController::mouseMoveEvent(QMouseEvent *event,
     {
         m_cursor->setIndex(QseSppGeometry::calcSampleIndex(geometry, event->x()));
     }
-    else if (m_cursor
-             && event->modifiers() == Qt::ControlModifier)
-    {
-        emit cursorChanged(QCursor(Qt::IBeamCursor));
-    }
+
+    updateCursor(event->modifiers());
 }
 
-void QseSppCursorController::mousePressEvent(QMouseEvent *event,
+void QseSppStandardCursorController::mousePressEvent(QMouseEvent *event,
         const QRect &/*rect*/, const QseSppGeometry &geometry)
 {
     if (m_cursor
-            && event->button() == Qt::LeftButton
-            && event->modifiers() == Qt::ControlModifier)
+            && event->button() == mouseButtons()
+            && event->modifiers() == keyboardModifiers())
     {
         m_cursor->setIndex(QseSppGeometry::calcSampleIndex(geometry, event->x()));
     }
+
+    updateCursor(event->modifiers());
 }
 
-void QseSppCursorController::keyPressEvent(QKeyEvent *event,
+void QseSppStandardCursorController::keyPressEvent(QKeyEvent *event,
         const QRect &/*rect*/, const QseSppGeometry &/*geometry*/)
 {
-    if (m_cursor && event->modifiers() == Qt::ControlModifier)
+    updateCursor(event->modifiers());
+}
+
+void QseSppStandardCursorController::keyReleaseEvent(QKeyEvent *event,
+        const QRect &/*rect*/, const QseSppGeometry &/*geometry*/)
+{
+    updateCursor(event->modifiers());
+}
+
+void QseSppStandardCursorController::updateCursor(Qt::KeyboardModifiers km)
+{
+    if (m_cursor && km == keyboardModifiers())
     {
         emit cursorChanged(QCursor(Qt::IBeamCursor));
     }
-}
-
-void QseSppCursorController::keyReleaseEvent(QKeyEvent *event,
-        const QRect &/*rect*/, const QseSppGeometry &/*geometry*/)
-{
-    if (m_cursor && event->modifiers() == Qt::NoModifier)
+    else
     {
         emit cursorChanged(defaultCursor());
     }

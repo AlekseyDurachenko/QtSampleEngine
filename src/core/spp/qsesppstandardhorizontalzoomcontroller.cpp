@@ -13,20 +13,20 @@
 // You should have received a copy of the GNU Lesser General Public
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
-#include "qsespphorizontalzoomcontroller.h"
+#include "qsesppstandardhorizontalzoomcontroller.h"
 #include <QWheelEvent>
 
 
-QseSppHorizontalZoomController::QseSppHorizontalZoomController(
-        QObject *parent) : QseAbstractSppController(parent)
+QseSppStandardHorizontalZoomController::QseSppStandardHorizontalZoomController(
+        QObject *parent) : QseAbstractSppStandardController(parent)
 {
 }
 
 
-void QseSppHorizontalZoomController::wheelEvent(QWheelEvent *event,
+void QseSppStandardHorizontalZoomController::wheelEvent(QWheelEvent *event,
         const QRect &/*rect*/, const QseSppGeometry &geometry)
 {
-    if (event->modifiers() == Qt::NoModifier)
+    if (event->modifiers() == keyboardModifiers())
     {
         // calculate zoom
         int degree = event->delta() / 60;

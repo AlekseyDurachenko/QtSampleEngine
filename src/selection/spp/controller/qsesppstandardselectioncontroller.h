@@ -13,38 +13,51 @@
 // You should have received a copy of the GNU Lesser General Public
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
-#ifndef QSESPPCURSORCONTROLLER_H
-#define QSESPPCURSORCONTROLLER_H
+#ifndef QSESPPSTANDARDSELECTIONCONTROLLER_H
+#define QSESPPSTANDARDSELECTIONCONTROLLER_H
 
-#include "qseabstractsppcontroller.h"
-class QseCursor;
+#include "qseabstractsppstandardcontroller.h"
+class QseSelection;
 
 
-class QseSppCursorController : public QseAbstractSppController
+class QseSppStandardSelectionController : public QseAbstractSppStandardController
 {
     Q_OBJECT
 public:
-    explicit QseSppCursorController(QObject *parent = 0);
+    explicit QseSppStandardSelectionController(QObject *parent = 0);
 
-    inline QseCursor *cursor() const;
-    void setCursor(QseCursor *cursor);
+    inline QseSelection *selection() const;
+    void setSelection(QseSelection *cursor);
 protected:
     virtual void mouseMoveEvent(QMouseEvent *event, const QRect &rect,
                         const QseSppGeometry &geometry);
     virtual void mousePressEvent(QMouseEvent *event, const QRect &rect,
                          const QseSppGeometry &geometry);
+    virtual void mouseReleaseEvent(QMouseEvent *event, const QRect &rect,
+                                   const QseSppGeometry &geometry);
     virtual void keyPressEvent(QKeyEvent *event, const QRect &rect,
                                const QseSppGeometry &geometry);
     virtual void keyReleaseEvent(QKeyEvent *event, const QRect &rect,
                                  const QseSppGeometry &geometry);
 private:
-    QseCursor *m_cursor;
+    void updateCursor(Qt::KeyboardModifiers km, int x,
+                      const QseSppGeometry &geometry);
+private:
+    QseSelection *m_selection;
+    // true  -- ready to move the selection
+    // false -- not ready to move the selection
+    bool m_dragAction;
+    // store the one selection bound different the current cursor
+    // selection round
+    qint64 m_otherDragSample;
+
+    QPoint m_lastCursorPosition;
 };
 
-QseCursor *QseSppCursorController::cursor() const
+QseSelection *QseSppStandardSelectionController::selection() const
 {
-    return m_cursor;
+    return m_selection;
 }
 
 
-#endif // QSESPPCURSORCONTROLLER_H
+#endif // QSESPPSTANDARDSELECTIONCONTROLLER_H

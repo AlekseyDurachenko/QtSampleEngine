@@ -35,17 +35,19 @@ HEADERS +=                                                          \
     $$PWD/src/signal/spp/plot/qsesppsyncsignallinearplot.h \
     $$PWD/src/widget/sppwidget/qsesppwidget.h \
     $$PWD/src/qse_deprecated.h \
-    $$PWD/src/core/spp/qsesppverticalcontroller.h \
-    $$PWD/src/core/spp/qsespphorizontalcontroller.h \
     $$PWD/src/core/spp/qsesppcompositorcontroller.h \
     $$PWD/src/widget/sppaxiswidget/qsesppaxiswidget.h \
     $$PWD/src/axis/spp/metric/qsespplinearmetricprovider.h \
     $$PWD/src/axis/spp/metric/qsesppsignallinearamplmetricprovider.h \
     $$PWD/src/axis/spp/metric/qsespptimemetricprovider.h \
     $$PWD/src/cover/spp/plot/qsesppaxiscoverplot.h \
-    $$PWD/src/core/spp/qsespphorizontalzoomcontroller.h \
-    $$PWD/src/core/spp/qsesppverticalzoomcontroller.h \
-    $$PWD/src/cursor/spp/controller/qsesppcursorcontroller.h
+    $$PWD/src/core/spp/qseabstractsppstandardcontroller.h \
+    $$PWD/src/core/spp/qsesppstandardhorizontalcontroller.h \
+    $$PWD/src/core/spp/qsesppstandardverticalcontroller.h \
+    $$PWD/src/core/spp/qsesppstandardverticalzoomcontroller.h \
+    $$PWD/src/core/spp/qsesppstandardhorizontalzoomcontroller.h \
+    $$PWD/src/cursor/spp/controller/qsesppstandardcursorcontroller.h \
+    $$PWD/src/selection/spp/controller/qsesppstandardselectioncontroller.h
 
 
 SOURCES +=                                                          \
@@ -84,17 +86,19 @@ SOURCES +=                                                          \
     $$PWD/src/signal/spp/plot/qseabstractsppsyncsignalplot.cpp \
     $$PWD/src/signal/spp/plot/qsesppsyncsignallinearplot.cpp \
     $$PWD/src/widget/sppwidget/qsesppwidget.cpp \
-    $$PWD/src/core/spp/qsesppverticalcontroller.cpp \
-    $$PWD/src/core/spp/qsespphorizontalcontroller.cpp \
     $$PWD/src/core/spp/qsesppcompositorcontroller.cpp \
     $$PWD/src/widget/sppaxiswidget/qsesppaxiswidget.cpp \
     $$PWD/src/axis/spp/metric/qsespplinearmetricprovider.cpp \
     $$PWD/src/axis/spp/metric/qsesppsignallinearamplmetricprovider.cpp \
     $$PWD/src/axis/spp/metric/qsespptimemetricprovider.cpp \
     $$PWD/src/cover/spp/plot/qsesppaxiscoverplot.cpp \
-    $$PWD/src/core/spp/qsespphorizontalzoomcontroller.cpp \
-    $$PWD/src/core/spp/qsesppverticalzoomcontroller.cpp \
-    $$PWD/src/cursor/spp/controller/qsesppcursorcontroller.cpp
+    $$PWD/src/core/spp/qseabstractsppstandardcontroller.cpp \
+    $$PWD/src/core/spp/qsesppstandardhorizontalcontroller.cpp \
+    $$PWD/src/core/spp/qsesppstandardverticalcontroller.cpp \
+    $$PWD/src/core/spp/qsesppstandardverticalzoomcontroller.cpp \
+    $$PWD/src/core/spp/qsesppstandardhorizontalzoomcontroller.cpp \
+    $$PWD/src/cursor/spp/controller/qsesppstandardcursorcontroller.cpp \
+    $$PWD/src/selection/spp/controller/qsesppstandardselectioncontroller.cpp
 
 
 OTHER_FILES +=                                                      \
@@ -103,6 +107,7 @@ OTHER_FILES +=                                                      \
     $$PWD/AUTHORS                                                   \
     $$PWD/LICENSE                                                   \
     $$PWD/S-Docs/DOC_RU.md                                          \
+
 
 INCLUDEPATH +=                                                      \
     $$PWD/src                                                       \
@@ -125,10 +130,12 @@ INCLUDEPATH +=                                                      \
     $$PWD/src/metric/spw                                            \
     $$PWD/src/selection                                             \
     $$PWD/src/selection/spp/plot                                    \
+    $$PWD/src/selection/spp/controller                              \
     $$PWD/src/signal                                                \
     $$PWD/src/signal/spp/plot                                       \
     $$PWD/src/widget                                                \
     $$PWD/src/widget/sppwidget                                      \
     $$PWD/src/widget/sppaxiswidget                                  \
+
 
 DEFINES +=                                                          \

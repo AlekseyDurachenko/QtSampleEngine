@@ -13,21 +13,20 @@
 // You should have received a copy of the GNU Lesser General Public
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
-#include "qsespphorizontalcontroller.h"
+#include "qsesppstandardhorizontalcontroller.h"
 #include <QMouseEvent>
 
 
-QseSppHorizontalController::QseSppHorizontalController(QObject *parent) :
-    QseAbstractSppController(parent)
+QseSppStandardHorizontalController::QseSppStandardHorizontalController(
+        QObject *parent) : QseAbstractSppStandardController(parent)
 {
     m_dragAction = false;
     setDefaultCursor(Qt::OpenHandCursor);
 }
 
-void QseSppHorizontalController::mouseMoveEvent(QMouseEvent *event,
-        const QRect &, const QseSppGeometry &geometry)
+void QseSppStandardHorizontalController::mouseMoveEvent(QMouseEvent *event,
+        const QRect &/*rect*/, const QseSppGeometry &geometry)
 {
-    // if left button is pressed, we shuld move the Y axis of the plotter
     if (m_dragAction)
     {
         const int diff = m_dragPrevPos.x() - event->x();
@@ -40,10 +39,11 @@ void QseSppHorizontalController::mouseMoveEvent(QMouseEvent *event,
     }
 }
 
-void QseSppHorizontalController::mousePressEvent(QMouseEvent *event,
-        const QRect &, const QseSppGeometry &)
+void QseSppStandardHorizontalController::mousePressEvent(QMouseEvent *event,
+        const QRect &/*rect*/, const QseSppGeometry &/*geometry*/)
 {
-    if (event->button() == Qt::LeftButton && event->modifiers() == Qt::NoModifier)
+    if (event->buttons() == mouseButtons()
+            && event->modifiers() == keyboardModifiers())
     {
         m_dragAction = true;
         m_dragPrevPos = event->pos();
@@ -51,12 +51,20 @@ void QseSppHorizontalController::mousePressEvent(QMouseEvent *event,
     }
 }
 
-void QseSppHorizontalController::mouseReleaseEvent(QMouseEvent *event,
-        const QRect &, const QseSppGeometry &)
+void QseSppStandardHorizontalController::mouseReleaseEvent(QMouseEvent *event,
+        const QRect &/*rect*/, const QseSppGeometry &/*geometry*/)
 {
-    // after left button of the mouse will be release
-    // we should finished the moving
-    if (!(event->buttons() & Qt::LeftButton))
+    if (event->buttons() != mouseButtons())
+    {
+        m_dragAction = false;
+        emit cursorChanged(defaultCursor());
+    }
+}
+
+void QseSppStandardHorizontalController::keyReleaseEvent(QKeyEvent *event,
+        const QRect &/*rect*/, const QseSppGeometry &/*geometry*/)
+{
+    if (event->modifiers() != keyboardModifiers())
     {
         m_dragAction = false;
         emit cursorChanged(defaultCursor());

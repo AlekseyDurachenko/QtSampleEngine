@@ -13,20 +13,20 @@
 // You should have received a copy of the GNU Lesser General Public
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
-#include "qsesppverticalzoomcontroller.h"
+#include "qsesppstandardverticalzoomcontroller.h"
 #include <QWheelEvent>
 
 
-QseSppVerticalZoomController::QseSppVerticalZoomController(QObject *parent) :
-    QseAbstractSppController(parent)
+QseSppStandardVerticalZoomController::QseSppStandardVerticalZoomController(
+        QObject *parent) : QseAbstractSppStandardController(parent)
 {
 }
 
 
-void QseSppVerticalZoomController::wheelEvent(QWheelEvent *event,
+void QseSppStandardVerticalZoomController::wheelEvent(QWheelEvent *event,
         const QRect &/*rect*/, const QseSppGeometry &geometry)
 {
-    if (event->modifiers() == Qt::ControlModifier)
+    if (event->modifiers() == keyboardModifiers())
     {
         QseSppGeometry result = geometry;
 
