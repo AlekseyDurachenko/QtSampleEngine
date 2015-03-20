@@ -24,12 +24,12 @@ class QseSppVerticalController : public QseAbstractSppController
     Q_OBJECT
 public:
     explicit QseSppVerticalController(QObject *parent = 0);
-
-    void mouseMoveEvent(QMouseEvent *event, const QRect &rect,
+protected:
+    virtual void mouseMoveEvent(QMouseEvent *event, const QRect &rect,
                         const QseSppGeometry &geometry);
-    void mousePressEvent(QMouseEvent *event, const QRect &rect,
+    virtual void mousePressEvent(QMouseEvent *event, const QRect &rect,
                          const QseSppGeometry &geometry);
-    void mouseReleaseEvent(QMouseEvent *event, const QRect &rect,
+    virtual void mouseReleaseEvent(QMouseEvent *event, const QRect &rect,
                            const QseSppGeometry &geometry);
 private:
     // true  -- ready to move
