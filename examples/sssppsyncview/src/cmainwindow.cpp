@@ -33,6 +33,7 @@
 #include "qsesppaxiscoverplot.h"
 #include "qsespphorizontalzoomcontroller.h"
 #include "qsesppverticalzoomcontroller.h"
+#include "qsesppcursorcontroller.h"
 #include <QDebug>
 #include <math.h>
 #include <QtGui>
@@ -168,6 +169,10 @@ qDebug() << DBL_MAX_10_EXP << 5e307 << 5e-308;
     sppControllers << new QseSppVerticalController(this);
     sppControllers << new QseSppHorizontalZoomController(this);
     sppControllers << new QseSppVerticalZoomController(this);
+    QseSppCursorController *cursorController = new QseSppCursorController(this);
+    cursorController->setCursor(m_cursor);
+    sppControllers << cursorController;
+
     QseSppCompositorController *sppCompositorController =
             new QseSppCompositorController(this);
     sppCompositorController->setControllers(sppControllers);

@@ -23,6 +23,7 @@ QseSppWidget::QseSppWidget(QWidget *parent,
 {
     setMouseTracking(true);
     setAutoFillBackground(false);
+    setFocusPolicy(Qt::StrongFocus);
     setAttribute(Qt::WA_OpaquePaintEvent);
 }
 

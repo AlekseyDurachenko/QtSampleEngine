@@ -44,7 +44,8 @@ HEADERS +=                                                          \
     $$PWD/src/axis/spp/metric/qsespptimemetricprovider.h \
     $$PWD/src/cover/spp/plot/qsesppaxiscoverplot.h \
     $$PWD/src/core/spp/qsespphorizontalzoomcontroller.h \
-    $$PWD/src/core/spp/qsesppverticalzoomcontroller.h
+    $$PWD/src/core/spp/qsesppverticalzoomcontroller.h \
+    $$PWD/src/cursor/spp/controller/qsesppcursorcontroller.h
 
 
 SOURCES +=                                                          \
@@ -92,7 +93,8 @@ SOURCES +=                                                          \
     $$PWD/src/axis/spp/metric/qsespptimemetricprovider.cpp \
     $$PWD/src/cover/spp/plot/qsesppaxiscoverplot.cpp \
     $$PWD/src/core/spp/qsespphorizontalzoomcontroller.cpp \
-    $$PWD/src/core/spp/qsesppverticalzoomcontroller.cpp
+    $$PWD/src/core/spp/qsesppverticalzoomcontroller.cpp \
+    $$PWD/src/cursor/spp/controller/qsesppcursorcontroller.cpp
 
 
 OTHER_FILES +=                                                      \
@@ -113,6 +115,7 @@ INCLUDEPATH +=                                                      \
     $$PWD/src/cover/spp/plot                                        \
     $$PWD/src/cursor                                                \
     $$PWD/src/cursor/spp/plot                                       \
+    $$PWD/src/cursor/spp/controller                                 \
     $$PWD/src/datasource                                            \
     $$PWD/src/datasource/spp                                        \
     $$PWD/src/datasource/spw                                        \
