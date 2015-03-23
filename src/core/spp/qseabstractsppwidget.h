@@ -19,6 +19,7 @@
 #include "qseabstractwidget.h"
 #include "qsesppgeometry.h"
 class QseAbstractSppController;
+class QseAbstractSppLimiter;
 
 
 class QseAbstractSppWidget : public QseAbstractWidget
@@ -27,8 +28,11 @@ class QseAbstractSppWidget : public QseAbstractWidget
 public:
     explicit QseAbstractSppWidget(QWidget *parent = 0, Qt::WindowFlags f = 0);
 
-    inline const QseAbstractSppController *controller() const;
+    inline QseAbstractSppController *controller() const;
     void setController(QseAbstractSppController *controller);
+
+    inline QseAbstractSppLimiter *limiter() const;
+    void setLimiter(QseAbstractSppLimiter *limiter);
 
     inline const QseSppGeometry &geometry() const;
 signals:
@@ -37,6 +41,8 @@ public slots:
     void setGeometry(const QseSppGeometry& geometry);
 private slots:
     void controller_destroyed();
+    void limiter_changed();
+    void limiter_destroyed();
 protected:
     void mouseMoveEvent(QMouseEvent *event);
     void mousePressEvent(QMouseEvent *event);
@@ -46,13 +52,19 @@ protected:
     void keyReleaseEvent(QKeyEvent *event);
 private:
     QseAbstractSppController *m_controller;
+    QseAbstractSppLimiter *m_limiter;
     QseSppGeometry m_geometry;
     bool m_updateOnce;
 };
 
-const QseAbstractSppController *QseAbstractSppWidget::controller() const
+QseAbstractSppController *QseAbstractSppWidget::controller() const
 {
     return m_controller;
+}
+
+QseAbstractSppLimiter *QseAbstractSppWidget::limiter() const
+{
+    return m_limiter;
 }
 
 const QseSppGeometry &QseAbstractSppWidget::geometry() const

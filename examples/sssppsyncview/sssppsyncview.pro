@@ -11,11 +11,13 @@ INCLUDEPATH +=                              \
 SOURCES +=                                  \
     $$PWD/src/main.cpp                            \
     $$PWD/src/csppsyncdatasource.cpp \
-    src/cmainwindow.cpp
+    src/cmainwindow.cpp \
+    src/cspplimiter.cpp
 
 HEADERS +=                                  \
     $$PWD/src/csppsyncdatasource.h \
-    src/cmainwindow.h
+    src/cmainwindow.h \
+    src/cspplimiter.h
 
 FORMS += \
     src/cmainwindow.ui

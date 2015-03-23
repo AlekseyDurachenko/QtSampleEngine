@@ -15,19 +15,25 @@
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
 #include "qseabstractsppwidget.h"
 #include "qseabstractsppcontroller.h"
+#include "qseabstractspplimiter.h"
 
 
 QseAbstractSppWidget::QseAbstractSppWidget(QWidget *parent,
         Qt::WindowFlags f) : QseAbstractWidget(parent, f)
 {
     m_controller = 0;
+    m_limiter = 0;
 }
 
 void QseAbstractSppWidget::setGeometry(const QseSppGeometry &geometry)
 {
-    if (m_geometry != geometry)
+    QseSppGeometry limitedGeometry = geometry;
+    if (m_limiter)
+        m_limiter->limit(&limitedGeometry);
+
+    if (m_geometry != limitedGeometry)
     {
-        m_geometry = geometry;
+        m_geometry = limitedGeometry;
         setUpdateOnce(true);
         emit geometryChanged(m_geometry);
     }
@@ -51,9 +57,35 @@ void QseAbstractSppWidget::setController(QseAbstractSppController *controller)
     }
 }
 
+void QseAbstractSppWidget::setLimiter(QseAbstractSppLimiter *limiter)
+{
+    if (m_limiter)
+        disconnect(m_limiter, 0, this, 0);
+
+    m_limiter = limiter;
+    if (m_limiter)
+    {
+        connect(m_limiter, SIGNAL(changed()),
+                this, SLOT(limiter_changed()));
+        connect(m_limiter, SIGNAL(destroyed()),
+                this, SLOT(limiter_destroyed()));
+        setGeometry(geometry());
+    }
+}
+
 void QseAbstractSppWidget::controller_destroyed()
 {
     m_controller = 0;
+}
+
+void QseAbstractSppWidget::limiter_changed()
+{
+    setGeometry(geometry());
+}
+
+void QseAbstractSppWidget::limiter_destroyed()
+{
+    m_limiter = 0;
 }
 
 void QseAbstractSppWidget::mouseMoveEvent(QMouseEvent *event)

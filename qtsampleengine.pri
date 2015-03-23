@@ -47,7 +47,8 @@ HEADERS +=                                                          \
     $$PWD/src/core/spp/qsesppstandardverticalzoomcontroller.h \
     $$PWD/src/core/spp/qsesppstandardhorizontalzoomcontroller.h \
     $$PWD/src/cursor/spp/controller/qsesppstandardcursorcontroller.h \
-    $$PWD/src/selection/spp/controller/qsesppstandardselectioncontroller.h
+    $$PWD/src/selection/spp/controller/qsesppstandardselectioncontroller.h \
+    $$PWD/src/core/spp/qseabstractspplimiter.h
 
 
 SOURCES +=                                                          \
@@ -98,7 +99,8 @@ SOURCES +=                                                          \
     $$PWD/src/core/spp/qsesppstandardverticalzoomcontroller.cpp \
     $$PWD/src/core/spp/qsesppstandardhorizontalzoomcontroller.cpp \
     $$PWD/src/cursor/spp/controller/qsesppstandardcursorcontroller.cpp \
-    $$PWD/src/selection/spp/controller/qsesppstandardselectioncontroller.cpp
+    $$PWD/src/selection/spp/controller/qsesppstandardselectioncontroller.cpp \
+    $$PWD/src/core/spp/qseabstractspplimiter.cpp
 
 
 OTHER_FILES +=                                                      \

@@ -35,6 +35,7 @@
 #include "qsesppstandardverticalzoomcontroller.h"
 #include "qsesppstandardcursorcontroller.h"
 #include "qsesppstandardselectioncontroller.h"
+#include "cspplimiter.h"
 #include <QDebug>
 #include <math.h>
 #include <QtGui>
@@ -212,6 +213,8 @@ qDebug() << DBL_MAX_10_EXP << 5e307 << 5e-308;
 
     m_sppWidget->setGeometry(m_sppWidget->geometry().replaceSamplesPerPixel(-1));
     m_sppWidget->setController(sppCompositorController);
+
+    m_sppWidget->setLimiter(new CSppLimiter(this));
 
     qDebug() << m_sppWidget->geometry();
 }
