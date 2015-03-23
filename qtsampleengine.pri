@@ -48,7 +48,8 @@ HEADERS +=                                                          \
     $$PWD/src/core/spp/qsesppstandardhorizontalzoomcontroller.h \
     $$PWD/src/cursor/spp/controller/qsesppstandardcursorcontroller.h \
     $$PWD/src/selection/spp/controller/qsesppstandardselectioncontroller.h \
-    $$PWD/src/core/spp/qseabstractspplimiter.h
+    $$PWD/src/core/spp/qseabstractspplimiter.h \
+    $$PWD/src/widget/sppaudacitywidget/qsesppaudacitywidget.h
 
 
 SOURCES +=                                                          \
@@ -100,7 +101,8 @@ SOURCES +=                                                          \
     $$PWD/src/core/spp/qsesppstandardhorizontalzoomcontroller.cpp \
     $$PWD/src/cursor/spp/controller/qsesppstandardcursorcontroller.cpp \
     $$PWD/src/selection/spp/controller/qsesppstandardselectioncontroller.cpp \
-    $$PWD/src/core/spp/qseabstractspplimiter.cpp
+    $$PWD/src/core/spp/qseabstractspplimiter.cpp \
+    $$PWD/src/widget/sppaudacitywidget/qsesppaudacitywidget.cpp
 
 
 OTHER_FILES +=                                                      \
@@ -136,6 +138,7 @@ INCLUDEPATH +=                                                      \
     $$PWD/src/signal                                                \
     $$PWD/src/signal/spp/plot                                       \
     $$PWD/src/widget                                                \
+    $$PWD/src/widget/sppaudacitywidget                              \
     $$PWD/src/widget/sppwidget                                      \
     $$PWD/src/widget/sppaxiswidget                                  \
 
