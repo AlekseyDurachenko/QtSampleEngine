@@ -25,6 +25,8 @@ class CSppSyncDataSource : public QseAbstractSppSyncDataSource
 public:
     CSppSyncDataSource(const QVector<double> &samples, QObject *parent = 0);
     virtual qint64 count() const;
+    virtual double maximum() const;
+    virtual double minimum() const;
     inline const QVector<double> &samples() const;
     virtual QsePeakArray read(const QseSppGeometry &geometry, int width);
 public slots:

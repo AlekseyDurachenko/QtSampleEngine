@@ -27,6 +27,16 @@ qint64 CSppSyncDataSource::count() const
     return m_samples.count();
 }
 
+double CSppSyncDataSource::maximum() const
+{
+    return 1.0;
+}
+
+double CSppSyncDataSource::minimum() const
+{
+    return -1.0;
+}
+
 void CSppSyncDataSource::setSamples(const QVector<double> &samples)
 {
     m_samples = samples;

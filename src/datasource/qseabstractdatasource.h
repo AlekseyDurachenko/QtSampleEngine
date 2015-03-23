@@ -25,6 +25,8 @@ class QseAbstractDataSource : public QObject
 public:
     explicit QseAbstractDataSource(QObject *parent = 0);
     virtual qint64 count() const = 0;
+    virtual double maximum() const = 0;
+    virtual double minimum() const = 0;
 signals:
     void dataChanged(qint64 first = -1, qint64 last = -1);
 };
