@@ -22,6 +22,7 @@
 QseSppSyncSignalLinearPlot::QseSppSyncSignalLinearPlot(QObject *parent) :
     QseAbstractSppSyncSignalPlot(parent)
 {
+    setZeroPoint(Middle);
 }
 
 void QseSppSyncSignalLinearPlot::draw(QPainter *painter, const QRect &rect,
@@ -57,6 +58,20 @@ void QseSppSyncSignalLinearPlot::drawAsLines(QPainter *painter,
     const qint64 pps = -geometry.samplesPerPixel();
     const QVector<double> &points = peaks.minimums();
 
+    double zero;
+    switch (zeroPoint())
+    {
+    case Top:
+        zero = 0;
+        break;
+    case Middle:
+        zero = rect.height()/2.0;
+        break;
+    case Bottom:
+        zero = rect.height();
+        break;
+    }
+
     int space = 0; // skip pixel from left bound
     int first = 0; // index of first visible points
     if (offset < 0)
@@ -68,8 +83,8 @@ void QseSppSyncSignalLinearPlot::drawAsLines(QPainter *painter,
     {
         double x1 = space + (i-1-first)*pps;
         double x2 = x1 + pps;
-        double y1 = rect.height()/2 - (geometry.y()+points[i-1])*rect.height()/geometry.height();
-        double y2 = rect.height()/2 - (geometry.y()+points[i])*rect.height()/geometry.height();
+        double y1 = zero-(geometry.y()+points[i-1])*rect.height()/geometry.height();
+        double y2 = zero-(geometry.y()+points[i])*rect.height()/geometry.height();
 
         if (x1 >= rect.width())
             break;
@@ -102,6 +117,20 @@ void QseSppSyncSignalLinearPlot::drawAsPeaks(QPainter *painter,
     const QVector<double> &minimums = peaks.minimums();
     const QVector<double> &maximums = peaks.maximums();
 
+    double zero;
+    switch (zeroPoint())
+    {
+    case Top:
+        zero = 0;
+        break;
+    case Middle:
+        zero = rect.height()/2.0;
+        break;
+    case Bottom:
+        zero = rect.height();
+        break;
+    }
+
     int space = 0; // skip pixel from left bound
     int first = 0; // index of first visible minimum(maximum)
     if (offset < 0)
@@ -112,8 +141,8 @@ void QseSppSyncSignalLinearPlot::drawAsPeaks(QPainter *painter,
     if (first >= maximums.count())
         return;
 
-    double prevMin = rect.height()/2-(geometry.y()+minimums[first])*rect.height()/geometry.height();
-    double prevMax = rect.height()/2-(geometry.y()+maximums[first])*rect.height()/geometry.height();
+    double prevMin = zero-(geometry.y()+minimums[first])*rect.height()/geometry.height();
+    double prevMax = zero-(geometry.y()+maximums[first])*rect.height()/geometry.height();
     double x1 = space;
     double x2 = space;
     if (x1 >= rect.width())
@@ -133,8 +162,8 @@ void QseSppSyncSignalLinearPlot::drawAsPeaks(QPainter *painter,
         x2 = space + i - first;
         if (x1 >= rect.width())
             break;
-        double curMin = rect.height()/2-(geometry.y()+minimums[i])*rect.height()/geometry.height();
-        double curMax = rect.height()/2-(geometry.y()+maximums[i])*rect.height()/geometry.height();
+        double curMin = zero-(geometry.y()+minimums[i])*rect.height()/geometry.height();
+        double curMax = zero-(geometry.y()+maximums[i])*rect.height()/geometry.height();
         if (! ((curMin < 0.0 && curMax < 0.0)
               || (curMin >= rect.height() && curMax >= rect.height())))
         {

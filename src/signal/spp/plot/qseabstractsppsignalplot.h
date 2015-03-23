@@ -24,10 +24,21 @@
 class QseAbstractSppSignalPlot : public QseAbstractSppPlot
 {
     Q_OBJECT
+    Q_ENUMS(ZeroPoint)
     Q_PROPERTY(QPen pen READ pen WRITE setPen)
     Q_PROPERTY(qreal opacity READ opacity WRITE setOpacity)
 public:
+    enum ZeroPoint
+    {
+        Top     = 0x01,
+        Middle  = 0x02,
+        Bottom  = 0x03
+    };
+
     explicit QseAbstractSppSignalPlot(QObject *parent = 0);
+
+    inline ZeroPoint zeroPoint() const;
+    void setZeroPoint(ZeroPoint zeroPoint);
 
     inline const QPen &pen() const;
     void setPen(const QPen &pen);
@@ -35,9 +46,15 @@ public:
     inline qreal opacity() const;
     void setOpacity(qreal opacity);
 private:
+    ZeroPoint m_zeroPoint;
     qreal m_opacity;
     QPen m_pen;
 };
+
+QseAbstractSppSignalPlot::ZeroPoint QseAbstractSppSignalPlot::zeroPoint() const
+{
+    return m_zeroPoint;
+}
 
 const QPen &QseAbstractSppSignalPlot::pen() const
 {

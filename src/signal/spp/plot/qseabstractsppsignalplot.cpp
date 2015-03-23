@@ -23,6 +23,16 @@ QseAbstractSppSignalPlot::QseAbstractSppSignalPlot(QObject *parent) :
     m_pen = QPen(QColor(Qt::darkBlue));
 }
 
+void QseAbstractSppSignalPlot::setZeroPoint(
+        QseAbstractSppSignalPlot::ZeroPoint zeroPoint)
+{
+    if (m_zeroPoint != zeroPoint)
+    {
+        m_zeroPoint = zeroPoint;
+        setUpdateOnce(true);
+    }
+}
+
 void QseAbstractSppSignalPlot::setOpacity(qreal opacity)
 {
     if (m_opacity != opacity)
