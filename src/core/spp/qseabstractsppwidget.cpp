@@ -29,7 +29,7 @@ void QseAbstractSppWidget::setGeometry(const QseSppGeometry &geometry)
 {
     QseSppGeometry limitedGeometry = geometry;
     if (m_limiter)
-        m_limiter->limit(&limitedGeometry);
+        limitedGeometry = m_limiter->limit(limitedGeometry);
 
     if (m_geometry != limitedGeometry)
     {

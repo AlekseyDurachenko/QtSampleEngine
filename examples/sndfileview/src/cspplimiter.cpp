@@ -21,8 +21,12 @@ CSppLimiter::CSppLimiter(QObject *parent) : QseAbstractSppLimiter(parent)
 {
 }
 
-void CSppLimiter::limit(QseSppGeometry *geometry)
+QseSppGeometry CSppLimiter::limit(const QseSppGeometry &geometry)
 {
-    if (geometry->x() < 0)
-        geometry->setX(0);
+    QseSppGeometry limitedGeometry = geometry;
+
+    if (limitedGeometry.x() < 0)
+        limitedGeometry.setX(0);
+
+    return limitedGeometry;
 }

@@ -23,7 +23,7 @@ class CSppLimiter : public QseAbstractSppLimiter
 {
 public:
     CSppLimiter(QObject *parent = 0);
-    virtual void limit(QseSppGeometry *geometry);
+    virtual QseSppGeometry limit(const QseSppGeometry &geometry);
 };
 
 

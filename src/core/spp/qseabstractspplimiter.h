@@ -24,7 +24,7 @@ class QseAbstractSppLimiter : public QObject
     Q_OBJECT
 public:
     explicit QseAbstractSppLimiter(QObject *parent);
-    virtual void limit(QseSppGeometry *geometry) = 0;
+    virtual QseSppGeometry limit(const QseSppGeometry& geometry) = 0;
 signals:
     void changed();
 };
