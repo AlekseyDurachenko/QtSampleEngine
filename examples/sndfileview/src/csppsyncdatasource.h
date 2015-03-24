@@ -13,22 +13,35 @@
 // You should have received a copy of the GNU Lesser General Public
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
-#ifndef QSESSSPPAUDACITYWIDGET_H
-#define QSESSSPPAUDACITYWIDGET_H
+#ifndef CSPPSYNCDATASOURCE_H
+#define CSPPSYNCDATASOURCE_H
 
-#include "qseabstractsppwidget.h"
-class QseAbstractSppPlot;
+#include "qseabstractsppsyncdatasource.h"
 
 
-class QseSppAudioWidget : public QseAbstractSppWidget
+class CSppSyncDataSource : public QseAbstractSppSyncDataSource
 {
     Q_OBJECT
 public:
-    explicit QseSppAudioWidget(QWidget *parent = 0, Qt::WindowFlags f = 0);
-protected:
-    void paintEvent(QPaintEvent *event);
+    CSppSyncDataSource(const QVector<double> &samples, QObject *parent = 0);
+    virtual qint64 count() const;
+    virtual double maximum() const;
+    virtual double minimum() const;
+    inline const QVector<double> &samples() const;
+    virtual QsePeakArray read(const QseSppGeometry &geometry, int width);
+public slots:
+    void setSamples(const QVector<double> &samples);
 private:
+    QsePeakArray readAsLines(qint64 first, qint64 pps, int width);
+    QsePeakArray readAsPeaks(qint64 first, qint64 spp, int width);
+private:
+    QVector<double> m_samples;
 };
 
+const QVector<double> &CSppSyncDataSource::samples() const
+{
+    return m_samples;
+}
 
-#endif // QSESSSPPAUDACITYWIDGET_H
+
+#endif // CSPPSYNCDATASOURCE_H

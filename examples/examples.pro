@@ -1,3 +1,3 @@
 TEMPLATE = subdirs
 
-SUBDIRS += sssppsyncview
+SUBDIRS += sssppsyncview sndfileview

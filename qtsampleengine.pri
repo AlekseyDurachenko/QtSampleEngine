@@ -49,7 +49,7 @@ HEADERS +=                                                          \
     $$PWD/src/cursor/spp/controller/qsesppstandardcursorcontroller.h \
     $$PWD/src/selection/spp/controller/qsesppstandardselectioncontroller.h \
     $$PWD/src/core/spp/qseabstractspplimiter.h \
-    $$PWD/src/widget/sppaudacitywidget/qsesppaudacitywidget.h
+    $$PWD/src/widget/sppaudacitywidget/qsesppaudacitycontroller.h
 
 
 SOURCES +=                                                          \
@@ -102,7 +102,7 @@ SOURCES +=                                                          \
     $$PWD/src/cursor/spp/controller/qsesppstandardcursorcontroller.cpp \
     $$PWD/src/selection/spp/controller/qsesppstandardselectioncontroller.cpp \
     $$PWD/src/core/spp/qseabstractspplimiter.cpp \
-    $$PWD/src/widget/sppaudacitywidget/qsesppaudacitywidget.cpp
+    $$PWD/src/widget/sppaudacitywidget/qsesppaudacitycontroller.cpp
 
 
 OTHER_FILES +=                                                      \

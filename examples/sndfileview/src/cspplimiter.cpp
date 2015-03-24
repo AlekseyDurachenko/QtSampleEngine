@@ -13,20 +13,16 @@
 // You should have received a copy of the GNU Lesser General Public
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
-#include "qsesppaudacitywidget.h"
-#include <QPainter>
-#include "qseabstractsppplot.h"
+#include "cspplimiter.h"
+#include "qsesppgeometry.h"
 
 
-QseSppAudioWidget::QseSppAudioWidget(QWidget *parent,
-        Qt::WindowFlags f) : QseAbstractSppWidget(parent, f)
+CSppLimiter::CSppLimiter(QObject *parent) : QseAbstractSppLimiter(parent)
 {
-    setMouseTracking(true);
-    setAutoFillBackground(false);
-    setFocusPolicy(Qt::StrongFocus);
-    setAttribute(Qt::WA_OpaquePaintEvent);
 }
 
-void QseSppAudioWidget::paintEvent(QPaintEvent */*event*/)
+void CSppLimiter::limit(QseSppGeometry *geometry)
 {
+    if (geometry->x() < 0)
+        geometry->setX(0);
 }
