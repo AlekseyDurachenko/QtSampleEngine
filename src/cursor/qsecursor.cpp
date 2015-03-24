@@ -26,7 +26,8 @@ void QseCursor::setAvailableRange(const QseRange &availableRange)
     if (availableRange != m_availableRange)
     {
         m_availableRange = availableRange;
-        setIndex(m_index);
+        if (!isNull())
+            setIndex(m_index);
     }
 }
 
