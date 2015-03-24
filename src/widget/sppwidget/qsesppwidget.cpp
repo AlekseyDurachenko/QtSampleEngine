@@ -27,7 +27,7 @@ QseSppWidget::QseSppWidget(QWidget *parent,
     setAttribute(Qt::WA_OpaquePaintEvent);
 }
 
-void QseSppWidget::setPreUncachedPlot(const QList<QseAbstractSppPlot *> &plots)
+void QseSppWidget::setPreUncachedPlots(const QList<QseAbstractSppPlot *> &plots)
 {
     foreach (QseAbstractSppPlot *plot, m_preUncachedPlots)
         disconnect(plot, 0, this, 0);
@@ -43,7 +43,7 @@ void QseSppWidget::setPreUncachedPlot(const QList<QseAbstractSppPlot *> &plots)
     update();
 }
 
-void QseSppWidget::setCachedPlot(const QList<QseAbstractSppPlot *> &plots)
+void QseSppWidget::setCachedPlots(const QList<QseAbstractSppPlot *> &plots)
 {
     foreach (QseAbstractSppPlot *plot, m_cachedPlots)
         disconnect(plot, 0, this, 0);
@@ -63,7 +63,7 @@ void QseSppWidget::setCachedPlot(const QList<QseAbstractSppPlot *> &plots)
     update();
 }
 
-void QseSppWidget::setPostUncachedPlot(const QList<QseAbstractSppPlot *> &plots)
+void QseSppWidget::setPostUncachedPlots(const QList<QseAbstractSppPlot *> &plots)
 {
     foreach (QseAbstractSppPlot *plot, m_postUncachedPlots)
         disconnect(plot, 0, this, 0);

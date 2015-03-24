@@ -26,14 +26,14 @@ class QseSppWidget : public QseAbstractSppWidget
 public:
     explicit QseSppWidget(QWidget *parent = 0, Qt::WindowFlags f = 0);
 
-    inline const QList<QseAbstractSppPlot *> &preUncachedPlot() const;
-    void setPreUncachedPlot(const QList<QseAbstractSppPlot *> &plots);
+    inline const QList<QseAbstractSppPlot *> &preUncachedPlots() const;
+    void setPreUncachedPlots(const QList<QseAbstractSppPlot *> &plots);
 
-    inline const QList<QseAbstractSppPlot *> &cachedPlot() const;
-    void setCachedPlot(const QList<QseAbstractSppPlot *> &plots);
+    inline const QList<QseAbstractSppPlot *> &cachedPlots() const;
+    void setCachedPlots(const QList<QseAbstractSppPlot *> &plots);
 
-    inline const QList<QseAbstractSppPlot *> &postUncachedPlot() const;
-    void setPostUncachedPlot(const QList<QseAbstractSppPlot *> &plots);
+    inline const QList<QseAbstractSppPlot *> &postUncachedPlots() const;
+    void setPostUncachedPlots(const QList<QseAbstractSppPlot *> &plots);
 private slots:
     void preUncachedPlots_destroyed(QObject *obj);
     void cachedPlots_destroyed(QObject *obj);
@@ -47,17 +47,17 @@ private:
     QList<QseAbstractSppPlot *> m_postUncachedPlots;
 };
 
-const QList<QseAbstractSppPlot *> &QseSppWidget::preUncachedPlot() const
+const QList<QseAbstractSppPlot *> &QseSppWidget::preUncachedPlots() const
 {
     return m_preUncachedPlots;
 }
 
-const QList<QseAbstractSppPlot *> &QseSppWidget::cachedPlot() const
+const QList<QseAbstractSppPlot *> &QseSppWidget::cachedPlots() const
 {
     return m_cachedPlots;
 }
 
-const QList<QseAbstractSppPlot *> &QseSppWidget::postUncachedPlot() const
+const QList<QseAbstractSppPlot *> &QseSppWidget::postUncachedPlots() const
 {
     return m_postUncachedPlots;
 }
