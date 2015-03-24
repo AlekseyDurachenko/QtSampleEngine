@@ -58,7 +58,7 @@ void QseSppSyncSignalLinearPlot::drawAsLines(QPainter *painter,
     const qint64 pps = -geometry.samplesPerPixel();
     const QVector<double> &points = peaks.minimums();
 
-    double zero;
+    double zero = 0;
     switch (zeroPoint())
     {
     case Top:
@@ -117,7 +117,7 @@ void QseSppSyncSignalLinearPlot::drawAsPeaks(QPainter *painter,
     const QVector<double> &minimums = peaks.minimums();
     const QVector<double> &maximums = peaks.maximums();
 
-    double zero;
+    double zero = 0;
     switch (zeroPoint())
     {
     case Top:
