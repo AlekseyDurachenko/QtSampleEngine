@@ -13,23 +13,10 @@
 // You should have received a copy of the GNU Lesser General Public
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
-#ifndef QSEABSTRACTDATASOURCE_H
-#define QSEABSTRACTDATASOURCE_H
-
-#include <QObject>
+#include "qseabstractsppsyncpeakdatasource.h"
 
 
-class QseAbstractDataSource : public QObject
+QseAbstractSppSyncPeakDataSource::QseAbstractSppSyncPeakDataSource(
+        QObject *parent) : QseAbstractPeakDataSource(parent)
 {
-    Q_OBJECT
-public:
-    explicit QseAbstractDataSource(QObject *parent = 0);
-    virtual qint64 count() const = 0;
-    virtual double maximum() const = 0;
-    virtual double minimum() const = 0;
-signals:
-    void dataChanged(qint64 first = -1, qint64 last = -1);
-};
-
-
-#endif // QSEABSTRACTDATASOURCE_H
+}

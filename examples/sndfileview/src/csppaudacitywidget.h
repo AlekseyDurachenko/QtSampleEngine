@@ -25,7 +25,7 @@ class QseSppSelectionPlot;
 class QseSppSyncSignalLinearPlot;
 class QseSppAxisCoverPlot;
 class QseSppAudacityController;
-class CSppSyncDataSource;
+class CSppSyncPeakDataSource;
 class CSppLimiter;
 class QseSppWidget;
 
@@ -42,7 +42,7 @@ public:
     inline QseSppAxisCoverPlot *coverPlot() const;
     inline QseSppSyncSignalLinearPlot *signalPlot() const;
     inline QseSppAudacityController *controller() const;
-    inline CSppSyncDataSource *dataSource() const;
+    inline CSppSyncPeakDataSource *dataSource() const;
     inline CSppLimiter *limiter() const;
 private:
     QseCursor *m_playPosition;
@@ -60,7 +60,7 @@ private:
     QseSppAudacityController *m_controller;
 
     CSppLimiter *m_limiter;
-    CSppSyncDataSource *m_dataSource;
+    CSppSyncPeakDataSource *m_dataSource;
 
     QseSppWidget *m_sppWidget;
 };
@@ -95,7 +95,7 @@ QseSppAudacityController *CSppSyncAudacityWidget::controller() const
     return m_controller;
 }
 
-CSppSyncDataSource *CSppSyncAudacityWidget::dataSource() const
+CSppSyncPeakDataSource *CSppSyncAudacityWidget::dataSource() const
 {
     return m_dataSource;
 }

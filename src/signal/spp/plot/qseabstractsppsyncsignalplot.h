@@ -17,7 +17,7 @@
 #define QSEABSTRACTSPPSYNCSIGNALPLOT_H
 
 #include "qseabstractsppsignalplot.h"
-class QseAbstractSppSyncDataSource;
+class QseAbstractSppSyncPeakDataSource;
 
 
 class QseAbstractSppSyncSignalPlot : public QseAbstractSppSignalPlot
@@ -26,18 +26,18 @@ class QseAbstractSppSyncSignalPlot : public QseAbstractSppSignalPlot
 public:
     explicit QseAbstractSppSyncSignalPlot(QObject *parent = 0);
 
-    inline QseAbstractSppSyncDataSource *dataSource() const;
-    void setDataSource(QseAbstractSppSyncDataSource *dataSource);
+    inline QseAbstractSppSyncPeakDataSource *dataSource() const;
+    void setDataSource(QseAbstractSppSyncPeakDataSource *dataSource);
 
     virtual bool hasChanges(const QRect &rect, const QseSppGeometry &geometry);
     virtual bool isVisible(const QRect &rect, const QseSppGeometry &geometry);
 private slots:
     void dataSource_destroyed(QObject *obj);
 private:
-    QseAbstractSppSyncDataSource *m_dataSource;
+    QseAbstractSppSyncPeakDataSource *m_dataSource;
 };
 
-QseAbstractSppSyncDataSource *QseAbstractSppSyncSignalPlot::dataSource() const
+QseAbstractSppSyncPeakDataSource *QseAbstractSppSyncSignalPlot::dataSource() const
 {
     return m_dataSource;
 }

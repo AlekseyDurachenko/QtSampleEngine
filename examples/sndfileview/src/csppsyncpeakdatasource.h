@@ -13,17 +13,17 @@
 // You should have received a copy of the GNU Lesser General Public
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
-#ifndef CSPPSYNCDATASOURCE_H
-#define CSPPSYNCDATASOURCE_H
+#ifndef CSPPSYNCDATAPEAKSOURCE_H
+#define CSPPSYNCDATAPEAKSOURCE_H
 
-#include "qseabstractsppsyncdatasource.h"
+#include "qseabstractsppsyncpeakdatasource.h"
 
 
-class CSppSyncDataSource : public QseAbstractSppSyncDataSource
+class CSppSyncPeakDataSource : public QseAbstractSppSyncPeakDataSource
 {
     Q_OBJECT
 public:
-    CSppSyncDataSource(const QVector<double> &samples, QObject *parent = 0);
+    CSppSyncPeakDataSource(const QVector<double> &samples, QObject *parent = 0);
     virtual qint64 count() const;
     virtual double maximum() const;
     virtual double minimum() const;
@@ -38,10 +38,10 @@ private:
     QVector<double> m_samples;
 };
 
-const QVector<double> &CSppSyncDataSource::samples() const
+const QVector<double> &CSppSyncPeakDataSource::samples() const
 {
     return m_samples;
 }
 
 
-#endif // CSPPSYNCDATASOURCE_H
+#endif // CSPPSYNCDATAPEAKSOURCE_H

@@ -13,21 +13,21 @@
 // You should have received a copy of the GNU Lesser General Public
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
-#ifndef QSEABSTRACTSPPSYNCDATASOURCE_H
-#define QSEABSTRACTSPPSYNCDATASOURCE_H
+#ifndef QSEABSTRACTSPPSYNCPEAKDATASOURCE_H
+#define QSEABSTRACTSPPSYNCPEAKDATASOURCE_H
 
-#include "qseabstractdatasource.h"
+#include "qseabstractpeakdatasource.h"
 #include "qsesppgeometry.h"
 #include "qsepeakarray.h"
 
 
-class QseAbstractSppSyncDataSource : public QseAbstractDataSource
+class QseAbstractSppSyncPeakDataSource : public QseAbstractPeakDataSource
 {
     Q_OBJECT
 public:
-    QseAbstractSppSyncDataSource(QObject *parent = 0);
+    QseAbstractSppSyncPeakDataSource(QObject *parent = 0);
     virtual QsePeakArray read(const QseSppGeometry &geometry, int width) = 0;
 };
 
 
-#endif // QSEABSTRACTSPPSYNCDATASOURCE_H
+#endif // QSEABSTRACTSPPSYNCPEAKDATASOURCE_H

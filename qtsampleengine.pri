@@ -12,13 +12,8 @@ HEADERS +=                                                          \
     $$PWD/src/cover/spp/plot/qsemonocolorsppcoverplot.h \
     $$PWD/src/cursor/spp/plot/qsesppcursorplot.h \
     $$PWD/src/cursor/qsecursor.h \
-    $$PWD/src/datasource/spp/qseabstractsppasyncdatasource.h \
     $$PWD/src/datasource/spp/qseabstractspppeakreply.h \
-    $$PWD/src/datasource/spp/qseabstractsppsyncdatasource.h \
-    $$PWD/src/datasource/spw/qseabstractspwasyncdatasource.h \
     $$PWD/src/datasource/spw/qseabstractspwpeakreply.h \
-    $$PWD/src/datasource/spw/qseabstractspwsyncdatasource.h \
-    $$PWD/src/datasource/qseabstractdatasource.h \
     $$PWD/src/datasource/qseabstractpeakreply.h \
     $$PWD/src/datatype/qsepeakarray.h \
     $$PWD/src/datatype/qserange.h \
@@ -49,7 +44,12 @@ HEADERS +=                                                          \
     $$PWD/src/cursor/spp/controller/qsesppstandardcursorcontroller.h \
     $$PWD/src/selection/spp/controller/qsesppstandardselectioncontroller.h \
     $$PWD/src/core/spp/qseabstractspplimiter.h \
-    $$PWD/src/widget/sppaudacitywidget/qsesppaudacitycontroller.h
+    $$PWD/src/widget/sppaudacitywidget/qsesppaudacitycontroller.h \
+    $$PWD/src/datasource/qseabstractpeakdatasource.h \
+    $$PWD/src/datasource/spp/qseabstractsppasyncpeakdatasource.h \
+    $$PWD/src/datasource/spp/qseabstractsppsyncpeakdatasource.h \
+    $$PWD/src/datasource/spw/qseabstractspwasyncpeakdatasource.h \
+    $$PWD/src/datasource/spw/qseabstractspwsyncpeakdatasource.h
 
 
 SOURCES +=                                                          \
@@ -66,13 +66,8 @@ SOURCES +=                                                          \
     $$PWD/src/cover/spp/plot/qsemonocolorsppcoverplot.cpp \
     $$PWD/src/cursor/spp/plot/qsesppcursorplot.cpp \
     $$PWD/src/cursor/qsecursor.cpp \
-    $$PWD/src/datasource/spp/qseabstractsppasyncdatasource.cpp \
     $$PWD/src/datasource/spp/qseabstractspppeakreply.cpp \
-    $$PWD/src/datasource/spp/qseabstractsppsyncdatasource.cpp \
-    $$PWD/src/datasource/spw/qseabstractspwasyncdatasource.cpp \
     $$PWD/src/datasource/spw/qseabstractspwpeakreply.cpp \
-    $$PWD/src/datasource/spw/qseabstractspwsyncdatasource.cpp \
-    $$PWD/src/datasource/qseabstractdatasource.cpp \
     $$PWD/src/datasource/qseabstractpeakreply.cpp \
     $$PWD/src/datatype/qsepeakarray.cpp \
     $$PWD/src/datatype/qserange.cpp \
@@ -102,7 +97,12 @@ SOURCES +=                                                          \
     $$PWD/src/cursor/spp/controller/qsesppstandardcursorcontroller.cpp \
     $$PWD/src/selection/spp/controller/qsesppstandardselectioncontroller.cpp \
     $$PWD/src/core/spp/qseabstractspplimiter.cpp \
-    $$PWD/src/widget/sppaudacitywidget/qsesppaudacitycontroller.cpp
+    $$PWD/src/widget/sppaudacitywidget/qsesppaudacitycontroller.cpp \
+    $$PWD/src/datasource/qseabstractpeakdatasource.cpp \
+    $$PWD/src/datasource/spp/qseabstractsppasyncpeakdatasource.cpp \
+    $$PWD/src/datasource/spp/qseabstractsppsyncpeakdatasource.cpp \
+    $$PWD/src/datasource/spw/qseabstractspwasyncpeakdatasource.cpp \
+    $$PWD/src/datasource/spw/qseabstractspwsyncpeakdatasource.cpp
 
 
 OTHER_FILES +=                                                      \

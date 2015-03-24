@@ -14,7 +14,7 @@
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
 #include "qseabstractsppsyncsignalplot.h"
-#include "qseabstractsppsyncdatasource.h"
+#include "qseabstractsppsyncpeakdatasource.h"
 
 
 QseAbstractSppSyncSignalPlot::QseAbstractSppSyncSignalPlot(QObject *parent) :
@@ -24,7 +24,7 @@ QseAbstractSppSyncSignalPlot::QseAbstractSppSyncSignalPlot(QObject *parent) :
 }
 
 void QseAbstractSppSyncSignalPlot::setDataSource(
-        QseAbstractSppSyncDataSource *dataSource)
+        QseAbstractSppSyncPeakDataSource *dataSource)
 {
     if (m_dataSource)
         disconnect(m_dataSource, 0, this, 0);

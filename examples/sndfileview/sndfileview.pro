@@ -9,13 +9,13 @@ INCLUDEPATH +=                              \
 
 SOURCES +=                                  \
     $$PWD/src/main.cpp                            \
-    $$PWD/src/csppsyncdatasource.cpp \
+    $$PWD/src/csppsyncpeakdatasource.cpp \
     src/cmainwindow.cpp \
     src/cspplimiter.cpp \
     src/csppaudacitywidget.cpp
 
 HEADERS +=                                  \
-    $$PWD/src/csppsyncdatasource.h \
+    $$PWD/src/csppsyncpeakdatasource.h \
     src/cmainwindow.h \
     src/cspplimiter.h \
     src/csppaudacitywidget.h

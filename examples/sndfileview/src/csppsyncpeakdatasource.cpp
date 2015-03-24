@@ -13,37 +13,37 @@
 // You should have received a copy of the GNU Lesser General Public
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
-#include "csppsyncdatasource.h"
+#include "csppsyncpeakdatasource.h"
 
 
-CSppSyncDataSource::CSppSyncDataSource(const QVector<double> &samples,
-        QObject *parent) : QseAbstractSppSyncDataSource(parent)
+CSppSyncPeakDataSource::CSppSyncPeakDataSource(const QVector<double> &samples,
+        QObject *parent) : QseAbstractSppSyncPeakDataSource(parent)
 {
     m_samples = samples;
 }
 
-qint64 CSppSyncDataSource::count() const
+qint64 CSppSyncPeakDataSource::count() const
 {
     return m_samples.count();
 }
 
-double CSppSyncDataSource::maximum() const
+double CSppSyncPeakDataSource::maximum() const
 {
     return 1.0;
 }
 
-double CSppSyncDataSource::minimum() const
+double CSppSyncPeakDataSource::minimum() const
 {
     return -1.0;
 }
 
-void CSppSyncDataSource::setSamples(const QVector<double> &samples)
+void CSppSyncPeakDataSource::setSamples(const QVector<double> &samples)
 {
     m_samples = samples;
     emit dataChanged();
 }
 
-QsePeakArray CSppSyncDataSource::read(const QseSppGeometry &geometry, int width)
+QsePeakArray CSppSyncPeakDataSource::read(const QseSppGeometry &geometry, int width)
 {
     const qint64 spp = geometry.samplesPerPixel();
     const qint64 x = geometry.x();
@@ -54,7 +54,7 @@ QsePeakArray CSppSyncDataSource::read(const QseSppGeometry &geometry, int width)
         return readAsLines(x, -spp, width);
 }
 
-QsePeakArray CSppSyncDataSource::readAsLines(qint64 first, qint64 pps, int width)
+QsePeakArray CSppSyncPeakDataSource::readAsLines(qint64 first, qint64 pps, int width)
 {
     if (first >= m_samples.count())
         return QsePeakArray();
@@ -76,7 +76,7 @@ QsePeakArray CSppSyncDataSource::readAsLines(qint64 first, qint64 pps, int width
     return QsePeakArray(points);
 }
 
-QsePeakArray CSppSyncDataSource::readAsPeaks(qint64 first, qint64 spp, int width)
+QsePeakArray CSppSyncPeakDataSource::readAsPeaks(qint64 first, qint64 spp, int width)
 {
     if (first >= m_samples.count())
         return QsePeakArray();

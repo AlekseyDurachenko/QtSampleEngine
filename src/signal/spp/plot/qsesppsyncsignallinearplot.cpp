@@ -15,7 +15,7 @@
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
 #include "qsesppsyncsignallinearplot.h"
 #include <QPainter>
-#include "qseabstractsppsyncdatasource.h"
+#include "qseabstractsppsyncpeakdatasource.h"
 #include "qsehelper.h"
 
 

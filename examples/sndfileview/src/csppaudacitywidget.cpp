@@ -21,7 +21,7 @@
 #include "qsesppsyncsignallinearplot.h"
 #include "qsesppaxiscoverplot.h"
 #include "qsesppaudacitycontroller.h"
-#include "csppsyncdatasource.h"
+#include "csppsyncpeakdatasource.h"
 #include "cspplimiter.h"
 
 
@@ -34,7 +34,7 @@ CSppSyncAudacityWidget::CSppSyncAudacityWidget(QWidget *parent,
         datasamples[i] = (qrand()%100000)/100000.0-0.5;
     // TEMPORARY_END
 
-    m_dataSource = new CSppSyncDataSource(datasamples, this);
+    m_dataSource = new CSppSyncPeakDataSource(datasamples, this);
     m_limiter = new CSppLimiter(this);
 
     m_playPosition = new QseCursor(this);

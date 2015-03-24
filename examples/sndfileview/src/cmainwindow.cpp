@@ -21,7 +21,7 @@
 #include "qsecursor.h"
 #include "qsesppselectionplot.h"
 #include "qseselection.h"
-#include "csppsyncdatasource.h"
+#include "csppsyncpeakdatasource.h"
 #include "qsesppsyncsignallinearplot.h"
 #include "qsesppstandardhorizontalcontroller.h"
 #include "qsesppstandardverticalcontroller.h"
@@ -217,7 +217,7 @@ CMainWindow::CMainWindow(QWidget *parent) :
     QVector<double> datasamples(100000);
     for (int i = 0; i < 100000; ++i)
         datasamples[i] = (qrand()%100000)/100000.0-0.5;
-    CSppSyncDataSource *dataSource = new CSppSyncDataSource(datasamples);
+    CSppSyncPeakDataSource *dataSource = new CSppSyncPeakDataSource(datasamples);
 
     m_monocolorCoverSppPlot = new QseMonocolorSppCoverPlot(this);
 

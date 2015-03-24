@@ -13,10 +13,10 @@
 // You should have received a copy of the GNU Lesser General Public
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
-#include "qseabstractsppsyncdatasource.h"
+#include "qseabstractpeakdatasource.h"
 
 
-QseAbstractSppSyncDataSource::QseAbstractSppSyncDataSource(QObject *parent)
-    : QseAbstractDataSource(parent)
+QseAbstractPeakDataSource::QseAbstractPeakDataSource(QObject *parent) :
+    QObject(parent)
 {
 }
