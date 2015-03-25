@@ -23,24 +23,30 @@ class CSppSyncPeakDataSource : public QseAbstractSppSyncPeakDataSource
 {
     Q_OBJECT
 public:
-    CSppSyncPeakDataSource(const QVector<double> &samples, QObject *parent = 0);
+    CSppSyncPeakDataSource(QObject *parent = 0);
+
     virtual qint64 count() const;
-    virtual double maximum() const;
-    virtual double minimum() const;
     inline const QVector<double> &samples() const;
+    inline double sampleRate() const;
     virtual QsePeakArray read(const QseSppGeometry &geometry, int width);
 public slots:
-    void setSamples(const QVector<double> &samples);
+    void setSamples(const QVector<double> &samples, double sampleRate);
 private:
     QsePeakArray readAsLines(qint64 first, qint64 pps, int width);
     QsePeakArray readAsPeaks(qint64 first, qint64 spp, int width);
 private:
     QVector<double> m_samples;
+    double m_sampleRate;
 };
 
 const QVector<double> &CSppSyncPeakDataSource::samples() const
 {
     return m_samples;
+}
+
+double CSppSyncPeakDataSource::sampleRate() const
+{
+    return m_sampleRate;
 }
 
 

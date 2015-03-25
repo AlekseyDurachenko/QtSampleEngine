@@ -24,7 +24,7 @@ class QsePosition;
 class QseSppSelectionPlot;
 class QseSelection;
 class QseSppSyncSignalLinearPlot;
-
+class CSppSyncAudacityWidget;
 
 namespace Ui {
 class CMainWindow;
@@ -51,6 +51,7 @@ private:
     QseSppSelectionPlot *m_sppSelectionPlot;
     QseSelection *m_selection;
     QseSppSyncSignalLinearPlot *m_sppSignalLinearPlot;
+    CSppSyncAudacityWidget *m_audacityWidget;
 };
 
 

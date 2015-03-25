@@ -13,18 +13,22 @@
 // You should have received a copy of the GNU Lesser General Public
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
-#ifndef CSPPLIMITER_H
-#define CSPPLIMITER_H
-
-#include "qseabstractspplimiter.h"
+#include "csppsyncaudacitylimiter.h"
+#include "qsesppgeometry.h"
 
 
-class CSppLimiter : public QseAbstractSppLimiter
+CSppSyncAudacityLimiter::CSppSyncAudacityLimiter(CSppSyncPeakDataSource *dataSource,
+        QObject *parent) : QseAbstractSppLimiter(parent)
 {
-public:
-    CSppLimiter(QObject *parent = 0);
-    virtual QseSppGeometry limit(const QseSppGeometry &geometry);
-};
+    m_dataSource = dataSource;
+}
 
+QseSppGeometry CSppSyncAudacityLimiter::limit(const QseSppGeometry &geometry)
+{
+    QseSppGeometry limitedGeometry = geometry;
 
-#endif // CSPPLIMITER_H
+    if (limitedGeometry.x() < 0)
+        limitedGeometry.setX(0);
+
+    return limitedGeometry;
+}

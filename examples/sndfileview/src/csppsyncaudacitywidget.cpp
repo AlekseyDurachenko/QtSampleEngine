@@ -13,7 +13,7 @@
 // You should have received a copy of the GNU Lesser General Public
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
-#include "csppaudacitywidget.h"
+#include "csppsyncaudacitywidget.h"
 #include "qseposition.h"
 #include "qseselection.h"
 #include "qsespppositionplot.h"
@@ -22,33 +22,27 @@
 #include "qsesppaxiscoverplot.h"
 #include "qsesppaudacitycontroller.h"
 #include "csppsyncpeakdatasource.h"
-#include "cspplimiter.h"
+#include "csppsyncaudacitylimiter.h"
 
 
 CSppSyncAudacityWidget::CSppSyncAudacityWidget(QWidget *parent,
         Qt::WindowFlags f) : QseSppWidget(parent, f)
 {
-    // TEMPORARY_START
-    QVector<double> datasamples(100000);
-    for (int i = 0; i < 100000; ++i)
-        datasamples[i] = (qrand()%100000)/100000.0-0.5;
-    // TEMPORARY_END
+    m_dataSource = new CSppSyncPeakDataSource(this);
+    connect(m_dataSource, SIGNAL(dataChanged()),
+            this, SLOT(dataSource_dataChanged()));
 
-    m_dataSource = new CSppSyncPeakDataSource(datasamples, this);
-    m_limiter = new CSppLimiter(this);
+    m_limiter = new CSppSyncAudacityLimiter(m_dataSource, this);
 
     m_playPosition = new QsePosition(this);
-    m_playPosition->setAvailableRange(QseRange(0, m_dataSource->count()));
     m_playPositionPlot = new QseSppPositionPlot(this);
     m_playPositionPlot->setPosition(m_playPosition);
 
     m_cursorPosition = new QsePosition(this);
-    m_cursorPosition->setAvailableRange(QseRange(0, m_dataSource->count()));
     m_cursorPositionPlot = new QseSppPositionPlot(this);
     m_cursorPositionPlot->setPosition(m_cursorPosition);
 
     m_selection = new QseSelection(this);
-    m_selection->setAvailableRange(QseRange(0, m_dataSource->count()));
     m_selectionPlot = new QseSppSelectionPlot(this);
     m_selectionPlot->setSelection(m_selection);
 
@@ -73,4 +67,12 @@ CSppSyncAudacityWidget::CSppSyncAudacityWidget(QWidget *parent,
     setCachedPlots(cachedPlots);
     setPostUncachedPlots(postUncachedPlots);
     setLimiter(m_limiter);
+}
+
+void CSppSyncAudacityWidget::dataSource_dataChanged()
+{
+    QseRange avaibleRange(0, m_dataSource->count()-1);
+    m_playPosition->setAvailableRange(avaibleRange);
+    m_cursorPosition->setAvailableRange(avaibleRange);
+    m_selection->setAvailableRange(avaibleRange);
 }

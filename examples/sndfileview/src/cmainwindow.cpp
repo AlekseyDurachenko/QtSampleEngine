@@ -35,8 +35,8 @@
 #include "qsesppstandardverticalzoomcontroller.h"
 #include "qsesppstandardpositioncontroller.h"
 #include "qsesppstandardselectioncontroller.h"
-#include "cspplimiter.h"
-#include "csppaudacitywidget.h"
+#include "csppsyncaudacitylimiter.h"
+#include "csppsyncaudacitywidget.h"
 #include <QDebug>
 #include <math.h>
 #include <QtGui>
@@ -214,21 +214,21 @@ CMainWindow::CMainWindow(QWidget *parent) :
     qDebug() << m_sppWidget->geometry();
     */
 
-    QVector<double> datasamples(100000);
-    for (int i = 0; i < 100000; ++i)
-        datasamples[i] = (qrand()%100000)/100000.0-0.5;
-    CSppSyncPeakDataSource *dataSource = new CSppSyncPeakDataSource(datasamples);
+//    QVector<double> datasamples(100000);
+//    for (int i = 0; i < 100000; ++i)
+//        datasamples[i] = (qrand()%100000)/100000.0-0.5;
+//    CSppSyncPeakDataSource *dataSource = new CSppSyncPeakDataSource(datasamples);
 
-    m_monocolorCoverSppPlot = new QseMonocolorSppCoverPlot(this);
+//    m_monocolorCoverSppPlot = new QseMonocolorSppCoverPlot(this);
 
-//    m_sppWidget = new QseSppWidget(this);
-//    m_sppWidget->setLimiter(new CSppLimiter(this));
+////    m_sppWidget = new QseSppWidget(this);
+////    m_sppWidget->setLimiter(new CSppLimiter(this));
 
-    m_sppSignalLinearPlot = new QseSppSyncSignalLinearPlot(this);
-    m_sppSignalLinearPlot->setDataSource(dataSource);
+//    m_sppSignalLinearPlot = new QseSppSyncSignalLinearPlot(this);
+//    m_sppSignalLinearPlot->setDataSource(dataSource);
 
-    CSppSyncAudacityWidget *audacityWidget = new CSppSyncAudacityWidget(this);
-    setCentralWidget(audacityWidget);
+    m_audacityWidget = new CSppSyncAudacityWidget(this);
+    setCentralWidget(m_audacityWidget);
 
 }
 
@@ -239,7 +239,16 @@ CMainWindow::~CMainWindow()
 
 void CMainWindow::on_action_Test_moncolorplot_triggered()
 {
-    m_monocolorCoverSppPlot->setColor(Qt::black);
+    // TEMPORARY_START
+    QVector<double> datasamples(100000);
+    for (int i = 0; i < 100000; ++i)
+        datasamples[i] = (qrand()%100000)/100000.0-0.5;
+    // TEMPORARY_END
+
+    m_audacityWidget->dataSource()->setSamples(datasamples, 1.0);
+
+
+    //m_monocolorCoverSppPlot->setColor(Qt::black);
 }
 
 void CMainWindow::on_actionAdd_cursor_triggered()

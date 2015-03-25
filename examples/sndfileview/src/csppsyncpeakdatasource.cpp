@@ -16,10 +16,9 @@
 #include "csppsyncpeakdatasource.h"
 
 
-CSppSyncPeakDataSource::CSppSyncPeakDataSource(const QVector<double> &samples,
-        QObject *parent) : QseAbstractSppSyncPeakDataSource(parent)
+CSppSyncPeakDataSource::CSppSyncPeakDataSource(QObject *parent) :
+    QseAbstractSppSyncPeakDataSource(parent)
 {
-    m_samples = samples;
 }
 
 qint64 CSppSyncPeakDataSource::count() const
@@ -27,23 +26,17 @@ qint64 CSppSyncPeakDataSource::count() const
     return m_samples.count();
 }
 
-double CSppSyncPeakDataSource::maximum() const
-{
-    return 1.0;
-}
-
-double CSppSyncPeakDataSource::minimum() const
-{
-    return -1.0;
-}
-
-void CSppSyncPeakDataSource::setSamples(const QVector<double> &samples)
+void CSppSyncPeakDataSource::setSamples(const QVector<double> &samples,
+        double sampleRate)
 {
     m_samples = samples;
+    m_sampleRate = sampleRate;
+
     emit dataChanged();
 }
 
-QsePeakArray CSppSyncPeakDataSource::read(const QseSppGeometry &geometry, int width)
+QsePeakArray CSppSyncPeakDataSource::read(const QseSppGeometry &geometry,
+        int width)
 {
     const qint64 spp = geometry.samplesPerPixel();
     const qint64 x = geometry.x();
@@ -54,7 +47,8 @@ QsePeakArray CSppSyncPeakDataSource::read(const QseSppGeometry &geometry, int wi
         return readAsLines(x, -spp, width);
 }
 
-QsePeakArray CSppSyncPeakDataSource::readAsLines(qint64 first, qint64 pps, int width)
+QsePeakArray CSppSyncPeakDataSource::readAsLines(qint64 first, qint64 pps,
+        int width)
 {
     if (first >= m_samples.count())
         return QsePeakArray();
@@ -76,7 +70,8 @@ QsePeakArray CSppSyncPeakDataSource::readAsLines(qint64 first, qint64 pps, int w
     return QsePeakArray(points);
 }
 
-QsePeakArray CSppSyncPeakDataSource::readAsPeaks(qint64 first, qint64 spp, int width)
+QsePeakArray CSppSyncPeakDataSource::readAsPeaks(qint64 first, qint64 spp,
+        int width)
 {
     if (first >= m_samples.count())
         return QsePeakArray();
