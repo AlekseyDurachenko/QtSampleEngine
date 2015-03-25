@@ -13,22 +13,22 @@
 // You should have received a copy of the GNU Lesser General Public
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
-#ifndef QSESPPCURSORPLOT_H
-#define QSESPPCURSORPLOT_H
+#ifndef QSESPPPOSITIONPLOT_H
+#define QSESPPPOSITIONPLOT_H
 
 #include <QPen>
 #include "qsesppgeometry.h"
 #include "qseabstractsppplot.h"
-class QseCursor;
+class QsePosition;
 
 
-class QseSppCursorPlot : public QseAbstractSppPlot
+class QseSppPositionPlot : public QseAbstractSppPlot
 {
     Q_OBJECT
     Q_PROPERTY(QPen pen READ pen WRITE setPen)
     Q_PROPERTY(qreal opacity READ opacity WRITE setOpacity)
 public:
-    explicit QseSppCursorPlot(QObject *parent = 0);
+    explicit QseSppPositionPlot(QObject *parent = 0);
 
     inline const QPen &pen() const;
     void setPen(const QPen &pen);
@@ -36,30 +36,30 @@ public:
     inline qreal opacity() const;
     void setOpacity(qreal opacity);
 
-    inline QseCursor *cursor() const;
-    void setCursor(QseCursor *cursor);
+    inline QsePosition *position() const;
+    void setPosition(QsePosition *position);
 
     virtual bool hasChanges(const QRect &rect, const QseSppGeometry &geometry);
     virtual bool isVisible(const QRect &rect, const QseSppGeometry &geometry);
     virtual void draw(QPainter *painter, const QRect &rect,
               const QseSppGeometry &geometry);
 private slots:
-    void cursor_destroyed(QObject *obj);
+    void position_destroyed(QObject *obj);
 private:
-    QseCursor *m_cursor;
+    QsePosition *m_position;
     qreal m_opacity;
     QPen m_pen;
 };
 
-const QPen &QseSppCursorPlot::pen() const
+const QPen &QseSppPositionPlot::pen() const
 {
     return m_pen;
 }
 
-qreal QseSppCursorPlot::opacity() const
+qreal QseSppPositionPlot::opacity() const
 {
     return m_opacity;
 }
 
 
-#endif // QSESPPCURSORPLOT_H
+#endif // QSESPPPOSITIONPLOT_H

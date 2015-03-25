@@ -13,21 +13,21 @@
 // You should have received a copy of the GNU Lesser General Public
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
-#ifndef QSESPPSTANDARDCURSORCONTROLLER_H
-#define QSESPPSTANDARDCURSORCONTROLLER_H
+#ifndef QSESPPSTANDARDPOSITIONCONTROLLER_H
+#define QSESPPSTANDARDPOSITIONCONTROLLER_H
 
 #include "qseabstractsppstandardcontroller.h"
-class QseCursor;
+class QsePosition;
 
 
-class QseSppStandardCursorController : public QseAbstractSppStandardController
+class QseSppStandardPositionController : public QseAbstractSppStandardController
 {
     Q_OBJECT
 public:
-    explicit QseSppStandardCursorController(QObject *parent = 0);
+    explicit QseSppStandardPositionController(QObject *parent = 0);
 
-    inline QseCursor *cursor() const;
-    void setCursor(QseCursor *cursor);
+    inline QsePosition *position() const;
+    void setPosition(QsePosition *position);
 protected:
     virtual void mouseMoveEvent(QMouseEvent *event, const QRect &rect,
                         const QseSppGeometry &geometry);
@@ -37,16 +37,18 @@ protected:
                                const QseSppGeometry &geometry);
     virtual void keyReleaseEvent(QKeyEvent *event, const QRect &rect,
                                  const QseSppGeometry &geometry);
+private slots:
+    void position_destroyed();
 private:
     void updateCursor(Qt::KeyboardModifiers km);
 private:
-    QseCursor *m_cursor;
+    QsePosition *m_position;
 };
 
-QseCursor *QseSppStandardCursorController::cursor() const
+QsePosition *QseSppStandardPositionController::position() const
 {
-    return m_cursor;
+    return m_position;
 }
 
 
-#endif // QSESPPSTANDARDCURSORCONTROLLER_H
+#endif // QSESPPSTANDARDPOSITIONCONTROLLER_H

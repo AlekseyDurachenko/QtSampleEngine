@@ -17,7 +17,7 @@
 #define QSESPPAUDACITYCONTROLLER_H
 
 #include "qseabstractsppcontroller.h"
-class QseCursor;
+class QsePosition;
 class QseSelection;
 
 
@@ -36,8 +36,8 @@ class QseSppAudacityController : public QseAbstractSppController
 public:
     explicit QseSppAudacityController(QObject *parent = 0);
 
-    inline QseCursor *currentPosition();
-    void setCurrentPosition(QseCursor *cursor);
+    inline QsePosition *position();
+    void setPosition(QsePosition *position);
 
     inline QseSelection *selection();
     void setSelection(QseSelection *selection);
@@ -53,7 +53,7 @@ public:
 signals:
     void playClicked(qint64 index);
 private slots:
-    void currentPosition_destroyed();
+    void position_destroyed();
     void selection_destroyed();
 private:
     void startSelection(QMouseEvent *event, const QRect &rect,
@@ -68,7 +68,7 @@ private:
     void horizontalScroll(QWheelEvent *event, const QseSppGeometry &geometry);
     void updateCursor(int x, const QRect &rect, const QseSppGeometry &geometry);
 private:
-    QseCursor *m_currentPosition;
+    QsePosition *m_position;
     QseSelection *m_selection;
     // true  -- ready to change the selection
     // false -- not ready to change the selection
@@ -76,9 +76,9 @@ private:
     qint64 m_otherSample;
 };
 
-QseCursor *QseSppAudacityController::currentPosition()
+QsePosition *QseSppAudacityController::position()
 {
-    return m_currentPosition;
+    return m_position;
 }
 
 QseSelection *QseSppAudacityController::selection()

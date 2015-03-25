@@ -29,7 +29,15 @@ QseSppStandardSelectionController::QseSppStandardSelectionController(QObject *pa
 
 void QseSppStandardSelectionController::setSelection(QseSelection *selection)
 {
+    if (m_selection)
+        disconnect(m_selection, 0, this, 0);
+
     m_selection = selection;
+    if (m_selection)
+    {
+        connect(m_selection, SIGNAL(destroyed()),
+                this, SLOT(position_destroyed()));
+    }
 }
 
 void QseSppStandardSelectionController::mouseMoveEvent(QMouseEvent *event,
@@ -181,4 +189,9 @@ void QseSppStandardSelectionController::updateCursor(Qt::KeyboardModifiers km,
     }
 
     emit cursorChanged(defaultCursor());
+}
+
+void QseSppStandardSelectionController::selection_destroyed()
+{
+    m_selection = 0;
 }

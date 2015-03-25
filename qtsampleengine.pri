@@ -10,8 +10,6 @@ HEADERS +=                                                          \
     $$PWD/src/core/qseabstractwidget.h \
     $$PWD/src/core/qsehelper.h \
     $$PWD/src/cover/spp/plot/qsemonocolorsppcoverplot.h \
-    $$PWD/src/cursor/spp/plot/qsesppcursorplot.h \
-    $$PWD/src/cursor/qsecursor.h \
     $$PWD/src/datasource/spp/qseabstractspppeakreply.h \
     $$PWD/src/datasource/spw/qseabstractspwpeakreply.h \
     $$PWD/src/datasource/qseabstractpeakreply.h \
@@ -41,7 +39,6 @@ HEADERS +=                                                          \
     $$PWD/src/core/spp/qsesppstandardverticalcontroller.h \
     $$PWD/src/core/spp/qsesppstandardverticalzoomcontroller.h \
     $$PWD/src/core/spp/qsesppstandardhorizontalzoomcontroller.h \
-    $$PWD/src/cursor/spp/controller/qsesppstandardcursorcontroller.h \
     $$PWD/src/selection/spp/controller/qsesppstandardselectioncontroller.h \
     $$PWD/src/core/spp/qseabstractspplimiter.h \
     $$PWD/src/widget/sppaudacitywidget/qsesppaudacitycontroller.h \
@@ -49,7 +46,10 @@ HEADERS +=                                                          \
     $$PWD/src/datasource/spp/qseabstractsppasyncpeakdatasource.h \
     $$PWD/src/datasource/spp/qseabstractsppsyncpeakdatasource.h \
     $$PWD/src/datasource/spw/qseabstractspwasyncpeakdatasource.h \
-    $$PWD/src/datasource/spw/qseabstractspwsyncpeakdatasource.h
+    $$PWD/src/datasource/spw/qseabstractspwsyncpeakdatasource.h \
+    $$PWD/src/position/qseposition.h \
+    $$PWD/src/position/spp/plot/qsespppositionplot.h \
+    $$PWD/src/position/spp/controller/qsesppstandardpositioncontroller.h
 
 
 SOURCES +=                                                          \
@@ -64,8 +64,6 @@ SOURCES +=                                                          \
     $$PWD/src/core/qseabstractwidget.cpp \
     $$PWD/src/core/qsehelper.cpp \
     $$PWD/src/cover/spp/plot/qsemonocolorsppcoverplot.cpp \
-    $$PWD/src/cursor/spp/plot/qsesppcursorplot.cpp \
-    $$PWD/src/cursor/qsecursor.cpp \
     $$PWD/src/datasource/spp/qseabstractspppeakreply.cpp \
     $$PWD/src/datasource/spw/qseabstractspwpeakreply.cpp \
     $$PWD/src/datasource/qseabstractpeakreply.cpp \
@@ -94,7 +92,6 @@ SOURCES +=                                                          \
     $$PWD/src/core/spp/qsesppstandardverticalcontroller.cpp \
     $$PWD/src/core/spp/qsesppstandardverticalzoomcontroller.cpp \
     $$PWD/src/core/spp/qsesppstandardhorizontalzoomcontroller.cpp \
-    $$PWD/src/cursor/spp/controller/qsesppstandardcursorcontroller.cpp \
     $$PWD/src/selection/spp/controller/qsesppstandardselectioncontroller.cpp \
     $$PWD/src/core/spp/qseabstractspplimiter.cpp \
     $$PWD/src/widget/sppaudacitywidget/qsesppaudacitycontroller.cpp \
@@ -102,7 +99,10 @@ SOURCES +=                                                          \
     $$PWD/src/datasource/spp/qseabstractsppasyncpeakdatasource.cpp \
     $$PWD/src/datasource/spp/qseabstractsppsyncpeakdatasource.cpp \
     $$PWD/src/datasource/spw/qseabstractspwasyncpeakdatasource.cpp \
-    $$PWD/src/datasource/spw/qseabstractspwsyncpeakdatasource.cpp
+    $$PWD/src/datasource/spw/qseabstractspwsyncpeakdatasource.cpp \
+    $$PWD/src/position/spp/controller/qsesppstandardpositioncontroller.cpp \
+    $$PWD/src/position/spp/plot/qsespppositionplot.cpp \
+    $$PWD/src/position/qseposition.cpp
 
 
 OTHER_FILES +=                                                      \
@@ -122,9 +122,9 @@ INCLUDEPATH +=                                                      \
     $$PWD/src/core/spw                                              \
     $$PWD/src/cover                                                 \
     $$PWD/src/cover/spp/plot                                        \
-    $$PWD/src/cursor                                                \
-    $$PWD/src/cursor/spp/plot                                       \
-    $$PWD/src/cursor/spp/controller                                 \
+    $$PWD/src/position                                              \
+    $$PWD/src/position/spp/plot                                     \
+    $$PWD/src/position/spp/controller                               \
     $$PWD/src/datasource                                            \
     $$PWD/src/datasource/spp                                        \
     $$PWD/src/datasource/spw                                        \

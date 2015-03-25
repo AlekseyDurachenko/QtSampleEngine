@@ -19,8 +19,8 @@
 #include <QMainWindow>
 class QseSppWidget;
 class QseMonocolorSppCoverPlot;
-class QseSppCursorPlot;
-class QseCursor;
+class QseSppPositionPlot;
+class QsePosition;
 class QseSppSelectionPlot;
 class QseSelection;
 class QseSppSyncSignalLinearPlot;
@@ -46,8 +46,8 @@ private:
     Ui::CMainWindow *ui;
     QseSppWidget *m_sppWidget;
     QseMonocolorSppCoverPlot *m_monocolorCoverSppPlot;
-    QseSppCursorPlot *m_sppCursorPlot;
-    QseCursor *m_cursor;
+    QseSppPositionPlot *m_sppCursorPlot;
+    QsePosition *m_cursor;
     QseSppSelectionPlot *m_sppSelectionPlot;
     QseSelection *m_selection;
     QseSppSyncSignalLinearPlot *m_sppSignalLinearPlot;

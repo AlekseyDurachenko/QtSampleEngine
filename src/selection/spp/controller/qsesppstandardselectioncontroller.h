@@ -27,7 +27,7 @@ public:
     explicit QseSppStandardSelectionController(QObject *parent = 0);
 
     inline QseSelection *selection() const;
-    void setSelection(QseSelection *cursor);
+    void setSelection(QseSelection *selection);
 protected:
     virtual void mouseMoveEvent(QMouseEvent *event, const QRect &rect,
                         const QseSppGeometry &geometry);
@@ -42,6 +42,8 @@ protected:
 private:
     void updateCursor(Qt::KeyboardModifiers km, int x,
                       const QRect &rect, const QseSppGeometry &geometry);
+private slots:
+    void selection_destroyed();
 private:
     QseSelection *m_selection;
     // true  -- ready to move the selection

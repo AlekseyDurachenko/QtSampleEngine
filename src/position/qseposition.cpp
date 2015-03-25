@@ -13,15 +13,15 @@
 // You should have received a copy of the GNU Lesser General Public
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
-#include "qsecursor.h"
+#include "qseposition.h"
 
 
-QseCursor::QseCursor(QObject *parent) : QObject(parent)
+QsePosition::QsePosition(QObject *parent) : QObject(parent)
 {
     m_index = -1;
 }
 
-void QseCursor::setAvailableRange(const QseRange &availableRange)
+void QsePosition::setAvailableRange(const QseRange &availableRange)
 {
     if (availableRange != m_availableRange)
     {
@@ -31,7 +31,7 @@ void QseCursor::setAvailableRange(const QseRange &availableRange)
     }
 }
 
-void QseCursor::setIndex(qint64 index)
+void QsePosition::setIndex(qint64 index)
 {
     qint64 newIndex = index;
     if (m_availableRange.isNull())
@@ -48,14 +48,14 @@ void QseCursor::setIndex(qint64 index)
     }
 }
 
-void QseCursor::resetAvailableRange()
+void QsePosition::resetAvailableRange()
 {
     setAvailableRange(QseRange());
 }
 
 /*! set index to null
  */
-void QseCursor::resetIndex()
+void QsePosition::resetIndex()
 {
     if (m_index != -1)
     {

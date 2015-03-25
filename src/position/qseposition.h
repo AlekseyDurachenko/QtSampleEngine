@@ -13,14 +13,14 @@
 // You should have received a copy of the GNU Lesser General Public
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
-#ifndef QSECURSOR_H
-#define QSECURSOR_H
+#ifndef QSEPOSITION_H
+#define QSEPOSITION_H
 
 #include <QObject>
 #include "qserange.h"
 
 
-class QseCursor : public QObject
+class QsePosition : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(qint64 index READ index WRITE setIndex
@@ -28,7 +28,7 @@ class QseCursor : public QObject
     Q_PROPERTY(QseRange availableRange READ availableRange
                WRITE setAvailableRange RESET resetAvailableRange)
 public:
-    explicit QseCursor(QObject *parent = 0);
+    explicit QsePosition(QObject *parent = 0);
 
     inline bool isNull() const;
     inline qint64 index() const;
@@ -48,20 +48,20 @@ private:
 /*! \retval true if index() is "-1",
  *  \retval false oterwise
  */
-bool QseCursor::isNull() const
+bool QsePosition::isNull() const
 {
     return (m_index < 0);
 }
 
-qint64 QseCursor::index() const
+qint64 QsePosition::index() const
 {
     return m_index;
 }
 
-const QseRange &QseCursor::availableRange() const
+const QseRange &QsePosition::availableRange() const
 {
     return m_availableRange;
 }
 
 
-#endif // QSECURSOR_H
+#endif // QSEPOSITION_H

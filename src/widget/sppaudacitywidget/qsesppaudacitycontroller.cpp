@@ -18,32 +18,32 @@
 #include <QKeyEvent>
 #include <QWheelEvent>
 #include "qseselection.h"
-#include "qsecursor.h"
+#include "qseposition.h"
 #include "qsesppgeometry.h"
 
 
 QseSppAudacityController::QseSppAudacityController(QObject *parent) :
     QseAbstractSppController(parent)
 {
-    m_currentPosition = 0;
+    m_position = 0;
     m_selection = 0;
     m_isSelectionAction = false;
     setDefaultCursor(QCursor(Qt::IBeamCursor));
 }
 
-void QseSppAudacityController::setCurrentPosition(QseCursor *cursor)
+void QseSppAudacityController::setPosition(QsePosition *position)
 {
-    if (cursor == m_currentPosition)
+    if (position == m_position)
         return;
 
-    if (m_currentPosition)
-        disconnect(m_currentPosition, 0, this, 0);
+    if (m_position)
+        disconnect(m_position, 0, this, 0);
 
-    m_currentPosition = cursor;
-    if (m_currentPosition)
+    m_position = position;
+    if (m_position)
     {
-        connect(m_currentPosition, SIGNAL(destroyed()),
-                this, SLOT(currentPosition_destroyed()));
+        connect(m_position, SIGNAL(destroyed()),
+                this, SLOT(position_destroyed()));
     }
 }
 
@@ -127,9 +127,9 @@ void QseSppAudacityController::wheelEvent(QWheelEvent *event,
     updateCursor(event->x(), rect, geometry);
 }
 
-void QseSppAudacityController::currentPosition_destroyed()
+void QseSppAudacityController::position_destroyed()
 {
-    m_currentPosition = 0;
+    m_position = 0;
 }
 
 void QseSppAudacityController::selection_destroyed()
@@ -222,8 +222,8 @@ void QseSppAudacityController::changeSelection(QMouseEvent *event,
         sample = 0;
 
     m_selection->setSelectedRange(QseRange(m_otherSample, sample));
-    if (m_currentPosition && !m_selection->isNull())
-        m_currentPosition->resetIndex();
+    if (m_position && !m_selection->isNull())
+        m_position->resetIndex();
 }
 
 void QseSppAudacityController::endSelection()
@@ -234,10 +234,10 @@ void QseSppAudacityController::endSelection()
 void QseSppAudacityController::changeCurrentPosition(QMouseEvent *event,
         const QseSppGeometry &geometry)
 {
-    if (!m_currentPosition || !m_selection->isNull())
+    if (!m_position || !m_selection->isNull())
         return;
 
-    m_currentPosition->setIndex(
+    m_position->setIndex(
             QseSppGeometry::calcSampleIndex(geometry, event->x()));
 }
 

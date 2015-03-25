@@ -18,9 +18,9 @@
 
 #include <QWidget>
 #include "qsesppwidget.h"
-class QseCursor;
+class QsePosition;
 class QseSelection;
-class QseSppCursorPlot;
+class QseSppPositionPlot;
 class QseSppSelectionPlot;
 class QseSppSyncSignalLinearPlot;
 class QseSppAxisCoverPlot;
@@ -36,8 +36,8 @@ class CSppSyncAudacityWidget : public QseSppWidget
 public:
     explicit CSppSyncAudacityWidget(QWidget *parent = 0, Qt::WindowFlags f = 0);
 
-    inline QseCursor *playPosition() const;
-    inline QseCursor *currentPosition() const;
+    inline QsePosition *playPosition() const;
+    inline QsePosition *cursorPosition() const;
     inline QseSelection *selection() const;
     inline QseSppAxisCoverPlot *coverPlot() const;
     inline QseSppSyncSignalLinearPlot *signalPlot() const;
@@ -45,11 +45,11 @@ public:
     inline CSppSyncPeakDataSource *dataSource() const;
     inline CSppLimiter *limiter() const;
 private:
-    QseCursor *m_playPosition;
-    QseSppCursorPlot *m_playPositionPlot;
+    QsePosition *m_playPosition;
+    QseSppPositionPlot *m_playPositionPlot;
 
-    QseCursor *m_currentPosition;
-    QseSppCursorPlot *m_currentPositionPlot;
+    QsePosition *m_cursorPosition;
+    QseSppPositionPlot *m_cursorPositionPlot;
 
     QseSelection *m_selection;
     QseSppSelectionPlot *m_selectionPlot;
@@ -65,14 +65,14 @@ private:
     QseSppWidget *m_sppWidget;
 };
 
-QseCursor *CSppSyncAudacityWidget::playPosition() const
+QsePosition *CSppSyncAudacityWidget::playPosition() const
 {
     return m_playPosition;
 }
 
-QseCursor *CSppSyncAudacityWidget::currentPosition() const
+QsePosition *CSppSyncAudacityWidget::cursorPosition() const
 {
-    return m_currentPosition;
+    return m_cursorPosition;
 }
 
 QseSelection *CSppSyncAudacityWidget::selection() const

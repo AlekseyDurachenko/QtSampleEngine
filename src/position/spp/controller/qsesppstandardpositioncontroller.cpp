@@ -13,64 +13,77 @@
 // You should have received a copy of the GNU Lesser General Public
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
-#include "qsesppstandardcursorcontroller.h"
+#include "qsesppstandardpositioncontroller.h"
 #include <QMouseEvent>
 #include "qsesppgeometry.h"
-#include "qsecursor.h"
+#include "qseposition.h"
 
 
-QseSppStandardCursorController::QseSppStandardCursorController(
+QseSppStandardPositionController::QseSppStandardPositionController(
         QObject *parent) : QseAbstractSppStandardController(parent)
 {
-    m_cursor = 0;
+    m_position = 0;
 }
 
-void QseSppStandardCursorController::setCursor(QseCursor *cursor)
+void QseSppStandardPositionController::setPosition(QsePosition *position)
 {
-    m_cursor = cursor;
+    if (m_position)
+        disconnect(m_position, 0, this, 0);
+
+    m_position = position;
+    if (m_position)
+    {
+        connect(m_position, SIGNAL(destroyed()),
+                this, SLOT(position_destroyed()));
+    }
 }
 
-void QseSppStandardCursorController::mouseMoveEvent(QMouseEvent *event,
+void QseSppStandardPositionController::mouseMoveEvent(QMouseEvent *event,
         const QRect &/*rect*/, const QseSppGeometry &geometry)
 {
-    if (m_cursor
+    if (m_position
             && event->buttons() == Qt::LeftButton
             && event->modifiers() == Qt::ControlModifier)
     {
-        m_cursor->setIndex(QseSppGeometry::calcSampleIndex(geometry, event->x()));
+        m_position->setIndex(QseSppGeometry::calcSampleIndex(geometry, event->x()));
     }
 
     updateCursor(event->modifiers());
 }
 
-void QseSppStandardCursorController::mousePressEvent(QMouseEvent *event,
+void QseSppStandardPositionController::mousePressEvent(QMouseEvent *event,
         const QRect &/*rect*/, const QseSppGeometry &geometry)
 {
-    if (m_cursor
+    if (m_position
             && event->button() == mouseButtons()
             && event->modifiers() == keyboardModifiers())
     {
-        m_cursor->setIndex(QseSppGeometry::calcSampleIndex(geometry, event->x()));
+        m_position->setIndex(QseSppGeometry::calcSampleIndex(geometry, event->x()));
     }
 
     updateCursor(event->modifiers());
 }
 
-void QseSppStandardCursorController::keyPressEvent(QKeyEvent *event,
+void QseSppStandardPositionController::keyPressEvent(QKeyEvent *event,
         const QRect &/*rect*/, const QseSppGeometry &/*geometry*/)
 {
     updateCursor(event->modifiers());
 }
 
-void QseSppStandardCursorController::keyReleaseEvent(QKeyEvent *event,
+void QseSppStandardPositionController::keyReleaseEvent(QKeyEvent *event,
         const QRect &/*rect*/, const QseSppGeometry &/*geometry*/)
 {
     updateCursor(event->modifiers());
 }
 
-void QseSppStandardCursorController::updateCursor(Qt::KeyboardModifiers km)
+void QseSppStandardPositionController::position_destroyed()
 {
-    if (m_cursor && km == keyboardModifiers())
+    m_position = 0;
+}
+
+void QseSppStandardPositionController::updateCursor(Qt::KeyboardModifiers km)
+{
+    if (m_position && km == keyboardModifiers())
     {
         emit cursorChanged(QCursor(Qt::IBeamCursor));
     }

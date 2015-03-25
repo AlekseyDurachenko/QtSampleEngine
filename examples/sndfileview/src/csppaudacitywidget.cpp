@@ -14,9 +14,9 @@
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
 #include "csppaudacitywidget.h"
-#include "qsecursor.h"
+#include "qseposition.h"
 #include "qseselection.h"
-#include "qsesppcursorplot.h"
+#include "qsespppositionplot.h"
 #include "qsesppselectionplot.h"
 #include "qsesppsyncsignallinearplot.h"
 #include "qsesppaxiscoverplot.h"
@@ -37,15 +37,15 @@ CSppSyncAudacityWidget::CSppSyncAudacityWidget(QWidget *parent,
     m_dataSource = new CSppSyncPeakDataSource(datasamples, this);
     m_limiter = new CSppLimiter(this);
 
-    m_playPosition = new QseCursor(this);
+    m_playPosition = new QsePosition(this);
     m_playPosition->setAvailableRange(QseRange(0, m_dataSource->count()));
-    m_playPositionPlot = new QseSppCursorPlot(this);
-    m_playPositionPlot->setCursor(m_playPosition);
+    m_playPositionPlot = new QseSppPositionPlot(this);
+    m_playPositionPlot->setPosition(m_playPosition);
 
-    m_currentPosition = new QseCursor(this);
-    m_currentPosition->setAvailableRange(QseRange(0, m_dataSource->count()));
-    m_currentPositionPlot = new QseSppCursorPlot(this);
-    m_currentPositionPlot->setCursor(m_currentPosition);
+    m_cursorPosition = new QsePosition(this);
+    m_cursorPosition->setAvailableRange(QseRange(0, m_dataSource->count()));
+    m_cursorPositionPlot = new QseSppPositionPlot(this);
+    m_cursorPositionPlot->setPosition(m_cursorPosition);
 
     m_selection = new QseSelection(this);
     m_selection->setAvailableRange(QseRange(0, m_dataSource->count()));
@@ -53,7 +53,7 @@ CSppSyncAudacityWidget::CSppSyncAudacityWidget(QWidget *parent,
     m_selectionPlot->setSelection(m_selection);
 
     m_controller = new QseSppAudacityController(this);
-    m_controller->setCurrentPosition(m_currentPosition);
+    m_controller->setPosition(m_cursorPosition);
     m_controller->setSelection(m_selection);
     setController(m_controller);
 
@@ -68,7 +68,7 @@ CSppSyncAudacityWidget::CSppSyncAudacityWidget(QWidget *parent,
     QList<QseAbstractSppPlot *> postUncachedPlots;
     postUncachedPlots << m_selectionPlot;
     postUncachedPlots << m_playPositionPlot;
-    postUncachedPlots << m_currentPositionPlot;
+    postUncachedPlots << m_cursorPositionPlot;
 
     setCachedPlots(cachedPlots);
     setPostUncachedPlots(postUncachedPlots);
