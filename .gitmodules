@@ -1,3 +1,0 @@
-[submodule "examples/sssppsyncview/submodules/QtAttoDateTime"]
-	path = examples/sssppsyncview/submodules/QtAttoDateTime
-	url = https://github.com/AlekseyDurachenko/QtAttoDateTime.git
