@@ -61,8 +61,6 @@ private:
     void extendSelection(QMouseEvent *event, const QseSppGeometry &geometry);
     void changeSelection(QMouseEvent *event, const QseSppGeometry &geometry);
     void endSelection();
-    void changeCurrentPosition(QMouseEvent *event,
-                               const QseSppGeometry &geometry);
     void clickPlayPosition(QMouseEvent *event, const QseSppGeometry &geometry);
     void horizontalZoom(QWheelEvent *event, const QseSppGeometry &geometry);
     void horizontalScroll(QWheelEvent *event, const QseSppGeometry &geometry);

@@ -93,7 +93,6 @@ void QseSppAudacityController::mousePressEvent(QMouseEvent *event,
     {
         if (event->buttons() & Qt::LeftButton)
         {
-            changeCurrentPosition(event, geometry);
             startSelection(event, rect, geometry);
         }
     }
@@ -140,52 +139,56 @@ void QseSppAudacityController::selection_destroyed()
 void QseSppAudacityController::startSelection(QMouseEvent *event,
         const QRect &rect, const QseSppGeometry &geometry)
 {
-    if (!m_selection)
-        return;
-
     qint64 sample = QseSppGeometry::calcSampleIndex(geometry, event->x());
     if (sample < 0)
         sample = 0;
 
-    // resize selection if mouse around the selection bounds
-    if (!m_selection->isNull())
+    if (m_selection)
     {
-        QseRange range = m_selection->selectedRange();
-        // left bound of selection
-        if (QseSppGeometry::checkSampleIndexVisibility(geometry,
-                range.first(), rect.width()))
+        // resize selection if mouse around the selection bounds
+        if (!m_selection->isNull())
         {
-            int pos = QseSppGeometry::calcOffset(geometry, range.first());
-            if (qAbs(pos - event->x()) < 5)
+            QseRange range = m_selection->selectedRange();
+            // left bound of selection
+            if (QseSppGeometry::checkSampleIndexVisibility(geometry,
+                    range.first(), rect.width()))
             {
-                m_isSelectionAction = true;
-                m_otherSample = range.last();
-                m_selection->setSelectedRange(range.replaceFirst(sample));
+                int pos = QseSppGeometry::calcOffset(geometry, range.first());
+                if (qAbs(pos - event->x()) < 5)
+                {
+                    m_isSelectionAction = true;
+                    m_otherSample = range.last();
+                    m_selection->setSelectedRange(range.replaceFirst(sample));
+                }
+            }
+            // right bound of selection
+            if (!m_isSelectionAction
+                    && QseSppGeometry::checkSampleIndexVisibility(geometry,
+                            range.last(), rect.width()))
+            {
+                int pos = QseSppGeometry::calcOffset(geometry, range.last());
+                if (qAbs(pos - event->x()) < 5)
+                {
+                    m_isSelectionAction = true;
+                    m_otherSample = range.first();
+                    m_selection->setSelectedRange(range.replaceLast(sample));
+                }
             }
         }
-        // right bound of selection
-        if (!m_isSelectionAction
-                && QseSppGeometry::checkSampleIndexVisibility(geometry,
-                        range.last(), rect.width()))
+
+        // start new selection if mouse away the selection bounds
+        if (!m_isSelectionAction)
         {
-            int pos = QseSppGeometry::calcOffset(geometry, range.last());
-            if (qAbs(pos - event->x()) < 5)
-            {
-                m_isSelectionAction = true;
-                m_otherSample = range.first();
-                m_selection->setSelectedRange(range.replaceLast(sample));
-            }
+            m_isSelectionAction = true;
+            m_otherSample = sample;
+            m_selection->resetSelectedRange();
+            m_selection->setSelectedRange(QseRange(sample, sample));
         }
     }
 
-    // start new selection if mouse away the selection bounds
-    if (!m_isSelectionAction)
-    {
-        m_isSelectionAction = true;
-        m_otherSample = sample;
-        m_selection->resetSelectedRange();
-        m_selection->setSelectedRange(QseRange(sample, sample));
-    }
+    // change the current position if selection not found
+    if (m_position && (!m_selection || m_selection->isNull()))
+        m_position->setIndex(sample);
 }
 
 void QseSppAudacityController::extendSelection(QMouseEvent *event,
@@ -229,16 +232,6 @@ void QseSppAudacityController::changeSelection(QMouseEvent *event,
 void QseSppAudacityController::endSelection()
 {
     m_isSelectionAction = false;
-}
-
-void QseSppAudacityController::changeCurrentPosition(QMouseEvent *event,
-        const QseSppGeometry &geometry)
-{
-    if (!m_position || !m_selection->isNull())
-        return;
-
-    m_position->setIndex(
-            QseSppGeometry::calcSampleIndex(geometry, event->x()));
 }
 
 void QseSppAudacityController::clickPlayPosition(QMouseEvent *event,
