@@ -27,9 +27,7 @@
     <property name="title">
      <string>&amp;File</string>
     </property>
-    <addaction name="action_Test_moncolorplot"/>
-    <addaction name="actionAdd_cursor"/>
-    <addaction name="actionTest_Selection"/>
+    <addaction name="action_Open"/>
     <addaction name="action_Quit"/>
    </widget>
    <addaction name="menu_File"/>
@@ -40,19 +38,9 @@
     <string>&amp;Quit</string>
    </property>
   </action>
-  <action name="action_Test_moncolorplot">
+  <action name="action_Open">
    <property name="text">
-    <string>&amp;Test moncolorplot</string>
-   </property>
-  </action>
-  <action name="actionAdd_cursor">
-   <property name="text">
-    <string>Add cursor</string>
-   </property>
-  </action>
-  <action name="actionTest_Selection">
-   <property name="text">
-    <string>Test Selection</string>
+    <string>&amp;Open...</string>
    </property>
   </action>
  </widget>

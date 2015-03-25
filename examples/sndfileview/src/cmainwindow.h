@@ -31,7 +31,10 @@ public:
     explicit CMainWindow(QWidget *parent = 0);
     virtual ~CMainWindow();
 private slots:
-    void on_action_Test_moncolorplot_triggered();
+    void on_action_Open_triggered();
+private:
+    QVector<double> readSoundFile(const QString &fileName,
+                                  double *sampleRage = 0);
 private:
     Ui::CMainWindow *ui;
     CComplexMonoAudioWidget *m_monoAudioWidget;

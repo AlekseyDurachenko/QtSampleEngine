@@ -15,6 +15,9 @@
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
 #include "cmainwindow.h"
 #include "ui_cmainwindow.h"
+#include <QFileDialog>
+#include <QMessageBox>
+#include <sndfile.h>
 #include "ccomplexmonoaudiowidget.h"
 #include "csppsyncaudiowidget.h"
 #include "csppsyncpeakdatasource.h"
@@ -24,6 +27,7 @@ CMainWindow::CMainWindow(QWidget *parent) :
     QMainWindow(parent), ui(new Ui::CMainWindow)
 {
     ui->setupUi(this);
+    setWindowTitle(tr("Sound File View"));
 
     m_monoAudioWidget = new CComplexMonoAudioWidget(this);
     setCentralWidget(m_monoAudioWidget);
@@ -34,16 +38,63 @@ CMainWindow::~CMainWindow()
     delete ui;
 }
 
-void CMainWindow::on_action_Test_moncolorplot_triggered()
+void CMainWindow::on_action_Open_triggered()
 {
-    // TEMPORARY_START
-    QVector<double> datasamples(100000);
-    for (int i = 0; i < 100000; ++i)
-        datasamples[i] = (qrand()%100000)/100000.0-0.5;
-    // TEMPORARY_END
+    QString fileName = QFileDialog::getOpenFileName(this,
+            tr("Open Sound File"), "", tr("Sound Files (* *.*)"));
 
-    m_monoAudioWidget->audioWidget()->dataSource()->setSamples(datasamples, 44100);
+    if (fileName.isEmpty())
+        return;
+
+    double sampleRate;
+    QVector<double> data = readSoundFile(fileName, &sampleRate);
+    if (data.isEmpty())
+    {
+        QMessageBox::critical(this, tr("Critical"),
+                              tr("Sound format not support"));
+    }
+    else
+    {
+        setWindowTitle(fileName + tr(" - Sound File View"));
+
+        m_monoAudioWidget->audioWidget()->dataSource()->setSamples(data,
+                                                                   sampleRate);
+        QseSppGeometry geometry;
+        geometry.setHeight(2.6);
+        if (data.count() > m_monoAudioWidget->audioWidget()->width()*2)
+            geometry.setSamplesPerPixel(
+                    data.count()/m_monoAudioWidget->audioWidget()->width());
+
+        m_monoAudioWidget->audioWidget()->setGeometry(geometry);
+    }
+}
 
 
-    //m_monocolorCoverSppPlot->setColor(Qt::black);
+QVector<double> CMainWindow::readSoundFile(const QString &fileName,
+        double *sampleRage)
+{
+    SNDFILE *infile;
+    SF_INFO sfinfo;
+    int readcount;
+
+    if ((infile = sf_open(fileName.toLatin1().data(), SFM_READ, &sfinfo)))
+    {
+        if (sampleRage)
+            *sampleRage = sfinfo.samplerate;
+
+        double data[1024];
+
+        QVector<double> result;
+        result.reserve(10000000);
+
+        while ((readcount = sf_read_double(infile, data, 1024)))
+            for (int i = 0; i < readcount; i += sfinfo.channels)
+                result.push_back(data[i]);
+
+        return result;
+    }
+
+    sf_close(infile);
+
+    return QVector<double>();
 }
