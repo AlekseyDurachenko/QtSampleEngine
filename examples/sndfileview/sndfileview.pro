@@ -11,14 +11,16 @@ SOURCES +=                                  \
     $$PWD/src/main.cpp                            \
     $$PWD/src/csppsyncpeakdatasource.cpp \
     src/cmainwindow.cpp \
-    src/csppsyncaudacitylimiter.cpp \
-    src/csppsyncaudacitywidget.cpp
+    src/csppsyncaudiolimiter.cpp \
+    src/csppsyncaudiowidget.cpp \
+    src/ccomplexmonoaudiowidget.cpp
 
 HEADERS +=                                  \
     $$PWD/src/csppsyncpeakdatasource.h \
     src/cmainwindow.h \
-    src/csppsyncaudacitylimiter.h \
-    src/csppsyncaudacitywidget.h
+    src/csppsyncaudiowidget.h \
+    src/csppsyncaudiolimiter.h \
+    src/ccomplexmonoaudiowidget.h
 
 FORMS += \
     src/cmainwindow.ui

@@ -92,6 +92,15 @@ void QseSppAxisWidget::setOrientation(Orientation orientation)
     }
 }
 
+void QseSppAxisWidget::setZeroPos(const QPoint &zeroPos)
+{
+    if (m_zeroPos != zeroPos)
+    {
+        m_zeroPos = zeroPos;
+        setUpdateOnce(true);
+    }
+}
+
 void QseSppAxisWidget::setMetricProvider(QseAbstractSppMetricProvider *provider)
 {
     if (m_provider)
@@ -183,13 +192,15 @@ void QseSppAxisWidget::topDownRender(QPainter *painter)
     painter->setPen(m_metricPen);
     foreach (const QseMetricItem &metric, metricList)
         if (metric.level() == 0 || metric.level() == 1)
-            painter->drawLine(metric.offset(), mpY1, metric.offset(), mpY2);
+            painter->drawLine(metric.offset()+m_zeroPos.x(), mpY1,
+                              metric.offset()+m_zeroPos.x(), mpY2);
 
     // draw the help text for the metric
     painter->setPen(m_metricPen);
     foreach (const QseMetricItem &metric, metricList)
         if (metric.level() == 0 || metric.level() == 1)
-            painter->drawText(QPoint(metric.offset(), tpY), metric.text());
+            painter->drawText(QPoint(metric.offset()+m_zeroPos.x(), tpY),
+                              metric.text());
             //painter->drawText(QPoint(metric.offset()+2, tpY), metric.text());
 }
 
@@ -224,14 +235,15 @@ void QseSppAxisWidget::leftRightRender(QPainter *painter)
     painter->setPen(m_metricPen);
     foreach (const QseMetricItem &metric, metricList)
         if (metric.level() == 0 || metric.level() == 1)
-            painter->drawLine(mpX1, metric.offset(), mpX2, metric.offset());
+            painter->drawLine(mpX1, metric.offset()+m_zeroPos.y(),
+                              mpX2, metric.offset()+m_zeroPos.y());
 
     // draw the help text for the metric
     painter->setPen(m_metricPen);
     foreach (const QseMetricItem &metric, metricList)
         if (metric.level() == 0 || metric.level() == 1)
-            painter->drawText(QRect(mtX1, metric.offset()+mtY1, mtW, mtH),
-                              flags, metric.text());
+            painter->drawText(QRect(mtX1, metric.offset()+mtY1+m_zeroPos.y(),
+                                    mtW, mtH), flags, metric.text());
 }
 
 QSize QseSppAxisWidget::minimumSizeHint() const

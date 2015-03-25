@@ -31,6 +31,7 @@ class QseSppAxisWidget : public QseAbstractSppWidget
     Q_PROPERTY(QFont textFont READ textFont WRITE setTextFont)
     Q_PROPERTY(int metricSize READ metricSize WRITE setMetricSize)
     Q_PROPERTY(Orientation orientation READ orientation WRITE setOrientation)
+    Q_PROPERTY(QPoint zeroPos READ zeroPos WRITE setZeroPos)
 public:
     enum Orientation
     {
@@ -60,6 +61,9 @@ public:
     inline Orientation orientation() const;
     void setOrientation(Orientation orientation);
 
+    inline const QPoint &zeroPos() const;
+    void setZeroPos(const QPoint &zeroPos);
+
     inline QseAbstractSppMetricProvider *metricProvider();
     void setMetricProvider(QseAbstractSppMetricProvider *provider);
 private slots:
@@ -80,6 +84,7 @@ protected:
     QFont m_textFont;
     int m_metricSize;
     Orientation m_orientation;
+    QPoint m_zeroPos;
 };
 
 
@@ -116,6 +121,11 @@ inline QseAbstractSppMetricProvider *QseSppAxisWidget::metricProvider()
 inline QseSppAxisWidget::Orientation QseSppAxisWidget::orientation() const
 {
     return m_orientation;
+}
+
+const QPoint &QseSppAxisWidget::zeroPos() const
+{
+    return m_zeroPos;
 }
 
 

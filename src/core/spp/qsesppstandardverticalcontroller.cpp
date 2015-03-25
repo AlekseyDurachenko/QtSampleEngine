@@ -21,6 +21,7 @@ QseSppStandardVerticalController::QseSppStandardVerticalController(
         QObject *parent) : QseAbstractSppStandardController(parent)
 {
     m_dragAction = false;
+    setDefaultCursor(Qt::OpenHandCursor);
 }
 
 void QseSppStandardVerticalController::mouseMoveEvent(QMouseEvent *event,

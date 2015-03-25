@@ -27,7 +27,7 @@ class QseAbstractSppController : public QseAbstractController
 {
     Q_OBJECT
     friend class QseAbstractSppWidget;
-    friend class QseSppCompositorController;
+    friend class QseSppCompositController;
 public:
     explicit QseAbstractSppController(QObject *parent = 0);
 signals:

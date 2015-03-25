@@ -1,4 +1,4 @@
-// Copyright 2013-2015, Durachenko Aleksey V. <durachenko.aleksey@gmail.com>
+// Copyright 2015, Durachenko Aleksey V. <durachenko.aleksey@gmail.com>
 //
 // This library is free software; you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public
@@ -13,26 +13,22 @@
 // You should have received a copy of the GNU Lesser General Public
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
-#include "qseabstractcontroller.h"
+#include "csppsyncaudiolimiter.h"
+#include "qsesppgeometry.h"
 
 
-QseAbstractController::QseAbstractController(QObject *parent) :
-    QObject(parent)
+CSppSyncAudioLimiter::CSppSyncAudioLimiter(CSppSyncPeakDataSource *dataSource,
+        QObject *parent) : QseAbstractSppLimiter(parent)
 {
-    m_defaultCursor = QCursor();
+    m_dataSource = dataSource;
 }
 
-QCursor QseAbstractController::defaultCursor() const
+QseSppGeometry CSppSyncAudioLimiter::limit(const QseSppGeometry &geometry)
 {
-    return m_defaultCursor;
-}
+    QseSppGeometry limitedGeometry = geometry;
 
-void QseAbstractController::setDefaultCursor(const QCursor &cursor)
-{
-    m_defaultCursor = cursor;
-}
+    if (limitedGeometry.x() < 0)
+        limitedGeometry.setX(0);
 
-void QseAbstractController::setZeroPos(const QPoint &zeroPos)
-{
-    m_zeroPos = zeroPos;
+    return limitedGeometry;
 }

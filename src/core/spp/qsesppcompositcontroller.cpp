@@ -13,15 +13,15 @@
 // You should have received a copy of the GNU Lesser General Public
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
-#include "qsesppcompositorcontroller.h"
+#include "qsesppcompositcontroller.h"
 
 
-QseSppCompositorController::QseSppCompositorController(QObject *parent) :
+QseSppCompositController::QseSppCompositController(QObject *parent) :
     QseAbstractSppController(parent)
 {
 }
 
-void QseSppCompositorController::setControllers(
+void QseSppCompositController::setControllers(
         const QList<QseAbstractSppController *> &controllers)
 {
     foreach (QseAbstractSppController *controller, m_controllers)
@@ -39,13 +39,13 @@ void QseSppCompositorController::setControllers(
     }
 }
 
-void QseSppCompositorController::controller_geometryChanged(
+void QseSppCompositController::controller_geometryChanged(
         const QseSppGeometry &geometry)
 {
     emit geometryChanged(geometry);
 }
 
-void QseSppCompositorController::controller_cursorChanged(const QCursor &cursor)
+void QseSppCompositController::controller_cursorChanged(const QCursor &cursor)
 {
     QseAbstractSppController *controller =
             qobject_cast<QseAbstractSppController *>(sender());
@@ -58,47 +58,47 @@ void QseSppCompositorController::controller_cursorChanged(const QCursor &cursor)
         emit cursorChanged(cursor);
 }
 
-void QseSppCompositorController::controller_destroyed(QObject *obj)
+void QseSppCompositController::controller_destroyed(QObject *obj)
 {
     m_controllers.removeAll(qobject_cast<QseAbstractSppController *>(obj));
 }
 
-void QseSppCompositorController::mouseMoveEvent(QMouseEvent *event,
+void QseSppCompositController::mouseMoveEvent(QMouseEvent *event,
         const QRect &rect, const QseSppGeometry &geometry)
 {
     foreach (QseAbstractSppController *controller, m_controllers)
         controller->mouseMoveEvent(event, rect, geometry);
 }
 
-void QseSppCompositorController::mousePressEvent(QMouseEvent *event,
+void QseSppCompositController::mousePressEvent(QMouseEvent *event,
         const QRect &rect, const QseSppGeometry &geometry)
 {
     foreach (QseAbstractSppController *controller, m_controllers)
         controller->mousePressEvent(event, rect, geometry);
 }
 
-void QseSppCompositorController::mouseReleaseEvent(QMouseEvent *event,
+void QseSppCompositController::mouseReleaseEvent(QMouseEvent *event,
         const QRect &rect, const QseSppGeometry &geometry)
 {
     foreach (QseAbstractSppController *controller, m_controllers)
         controller->mouseReleaseEvent(event, rect, geometry);
 }
 
-void QseSppCompositorController::wheelEvent(QWheelEvent *event,
+void QseSppCompositController::wheelEvent(QWheelEvent *event,
         const QRect &rect, const QseSppGeometry &geometry)
 {
     foreach (QseAbstractSppController *controller, m_controllers)
         controller->wheelEvent(event, rect, geometry);
 }
 
-void QseSppCompositorController::keyPressEvent(QKeyEvent *event,
+void QseSppCompositController::keyPressEvent(QKeyEvent *event,
         const QRect &rect, const QseSppGeometry &geometry)
 {
     foreach (QseAbstractSppController *controller, m_controllers)
         controller->keyPressEvent(event, rect, geometry);
 }
 
-void QseSppCompositorController::keyReleaseEvent(QKeyEvent *event,
+void QseSppCompositController::keyReleaseEvent(QKeyEvent *event,
         const QRect &rect, const QseSppGeometry &geometry)
 {
     foreach (QseAbstractSppController *controller, m_controllers)

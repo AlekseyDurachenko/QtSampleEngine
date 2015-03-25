@@ -13,17 +13,17 @@
 // You should have received a copy of the GNU Lesser General Public
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
-#ifndef QSESPPCOMPOSITORCONTROLLER_H
-#define QSESPPCOMPOSITORCONTROLLER_H
+#ifndef QSESPPCOMPOSITCONTROLLER_H
+#define QSESPPCOMPOSITCONTROLLER_H
 
 #include "qseabstractsppcontroller.h"
 
 
-class QseSppCompositorController : public QseAbstractSppController
+class QseSppCompositController : public QseAbstractSppController
 {
     Q_OBJECT
 public:
-    explicit QseSppCompositorController(QObject *parent = 0);
+    explicit QseSppCompositController(QObject *parent = 0);
 
     inline const QList<QseAbstractSppController *> controllers() const;
     void setControllers(const QList<QseAbstractSppController *> &controllers);
@@ -48,7 +48,7 @@ private:
     QList<QseAbstractSppController *> m_controllers;
 };
 
-const QList<QseAbstractSppController *> QseSppCompositorController::controllers() const
+const QList<QseAbstractSppController *> QseSppCompositController::controllers() const
 {
     return m_controllers;
 }

@@ -29,6 +29,7 @@ void QseSppStandardHorizontalZoomController::wheelEvent(QWheelEvent *event,
     if (event->modifiers() == keyboardModifiers())
     {
         // calculate zoom
+        const int xpos = event->x() - zeroPos().x();
         int degree = event->delta() / 60;
         qint64 spp = geometry.samplesPerPixel();
         // zoom in
@@ -53,8 +54,8 @@ void QseSppStandardHorizontalZoomController::wheelEvent(QWheelEvent *event,
         }
 
         QseSppGeometry result = geometry.replaceSamplesPerPixel(spp);
-        qint64 sampleA = QseSppGeometry::calcSampleIndex(geometry, event->x());
-        qint64 sampleB = QseSppGeometry::calcSampleIndex(result, event->x());
+        qint64 sampleA = QseSppGeometry::calcSampleIndex(geometry, xpos);
+        qint64 sampleB = QseSppGeometry::calcSampleIndex(result, xpos);
         qint64 x = geometry.x() + (sampleA - sampleB);
 
         emit geometryChanged(result.replaceX(x));

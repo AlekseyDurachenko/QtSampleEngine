@@ -28,7 +28,6 @@ HEADERS +=                                                          \
     $$PWD/src/signal/spp/plot/qsesppsyncsignallinearplot.h \
     $$PWD/src/widget/sppwidget/qsesppwidget.h \
     $$PWD/src/qse_deprecated.h \
-    $$PWD/src/core/spp/qsesppcompositorcontroller.h \
     $$PWD/src/widget/sppaxiswidget/qsesppaxiswidget.h \
     $$PWD/src/axis/spp/metric/qsespplinearmetricprovider.h \
     $$PWD/src/axis/spp/metric/qsesppsignallinearamplmetricprovider.h \
@@ -49,7 +48,8 @@ HEADERS +=                                                          \
     $$PWD/src/datasource/spw/qseabstractspwsyncpeakdatasource.h \
     $$PWD/src/position/qseposition.h \
     $$PWD/src/position/spp/plot/qsespppositionplot.h \
-    $$PWD/src/position/spp/controller/qsesppstandardpositioncontroller.h
+    $$PWD/src/position/spp/controller/qsesppstandardpositioncontroller.h \
+    $$PWD/src/core/spp/qsesppcompositcontroller.h
 
 
 SOURCES +=                                                          \
@@ -81,7 +81,6 @@ SOURCES +=                                                          \
     $$PWD/src/signal/spp/plot/qseabstractsppsyncsignalplot.cpp \
     $$PWD/src/signal/spp/plot/qsesppsyncsignallinearplot.cpp \
     $$PWD/src/widget/sppwidget/qsesppwidget.cpp \
-    $$PWD/src/core/spp/qsesppcompositorcontroller.cpp \
     $$PWD/src/widget/sppaxiswidget/qsesppaxiswidget.cpp \
     $$PWD/src/axis/spp/metric/qsespplinearmetricprovider.cpp \
     $$PWD/src/axis/spp/metric/qsesppsignallinearamplmetricprovider.cpp \
@@ -102,7 +101,8 @@ SOURCES +=                                                          \
     $$PWD/src/datasource/spw/qseabstractspwsyncpeakdatasource.cpp \
     $$PWD/src/position/spp/controller/qsesppstandardpositioncontroller.cpp \
     $$PWD/src/position/spp/plot/qsespppositionplot.cpp \
-    $$PWD/src/position/qseposition.cpp
+    $$PWD/src/position/qseposition.cpp \
+    $$PWD/src/core/spp/qsesppcompositcontroller.cpp
 
 
 OTHER_FILES +=                                                      \

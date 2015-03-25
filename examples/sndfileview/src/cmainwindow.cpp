@@ -25,7 +25,7 @@
 #include "qsesppsyncsignallinearplot.h"
 #include "qsesppstandardhorizontalcontroller.h"
 #include "qsesppstandardverticalcontroller.h"
-#include "qsesppcompositorcontroller.h"
+#include "qsesppcompositcontroller.h"
 #include "qsesppaxiswidget.h"
 #include "qsespplinearmetricprovider.h"
 #include "qsesppsignallinearamplmetricprovider.h"
@@ -35,14 +35,16 @@
 #include "qsesppstandardverticalzoomcontroller.h"
 #include "qsesppstandardpositioncontroller.h"
 #include "qsesppstandardselectioncontroller.h"
-#include "csppsyncaudacitylimiter.h"
-#include "csppsyncaudacitywidget.h"
+#include "csppsyncaudiolimiter.h"
+#include "csppsyncaudiowidget.h"
 #include <QDebug>
 #include <math.h>
 #include <QtGui>
 #include <limits>
 #include <limits.h>
 #include <cfloat>
+#include "ccomplexmonoaudiowidget.h"
+
 
 CMainWindow::CMainWindow(QWidget *parent) :
     QMainWindow(parent), ui(new Ui::CMainWindow)
@@ -227,9 +229,10 @@ CMainWindow::CMainWindow(QWidget *parent) :
 //    m_sppSignalLinearPlot = new QseSppSyncSignalLinearPlot(this);
 //    m_sppSignalLinearPlot->setDataSource(dataSource);
 
-    m_audacityWidget = new CSppSyncAudacityWidget(this);
-    setCentralWidget(m_audacityWidget);
-
+    //m_audacityWidget = new CSppSyncAudioWidget(this);
+    //setCentralWidget(m_audacityWidget);
+    m_monoAudioWidget = new CComplexMonoAudioWidget(this);
+    setCentralWidget(m_monoAudioWidget);
 }
 
 CMainWindow::~CMainWindow()
@@ -245,7 +248,7 @@ void CMainWindow::on_action_Test_moncolorplot_triggered()
         datasamples[i] = (qrand()%100000)/100000.0-0.5;
     // TEMPORARY_END
 
-    m_audacityWidget->dataSource()->setSamples(datasamples, 1.0);
+    m_monoAudioWidget->audioWidget()->dataSource()->setSamples(datasamples, 44100);
 
 
     //m_monocolorCoverSppPlot->setColor(Qt::black);
