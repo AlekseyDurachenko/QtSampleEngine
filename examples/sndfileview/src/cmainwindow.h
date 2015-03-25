@@ -32,6 +32,7 @@ public:
     virtual ~CMainWindow();
 private slots:
     void on_action_Open_triggered();
+    void on_action_Quit_triggered();
 private:
     QVector<double> readSoundFile(const QString &fileName,
                                   double *sampleRage = 0);

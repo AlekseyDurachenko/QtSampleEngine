@@ -69,6 +69,11 @@ void CMainWindow::on_action_Open_triggered()
     }
 }
 
+void CMainWindow::on_action_Quit_triggered()
+{
+    close();
+}
+
 
 QVector<double> CMainWindow::readSoundFile(const QString &fileName,
         double *sampleRage)

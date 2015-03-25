@@ -36,56 +36,63 @@
 CComplexMonoAudioWidget::CComplexMonoAudioWidget(QWidget *parent) :
     QWidget(parent)
 {
-    m_timeScrollBar = new QScrollBar(Qt::Horizontal, this);
     m_audioWidget = new CSppSyncAudioWidget(this);
-    m_audioWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-    m_amplitudeAxis = new QseSppAxisWidget(QseSppAxisWidget::Left, this);
-    m_timeAxis = new QseSppAxisWidget(QseSppAxisWidget::Top, this);
-    m_amplitudeProvider = new QseSppSignalLinearAmplMetricProvider(this);
-    m_timeProvider = new QseSppTimeMetricProvider(this);
-    m_amplitudeAxis->setMetricProvider(m_amplitudeProvider);
-    m_timeAxis->setMetricProvider(m_timeProvider);
-    m_audioWidget->coverPlot()->setVerticalMetricProvider(m_amplitudeProvider);
-    m_audioWidget->coverPlot()->setHorizontalMetricProvider(m_timeProvider);
-    connect(m_audioWidget, SIGNAL(geometryChanged(QseSppGeometry)),
-            m_amplitudeAxis, SLOT(setGeometry(QseSppGeometry)));
-    connect(m_audioWidget, SIGNAL(geometryChanged(QseSppGeometry)),
-            m_timeAxis, SLOT(setGeometry(QseSppGeometry)));
+
+    m_timeScrollBar = new QScrollBar(Qt::Horizontal, this);
+    connect(m_timeScrollBar, SIGNAL(valueChanged(int)),
+            this, SLOT(scrollBar_valueChanged(int)));
+
     m_horizontalCtrl = new QseSppStandardHorizontalController(this);
     m_horizontalCtrl->setKeyboardModifiers(Qt::NoModifier);
     m_horizontalCtrl->setMouseButtons(Qt::LeftButton);
-    m_verticalCtrl = new QseSppStandardVerticalController(this);
-    m_verticalCtrl->setKeyboardModifiers(Qt::NoModifier);
-    m_verticalCtrl->setMouseButtons(Qt::LeftButton);
     m_horizontalZoomCtrl = new QseSppStandardHorizontalZoomController(this);
     m_horizontalZoomCtrl->setKeyboardModifiers(Qt::NoModifier);
-    m_verticalZoomCtrl = new QseSppStandardVerticalZoomController(this);
-    m_verticalZoomCtrl->setKeyboardModifiers(Qt::NoModifier);
     m_horizontalCompositCtrl = new QseSppCompositController(this);
-    m_verticalCompositCtrl = new QseSppCompositController(this);
     QList<QseAbstractSppController *> hctrls;
     hctrls << m_horizontalCtrl;
     hctrls << m_horizontalZoomCtrl;
     m_horizontalCompositCtrl->setControllers(hctrls);
+    connect(m_horizontalCompositCtrl, SIGNAL(geometryChanged(QseSppGeometry)),
+            m_audioWidget, SLOT(setGeometry(QseSppGeometry)));
+
+    m_verticalCtrl = new QseSppStandardVerticalController(this);
+    m_verticalCtrl->setKeyboardModifiers(Qt::NoModifier);
+    m_verticalCtrl->setMouseButtons(Qt::LeftButton);
+    m_verticalZoomCtrl = new QseSppStandardVerticalZoomController(this);
+    m_verticalZoomCtrl->setKeyboardModifiers(Qt::NoModifier);
+    m_verticalCompositCtrl = new QseSppCompositController(this);
     QList<QseAbstractSppController *> vctrls;
     vctrls << m_verticalCtrl;
     vctrls << m_verticalZoomCtrl;
     m_verticalCompositCtrl->setControllers(vctrls);
-    m_amplitudeAxis->setController(m_verticalCompositCtrl);
-    m_timeAxis->setController(m_horizontalCompositCtrl);
-    connect(m_horizontalCompositCtrl, SIGNAL(geometryChanged(QseSppGeometry)),
-            m_audioWidget, SLOT(setGeometry(QseSppGeometry)));
     connect(m_verticalCompositCtrl, SIGNAL(geometryChanged(QseSppGeometry)),
             m_audioWidget, SLOT(setGeometry(QseSppGeometry)));
+
+    m_amplitudeProvider = new QseSppSignalLinearAmplMetricProvider(this);
+    m_timeProvider = new QseSppTimeMetricProvider(this);
+
+    m_amplitudeAxis = new QseSppAxisWidget(QseSppAxisWidget::Left, this);
+    m_amplitudeAxis->setMetricProvider(m_amplitudeProvider);
+    m_amplitudeAxis->setController(m_verticalCompositCtrl);
     m_amplitudeAxis->setLimiter(m_audioWidget->limiter());
+
+    m_timeAxis = new QseSppAxisWidget(QseSppAxisWidget::Top, this);
+    m_timeAxis->setMetricProvider(m_timeProvider);
+    m_timeAxis->setController(m_horizontalCompositCtrl);
     m_timeAxis->setLimiter(m_audioWidget->limiter());
+
+    m_audioWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    m_audioWidget->coverPlot()->setVerticalMetricProvider(m_amplitudeProvider);
+    m_audioWidget->coverPlot()->setHorizontalMetricProvider(m_timeProvider);
     m_audioWidget->installEventFilter(this);
+    connect(m_audioWidget, SIGNAL(geometryChanged(QseSppGeometry)),
+            m_amplitudeAxis, SLOT(setGeometry(QseSppGeometry)));
+    connect(m_audioWidget, SIGNAL(geometryChanged(QseSppGeometry)),
+            m_timeAxis, SLOT(setGeometry(QseSppGeometry)));
     connect(m_audioWidget->dataSource(), SIGNAL(dataChanged()),
             this, SLOT(dataSource_dataChanged()));
     connect(m_audioWidget, SIGNAL(geometryChanged(QseSppGeometry)),
             this, SLOT(audioWidget_geometryChanged(QseSppGeometry)));
-    connect(m_timeScrollBar, SIGNAL(valueChanged(int)),
-            this, SLOT(scrollBar_valueChanged(int)));
 
     QHBoxLayout *hbox = new QHBoxLayout;
     hbox->setSpacing(0);
