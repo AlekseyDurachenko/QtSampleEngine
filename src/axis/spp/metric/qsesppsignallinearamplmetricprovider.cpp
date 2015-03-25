@@ -22,6 +22,7 @@ QseSppSignalLinearAmplMetricProvider::QseSppSignalLinearAmplMetricProvider(
         QObject *parent) : QseAbstractSppMetricProvider(parent)
 {
     m_mapper = new QseMetricMapper();
+    m_factor = 1.0;
 }
 
 QseSppSignalLinearAmplMetricProvider::~QseSppSignalLinearAmplMetricProvider()
