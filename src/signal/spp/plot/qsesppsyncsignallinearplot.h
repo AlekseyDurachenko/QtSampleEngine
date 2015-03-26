@@ -35,7 +35,11 @@ protected:
     void drawAsPeaks(QPainter *painter, const QsePeakArray &peaks,
                      const QRect &rect, const QseSppGeometry &geometry,
                      int offset = 0);
-
+private:
+    QsePeakArray readPeaks(const QRect &rect, const QseSppGeometry &geometry);
+    bool isPeaksMayChanged(const QRect &rect, const QseSppGeometry &geometry);
+private:
+    QsePeakArray m_lastPeaks;
 };
 
 #endif // QSESPPSYNCSIGNALLINEARPLOT_H

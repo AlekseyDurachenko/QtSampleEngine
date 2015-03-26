@@ -21,6 +21,9 @@ QseAbstractSppSyncSignalPlot::QseAbstractSppSyncSignalPlot(QObject *parent) :
     QseAbstractSppSignalPlot(parent)
 {
     m_dataSource = 0;
+    m_firstChangedSample = -1;
+    m_lastChangedSample = -1;
+    m_hasDataChanges = false;
 }
 
 void QseAbstractSppSyncSignalPlot::setDataSource(
@@ -33,9 +36,23 @@ void QseAbstractSppSyncSignalPlot::setDataSource(
     if (m_dataSource)
     {
         connect(m_dataSource, SIGNAL(dataChanged()),
-                this, SLOT(setUpdateOnce()));
+                this, SLOT(dataSource_dataChanged()));
+        connect(m_dataSource, SIGNAL(dataChanged(qint64,qint64)),
+                this, SLOT(dataSource_dataChanged(qint64,qint64)));
         connect(m_dataSource, SIGNAL(destroyed(QObject*)),
                 this, SLOT(dataSource_destroyed(QObject*)));
+
+        m_hasDataChanges = true;
+        if (!m_dataSource || m_dataSource->count() == 0)
+        {
+            m_firstChangedSample = -1;
+            m_lastChangedSample = -1;
+        }
+        else
+        {
+            m_firstChangedSample = 0;
+            m_lastChangedSample = m_dataSource->count()-1;
+        }
     }
 
     setUpdateOnce(true);
@@ -70,4 +87,61 @@ void QseAbstractSppSyncSignalPlot::dataSource_destroyed(QObject *obj)
 {
     if (obj == m_dataSource)
         m_dataSource = 0;
+}
+
+void QseAbstractSppSyncSignalPlot::dataSource_dataChanged()
+{
+    m_hasDataChanges = true;
+    if (!m_dataSource || m_dataSource->count() == 0)
+    {
+        m_firstChangedSample = -1;
+        m_lastChangedSample = -1;
+    }
+    else
+    {
+        m_firstChangedSample = 0;
+        m_lastChangedSample = m_dataSource->count()-1;
+    }
+
+    setUpdateOnce(true);
+}
+
+void QseAbstractSppSyncSignalPlot::dataSource_dataChanged(qint64 first,
+        qint64 last)
+{
+    m_hasDataChanges = true;
+    if (!m_dataSource || m_dataSource->count() == 0)
+    {
+        m_firstChangedSample = -1;
+        m_lastChangedSample = -1;
+    }
+    else
+    {
+        m_firstChangedSample = first;
+        m_lastChangedSample = last;
+    }
+
+    setUpdateOnce(true);
+}
+
+bool QseAbstractSppSyncSignalPlot::hasDataChanges() const
+{
+    return m_hasDataChanges;
+}
+
+qint64 QseAbstractSppSyncSignalPlot::firstChangedSample() const
+{
+    return m_firstChangedSample;
+}
+
+qint64 QseAbstractSppSyncSignalPlot::lastChangedSample() const
+{
+    return m_lastChangedSample;
+}
+
+void QseAbstractSppSyncSignalPlot::resetDataChanges()
+{
+    m_firstChangedSample = -1;
+    m_lastChangedSample = -1;
+    m_hasDataChanges = false;
 }

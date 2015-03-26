@@ -33,8 +33,18 @@ public:
     virtual bool isVisible(const QRect &rect, const QseSppGeometry &geometry);
 private slots:
     void dataSource_destroyed(QObject *obj);
+    void dataSource_dataChanged();
+    void dataSource_dataChanged(qint64 first, qint64 last);
+protected:
+    bool hasDataChanges() const;
+    qint64 firstChangedSample() const;
+    qint64 lastChangedSample() const;
+    void resetDataChanges();
 private:
     QseAbstractSppSyncPeakDataSource *m_dataSource;
+    qint64 m_hasDataChanges;
+    qint64 m_firstChangedSample;
+    qint64 m_lastChangedSample;
 };
 
 QseAbstractSppSyncPeakDataSource *QseAbstractSppSyncSignalPlot::dataSource() const

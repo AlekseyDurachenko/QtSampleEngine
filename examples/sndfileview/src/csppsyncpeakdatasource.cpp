@@ -14,7 +14,7 @@
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
 #include "csppsyncpeakdatasource.h"
-
+#include <QDebug>
 
 CSppSyncPeakDataSource::CSppSyncPeakDataSource(QObject *parent) :
     QseAbstractSppSyncPeakDataSource(parent)
@@ -76,7 +76,7 @@ QsePeakArray CSppSyncPeakDataSource::readAsPeaks(qint64 first, qint64 spp,
     if (first >= m_samples.count())
         return QsePeakArray();
 
-    qint64 last = first + width*spp;
+    qint64 last = first + width*spp - 1;
     if (last >= m_samples.count())
         last = m_samples.count() - 1;
 

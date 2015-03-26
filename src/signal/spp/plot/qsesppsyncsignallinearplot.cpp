@@ -30,7 +30,7 @@ void QseSppSyncSignalLinearPlot::draw(QPainter *painter, const QRect &rect,
 {
     if (isVisible(rect, geometry))
     {
-        QsePeakArray peaks = dataSource()->read(geometry, rect.width());
+        QsePeakArray peaks = readPeaks(rect, geometry);
         if (!peaks.isEmpty())
         {
             int offset = 0;
@@ -186,4 +186,113 @@ void QseSppSyncSignalLinearPlot::drawAsPeaks(QPainter *painter,
                 painter->drawLine(QPointF(x1, curMin), QPointF(x2, curMax));
         }
     }
+}
+
+QsePeakArray QseSppSyncSignalLinearPlot::readPeaks(const QRect &rect,
+        const QseSppGeometry &geometry)
+{
+    if (geometry.samplesPerPixel() < 2)
+    {
+        QsePeakArray peaks = dataSource()->read(geometry, rect.width());
+        m_lastPeaks = peaks;
+        resetDataChanges();
+
+        return peaks;
+    }
+
+    if (!isPeaksMayChanged(rect, geometry))
+        return m_lastPeaks;
+
+    if (geometry.x() == lastGeometry().x()
+            && geometry.samplesPerPixel() == lastGeometry().samplesPerPixel())
+    {
+        // visible range desrised
+        if (rect.width() < lastRect().width())
+            return m_lastPeaks;
+
+        // samples already readed
+        if (rect.width() < m_lastPeaks.count())
+            return m_lastPeaks;
+
+        // if all samples visible, do not try to read more samples
+        qint64 lastVisibleSample = QseSppGeometry::calcSampleIndex(
+                    geometry, m_lastPeaks.count());
+        if (lastVisibleSample >= dataSource()->count())
+            return m_lastPeaks;
+
+        // read only new visible samples
+        int unusedVisibleWidth = rect.width()-m_lastPeaks.count();
+        QsePeakArray peaks = dataSource()->read(
+                    geometry.replaceX(lastVisibleSample), unusedVisibleWidth);
+
+        QsePeakArray result(m_lastPeaks.minimums() + peaks.minimums(),
+                            m_lastPeaks.maximums() + peaks.maximums());
+
+        m_lastPeaks = result;
+        resetDataChanges();
+
+        return result;
+    }
+    else if (geometry.x() != lastGeometry().x()
+             && geometry.samplesPerPixel() == lastGeometry().samplesPerPixel()
+             && rect.width() == lastRect().width())
+    {
+        if (geometry.x() > lastGeometry().x())
+        {
+            qint64 lastVisibleSample = QseSppGeometry::calcSampleIndex(geometry, m_lastPeaks.count());
+            int scrollWidth = (geometry.x() - lastGeometry().x()) / geometry.samplesPerPixel();
+            QsePeakArray peaks = dataSource()->read(
+                        geometry.replaceX(lastVisibleSample), scrollWidth);
+
+            QVector<double> minimums = m_lastPeaks.minimums();
+            QVector<double> maximums = m_lastPeaks.maximums();
+            minimums.remove(0, scrollWidth);
+            maximums.remove(0, scrollWidth);
+
+            QsePeakArray result(minimums + peaks.minimums(),
+                                maximums + peaks.maximums());
+
+            m_lastPeaks = result;
+            resetDataChanges();
+
+            return result;
+        }
+        else
+        {
+            int scrollWidth = (lastGeometry().x() - geometry.x()) / geometry.samplesPerPixel();
+            QsePeakArray peaks = dataSource()->read(geometry, scrollWidth);
+
+            QsePeakArray result(peaks.minimums() + m_lastPeaks.minimums(),
+                                peaks.maximums() + m_lastPeaks.maximums());
+
+            m_lastPeaks = result;
+            resetDataChanges();
+
+            return result;
+        }
+    }
+
+    QsePeakArray peaks = dataSource()->read(geometry, rect.width());
+    m_lastPeaks = peaks;
+    resetDataChanges();
+
+    return peaks;
+}
+
+bool QseSppSyncSignalLinearPlot::isPeaksMayChanged(const QRect &rect,
+        const QseSppGeometry &geometry)
+{
+    if (hasDataChanges())
+        return true;
+
+    if (rect.width() != lastRect().width())
+        return true;
+
+    if (geometry.x() != lastGeometry().x())
+        return true;
+
+    if (geometry.samplesPerPixel() != lastGeometry().samplesPerPixel())
+        return true;
+
+    return false;
 }

@@ -46,6 +46,16 @@ void CMainWindow::on_action_Open_triggered()
     if (fileName.isEmpty())
         return;
 
+    openSoundFile(fileName);
+}
+
+void CMainWindow::on_action_Quit_triggered()
+{
+    close();
+}
+
+void CMainWindow::openSoundFile(const QString &fileName)
+{
     double sampleRate;
     QVector<double> data = readSoundFile(fileName, &sampleRate);
     if (data.isEmpty())
@@ -67,11 +77,6 @@ void CMainWindow::on_action_Open_triggered()
 
         m_monoAudioWidget->audioWidget()->setGeometry(geometry);
     }
-}
-
-void CMainWindow::on_action_Quit_triggered()
-{
-    close();
 }
 
 
