@@ -146,6 +146,7 @@ int QseSppGeometry::widthFromSamples(const QseSppGeometry &geometry,
         qint64 count)
 {
     const qint64 &spp = geometry.samplesPerPixel();
+
     if (spp > 0)
         return count/spp;
     else
@@ -156,6 +157,7 @@ qint64 QseSppGeometry::samplesFromWidth(const QseSppGeometry &geometry,
         int width)
 {
     const qint64 &spp = geometry.samplesPerPixel();
+
     if (spp > 0)
         return width*spp;
     else
