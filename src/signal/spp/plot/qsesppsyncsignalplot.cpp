@@ -143,9 +143,9 @@ void QseSppSyncSignalPlot::draw(QPainter *painter, const QRect &rect,
             painter->setPen(pen());
             painter->setOpacity(opacity());
             if (peaks.hasMaximums())
-                m_plotDelegate->drawAsPeaks(painter, zero, peaks, rect, geometry, offset);
+                m_plotDelegate->drawAsPeaks(painter, rect, geometry, peaks, offset, zero);
             else
-                m_plotDelegate->drawAsLines(painter, zero, peaks, rect, geometry, offset);
+                m_plotDelegate->drawAsLines(painter, rect, geometry, peaks, offset, zero);
             painter->restore();
         }
     }

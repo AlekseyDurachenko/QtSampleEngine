@@ -24,8 +24,8 @@ QseSppSignalLinearPlotDelegate::QseSppSignalLinearPlotDelegate(
 }
 
 void QseSppSignalLinearPlotDelegate::drawAsLines(QPainter *painter,
-        double zero, const QsePeakArray &peaks, const QRect &rect,
-        const QseSppGeometry &geometry, int offset)
+        const QRect &rect, const QseSppGeometry &geometry,
+        const QsePeakArray &peaks, int offset, double zero)
 {
     const qint64 pps = -geometry.samplesPerPixel();
     const QVector<double> &points = peaks.minimums();
@@ -69,8 +69,8 @@ void QseSppSignalLinearPlotDelegate::drawAsLines(QPainter *painter,
 }
 
 void QseSppSignalLinearPlotDelegate::drawAsPeaks(QPainter *painter,
-        double zero, const QsePeakArray &peaks, const QRect &rect,
-        const QseSppGeometry &geometry, int offset)
+        const QRect &rect, const QseSppGeometry &geometry,
+        const QsePeakArray &peaks, int offset, double zero)
 {
     const QVector<double> &minimums = peaks.minimums();
     const QVector<double> &maximums = peaks.maximums();

@@ -25,14 +25,14 @@ class QseSppSignalLinearPlotDelegate : public QseAbstractSppSignalPlotDelegate
 public:
     explicit QseSppSignalLinearPlotDelegate(QObject *parent = 0);
 
-    virtual void drawAsLines(QPainter *painter, double zero,
-                             const QsePeakArray &peaks,
+    virtual void drawAsLines(QPainter *painter,
                              const QRect &rect, const QseSppGeometry &geometry,
-                             int offset = 0);
-    virtual void drawAsPeaks(QPainter *painter, double zero,
-                             const QsePeakArray &peaks,
+                             const QsePeakArray &peaks, int offset,
+                             double zero);
+    virtual void drawAsPeaks(QPainter *painter,
                              const QRect &rect, const QseSppGeometry &geometry,
-                             int offset = 0);
+                             const QsePeakArray &peaks, int offset,
+                             double zero);
 };
 
 
