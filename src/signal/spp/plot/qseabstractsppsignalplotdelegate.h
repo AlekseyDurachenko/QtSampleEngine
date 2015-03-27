@@ -39,12 +39,11 @@ public:
     virtual void drawAsLines(QPainter *painter,
                              const QRect &rect, const QseSppGeometry &geometry,
                              const QsePeakArray &peaks, int offset,
-                             double zero) = 0;
+                             double dx, double dy) = 0;
     virtual void drawAsPeaks(QPainter *painter,
                              const QRect &rect, const QseSppGeometry &geometry,
                              const QsePeakArray &peaks, int offset,
-                             double zero) = 0;
-
+                             double dx, double dy) = 0;
 signals:
     void changed();
 private:

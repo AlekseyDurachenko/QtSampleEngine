@@ -57,6 +57,7 @@ private:
 private:
     QsePeakArray readPeaks(const QRect &rect, const QseSppGeometry &geometry);
     bool isPeaksMayChanged(const QRect &rect, const QseSppGeometry &geometry);
+    int calcDy(const QRect &rect);
 private:
     QsePeakArray m_lastPeaks;
 };

@@ -112,6 +112,21 @@ bool QseSppSyncSignalPlot::isVisible(const QRect &rect,
     return true;
 }
 
+int QseSppSyncSignalPlot::calcDy(const QRect &rect)
+{
+    switch (zeroPoint())
+    {
+    case Top:
+        return 0;
+    case Middle:
+        return rect.height()/2.0;
+    case Bottom:
+        return rect.height();
+    }
+
+    return 0;
+}
+
 void QseSppSyncSignalPlot::draw(QPainter *painter, const QRect &rect,
         const QseSppGeometry &geometry)
 {
@@ -124,28 +139,15 @@ void QseSppSyncSignalPlot::draw(QPainter *painter, const QRect &rect,
             if (geometry.x() < 0)
                 offset = geometry.x();
 
+            double dy = calcDy(rect);
+
             painter->save();
-
-            double zero = 0;
-            switch (zeroPoint())
-            {
-            case Top:
-                zero = 0;
-                break;
-            case Middle:
-                zero = rect.height()/2.0;
-                break;
-            case Bottom:
-                zero = rect.height();
-                break;
-            }
-
             painter->setPen(pen());
             painter->setOpacity(opacity());
             if (peaks.hasMaximums())
-                m_plotDelegate->drawAsPeaks(painter, rect, geometry, peaks, offset, zero);
+                m_plotDelegate->drawAsPeaks(painter, rect, geometry, peaks, offset, 0, dy);
             else
-                m_plotDelegate->drawAsLines(painter, rect, geometry, peaks, offset, zero);
+                m_plotDelegate->drawAsLines(painter, rect, geometry, peaks, offset, 0, dy);
             painter->restore();
         }
     }
