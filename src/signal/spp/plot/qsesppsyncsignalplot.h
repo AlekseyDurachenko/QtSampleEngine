@@ -13,28 +13,36 @@
 // You should have received a copy of the GNU Lesser General Public
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
-#ifndef QSEABSTRACTSPPSYNCSIGNALPLOT_H
-#define QSEABSTRACTSPPSYNCSIGNALPLOT_H
+#ifndef QSESPPSYNCSIGNALPLOT_H
+#define QSESPPSYNCSIGNALPLOT_H
 
 #include "qseabstractsppsignalplot.h"
+#include "qsepeakarray.h"
 class QseAbstractSppSyncPeakDataSource;
+class QseAbstractSppSignalPlotDelegate;
 
-
-class QseAbstractSppSyncSignalPlot : public QseAbstractSppSignalPlot
+class QseSppSyncSignalPlot : public QseAbstractSppSignalPlot
 {
     Q_OBJECT
 public:
-    explicit QseAbstractSppSyncSignalPlot(QObject *parent = 0);
+    explicit QseSppSyncSignalPlot(QObject *parent = 0);
 
     inline QseAbstractSppSyncPeakDataSource *dataSource() const;
     void setDataSource(QseAbstractSppSyncPeakDataSource *dataSource);
 
+    inline QseAbstractSppSignalPlotDelegate *plotDelegate() const;
+    void setPlotDelegate(QseAbstractSppSignalPlotDelegate *plotDelegate);
+
     virtual bool hasChanges(const QRect &rect, const QseSppGeometry &geometry);
     virtual bool isVisible(const QRect &rect, const QseSppGeometry &geometry);
+    virtual void draw(QPainter *painter, const QRect &rect,
+              const QseSppGeometry &geometry);
 private slots:
     void dataSource_destroyed(QObject *obj);
     void dataSource_dataChanged();
     void dataSource_dataChanged(qint64 first, qint64 last);
+    void plotDelegate_destroyed();
+    void plotDelegate_changed();
 protected:
     bool hasDataChanges() const;
     qint64 firstChangedSample() const;
@@ -42,15 +50,26 @@ protected:
     void resetDataChanges();
 private:
     QseAbstractSppSyncPeakDataSource *m_dataSource;
+    QseAbstractSppSignalPlotDelegate *m_plotDelegate;
     qint64 m_hasDataChanges;
     qint64 m_firstChangedSample;
     qint64 m_lastChangedSample;
+private:
+    QsePeakArray readPeaks(const QRect &rect, const QseSppGeometry &geometry);
+    bool isPeaksMayChanged(const QRect &rect, const QseSppGeometry &geometry);
+private:
+    QsePeakArray m_lastPeaks;
 };
 
-QseAbstractSppSyncPeakDataSource *QseAbstractSppSyncSignalPlot::dataSource() const
+QseAbstractSppSyncPeakDataSource *QseSppSyncSignalPlot::dataSource() const
 {
     return m_dataSource;
 }
 
+QseAbstractSppSignalPlotDelegate *QseSppSyncSignalPlot::plotDelegate() const
+{
+    return m_plotDelegate;
+}
 
-#endif // QSEABSTRACTSPPSYNCSIGNALPLOT_H
+
+#endif // QSESPPSYNCSIGNALPLOT_H

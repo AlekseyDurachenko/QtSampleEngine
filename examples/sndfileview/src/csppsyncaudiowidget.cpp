@@ -18,9 +18,10 @@
 #include "qseselection.h"
 #include "qsespppositionplot.h"
 #include "qsesppselectionplot.h"
-#include "qsesppsyncsignallinearplot.h"
+#include "qsesppsyncsignalplot.h"
 #include "qsesppaxiscoverplot.h"
 #include "qsesppaudacitycontroller.h"
+#include "qsesppsignallinearplotdelegate.h"
 #include "csppsyncpeakdatasource.h"
 #include "csppsyncaudiolimiter.h"
 
@@ -52,8 +53,10 @@ CSppSyncAudioWidget::CSppSyncAudioWidget(QWidget *parent,
     setController(m_controller);
 
     m_coverPlot = new QseSppAxisCoverPlot(this);
-    m_signalPlot = new QseSppSyncSignalLinearPlot(this);
+    m_signalPlot = new QseSppSyncSignalPlot(this);
     m_signalPlot->setDataSource(m_dataSource);
+    m_plotDelegate = new QseSppSignalLinearPlotDelegate(this);
+    m_signalPlot->setPlotDelegate(m_plotDelegate);
 
     QList<QseAbstractSppPlot *> cachedPlots;
     cachedPlots << m_coverPlot;

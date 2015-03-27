@@ -24,8 +24,6 @@ HEADERS +=                                                          \
     $$PWD/src/selection/spp/plot/qsesppselectionplot.h \
     $$PWD/src/selection/qseselection.h \
     $$PWD/src/signal/spp/plot/qseabstractsppsignalplot.h \
-    $$PWD/src/signal/spp/plot/qseabstractsppsyncsignalplot.h \
-    $$PWD/src/signal/spp/plot/qsesppsyncsignallinearplot.h \
     $$PWD/src/widget/sppwidget/qsesppwidget.h \
     $$PWD/src/qse_deprecated.h \
     $$PWD/src/widget/sppaxiswidget/qsesppaxiswidget.h \
@@ -49,7 +47,10 @@ HEADERS +=                                                          \
     $$PWD/src/position/qseposition.h \
     $$PWD/src/position/spp/plot/qsespppositionplot.h \
     $$PWD/src/position/spp/controller/qsesppstandardpositioncontroller.h \
-    $$PWD/src/core/spp/qsesppcompositcontroller.h
+    $$PWD/src/core/spp/qsesppcompositcontroller.h \
+    $$PWD/src/signal/spp/plot/qseabstractsppsignalplotdelegate.h \
+    $$PWD/src/signal/spp/plot/qsesppsignallinearplotdelegate.h \
+    $$PWD/src/signal/spp/plot/qsesppsyncsignalplot.h
 
 
 SOURCES +=                                                          \
@@ -78,8 +79,6 @@ SOURCES +=                                                          \
     $$PWD/src/selection/spp/plot/qsesppselectionplot.cpp \
     $$PWD/src/selection/qseselection.cpp \
     $$PWD/src/signal/spp/plot/qseabstractsppsignalplot.cpp \
-    $$PWD/src/signal/spp/plot/qseabstractsppsyncsignalplot.cpp \
-    $$PWD/src/signal/spp/plot/qsesppsyncsignallinearplot.cpp \
     $$PWD/src/widget/sppwidget/qsesppwidget.cpp \
     $$PWD/src/widget/sppaxiswidget/qsesppaxiswidget.cpp \
     $$PWD/src/axis/spp/metric/qsespplinearmetricprovider.cpp \
@@ -102,7 +101,10 @@ SOURCES +=                                                          \
     $$PWD/src/position/spp/controller/qsesppstandardpositioncontroller.cpp \
     $$PWD/src/position/spp/plot/qsespppositionplot.cpp \
     $$PWD/src/position/qseposition.cpp \
-    $$PWD/src/core/spp/qsesppcompositcontroller.cpp
+    $$PWD/src/core/spp/qsesppcompositcontroller.cpp \
+    $$PWD/src/signal/spp/plot/qseabstractsppsignalplotdelegate.cpp \
+    $$PWD/src/signal/spp/plot/qsesppsignallinearplotdelegate.cpp \
+    $$PWD/src/signal/spp/plot/qsesppsyncsignalplot.cpp
 
 
 OTHER_FILES +=                                                      \
