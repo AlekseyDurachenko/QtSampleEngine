@@ -159,7 +159,7 @@ qint64 QseSppGeometry::samplesFromWidth(const QseSppGeometry &geometry,
     if (spp > 0)
         return width*spp;
     else
-        return width/(-spp);
+        return width/(-spp) + ((width%(-spp)) ? (1) : (0));
 }
 
 qint64 QseSppGeometry::calcSampleIndex(const QseSppGeometry &geometry,
