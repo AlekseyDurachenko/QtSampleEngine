@@ -25,8 +25,6 @@ QseSppSyncSignalPlot::QseSppSyncSignalPlot(QObject *parent) :
 {
     m_plotDelegate = 0;
     m_dataSource = 0;
-    m_firstChangedSample = -1;
-    m_lastChangedSample = -1;
     m_hasDataChanges = false;
     setZeroPoint(Middle);
 }
@@ -34,6 +32,9 @@ QseSppSyncSignalPlot::QseSppSyncSignalPlot(QObject *parent) :
 void QseSppSyncSignalPlot::setDataSource(
         QseAbstractSppSyncPeakDataSource *dataSource)
 {
+    if (m_dataSource == dataSource)
+        return;
+
     if (m_dataSource)
         disconnect(m_dataSource, 0, this, 0);
 
@@ -46,20 +47,9 @@ void QseSppSyncSignalPlot::setDataSource(
                 this, SLOT(dataSource_dataChanged(qint64,qint64)));
         connect(m_dataSource, SIGNAL(destroyed(QObject*)),
                 this, SLOT(dataSource_destroyed(QObject*)));
-
-        m_hasDataChanges = true;
-        if (!m_dataSource || m_dataSource->count() == 0)
-        {
-            m_firstChangedSample = -1;
-            m_lastChangedSample = -1;
-        }
-        else
-        {
-            m_firstChangedSample = 0;
-            m_lastChangedSample = m_dataSource->count()-1;
-        }
     }
 
+    m_hasDataChanges = true;
     setUpdateOnce(true);
 }
 
@@ -93,13 +83,7 @@ bool QseSppSyncSignalPlot::hasChanges(const QRect &rect,
 bool QseSppSyncSignalPlot::isVisible(const QRect &rect,
         const QseSppGeometry &geometry)
 {
-    if (m_plotDelegate == 0)
-        return false;
-
-    if (m_dataSource == 0)
-        return false;
-
-    if (m_dataSource->count() == 0)
+    if (!m_plotDelegate || !m_dataSource || m_dataSource->count() == 0)
         return false;
 
     // TODO: fix algorithm, because it can cause the overflow
@@ -145,9 +129,11 @@ void QseSppSyncSignalPlot::draw(QPainter *painter, const QRect &rect,
             painter->setPen(pen());
             painter->setOpacity(opacity());
             if (peaks.hasMaximums())
-                m_plotDelegate->drawAsPeaks(painter, rect, geometry, peaks, offset, 0, dy);
+                m_plotDelegate->drawAsPeaks(painter, rect, geometry,
+                        peaks, offset, 0, dy);
             else
-                m_plotDelegate->drawAsLines(painter, rect, geometry, peaks, offset, 0, dy);
+                m_plotDelegate->drawAsLines(painter, rect, geometry,
+                        peaks, offset, 0, dy);
             painter->restore();
         }
     }
@@ -276,35 +262,13 @@ void QseSppSyncSignalPlot::dataSource_destroyed(QObject *obj)
 void QseSppSyncSignalPlot::dataSource_dataChanged()
 {
     m_hasDataChanges = true;
-    if (!m_dataSource || m_dataSource->count() == 0)
-    {
-        m_firstChangedSample = -1;
-        m_lastChangedSample = -1;
-    }
-    else
-    {
-        m_firstChangedSample = 0;
-        m_lastChangedSample = m_dataSource->count()-1;
-    }
-
     setUpdateOnce(true);
 }
 
-void QseSppSyncSignalPlot::dataSource_dataChanged(qint64 first,
-        qint64 last)
+void QseSppSyncSignalPlot::dataSource_dataChanged(qint64 /*first*/,
+        qint64 /*last*/)
 {
     m_hasDataChanges = true;
-    if (!m_dataSource || m_dataSource->count() == 0)
-    {
-        m_firstChangedSample = -1;
-        m_lastChangedSample = -1;
-    }
-    else
-    {
-        m_firstChangedSample = first;
-        m_lastChangedSample = last;
-    }
-
     setUpdateOnce(true);
 }
 
@@ -323,19 +287,7 @@ bool QseSppSyncSignalPlot::hasDataChanges() const
     return m_hasDataChanges;
 }
 
-qint64 QseSppSyncSignalPlot::firstChangedSample() const
-{
-    return m_firstChangedSample;
-}
-
-qint64 QseSppSyncSignalPlot::lastChangedSample() const
-{
-    return m_lastChangedSample;
-}
-
 void QseSppSyncSignalPlot::resetDataChanges()
 {
-    m_firstChangedSample = -1;
-    m_lastChangedSample = -1;
     m_hasDataChanges = false;
 }

@@ -45,15 +45,11 @@ private slots:
     void plotDelegate_changed();
 protected:
     bool hasDataChanges() const;
-    qint64 firstChangedSample() const;
-    qint64 lastChangedSample() const;
     void resetDataChanges();
 private:
     QseAbstractSppSyncPeakDataSource *m_dataSource;
     QseAbstractSppSignalPlotDelegate *m_plotDelegate;
     qint64 m_hasDataChanges;
-    qint64 m_firstChangedSample;
-    qint64 m_lastChangedSample;
 private:
     QsePeakArray readPeaks(const QRect &rect, const QseSppGeometry &geometry);
     bool isPeaksMayChanged(const QRect &rect, const QseSppGeometry &geometry);
