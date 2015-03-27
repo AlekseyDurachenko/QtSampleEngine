@@ -171,7 +171,7 @@ qint64 QseSppGeometry::calcSampleIndex(const QseSppGeometry &geometry,
     if (spp > 0)
         return x + (offset * spp);
     else
-        return x + qRound(static_cast<double>(offset) / (-spp));
+        return x + qRound64(static_cast<double>(offset) / (-spp));
 }
 
 
