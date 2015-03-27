@@ -17,7 +17,7 @@
 #include <QPainter>
 #include "qseabstractsppsyncpeakdatasource.h"
 #include "qseabstractsppsignalplotdelegate.h"
-#include "qsehelper.h"
+#include <QDebug>
 
 
 QseSppSyncSignalPlot::QseSppSyncSignalPlot(QObject *parent) :
@@ -45,8 +45,8 @@ void QseSppSyncSignalPlot::setDataSource(
                 this, SLOT(dataSource_dataChanged()));
         connect(m_dataSource, SIGNAL(dataChanged(qint64,qint64)),
                 this, SLOT(dataSource_dataChanged(qint64,qint64)));
-        connect(m_dataSource, SIGNAL(destroyed(QObject*)),
-                this, SLOT(dataSource_destroyed(QObject*)));
+        connect(m_dataSource, SIGNAL(destroyed()),
+                this, SLOT(dataSource_destroyed()));
     }
 
     m_hasDataChanges = true;
@@ -77,23 +77,27 @@ void QseSppSyncSignalPlot::setPlotDelegate(
 bool QseSppSyncSignalPlot::hasChanges(const QRect &rect,
         const QseSppGeometry &geometry)
 {
-    return (isUpdateOnce() || rect != lastRect() || geometry != lastGeometry());
+    return (isUpdateOnce()
+            || rect != lastRect()
+            || geometry != lastGeometry());
 }
 
 bool QseSppSyncSignalPlot::isVisible(const QRect &rect,
         const QseSppGeometry &geometry)
 {
-    if (!m_plotDelegate || !m_dataSource || m_dataSource->count() == 0)
+    if (!m_plotDelegate
+            || rect.width() == 0
+            || !m_dataSource || m_dataSource->count() == 0)
         return false;
 
-    // TODO: fix algorithm, because it can cause the overflow
-    int sl = QseSppGeometry::calcOffset(geometry, 0);
-    int sr = QseSppGeometry::calcOffset(geometry, m_dataSource->count()-1);
+    const qint64 sampleFirst = 0;
+    const qint64 sampleLast = m_dataSource->count()-1;
 
-    if ((sl < 0 && sr < 0) || (sl >= rect.width() && sr >= rect.width()))
-        return false;
+    const qint64 visibleFirst = geometry.x();
+    const qint64 visibleLast = visibleFirst
+            + QseSppGeometry::samplesFromWidth(geometry, rect.width()) - 1;
 
-    return true;
+    return ((visibleFirst <= sampleLast) && (sampleFirst <= visibleLast));
 }
 
 int QseSppSyncSignalPlot::calcDy(const QRect &rect)
@@ -252,13 +256,6 @@ bool QseSppSyncSignalPlot::isPeaksMayChanged(const QRect &rect,
     return false;
 }
 
-
-void QseSppSyncSignalPlot::dataSource_destroyed(QObject *obj)
-{
-    if (obj == m_dataSource)
-        m_dataSource = 0;
-}
-
 void QseSppSyncSignalPlot::dataSource_dataChanged()
 {
     m_hasDataChanges = true;
@@ -268,18 +265,22 @@ void QseSppSyncSignalPlot::dataSource_dataChanged()
 void QseSppSyncSignalPlot::dataSource_dataChanged(qint64 /*first*/,
         qint64 /*last*/)
 {
-    m_hasDataChanges = true;
+    dataSource_dataChanged();
+}
+
+void QseSppSyncSignalPlot::dataSource_destroyed()
+{
+    m_dataSource = 0;
+}
+
+void QseSppSyncSignalPlot::plotDelegate_changed()
+{
     setUpdateOnce(true);
 }
 
 void QseSppSyncSignalPlot::plotDelegate_destroyed()
 {
     m_plotDelegate = 0;
-}
-
-void QseSppSyncSignalPlot::plotDelegate_changed()
-{
-    setUpdateOnce(true);
 }
 
 bool QseSppSyncSignalPlot::hasDataChanges() const

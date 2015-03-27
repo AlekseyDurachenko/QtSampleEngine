@@ -38,11 +38,11 @@ public:
     virtual void draw(QPainter *painter, const QRect &rect,
               const QseSppGeometry &geometry);
 private slots:
-    void dataSource_destroyed(QObject *obj);
     void dataSource_dataChanged();
     void dataSource_dataChanged(qint64 first, qint64 last);
-    void plotDelegate_destroyed();
+    void dataSource_destroyed();
     void plotDelegate_changed();
+    void plotDelegate_destroyed();
 protected:
     bool hasDataChanges() const;
     void resetDataChanges();
