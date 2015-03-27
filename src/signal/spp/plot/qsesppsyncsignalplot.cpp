@@ -100,21 +100,6 @@ bool QseSppSyncSignalPlot::isVisible(const QRect &rect,
     return ((visibleFirst <= sampleLast) && (sampleFirst <= visibleLast));
 }
 
-int QseSppSyncSignalPlot::calcDy(const QRect &rect)
-{
-    switch (zeroPoint())
-    {
-    case Top:
-        return 0;
-    case Middle:
-        return rect.height()/2.0;
-    case Bottom:
-        return rect.height();
-    }
-
-    return 0;
-}
-
 void QseSppSyncSignalPlot::draw(QPainter *painter, const QRect &rect,
         const QseSppGeometry &geometry)
 {
@@ -145,6 +130,69 @@ void QseSppSyncSignalPlot::draw(QPainter *painter, const QRect &rect,
     QseAbstractSppSignalPlot::draw(painter, rect, geometry);
 }
 
+void QseSppSyncSignalPlot::dataSource_dataChanged()
+{
+    m_hasDataChanges = true;
+    setUpdateOnce(true);
+}
+
+void QseSppSyncSignalPlot::dataSource_dataChanged(qint64 first,
+        qint64 last)
+{
+    Q_UNUSED(first);
+    Q_UNUSED(last);
+
+    dataSource_dataChanged();
+}
+
+void QseSppSyncSignalPlot::dataSource_destroyed()
+{
+    m_dataSource = 0;
+}
+
+void QseSppSyncSignalPlot::plotDelegate_changed()
+{
+    setUpdateOnce(true);
+}
+
+void QseSppSyncSignalPlot::plotDelegate_destroyed()
+{
+    m_plotDelegate = 0;
+}
+
+int QseSppSyncSignalPlot::calcDy(const QRect &rect)
+{
+    switch (zeroPoint())
+    {
+    case Top:
+        return 0;
+    case Middle:
+        return rect.height()/2.0;
+    case Bottom:
+        return rect.height();
+    }
+
+    return 0;
+}
+
+bool QseSppSyncSignalPlot::peaksMayChanged(const QRect &rect,
+        const QseSppGeometry &geometry)
+{
+    if (hasDataChanges())
+        return true;
+
+    if (rect.width() != lastRect().width())
+        return true;
+
+    if (geometry.x() != lastGeometry().x())
+        return true;
+
+    if (geometry.samplesPerPixel() != lastGeometry().samplesPerPixel())
+        return true;
+
+    return false;
+}
+
 QsePeakArray QseSppSyncSignalPlot::readPeaks(const QRect &rect,
         const QseSppGeometry &geometry)
 {
@@ -157,7 +205,7 @@ QsePeakArray QseSppSyncSignalPlot::readPeaks(const QRect &rect,
         return peaks;
     }
 
-    if (!isPeaksMayChanged(rect, geometry))
+    if (!peaksMayChanged(rect, geometry))
         return m_lastPeaks;
 
     if (geometry.x() == lastGeometry().x()
@@ -238,50 +286,6 @@ QsePeakArray QseSppSyncSignalPlot::readPeaks(const QRect &rect,
     return peaks;
 }
 
-bool QseSppSyncSignalPlot::isPeaksMayChanged(const QRect &rect,
-        const QseSppGeometry &geometry)
-{
-    if (hasDataChanges())
-        return true;
-
-    if (rect.width() != lastRect().width())
-        return true;
-
-    if (geometry.x() != lastGeometry().x())
-        return true;
-
-    if (geometry.samplesPerPixel() != lastGeometry().samplesPerPixel())
-        return true;
-
-    return false;
-}
-
-void QseSppSyncSignalPlot::dataSource_dataChanged()
-{
-    m_hasDataChanges = true;
-    setUpdateOnce(true);
-}
-
-void QseSppSyncSignalPlot::dataSource_dataChanged(qint64 /*first*/,
-        qint64 /*last*/)
-{
-    dataSource_dataChanged();
-}
-
-void QseSppSyncSignalPlot::dataSource_destroyed()
-{
-    m_dataSource = 0;
-}
-
-void QseSppSyncSignalPlot::plotDelegate_changed()
-{
-    setUpdateOnce(true);
-}
-
-void QseSppSyncSignalPlot::plotDelegate_destroyed()
-{
-    m_plotDelegate = 0;
-}
 
 bool QseSppSyncSignalPlot::hasDataChanges() const
 {

@@ -43,18 +43,17 @@ private slots:
     void dataSource_destroyed();
     void plotDelegate_changed();
     void plotDelegate_destroyed();
-protected:
+private:
+    int calcDy(const QRect &rect);
+    bool peaksMayChanged(const QRect &rect, const QseSppGeometry &geometry);
+    QsePeakArray readPeaks(const QRect &rect, const QseSppGeometry &geometry);
+
     bool hasDataChanges() const;
     void resetDataChanges();
 private:
     QseAbstractSppSyncPeakDataSource *m_dataSource;
     QseAbstractSppSignalPlotDelegate *m_plotDelegate;
     qint64 m_hasDataChanges;
-private:
-    QsePeakArray readPeaks(const QRect &rect, const QseSppGeometry &geometry);
-    bool isPeaksMayChanged(const QRect &rect, const QseSppGeometry &geometry);
-    int calcDy(const QRect &rect);
-private:
     QsePeakArray m_lastPeaks;
 };
 
