@@ -25,8 +25,13 @@ QseSppSignalLinearPlotDelegate::QseSppSignalLinearPlotDelegate(
 
 void QseSppSignalLinearPlotDelegate::drawAsLines(QPainter *painter,
         const QRect &rect, const QseSppGeometry &geometry,
-        const QsePeakArray &peaks, int offset, double /*dx*/, double dy)
+        const QsePeakArray &peaks, int offset,
+        double /*dx*/, double dy)
 {
+    painter->save();
+    painter->setPen(pen());
+    painter->setOpacity(opacity());
+
     const qint64 pps = -geometry.samplesPerPixel();
     const QVector<double> &points = peaks.minimums();
 
@@ -66,12 +71,19 @@ void QseSppSignalLinearPlotDelegate::drawAsLines(QPainter *painter,
 
         painter->drawLine(QPointF(xx1, yy1), QPointF(xx2, yy2));
     }
+
+    painter->restore();
 }
 
 void QseSppSignalLinearPlotDelegate::drawAsPeaks(QPainter *painter,
         const QRect &rect, const QseSppGeometry &geometry,
-        const QsePeakArray &peaks, int offset, double /*dx*/, double dy)
+        const QsePeakArray &peaks, int offset,
+        double /*dx*/, double dy)
 {
+    painter->save();
+    painter->setPen(pen());
+    painter->setOpacity(opacity());
+
     const QVector<double> &minimums = peaks.minimums();
     const QVector<double> &maximums = peaks.maximums();
 
@@ -130,4 +142,6 @@ void QseSppSignalLinearPlotDelegate::drawAsPeaks(QPainter *painter,
                 painter->drawLine(QPointF(x1, curMin), QPointF(x2, curMax));
         }
     }
+
+    painter->restore();
 }

@@ -24,11 +24,10 @@
 class QseAbstractSppSignalPlot : public QseAbstractSppPlot
 {
     Q_OBJECT
-    Q_ENUMS(ZeroPoint)
-    Q_PROPERTY(QPen pen READ pen WRITE setPen)
-    Q_PROPERTY(qreal opacity READ opacity WRITE setOpacity)
+    Q_ENUMS(ZeroLine)
+    Q_PROPERTY(ZeroLine zeroLine READ zeroLine WRITE setZeroLine)
 public:
-    enum ZeroPoint
+    enum ZeroLine
     {
         Top     = 0x01,
         Middle  = 0x02,
@@ -37,33 +36,32 @@ public:
 
     explicit QseAbstractSppSignalPlot(QObject *parent = 0);
 
-    inline ZeroPoint zeroPoint() const;
-    void setZeroPoint(ZeroPoint zeroPoint);
-
-    inline const QPen &pen() const;
-    void setPen(const QPen &pen);
-
-    inline qreal opacity() const;
-    void setOpacity(qreal opacity);
+    inline ZeroLine zeroLine() const;
+    void setZeroLine(ZeroLine zeroLine);
+protected:
+    inline int calcDy(const QRect &rect);
 private:
-    ZeroPoint m_zeroPoint;
-    qreal m_opacity;
-    QPen m_pen;
+    ZeroLine m_zeroLine;
 };
 
-QseAbstractSppSignalPlot::ZeroPoint QseAbstractSppSignalPlot::zeroPoint() const
+QseAbstractSppSignalPlot::ZeroLine QseAbstractSppSignalPlot::zeroLine() const
 {
-    return m_zeroPoint;
+    return m_zeroLine;
 }
 
-const QPen &QseAbstractSppSignalPlot::pen() const
+int QseAbstractSppSignalPlot::calcDy(const QRect &rect)
 {
-    return m_pen;
-}
+    switch (zeroLine())
+    {
+    case Top:
+        return 0;
+    case Middle:
+        return rect.height()/2.0;
+    case Bottom:
+        return rect.height();
+    }
 
-qreal QseAbstractSppSignalPlot::opacity() const
-{
-    return m_opacity;
+    return rect.height()/2.0;
 }
 
 

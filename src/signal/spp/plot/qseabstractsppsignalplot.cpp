@@ -19,34 +19,14 @@
 QseAbstractSppSignalPlot::QseAbstractSppSignalPlot(QObject *parent) :
     QseAbstractSppPlot(parent)
 {
-    m_opacity = 1.0;
-    m_pen = QPen(QColor(Qt::darkBlue));
 }
 
-void QseAbstractSppSignalPlot::setZeroPoint(
-        QseAbstractSppSignalPlot::ZeroPoint zeroPoint)
+void QseAbstractSppSignalPlot::setZeroLine(
+        QseAbstractSppSignalPlot::ZeroLine zeroPoint)
 {
-    if (m_zeroPoint != zeroPoint)
+    if (m_zeroLine != zeroPoint)
     {
-        m_zeroPoint = zeroPoint;
-        setUpdateOnce(true);
-    }
-}
-
-void QseAbstractSppSignalPlot::setOpacity(qreal opacity)
-{
-    if (m_opacity != opacity)
-    {
-        m_opacity = opacity;
-        setUpdateOnce(true);
-    }
-}
-
-void QseAbstractSppSignalPlot::setPen(const QPen &pen)
-{
-    if (m_pen != pen)
-    {
-        m_pen = pen;
+        m_zeroLine = zeroPoint;
         setUpdateOnce(true);
     }
 }

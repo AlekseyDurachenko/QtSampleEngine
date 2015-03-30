@@ -26,7 +26,7 @@ QseSppSyncSignalPlot::QseSppSyncSignalPlot(QObject *parent) :
     m_plotDelegate = 0;
     m_dataSource = 0;
     m_hasDataChanges = false;
-    setZeroPoint(Middle);
+    setZeroLine(Middle);
 }
 
 void QseSppSyncSignalPlot::setDataSource(
@@ -114,16 +114,12 @@ void QseSppSyncSignalPlot::draw(QPainter *painter, const QRect &rect,
 
             double dy = calcDy(rect);
 
-            painter->save();
-            painter->setPen(pen());
-            painter->setOpacity(opacity());
             if (peaks.hasMaximums())
                 m_plotDelegate->drawAsPeaks(painter, rect, geometry,
                         peaks, offset, 0, dy);
             else
                 m_plotDelegate->drawAsLines(painter, rect, geometry,
                         peaks, offset, 0, dy);
-            painter->restore();
         }
     }
 
@@ -158,21 +154,6 @@ void QseSppSyncSignalPlot::plotDelegate_changed()
 void QseSppSyncSignalPlot::plotDelegate_destroyed()
 {
     m_plotDelegate = 0;
-}
-
-int QseSppSyncSignalPlot::calcDy(const QRect &rect)
-{
-    switch (zeroPoint())
-    {
-    case Top:
-        return 0;
-    case Middle:
-        return rect.height()/2.0;
-    case Bottom:
-        return rect.height();
-    }
-
-    return 0;
 }
 
 bool QseSppSyncSignalPlot::peaksMayChanged(const QRect &rect,

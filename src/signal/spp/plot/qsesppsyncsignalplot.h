@@ -21,6 +21,7 @@
 class QseAbstractSppSyncPeakDataSource;
 class QseAbstractSppSignalPlotDelegate;
 
+
 class QseSppSyncSignalPlot : public QseAbstractSppSignalPlot
 {
     Q_OBJECT
@@ -44,7 +45,6 @@ private slots:
     void plotDelegate_changed();
     void plotDelegate_destroyed();
 private:
-    int calcDy(const QRect &rect);
     bool peaksMayChanged(const QRect &rect, const QseSppGeometry &geometry);
     QsePeakArray readPeaks(const QRect &rect, const QseSppGeometry &geometry);
 
