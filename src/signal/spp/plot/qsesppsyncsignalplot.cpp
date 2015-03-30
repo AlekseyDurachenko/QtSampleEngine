@@ -85,8 +85,8 @@ bool QseSppSyncSignalPlot::hasChanges(const QRect &rect,
 bool QseSppSyncSignalPlot::isVisible(const QRect &rect,
         const QseSppGeometry &geometry)
 {
-    if (!m_plotDelegate
-            || rect.width() == 0
+    if (rect.width() == 0
+            || !m_plotDelegate
             || !m_dataSource || m_dataSource->count() == 0)
         return false;
 
