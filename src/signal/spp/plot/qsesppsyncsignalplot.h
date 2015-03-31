@@ -51,6 +51,10 @@ private:
     QseAbstractSppSyncPeakDataSource *m_dataSource;
     QseAbstractSppSignalPlotDelegate *m_plotDelegate;
     QsePeakArray m_lastPeaks;
+private:
+    QsePeakArray m_peaks;
+    qint64 m_peaksFirstIndex;
+    void t_readPeaks(const QRect &rect, const QseSppGeometry &geometry);
 };
 
 QseAbstractSppSyncPeakDataSource *QseSppSyncSignalPlot::dataSource() const

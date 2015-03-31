@@ -257,3 +257,38 @@ QsePeakArray QseSppSyncSignalPlot::readPeaks(const QRect &rect,
 
     return peaks;
 }
+
+static bool checkOptimizationPossibility(const QseSppGeometry &oldGeometry,
+        const QseSppGeometry &newGeometry)
+{
+    // does not make sense to optimize what quickly read (4 is empiric)
+    if (newGeometry.samplesPerPixel() < 4)
+        return false;
+
+    // zoom in: can't optimize
+    if (oldGeometry.samplesPerPixel() > newGeometry.samplesPerPixel())
+        return false;
+
+    // zoom out: we can't recalculate the peaks if (newValue % oldValue != 0)
+    if (oldGeometry.samplesPerPixel() < newGeometry.samplesPerPixel())
+        if (newGeometry.samplesPerPixel() % oldGeometry.samplesPerPixel() != 0)
+            return false;
+
+    // scroll x: we can't recalculate the peaks if (value % spp != 0)
+    if (newGeometry.x() % newGeometry.samplesPerPixel() != 0)
+        return false;
+
+    return true;
+}
+
+
+void QseSppSyncSignalPlot::t_readPeaks(const QRect &rect,
+        const QseSppGeometry &geometry)
+{
+    if (!checkOptimizationPossibility(lastGeometry(), geometry))
+    {
+        m_peaks = dataSource()->read(geometry, rect.width());
+        m_peaksFirstIndex = geometry.x();
+        return;
+    }
+}
