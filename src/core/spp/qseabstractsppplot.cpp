@@ -21,29 +21,21 @@ QseAbstractSppPlot::QseAbstractSppPlot(QObject *parent) :
 {
 }
 
-bool QseAbstractSppPlot::isVisible(const QRect &rect,
-        const QseSppGeometry &geometry)
+bool QseAbstractSppPlot::isVisible(const QRect &/*rect*/,
+        const QseSppGeometry &/*geometry*/)
 {
-    Q_UNUSED(rect);
-    Q_UNUSED(geometry);
-
     return true;
 }
 
-bool QseAbstractSppPlot::hasChanges(const QRect &rect,
-        const QseSppGeometry &geometry)
+bool QseAbstractSppPlot::hasChanges(const QRect &/*rect*/,
+        const QseSppGeometry &/*geometry*/)
 {
-    Q_UNUSED(rect);
-    Q_UNUSED(geometry);
-
     return false;
 }
 
-void QseAbstractSppPlot::draw(QPainter *painter, const QRect &rect,
+void QseAbstractSppPlot::draw(QPainter */*painter*/, const QRect &rect,
         const QseSppGeometry &geometry)
 {
-    Q_UNUSED(painter);
-
     m_lastRect = rect;
     m_lastGeometry = geometry;
 

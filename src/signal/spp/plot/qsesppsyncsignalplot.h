@@ -47,13 +47,9 @@ private slots:
 private:
     bool peaksMayChanged(const QRect &rect, const QseSppGeometry &geometry);
     QsePeakArray readPeaks(const QRect &rect, const QseSppGeometry &geometry);
-
-    bool hasDataChanges() const;
-    void resetDataChanges();
 private:
     QseAbstractSppSyncPeakDataSource *m_dataSource;
     QseAbstractSppSignalPlotDelegate *m_plotDelegate;
-    qint64 m_hasDataChanges;
     QsePeakArray m_lastPeaks;
 };
 

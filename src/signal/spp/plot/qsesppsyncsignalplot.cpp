@@ -25,7 +25,6 @@ QseSppSyncSignalPlot::QseSppSyncSignalPlot(QObject *parent) :
 {
     m_plotDelegate = 0;
     m_dataSource = 0;
-    m_hasDataChanges = false;
     setZeroLine(Middle);
 }
 
@@ -49,7 +48,6 @@ void QseSppSyncSignalPlot::setDataSource(
                 this, SLOT(dataSource_destroyed()));
     }
 
-    m_hasDataChanges = true;
     setUpdateOnce(true);
 }
 
@@ -128,16 +126,17 @@ void QseSppSyncSignalPlot::draw(QPainter *painter, const QRect &rect,
 
 void QseSppSyncSignalPlot::dataSource_dataChanged()
 {
-    m_hasDataChanges = true;
+    // TODO:
+    // * update visible peaks
     setUpdateOnce(true);
 }
 
-void QseSppSyncSignalPlot::dataSource_dataChanged(qint64 first,
-        qint64 last)
+void QseSppSyncSignalPlot::dataSource_dataChanged(qint64 /*first*/,
+        qint64 /*last*/)
 {
-    Q_UNUSED(first);
-    Q_UNUSED(last);
-
+    // TODO:
+    // * update only if changes is visible
+    // * if changes inside the cached peaks, replase changed peaks
     dataSource_dataChanged();
 }
 
@@ -159,9 +158,6 @@ void QseSppSyncSignalPlot::plotDelegate_destroyed()
 bool QseSppSyncSignalPlot::peaksMayChanged(const QRect &rect,
         const QseSppGeometry &geometry)
 {
-    if (hasDataChanges())
-        return true;
-
     if (rect.width() != lastRect().width())
         return true;
 
@@ -181,7 +177,6 @@ QsePeakArray QseSppSyncSignalPlot::readPeaks(const QRect &rect,
     {
         QsePeakArray peaks = dataSource()->read(geometry, rect.width());
         m_lastPeaks = peaks;
-        resetDataChanges();
 
         return peaks;
     }
@@ -215,7 +210,6 @@ QsePeakArray QseSppSyncSignalPlot::readPeaks(const QRect &rect,
                             m_lastPeaks.maximums() + peaks.maximums());
 
         m_lastPeaks = result;
-        resetDataChanges();
 
         return result;
     }
@@ -241,7 +235,6 @@ QsePeakArray QseSppSyncSignalPlot::readPeaks(const QRect &rect,
                                 maximums + peaks.maximums());
 
             m_lastPeaks = result;
-            resetDataChanges();
 
             return result;
         }
@@ -254,7 +247,6 @@ QsePeakArray QseSppSyncSignalPlot::readPeaks(const QRect &rect,
                                 peaks.maximums() + m_lastPeaks.maximums());
 
             m_lastPeaks = result;
-            resetDataChanges();
 
             return result;
         }
@@ -262,18 +254,6 @@ QsePeakArray QseSppSyncSignalPlot::readPeaks(const QRect &rect,
 
     QsePeakArray peaks = dataSource()->read(geometry, rect.width());
     m_lastPeaks = peaks;
-    resetDataChanges();
 
     return peaks;
-}
-
-
-bool QseSppSyncSignalPlot::hasDataChanges() const
-{
-    return m_hasDataChanges;
-}
-
-void QseSppSyncSignalPlot::resetDataChanges()
-{
-    m_hasDataChanges = false;
 }
