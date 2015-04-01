@@ -26,7 +26,7 @@ class QseAbstractSppSyncPeakDataSource : public QseAbstractPeakDataSource
     Q_OBJECT
 public:
     QseAbstractSppSyncPeakDataSource(QObject *parent = 0);
-    virtual QsePeakArray read(const QseSppGeometry &geometry, int width) = 0;
+    virtual QsePeakArray read(qint64 x, qint64 spp, int width) = 0;
 };
 
 

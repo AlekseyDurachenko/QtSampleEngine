@@ -31,7 +31,7 @@ public:
 
     inline const QVector<double> &samples() const;
     inline double sampleRate() const;
-    virtual QsePeakArray read(const QseSppGeometry &geometry, int width);
+    virtual QsePeakArray read(qint64 x, qint64 spp, int width);
 public slots:
     void setSamples(const QVector<double> &samples, double sampleRate);
 private:

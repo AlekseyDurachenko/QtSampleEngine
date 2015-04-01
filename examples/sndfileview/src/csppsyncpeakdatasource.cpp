@@ -45,12 +45,8 @@ void CSppSyncPeakDataSource::setSamples(const QVector<double> &samples,
     emit dataChanged();
 }
 
-QsePeakArray CSppSyncPeakDataSource::read(const QseSppGeometry &geometry,
-        int width)
+QsePeakArray CSppSyncPeakDataSource::read(qint64 x, qint64 spp, int width)
 {
-    const qint64 spp = geometry.samplesPerPixel();
-    const qint64 x = geometry.x();
-
     if (spp > 0)
         return readAsPeaks(x, spp, width);
     else

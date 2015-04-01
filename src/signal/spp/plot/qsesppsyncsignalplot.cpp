@@ -175,7 +175,7 @@ QsePeakArray QseSppSyncSignalPlot::readPeaks(const QRect &rect,
 {
     if (geometry.samplesPerPixel() < 2)
     {
-        QsePeakArray peaks = dataSource()->read(geometry, rect.width());
+        QsePeakArray peaks = dataSource()->read(geometry.x(), geometry.samplesPerPixel(), rect.width());
         m_lastPeaks = peaks;
 
         return peaks;
@@ -203,8 +203,8 @@ QsePeakArray QseSppSyncSignalPlot::readPeaks(const QRect &rect,
 
         // read only new visible samples
         int unusedVisibleWidth = rect.width()-m_lastPeaks.count();
-        QsePeakArray peaks = dataSource()->read(
-                    geometry.replaceX(lastVisibleSample), unusedVisibleWidth);
+        QsePeakArray peaks = dataSource()->read(lastVisibleSample,
+                    geometry.samplesPerPixel(), unusedVisibleWidth);
 
         QsePeakArray result(m_lastPeaks.minimums() + peaks.minimums(),
                             m_lastPeaks.maximums() + peaks.maximums());
@@ -221,8 +221,8 @@ QsePeakArray QseSppSyncSignalPlot::readPeaks(const QRect &rect,
         {
             qint64 lastVisibleSample = QseSppGeometry::calcSampleIndex(geometry, m_lastPeaks.count());
             int scrollWidth = (geometry.x() - lastGeometry().x()) / geometry.samplesPerPixel();
-            QsePeakArray peaks = dataSource()->read(
-                        geometry.replaceX(lastVisibleSample), scrollWidth);
+            QsePeakArray peaks = dataSource()->read(lastVisibleSample,
+                        geometry.samplesPerPixel(), scrollWidth);
 
             QVector<double> minimums = m_lastPeaks.minimums();
             QVector<double> maximums = m_lastPeaks.maximums();
@@ -241,7 +241,7 @@ QsePeakArray QseSppSyncSignalPlot::readPeaks(const QRect &rect,
         else
         {
             int scrollWidth = (lastGeometry().x() - geometry.x()) / geometry.samplesPerPixel();
-            QsePeakArray peaks = dataSource()->read(geometry, scrollWidth);
+            QsePeakArray peaks = dataSource()->read(geometry.x(), geometry.samplesPerPixel(), scrollWidth);
 
             QsePeakArray result(peaks.minimums() + m_lastPeaks.minimums(),
                                 peaks.maximums() + m_lastPeaks.maximums());
@@ -252,7 +252,7 @@ QsePeakArray QseSppSyncSignalPlot::readPeaks(const QRect &rect,
         }
     }
 
-    QsePeakArray peaks = dataSource()->read(geometry, rect.width());
+    QsePeakArray peaks = dataSource()->read(geometry.x(), geometry.samplesPerPixel(), rect.width());
     m_lastPeaks = peaks;
 
     return peaks;
@@ -287,8 +287,14 @@ void QseSppSyncSignalPlot::t_readPeaks(const QRect &rect,
 {
     if (!checkOptimizationPossibility(lastGeometry(), geometry))
     {
-        m_peaks = dataSource()->read(geometry, rect.width());
-        m_peaksFirstIndex = geometry.x();
+        //m_peaks = dataSource()->read(geometry, rect.width());
+        //m_peaksFirstIndex = geometry.x();
         return;
     }
+}
+
+void QseSppSyncSignalPlot::rereadPeaks(const QRect &rect,
+        const QseSppGeometry &geometry)
+{
+    m_peaks = m_dataSource->read(geometry.x(), geometry.samplesPerPixel(), rect.width());
 }
