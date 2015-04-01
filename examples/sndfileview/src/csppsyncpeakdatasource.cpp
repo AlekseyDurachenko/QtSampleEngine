@@ -26,6 +26,16 @@ qint64 CSppSyncPeakDataSource::count() const
     return m_samples.count();
 }
 
+qint64 CSppSyncPeakDataSource::minIndex() const
+{
+    return 0;
+}
+
+qint64 CSppSyncPeakDataSource::maxIndex() const
+{
+    return m_samples.count()-1;
+}
+
 void CSppSyncPeakDataSource::setSamples(const QVector<double> &samples,
         double sampleRate)
 {

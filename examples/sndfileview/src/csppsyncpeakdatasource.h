@@ -26,6 +26,9 @@ public:
     CSppSyncPeakDataSource(QObject *parent = 0);
 
     virtual qint64 count() const;
+    virtual qint64 minIndex() const;
+    virtual qint64 maxIndex() const;
+
     inline const QVector<double> &samples() const;
     inline double sampleRate() const;
     virtual QsePeakArray read(const QseSppGeometry &geometry, int width);

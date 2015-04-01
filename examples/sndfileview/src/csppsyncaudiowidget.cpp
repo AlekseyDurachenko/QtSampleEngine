@@ -74,7 +74,7 @@ CSppSyncAudioWidget::CSppSyncAudioWidget(QWidget *parent,
 
 void CSppSyncAudioWidget::dataSource_dataChanged()
 {
-    QseRange avaibleRange(0, m_dataSource->count()-1);
+    QseRange avaibleRange(m_dataSource->minIndex(), m_dataSource->maxIndex());
     m_playPosition->setAvailableRange(avaibleRange);
     m_cursorPosition->setAvailableRange(avaibleRange);
     m_selection->setAvailableRange(avaibleRange);

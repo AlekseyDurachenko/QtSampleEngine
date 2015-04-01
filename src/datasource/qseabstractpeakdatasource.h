@@ -25,6 +25,8 @@ class QseAbstractPeakDataSource : public QObject
 public:
     explicit QseAbstractPeakDataSource(QObject *parent = 0);
     virtual qint64 count() const = 0;
+    virtual qint64 minIndex() const = 0;
+    virtual qint64 maxIndex() const = 0;
 signals:
     void dataChanged();
     void dataChanged(qint64 first, qint64 last);

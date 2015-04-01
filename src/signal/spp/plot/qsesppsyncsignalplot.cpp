@@ -88,8 +88,8 @@ bool QseSppSyncSignalPlot::isVisible(const QRect &rect,
             || !m_dataSource || m_dataSource->count() == 0)
         return false;
 
-    const qint64 sampleFirst = 0;
-    const qint64 sampleLast = m_dataSource->count()-1;
+    const qint64 sampleFirst = m_dataSource->minIndex();
+    const qint64 sampleLast = m_dataSource->maxIndex();
 
     const qint64 visibleFirst = geometry.x();
     const qint64 visibleLast = visibleFirst

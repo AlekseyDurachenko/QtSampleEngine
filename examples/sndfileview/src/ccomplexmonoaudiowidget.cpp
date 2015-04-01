@@ -121,15 +121,17 @@ void CComplexMonoAudioWidget::audioWidget_geometryChanged(
         const QseSppGeometry &geometry)
 {
     m_timeScrollBar->blockSignals(true);
-    const qint64 count = m_audioWidget->dataSource()->count();
+    const qint64 maxIndex = m_audioWidget->dataSource()->maxIndex();
+    const qint64 minIndex = m_audioWidget->dataSource()->minIndex();
     if (geometry.samplesPerPixel() < 0)
     {
-        m_timeScrollBar->setRange(0, count-1);
+        m_timeScrollBar->setRange(minIndex, maxIndex);
         m_timeScrollBar->setValue(geometry.x());
     }
     else
     {
-        m_timeScrollBar->setRange(0, (count-1)/geometry.samplesPerPixel());
+        m_timeScrollBar->setRange(minIndex/geometry.samplesPerPixel(),
+                                  maxIndex/geometry.samplesPerPixel());
         m_timeScrollBar->setValue(geometry.x()/geometry.samplesPerPixel());
     }
     m_timeScrollBar->blockSignals(false);
