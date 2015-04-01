@@ -46,7 +46,7 @@ private slots:
     void plotDelegate_destroyed();
 private:
     bool peaksMayChanged(const QRect &rect, const QseSppGeometry &geometry);
-    QsePeakArray readPeaks(const QRect &rect, const QseSppGeometry &geometry);
+    QsePeakArray old_readPeaks(const QRect &rect, const QseSppGeometry &geometry);
 private:
     QseAbstractSppSyncPeakDataSource *m_dataSource;
     QseAbstractSppSignalPlotDelegate *m_plotDelegate;
@@ -54,8 +54,8 @@ private:
 private:
     QsePeakArray m_peaks;
     qint64 m_peaksFirstIndex;
-    void t_readPeaks(const QRect &rect, const QseSppGeometry &geometry);
-    void rereadPeaks(const QRect &rect, const QseSppGeometry &geometry);
+    void calcPeaks(const QRect &rect, const QseSppGeometry &geometry);
+    void recalcPeaks(const QRect &rect, const QseSppGeometry &geometry);
 };
 
 QseAbstractSppSyncPeakDataSource *QseSppSyncSignalPlot::dataSource() const
