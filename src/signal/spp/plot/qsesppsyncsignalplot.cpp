@@ -279,9 +279,7 @@ void QseSppSyncSignalPlot::pushFrontPeaks(const QseSppGeometry &geometry)
     const qint64 sampleCount = m_peaksFirstIndex - firstIndex;
     const qint64 peakCount = sampleCount/spp + ((sampleCount%spp) ? (1) : (0));
 
-    // WARNING: problem - firstIndex may not be multiple minIndex()
-    // read() should be modified
-    m_peaks = m_dataSource->read(firstIndex, spp, peakCount) + m_peaks;
+    m_peaks = m_dataSource->read(firstIndex, spp, peakCount, true) + m_peaks;
     m_peaksFirstIndex = firstIndex;
 }
 

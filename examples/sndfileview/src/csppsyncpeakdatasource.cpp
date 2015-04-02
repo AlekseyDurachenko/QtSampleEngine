@@ -45,10 +45,11 @@ void CSppSyncPeakDataSource::setSamples(const QVector<double> &samples,
     emit dataChanged();
 }
 
-QsePeakArray CSppSyncPeakDataSource::read(qint64 x, qint64 spp, int width)
+QsePeakArray CSppSyncPeakDataSource::read(qint64 x, qint64 spp, int width,
+        bool rightAligh)
 {
     if (spp > 0)
-        return readAsPeaks(x, spp, width);
+        return readAsPeaks(x, spp, width, rightAligh);
     else
         return readAsLines(x, -spp, width);
 }
@@ -66,9 +67,6 @@ QsePeakArray CSppSyncPeakDataSource::readAsLines(qint64 first, qint64 pps,
     if (last < 0)
         return QsePeakArray();
 
-    if (first < 0)
-        first = 0;
-
     QVector<double> points(last-first+1);
     for (qint64 i = first; i <= last; ++i)
         points[i-first] = m_samples[i];
@@ -77,7 +75,7 @@ QsePeakArray CSppSyncPeakDataSource::readAsLines(qint64 first, qint64 pps,
 }
 
 QsePeakArray CSppSyncPeakDataSource::readAsPeaks(qint64 first, qint64 spp,
-        int width)
+        int width, bool rightAligh)
 {
     if (first >= m_samples.count())
         return QsePeakArray();
@@ -89,18 +87,27 @@ QsePeakArray CSppSyncPeakDataSource::readAsPeaks(qint64 first, qint64 spp,
     if (last < 0)
         return QsePeakArray();
 
-    if (first < 0)
-        first = 0;
-
     const qint64 count = (last-first+1)/spp + (((last-first+1)%spp) ? (1) : (0));
     QVector<double> minimums(count);
     QVector<double> maximums(count);
     for (qint64 arrIndex = 0; arrIndex < count; ++arrIndex)
     {
-        const qint64 sampleFirstIndex = first + arrIndex*spp;
-        qint64 sampleLastIndex = sampleFirstIndex + spp - 1;
-        if (sampleLastIndex >= m_samples.count())
-            sampleLastIndex = m_samples.count() - 1;
+        qint64 sampleFirstIndex = first;
+        qint64 sampleLastIndex = last;
+        if (rightAligh)
+        {
+            sampleLastIndex = last - (arrIndex-count+1)*spp;
+            sampleFirstIndex = sampleLastIndex - spp + 1;
+            if (sampleFirstIndex < first)
+                sampleFirstIndex = first;
+        }
+        else
+        {
+            sampleFirstIndex = first + arrIndex*spp;
+            sampleLastIndex = sampleFirstIndex + spp - 1;
+            if (sampleLastIndex >= m_samples.count())
+                sampleLastIndex = m_samples.count() - 1;
+        }
 
         double min;
         double max;

@@ -31,12 +31,14 @@ public:
 
     inline const QVector<double> &samples() const;
     inline double sampleRate() const;
-    virtual QsePeakArray read(qint64 x, qint64 spp, int width);
+    virtual QsePeakArray read(qint64 x, qint64 spp, int width,
+                              bool rightAligh = false);
 public slots:
     void setSamples(const QVector<double> &samples, double sampleRate);
 private:
     QsePeakArray readAsLines(qint64 first, qint64 pps, int width);
-    QsePeakArray readAsPeaks(qint64 first, qint64 spp, int width);
+    QsePeakArray readAsPeaks(qint64 first, qint64 spp, int width,
+                             bool rightAligh = false);
 private:
     QVector<double> m_samples;
     double m_sampleRate;
