@@ -73,23 +73,24 @@ void QseSppSignalLinearPlotDelegate::drawAsPeaks(QPainter *painter,
         const QsePeakArray &peaks, int firstIndex,
         int space, double /*dx*/, double dy)
 {
-    painter->save();
-    painter->setPen(pen());
-    painter->setOpacity(opacity());
-
     const QVector<double> &minimums = peaks.minimums();
     const QVector<double> &maximums = peaks.maximums();
 
     double prevMin = dy-(geometry.y()+minimums[firstIndex])*rect.height()/geometry.height();
     double prevMax = dy-(geometry.y()+maximums[firstIndex])*rect.height()/geometry.height();
-    double x1 = space;
+    int x1 = space;
+    int x2 = space;
     if (x1 >= rect.width())
         return;
-    double x2 = space;
     if (prevMin < 0.0) prevMin = 0.0;
     if (prevMax < 0.0) prevMax = 0.0;
     if (prevMin >= rect.height()) prevMin = rect.height()-1;
     if (prevMax >= rect.height()) prevMax = rect.height()-1;
+
+    painter->save();
+    painter->setPen(pen());
+    painter->setOpacity(opacity());
+
     if (prevMin == prevMax)
         painter->drawPoint(QPointF(x1, prevMin));
     else
