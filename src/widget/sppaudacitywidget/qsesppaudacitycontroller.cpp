@@ -272,6 +272,11 @@ void QseSppAudacityController::horizontalZoom(QWheelEvent *event,
     qint64 sampleB = QseSppGeometry::calcSampleIndex(result, event->x());
     qint64 x = geometry.x() + (sampleA - sampleB);
 
+    // optimization: for exclude recalculation the peaks for zoom out
+    if (result.samplesPerPixel() > 0)
+        if (x % result.samplesPerPixel() != 0)
+            x -= x % result.samplesPerPixel();
+
     emit geometryChanged(result.replaceX(x));
 }
 
