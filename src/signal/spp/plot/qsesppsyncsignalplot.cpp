@@ -123,25 +123,38 @@ void QseSppSyncSignalPlot::draw(QPainter *painter, const QRect &rect,
         */
 
         calcPeaks(rect, geometry);
-
         if (m_peaks.isEmpty())
             return;
 
-        int offset = 0;
-        if (geometry.x() < 0)
-            offset = geometry.x();
+        // first index of visible part of peaks
+        qint64 firstIndex = 0;
+        if (m_peaksFirstIndex < geometry.x())
+            firstIndex = geometry.x() - m_peaksFirstIndex;
+        if (geometry.samplesPerPixel() > 0)
+            firstIndex /= geometry.samplesPerPixel();
+        // all peaks are invisible
+        if (firstIndex >= m_peaks.count())
+            return;
 
+        // free space in pixels between left bound and first peaks
+        int space = 0;
+        if (m_peaksFirstIndex > geometry.x())
+            space = QseSppGeometry::widthFromSamples(
+                        geometry, m_peaksFirstIndex - geometry.x());
+
+        // this value will be added to the y coordiante of the each peaks
         double dy = calcDy(rect);
 
+        // draw the peaks
         if (m_peaks.hasMaximums())
         {
             m_plotDelegate->drawAsPeaks(painter, rect, geometry,
-                    m_peaks, offset, 0, dy);
+                    m_peaks, firstIndex, space, 0, dy);
         }
         else
         {
             m_plotDelegate->drawAsLines(painter, rect, geometry,
-                    m_peaks, offset, 0, dy);
+                    m_peaks, firstIndex, space, 0, dy);
         }
     }
 
