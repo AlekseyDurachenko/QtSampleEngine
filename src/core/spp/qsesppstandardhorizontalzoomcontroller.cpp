@@ -15,6 +15,7 @@
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
 #include "qsesppstandardhorizontalzoomcontroller.h"
 #include <QWheelEvent>
+#include <QDebug>
 
 
 QseSppStandardHorizontalZoomController::QseSppStandardHorizontalZoomController(
@@ -57,6 +58,11 @@ void QseSppStandardHorizontalZoomController::wheelEvent(QWheelEvent *event,
         qint64 sampleA = QseSppGeometry::calcSampleIndex(geometry, xpos);
         qint64 sampleB = QseSppGeometry::calcSampleIndex(result, xpos);
         qint64 x = geometry.x() + (sampleA - sampleB);
+
+        // optimization: for exclude recalculation the peaks for zoom out
+        if (result.samplesPerPixel() > 0)
+            if (x % result.samplesPerPixel() != 0)
+                x -= x % result.samplesPerPixel();
 
         emit geometryChanged(result.replaceX(x));
     }
