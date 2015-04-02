@@ -45,17 +45,19 @@ private slots:
     void plotDelegate_changed();
     void plotDelegate_destroyed();
 private:
-    bool peaksMayChanged(const QRect &rect, const QseSppGeometry &geometry);
-    QsePeakArray old_readPeaks(const QRect &rect, const QseSppGeometry &geometry);
+    void calcPeaks(const QRect &rect, const QseSppGeometry &geometry);
+    void recalcPeaks(const QRect &rect, const QseSppGeometry &geometry);
+    bool checkOptimizationPossibility(const QseSppGeometry &oldGeometry,
+                                      const QseSppGeometry &newGeometry);
+    void compressPeaks(const QseSppGeometry &oldGeometry,
+                       const QseSppGeometry &newGeometry);
+    void pushFrontPeaks(const QseSppGeometry &geometry);
+    void pushBackPeaks(const QseSppGeometry &geometry, int width);
 private:
     QseAbstractSppSyncPeakDataSource *m_dataSource;
     QseAbstractSppSignalPlotDelegate *m_plotDelegate;
-    QsePeakArray m_lastPeaks;
-private:
     QsePeakArray m_peaks;
     qint64 m_peaksFirstIndex;
-    void calcPeaks(const QRect &rect, const QseSppGeometry &geometry);
-    void recalcPeaks(const QRect &rect, const QseSppGeometry &geometry);
 };
 
 QseAbstractSppSyncPeakDataSource *QseSppSyncSignalPlot::dataSource() const

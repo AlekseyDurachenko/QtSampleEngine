@@ -103,26 +103,9 @@ void QseSppSyncSignalPlot::draw(QPainter *painter, const QRect &rect,
 {
     if (isVisible(rect, geometry))
     {
-        /*
-        QsePeakArray peaks = old_readPeaks(rect, geometry);
-        if (!peaks.isEmpty())
-        {
-            int offset = 0;
-            if (geometry.x() < 0)
-                offset = geometry.x();
+        if (hasChanges(rect, geometry))
+            calcPeaks(rect, geometry);
 
-            double dy = calcDy(rect);
-
-            if (peaks.hasMaximums())
-                m_plotDelegate->drawAsPeaks(painter, rect, geometry,
-                        peaks, offset, 0, dy);
-            else
-                m_plotDelegate->drawAsLines(painter, rect, geometry,
-                        peaks, offset, 0, dy);
-        }
-        */
-
-        calcPeaks(rect, geometry);
         if (m_peaks.isEmpty())
             return;
 
@@ -147,15 +130,11 @@ void QseSppSyncSignalPlot::draw(QPainter *painter, const QRect &rect,
 
         // draw the peaks
         if (m_peaks.hasMaximums())
-        {
             m_plotDelegate->drawAsPeaks(painter, rect, geometry,
                     m_peaks, firstIndex, space, 0, dy);
-        }
         else
-        {
             m_plotDelegate->drawAsLines(painter, rect, geometry,
                     m_peaks, firstIndex, space, 0, dy);
-        }
     }
 
     QseAbstractSppSignalPlot::draw(painter, rect, geometry);
@@ -163,16 +142,15 @@ void QseSppSyncSignalPlot::draw(QPainter *painter, const QRect &rect,
 
 void QseSppSyncSignalPlot::dataSource_dataChanged()
 {
-    // TODO:
-    // * update visible peaks
+    // peaks should be recalculated on update
+    m_peaks = QsePeakArray();
     setUpdateOnce(true);
 }
 
 void QseSppSyncSignalPlot::dataSource_dataChanged(qint64 /*first*/,
         qint64 /*last*/)
 {
-    // TODO:
-    // * update only if changes is visible
+    // TODO: update only if changes is visible
     // * if changes inside the cached peaks, replase changed peaks
     dataSource_dataChanged();
 }
@@ -192,114 +170,42 @@ void QseSppSyncSignalPlot::plotDelegate_destroyed()
     m_plotDelegate = 0;
 }
 
-bool QseSppSyncSignalPlot::peaksMayChanged(const QRect &rect,
+void QseSppSyncSignalPlot::calcPeaks(const QRect &rect,
         const QseSppGeometry &geometry)
 {
-    if (rect.width() != lastRect().width())
-        return true;
-
-    if (geometry.x() != lastGeometry().x())
-        return true;
-
-    if (geometry.samplesPerPixel() != lastGeometry().samplesPerPixel())
-        return true;
-
-    return false;
+    if (m_peaks.isEmpty()
+            || !checkOptimizationPossibility(lastGeometry(), geometry))
+    {
+        recalcPeaks(rect, geometry);
+    }
+    else
+    {
+        compressPeaks(lastGeometry(), geometry);
+        pushFrontPeaks(geometry);
+        pushBackPeaks(geometry, rect.width());
+    }
 }
 
-QsePeakArray QseSppSyncSignalPlot::old_readPeaks(const QRect &rect,
+void QseSppSyncSignalPlot::recalcPeaks(const QRect &rect,
         const QseSppGeometry &geometry)
 {
-    if (geometry.samplesPerPixel() < 2)
-    {
-        QsePeakArray peaks = dataSource()->read(geometry.x(), geometry.samplesPerPixel(), rect.width());
-        m_lastPeaks = peaks;
+    qint64 x = geometry.x();
+    if (x < m_dataSource->minIndex())
+        x = m_dataSource->minIndex();
+    const qint64 &spp = geometry.samplesPerPixel();
 
-        return peaks;
-    }
-
-    if (!peaksMayChanged(rect, geometry))
-        return m_lastPeaks;
-
-    if (geometry.x() == lastGeometry().x()
-            && geometry.samplesPerPixel() == lastGeometry().samplesPerPixel())
-    {
-        // visible range desrised
-        if (rect.width() < lastRect().width())
-            return m_lastPeaks;
-
-        // samples already readed
-        if (rect.width() < m_lastPeaks.count())
-            return m_lastPeaks;
-
-        // if all samples visible, do not try to read more samples
-        qint64 lastVisibleSample = QseSppGeometry::calcSampleIndex(
-                    geometry, m_lastPeaks.count());
-        if (lastVisibleSample >= dataSource()->count())
-            return m_lastPeaks;
-
-        // read only new visible samples
-        int unusedVisibleWidth = rect.width()-m_lastPeaks.count();
-        QsePeakArray peaks = dataSource()->read(lastVisibleSample,
-                    geometry.samplesPerPixel(), unusedVisibleWidth);
-
-        QsePeakArray result(m_lastPeaks.minimums() + peaks.minimums(),
-                            m_lastPeaks.maximums() + peaks.maximums());
-
-        m_lastPeaks = result;
-
-        return result;
-    }
-    else if (geometry.x() != lastGeometry().x()
-             && geometry.samplesPerPixel() == lastGeometry().samplesPerPixel()
-             && rect.width() == lastRect().width())
-    {
-        if (geometry.x() > lastGeometry().x())
-        {
-            qint64 lastVisibleSample = QseSppGeometry::calcSampleIndex(geometry, m_lastPeaks.count());
-            int scrollWidth = (geometry.x() - lastGeometry().x()) / geometry.samplesPerPixel();
-            QsePeakArray peaks = dataSource()->read(lastVisibleSample,
-                        geometry.samplesPerPixel(), scrollWidth);
-
-            QVector<double> minimums = m_lastPeaks.minimums();
-            QVector<double> maximums = m_lastPeaks.maximums();
-            if (scrollWidth > minimums.count())
-                scrollWidth = minimums.count();
-            minimums.remove(0, scrollWidth);
-            maximums.remove(0, scrollWidth);
-
-            QsePeakArray result(minimums + peaks.minimums(),
-                                maximums + peaks.maximums());
-
-            m_lastPeaks = result;
-
-            return result;
-        }
-        else
-        {
-            int scrollWidth = (lastGeometry().x() - geometry.x()) / geometry.samplesPerPixel();
-            QsePeakArray peaks = dataSource()->read(geometry.x(), geometry.samplesPerPixel(), scrollWidth);
-
-            QsePeakArray result(peaks.minimums() + m_lastPeaks.minimums(),
-                                peaks.maximums() + m_lastPeaks.maximums());
-
-            m_lastPeaks = result;
-
-            return result;
-        }
-    }
-
-    QsePeakArray peaks = dataSource()->read(geometry.x(), geometry.samplesPerPixel(), rect.width());
-    m_lastPeaks = peaks;
-
-    return peaks;
+    m_peaks = m_dataSource->read(x, spp, rect.width());
+    m_peaksFirstIndex = x;
 }
 
-static bool checkOptimizationPossibility(const QseSppGeometry &oldGeometry,
-        const QseSppGeometry &newGeometry)
+bool QseSppSyncSignalPlot::checkOptimizationPossibility(
+        const QseSppGeometry &oldGeometry, const QseSppGeometry &newGeometry)
 {
     // does not make sense to optimize what quickly read (4 is empiric)
     if (newGeometry.samplesPerPixel() < 4)
+        return false;
+    // can't optimize if sign of samplePerPixel is different
+    if (oldGeometry.samplesPerPixel() < 0)
         return false;
 
     // zoom in: can't optimize
@@ -318,28 +224,87 @@ static bool checkOptimizationPossibility(const QseSppGeometry &oldGeometry,
     return true;
 }
 
-
-void QseSppSyncSignalPlot::calcPeaks(const QRect &rect,
-        const QseSppGeometry &geometry)
+void QseSppSyncSignalPlot::compressPeaks(const QseSppGeometry &oldGeometry,
+        const QseSppGeometry &newGeometry)
 {
-    if (m_peaks.isEmpty()
-            || !checkOptimizationPossibility(lastGeometry(), geometry))
+    if (oldGeometry.samplesPerPixel() == newGeometry.samplesPerPixel())
+        return;
+
+    const qint64 &oldSpp = oldGeometry.samplesPerPixel();
+    const qint64 &newSpp = newGeometry.samplesPerPixel();
+    const qint64 newCount = (m_peaks.count() * oldSpp) / newSpp;
+    const qint64 compressLevel = newSpp / oldSpp;
+    const QVector<double> &oldMinimums = m_peaks.minimums();
+    const QVector<double> &oldMaximums = m_peaks.maximums();
+    QVector<double> newMinimums = QVector<double>(newCount);
+    QVector<double> newMaximums = QVector<double>(newCount);
+
+    for (qint64 newIndex = 0; newIndex < newCount; ++newIndex)
     {
-        recalcPeaks(rect, geometry);
+        double minimum = oldMinimums[newIndex*compressLevel];
+        double maximum = oldMaximums[newIndex*compressLevel];
+
+        for (qint64 c = 0; c < compressLevel; ++c)
+        {
+            const double curmin = oldMinimums[newIndex*compressLevel+c];
+            const double curmax = oldMaximums[newIndex*compressLevel+c];
+            if (curmin < minimum)
+                minimum = curmin;
+            if (curmax > maximum)
+                maximum = curmax;
+        }
+
+        newMinimums[newIndex] = minimum;
+        newMaximums[newIndex] = maximum;
     }
-    else
-    {
-    }
+
+    m_peaks = QsePeakArray(newMinimums, newMaximums);
 }
 
-void QseSppSyncSignalPlot::recalcPeaks(const QRect &rect,
-        const QseSppGeometry &geometry)
+void QseSppSyncSignalPlot::pushFrontPeaks(const QseSppGeometry &geometry)
 {
-    qint64 x = geometry.x();
-    if (x < m_dataSource->minIndex())
-        x = m_dataSource->minIndex();
-    const qint64 &spp = geometry.samplesPerPixel();
+    if (geometry.x() >= m_peaksFirstIndex)
+        return;
 
-    m_peaks = m_dataSource->read(x, spp, rect.width());
-    m_peaksFirstIndex = x;
+    if (m_peaksFirstIndex <= m_dataSource->minIndex())
+        return;
+
+    qint64 firstIndex = 0;
+    if (geometry.x() < m_dataSource->minIndex())
+        firstIndex = m_dataSource->minIndex();
+    else
+        firstIndex = geometry.x();
+
+    const qint64 &spp = geometry.samplesPerPixel();
+    const qint64 sampleCount = m_peaksFirstIndex - firstIndex;
+    const qint64 peakCount = sampleCount/spp + ((sampleCount%spp) ? (1) : (0));
+
+    // WARNING: problem - firstIndex may not be multiple minIndex()
+    // read() should be modified
+    m_peaks = m_dataSource->read(firstIndex, spp, peakCount) + m_peaks;
+    m_peaksFirstIndex = firstIndex;
+}
+
+void QseSppSyncSignalPlot::pushBackPeaks(const QseSppGeometry &geometry,
+        int width)
+{
+    const qint64 &spp = geometry.samplesPerPixel();
+    const qint64 lastIndex = m_peaksFirstIndex + m_peaks.count()*spp - 1;
+
+    if (lastIndex >= m_dataSource->maxIndex())
+        return;
+
+    int alreadyVisibleWidth = 0;
+    if (geometry.x() >= m_peaksFirstIndex)
+        alreadyVisibleWidth =
+                m_peaks.count() - (geometry.x() - m_peaksFirstIndex)/spp;
+    else
+        alreadyVisibleWidth =
+                m_peaks.count() + (m_peaksFirstIndex - geometry.x())/spp;
+
+    const int neededWidth = width - alreadyVisibleWidth;
+    if (neededWidth <= 0)
+        return;
+
+    m_peaks = m_peaks + m_dataSource->read(lastIndex+1, spp, neededWidth);
 }
