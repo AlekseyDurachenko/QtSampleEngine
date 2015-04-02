@@ -15,6 +15,7 @@
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
 #include "qsesppstandardhorizontalcontroller.h"
 #include <QMouseEvent>
+#include <QDebug>
 
 
 QseSppStandardHorizontalController::QseSppStandardHorizontalController(
@@ -30,7 +31,8 @@ void QseSppStandardHorizontalController::mouseMoveEvent(QMouseEvent *event,
     if (m_dragAction)
     {
         const int diff = m_dragPrevPos.x() - event->x();
-        const qint64 value = QseSppGeometry::samplesFromWidth(geometry, diff);
+        const qint64 value =
+                static_cast<qint64>(geometry.toRealSamplesPerPixel()*diff);
         if (value != 0)
         {
             m_dragPrevPos = event->pos();
