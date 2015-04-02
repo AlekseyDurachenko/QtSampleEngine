@@ -31,6 +31,9 @@ public:
     inline int count() const;
     inline const QVector<double> &minimums() const;
     inline const QVector<double> &maximums() const;
+
+    void push_front(const QsePeakArray &peaks);
+    void push_back(const QsePeakArray &peaks);
 private:
     QVector<double> m_minimums;
     QVector<double> m_maximums;

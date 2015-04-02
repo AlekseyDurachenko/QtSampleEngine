@@ -30,6 +30,18 @@ QsePeakArray::QsePeakArray(const QVector<double> &minimums,
     m_maximums = maximums;
 }
 
+void QsePeakArray::push_front(const QsePeakArray &peaks)
+{
+    m_minimums = peaks.minimums() + m_minimums;
+    m_maximums = peaks.maximums() + m_maximums;
+}
+
+void QsePeakArray::push_back(const QsePeakArray &peaks)
+{
+    m_minimums += peaks.minimums();
+    m_maximums += peaks.maximums();
+}
+
 bool operator ==(const QsePeakArray &l, const QsePeakArray &r)
 {
     return (l.minimums() == r.minimums()

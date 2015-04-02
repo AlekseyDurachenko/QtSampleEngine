@@ -279,7 +279,7 @@ void QseSppSyncSignalPlot::pushFrontPeaks(const QseSppGeometry &geometry)
     const qint64 sampleCount = m_peaksFirstIndex - firstIndex;
     const qint64 peakCount = sampleCount/spp + ((sampleCount%spp) ? (1) : (0));
 
-    m_peaks = m_dataSource->read(firstIndex, spp, peakCount, true) + m_peaks;
+    m_peaks.push_front(m_dataSource->read(firstIndex, spp, peakCount, true));
     m_peaksFirstIndex = firstIndex;
 }
 
@@ -304,5 +304,5 @@ void QseSppSyncSignalPlot::pushBackPeaks(const QseSppGeometry &geometry,
     if (neededWidth <= 0)
         return;
 
-    m_peaks = m_peaks + m_dataSource->read(lastIndex+1, spp, neededWidth);
+    m_peaks.push_back(m_dataSource->read(lastIndex+1, spp, neededWidth));
 }
