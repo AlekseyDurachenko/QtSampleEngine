@@ -39,6 +39,7 @@ Q_DECLARE_METATYPE(QsePeakArray)
 
 bool operator ==(const QsePeakArray &l, const QsePeakArray &r);
 bool operator !=(const QsePeakArray &l, const QsePeakArray &r);
+QsePeakArray operator +(const QsePeakArray &a, const QsePeakArray &b);
 QDebug operator<<(QDebug dbg, const QsePeakArray &peaks);
 
 bool QsePeakArray::isEmpty() const

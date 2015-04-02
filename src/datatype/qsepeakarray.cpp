@@ -43,6 +43,25 @@ bool operator !=(const QsePeakArray &l, const QsePeakArray &r)
             || l.maximums() != r.maximums());
 }
 
+QsePeakArray operator +(const QsePeakArray &a, const QsePeakArray &b)
+{
+    const int count = a.count() + b.count();
+    QVector<double> minimums(count);
+    QVector<double> maximums(count);
+
+    for (int i = 0; i < a.count(); ++i)
+    {
+        minimums[i] = a.minimums().at(i);
+        maximums[i] = a.maximums().at(i);
+    }
+    for (int i = 0; i < b.count(); ++i)
+    {
+        minimums[a.count()+i] = b.minimums().at(i);
+        maximums[a.count()+i] = b.maximums().at(i);
+    }
+
+    return QsePeakArray(minimums, maximums);
+}
 
 QDebug operator<<(QDebug dbg, const QsePeakArray &peaks)
 {
@@ -79,3 +98,4 @@ QDebug operator<<(QDebug dbg, const QsePeakArray &peaks)
 
     return dbg.space();
 }
+
