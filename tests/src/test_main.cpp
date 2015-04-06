@@ -15,7 +15,7 @@
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
 #include <QtTest>
 #include "test_qserange.h"
-#include "test_qsecursor.h"
+#include "test_qseposition.h"
 #include "test_qseselection.h"
 #include "test_qsesppgeometry.h"
 #include "test_qsespwgeometry.h"
@@ -26,7 +26,7 @@ int main(int argc, char *argv[])
 {
     if (QTest::qExec(new TestQseRange, argc, argv))
         return -1;
-    if (QTest::qExec(new TestQseCursor, argc, argv))
+    if (QTest::qExec(new TestQsePosition, argc, argv))
         return -1;
     if (QTest::qExec(new TestQseSelection, argc, argv))
         return -1;

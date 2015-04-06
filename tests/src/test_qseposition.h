@@ -13,18 +13,18 @@
 // You should have received a copy of the GNU Lesser General Public
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
-#ifndef TESTQSECURSOR_H
-#define TESTQSECURSOR_H
+#ifndef TESTQSEPOSITION_H
+#define TESTQSEPOSITION_H
 
 #include <QObject>
 #include <QtTest>
 
 
-class TestQseCursor : public QObject
+class TestQsePosition : public QObject
 {
     Q_OBJECT
 public:
-    explicit TestQseCursor(QObject *parent = 0);
+    explicit TestQsePosition(QObject *parent = 0);
 private slots:
     void setAvailableRange();
     void setIndex();
@@ -33,4 +33,4 @@ private slots:
 };
 
 
-#endif // TESTQSECURSOR_H
+#endif // TESTQSEPOSITION_H

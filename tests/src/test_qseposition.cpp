@@ -13,19 +13,20 @@
 // You should have received a copy of the GNU Lesser General Public
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
-#include "test_qsecursor.h"
-#include "qsecursor.h"
+#include "test_qseposition.h"
+#include "qseposition.h"
 #include <QSharedPointer>
 #include <QDebug>
 
 
-TestQseCursor::TestQseCursor(QObject *parent) : QObject(parent)
+TestQsePosition::TestQsePosition(QObject *parent) : QObject(parent)
 {
 }
 
-void TestQseCursor::setAvailableRange()
+void TestQsePosition::setAvailableRange()
 {
-    QSharedPointer<QseCursor> cursor = QSharedPointer<QseCursor>(new QseCursor);
+    QSharedPointer<QsePosition> cursor
+            = QSharedPointer<QsePosition>(new QsePosition);
 
     cursor->setAvailableRange(QseRange(10, 20));
     QVERIFY(cursor->availableRange() == QseRange(10, 20));
@@ -34,9 +35,10 @@ void TestQseCursor::setAvailableRange()
     QVERIFY(cursor->availableRange().isNull());
 }
 
-void TestQseCursor::setIndex()
+void TestQsePosition::setIndex()
 {
-    QSharedPointer<QseCursor> cursor = QSharedPointer<QseCursor>(new QseCursor);
+    QSharedPointer<QsePosition> cursor
+            = QSharedPointer<QsePosition>(new QsePosition);
 
     cursor->setAvailableRange(QseRange(0, 20));
     cursor->setIndex(0);
@@ -58,9 +60,10 @@ void TestQseCursor::setIndex()
     QVERIFY(cursor->isNull() == true);
 }
 
-void TestQseCursor::resetIndex()
+void TestQsePosition::resetIndex()
 {
-    QSharedPointer<QseCursor> cursor = QSharedPointer<QseCursor>(new QseCursor);
+    QSharedPointer<QsePosition> cursor
+            = QSharedPointer<QsePosition>(new QsePosition);
 
     cursor->setAvailableRange(QseRange(0, 20));
     cursor->setIndex(10);
@@ -68,9 +71,10 @@ void TestQseCursor::resetIndex()
     QVERIFY(cursor->isNull() == true);
 }
 
-void TestQseCursor::resetAvailableRange()
+void TestQsePosition::resetAvailableRange()
 {
-    QSharedPointer<QseCursor> cursor = QSharedPointer<QseCursor>(new QseCursor);
+    QSharedPointer<QsePosition> cursor
+            = QSharedPointer<QsePosition>(new QsePosition);
 
     cursor->setAvailableRange(QseRange(0, 20));
     cursor->setIndex(10);
