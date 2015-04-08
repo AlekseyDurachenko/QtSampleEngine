@@ -30,9 +30,23 @@ void TestQsePosition::setAvailableRange()
 
     cursor->setAvailableRange(QseRange(10, 20));
     QVERIFY(cursor->availableRange() == QseRange(10, 20));
+    QVERIFY(cursor->isNull() == true);
+
+    cursor->setIndex(10);
+    QVERIFY(cursor->index() == 10);
+    cursor->setIndex(5);
+    QVERIFY(cursor->index() == 10);
+    cursor->setIndex(15);
+    QVERIFY(cursor->index() == 15);
+    cursor->setIndex(25);
+    QVERIFY(cursor->index() == 20);
+
+    cursor->setAvailableRange(QseRange(15, 16));
+    QVERIFY(cursor->index() == 16);
 
     cursor->setAvailableRange(QseRange());
     QVERIFY(cursor->availableRange().isNull());
+    QVERIFY(cursor->isNull() == true);
 }
 
 void TestQsePosition::setIndex()

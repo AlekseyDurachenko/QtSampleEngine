@@ -42,15 +42,13 @@ public slots:
     void resetIndex();
 private:
     qint64 m_index;
+    bool m_isNull;
     QseRange m_availableRange;
 };
 
-/*! \retval true if index() is "-1",
- *  \retval false oterwise
- */
 bool QsePosition::isNull() const
 {
-    return (m_index < 0);
+    return m_isNull;
 }
 
 qint64 QsePosition::index() const

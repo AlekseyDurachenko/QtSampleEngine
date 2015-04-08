@@ -18,7 +18,8 @@
 
 QsePosition::QsePosition(QObject *parent) : QObject(parent)
 {
-    m_index = -1;
+    m_index = 0;
+    m_isNull = true;
 }
 
 void QsePosition::setAvailableRange(const QseRange &availableRange)
@@ -26,25 +27,33 @@ void QsePosition::setAvailableRange(const QseRange &availableRange)
     if (availableRange != m_availableRange)
     {
         m_availableRange = availableRange;
-        if (!isNull())
+        if (!m_isNull)
             setIndex(m_index);
     }
 }
 
 void QsePosition::setIndex(qint64 index)
 {
-    qint64 newIndex = index;
-    if (m_availableRange.isNull())
-        newIndex = -1;
-    else if (newIndex < m_availableRange.first())
-        newIndex = m_availableRange.first();
-    else if (newIndex > m_availableRange.last())
-        newIndex = m_availableRange.last();
-
-    if (newIndex != m_index)
+    if (m_availableRange.isNull() && !m_isNull)
     {
-        m_index = newIndex;
+        m_isNull = true;
         emit indexChanged();
+    }
+    else if (!m_availableRange.isNull())
+    {
+        qint64 newIndex = index;
+        if (newIndex < m_availableRange.first())
+            newIndex = m_availableRange.first();
+        else if (newIndex > m_availableRange.last())
+            newIndex = m_availableRange.last();
+
+        if (newIndex != m_index || m_isNull)
+        {
+            m_isNull = false;
+            m_index = newIndex;
+
+            emit indexChanged();
+        }
     }
 }
 
@@ -53,13 +62,11 @@ void QsePosition::resetAvailableRange()
     setAvailableRange(QseRange());
 }
 
-/*! set index to null
- */
 void QsePosition::resetIndex()
 {
-    if (m_index != -1)
+    if (!isNull())
     {
-        m_index = -1;
+        m_isNull = true;
         emit indexChanged();
     }
 }
