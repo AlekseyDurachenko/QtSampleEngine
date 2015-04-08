@@ -26,23 +26,23 @@ void TestQseRange::constructor()
 {
     {
         QseRange range;
-        QVERIFY(range.first()       == -1
-                && range.last()     == -1
+        QVERIFY(range.first()       == 0
+                && range.last()     == 0
                 && range.isNull()   == true);
     }
 
     {
         QseRange range(-1, 1);
         QVERIFY(range.first()       == -1
-                && range.last()     == -1
-                && range.isNull()   == true);
+                && range.last()     == 1
+                && range.isNull()   == false);
     }
 
     {
         QseRange range(1, -1);
         QVERIFY(range.first()       == -1
-                && range.last()     == -1
-                && range.isNull()   == true);
+                && range.last()     == 1
+                && range.isNull()   == false);
     }
 
     {
@@ -104,9 +104,9 @@ void TestQseRange::replaceFirst()
     {
         QseRange range;
         range = range.replaceFirst(2);
-        QVERIFY(range.first()       == -1
-                && range.last()     == -1
-                && range.isNull()   == true);
+        QVERIFY(range.first()       == 2
+                && range.last()     == 2
+                && range.isNull()   == false);
     }
 
     {
@@ -124,9 +124,9 @@ void TestQseRange::replaseLast()
     {
         QseRange range;
         range = range.replaceLast(2);
-        QVERIFY(range.first()       == -1
-                && range.last()     == -1
-                && range.isNull()   == true);
+        QVERIFY(range.first()       == 2
+                && range.last()     == 2
+                && range.isNull()   == false);
     }
 
     {

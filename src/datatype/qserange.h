@@ -23,7 +23,8 @@
 class QseRange
 {
 public:
-    QseRange(qint64 first = -1, qint64 last = -1);
+    QseRange();
+    QseRange(qint64 first, qint64 last);
 
     inline bool isNull() const;
     inline qint64 count() const;
@@ -39,6 +40,7 @@ public:
     QseRange replaceFirst(qint64 first);
     QseRange replaceLast(qint64 last);
 private:
+    bool m_isNull;
     qint64 m_first;
     qint64 m_last;
 };
@@ -50,7 +52,7 @@ QDebug operator<<(QDebug dbg, const QseRange &range);
 
 bool QseRange::isNull() const
 {
-    return m_first == -1 || m_last == -1;
+    return m_isNull;
 }
 
 qint64 QseRange::count() const

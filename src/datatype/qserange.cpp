@@ -17,6 +17,13 @@
 #include <QDebug>
 
 
+QseRange::QseRange()
+{
+    qRegisterMetaType<QseRange>("QseRange");
+
+    reset();
+}
+
 QseRange::QseRange(qint64 first, qint64 last)
 {
     qRegisterMetaType<QseRange>("QseRange");
@@ -28,34 +35,31 @@ void QseRange::setRange(qint64 first, qint64 last)
 {
     if (m_first != first || m_last != last)
     {
-        if (first < 0 || last < 0)
+        if (last > first)
         {
-            m_first = m_last = -1;
+            m_first = first;
+            m_last = last;
         }
         else
         {
-            if (last > first)
-            {
-                m_first = first;
-                m_last = last;
-            }
-            else
-            {
-                m_first = last;
-                m_last = first;
-            }
+            m_first = last;
+            m_last = first;
         }
     }
+
+    m_isNull = false;
 }
 
 void QseRange::reset()
 {
-    m_first = m_last = -1;
+    m_first = 0;
+    m_last = 0;
+    m_isNull = true;
 }
 
 void QseRange::setFirst(qint64 first)
 {
-    if (m_last == -1)
+    if (m_isNull)
         setRange(first, first);
     else
         setRange(first, m_last);
@@ -63,7 +67,7 @@ void QseRange::setFirst(qint64 first)
 
 void QseRange::setLast(qint64 last)
 {
-    if (m_first == -1)
+    if (m_isNull)
         setRange(last, last);
     else
         setRange(m_first, last);
@@ -71,24 +75,32 @@ void QseRange::setLast(qint64 last)
 
 QseRange QseRange::replaceFirst(qint64 first)
 {
-    return QseRange(first, m_last);
+    if (m_isNull)
+        return QseRange(first, first);
+    else
+        return QseRange(first, m_last);
 }
 
 QseRange QseRange::replaceLast(qint64 last)
 {
-    return QseRange(m_first, last);
+    if (m_isNull)
+        return QseRange(last, last);
+    else
+        return QseRange(m_first, last);
 }
 
 bool operator ==(const QseRange &l, const QseRange &r)
 {
     return (l.first() == r.first()
-            && l.last() == r.last());
+            && l.last() == r.last()
+            && l.isNull() == r.isNull());
 }
 
 bool operator !=(const QseRange &l, const QseRange &r)
 {
     return (l.first() != r.first()
-            || l.last() != r.last());
+            || l.last() != r.last()
+            || l.isNull() != r.isNull());
 }
 
 QDebug operator<<(QDebug dbg, const QseRange &range)
