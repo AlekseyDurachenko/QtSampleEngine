@@ -61,7 +61,7 @@ void QseSppHorizontalAxisWidget::topDownRender(QPainter *painter)
 
     // calculate geometry of the metric for top or down postion of them
     int mpY1, mpY2, tpY;
-    if (m_alignment == AlignTop)
+    if (m_alignment == AlignBottom)
     {
         mpY1 = height() - m_metricSize;
         mpY2 = height();

@@ -20,6 +20,7 @@
 #include <QMoveEvent>
 #include <QDebug>
 #include "qsesppaxiswidget.h"
+#include "qsespphorizontalaxiswidget.h"
 #include "qsesppsignallinearamplmetricprovider.h"
 #include "qsespptimemetricprovider.h"
 #include "qsesppaxiscoverplot.h"
@@ -79,10 +80,13 @@ CComplexMonoAudioWidget::CComplexMonoAudioWidget(QWidget *parent) :
     m_amplitudeAxis->setController(m_verticalCompositCtrl);
     m_amplitudeAxis->setLimiter(m_audioWidget->limiter());
 
-    m_timeAxis = new QseSppAxisWidget(QseSppAxisWidget::Top, this);
+    m_timeAxis = new QseSppHorizontalAxisWidget(this);
+    m_timeAxis->setAlignment(QseSppHorizontalAxisWidget::AlignBottom);
     m_timeAxis->setMetricProvider(m_timeProvider);
     m_timeAxis->setController(m_horizontalCompositCtrl);
     m_timeAxis->setLimiter(m_audioWidget->limiter());
+    connect(m_timeAxis, SIGNAL(shiftChanged(int)),
+            m_horizontalAxisZoomControllerProxy, SLOT(setShift(int)));
 
     m_audioWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     m_audioWidget->coverPlot()->setVerticalMetricProvider(m_amplitudeProvider);
@@ -157,8 +161,7 @@ bool CComplexMonoAudioWidget::eventFilter(QObject *obj, QEvent *event)
     {
         QMoveEvent *moveEvent = static_cast<QMoveEvent *>(event);
         QPoint timeAxisZeroPos = moveEvent->pos()-m_timeAxis->pos();
-        m_timeAxis->setZeroPos(timeAxisZeroPos);
-        m_horizontalAxisZoomControllerProxy->setShift(timeAxisZeroPos.x());
+        m_timeAxis->setShift(timeAxisZeroPos.x());
     }
 
     return QObject::eventFilter(obj, event);

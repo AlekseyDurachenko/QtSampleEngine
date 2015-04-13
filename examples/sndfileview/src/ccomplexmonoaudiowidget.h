@@ -29,6 +29,8 @@ class QseSppStandardHorizontalZoomController;
 class QseSppStandardVerticalZoomController;
 class QseSppCompositController;
 class QseSppHorizontalShiftControllerProxy;
+class QseSppHorizontalAxisWidget;
+
 
 class CComplexMonoAudioWidget : public QWidget
 {
@@ -46,7 +48,7 @@ protected:
 private:
     CSppSyncAudioWidget *m_audioWidget;
     QseSppAxisWidget *m_amplitudeAxis;
-    QseSppAxisWidget *m_timeAxis;
+    QseSppHorizontalAxisWidget *m_timeAxis;
     QseSppSignalLinearAmplMetricProvider *m_amplitudeProvider;
     QseSppTimeMetricProvider *m_timeProvider;
     QScrollBar *m_timeScrollBar;
