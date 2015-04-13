@@ -30,8 +30,8 @@ void QseSppStandardHorizontalZoomController::wheelEvent(QWheelEvent *event,
     if (event->modifiers() == keyboardModifiers())
     {
         // calculate zoom
-        const int xpos = event->x() - zeroPos().x();
-        int degree = event->delta() / 60;
+        const int xpos = event->x();
+        const int degree = event->delta() / 60;
         qint64 spp = geometry.samplesPerPixel();
         // zoom in
         if (degree > 0)

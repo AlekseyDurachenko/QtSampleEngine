@@ -27,8 +27,8 @@ QseSppGeometry CSppSyncAudioLimiter::limit(const QseSppGeometry &geometry)
 {
     QseSppGeometry limitedGeometry = geometry;
 
-    if (limitedGeometry.x() < 0)
-        limitedGeometry.setX(0);
+    //if (limitedGeometry.x() < 0)
+//        limitedGeometry.setX(0);
 
     return limitedGeometry;
 }

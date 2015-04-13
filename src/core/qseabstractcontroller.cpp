@@ -31,8 +31,3 @@ void QseAbstractController::setDefaultCursor(const QCursor &cursor)
 {
     m_defaultCursor = cursor;
 }
-
-void QseAbstractController::setZeroPos(const QPoint &zeroPos)
-{
-    m_zeroPos = zeroPos;
-}

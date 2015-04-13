@@ -23,26 +23,16 @@
 class QseAbstractController : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QPoint zeroPos READ zeroPos WRITE setZeroPos)
 public:
     explicit QseAbstractController(QObject *parent = 0);
 
     virtual QCursor defaultCursor() const;
     void setDefaultCursor(const QCursor &cursor);
-
-    inline const QPoint &zeroPos() const;
-    void setZeroPos(const QPoint &zeroPos);
 signals:
     void cursorChanged(const QCursor &cursor);
 private:
     QCursor m_defaultCursor;
-    QPoint m_zeroPos;
 };
-
-const QPoint &QseAbstractController::zeroPos() const
-{
-    return m_zeroPos;
-}
 
 
 #endif // QSEABSTRACTCONTROLLER_H
