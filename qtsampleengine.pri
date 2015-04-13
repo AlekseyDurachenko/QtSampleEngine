@@ -52,7 +52,7 @@ HEADERS +=                                                          \
     $$PWD/src/signal/spp/plot/qsesppsignallinearplotdelegate.h \
     $$PWD/src/signal/spp/plot/qsesppsyncsignalplot.h \
     $$PWD/src/core/spp/qseabstractsppcontrollerproxy.h \
-    $$PWD/src/axis/spp/controller/qsespphorizontalaxiscontrollerproxy.h
+    $$PWD/src/core/spp/qsespphorizontalshiftcontrollerproxy.h
 
 
 SOURCES +=                                                          \
@@ -108,7 +108,7 @@ SOURCES +=                                                          \
     $$PWD/src/signal/spp/plot/qsesppsignallinearplotdelegate.cpp \
     $$PWD/src/signal/spp/plot/qsesppsyncsignalplot.cpp \
     $$PWD/src/core/spp/qseabstractsppcontrollerproxy.cpp \
-    $$PWD/src/axis/spp/controller/qsespphorizontalaxiscontrollerproxy.cpp
+    $$PWD/src/core/spp/qsespphorizontalshiftcontrollerproxy.cpp
 
 
 OTHER_FILES +=                                                      \
@@ -123,7 +123,6 @@ INCLUDEPATH +=                                                      \
     $$PWD/src                                                       \
     $$PWD/src/axis                                                  \
     $$PWD/src/axis/spp/metric                                       \
-    $$PWD/src/axis/spp/controller                                   \
     $$PWD/src/core                                                  \
     $$PWD/src/core/spp                                              \
     $$PWD/src/core/spw                                              \

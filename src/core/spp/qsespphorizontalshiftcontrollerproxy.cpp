@@ -13,18 +13,18 @@
 // You should have received a copy of the GNU Lesser General Public
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
-#include "qsespphorizontalaxiscontrollerproxy.h"
+#include "qsespphorizontalshiftcontrollerproxy.h"
 #include <QWheelEvent>
 #include <QMouseEvent>
 
 
-QseSppHorizontalAxisControllerProxy::QseSppHorizontalAxisControllerProxy(
+QseSppHorizontalShiftControllerProxy::QseSppHorizontalShiftControllerProxy(
         QObject *parent) : QseAbstractSppControllerProxy(parent)
 {
     m_shift = 0;
 }
 
-void QseSppHorizontalAxisControllerProxy::setShift(int value)
+void QseSppHorizontalShiftControllerProxy::setShift(int value)
 {
     if (m_shift != value)
     {
@@ -33,7 +33,7 @@ void QseSppHorizontalAxisControllerProxy::setShift(int value)
     }
 }
 
-void QseSppHorizontalAxisControllerProxy::mouseMoveEvent(QMouseEvent *event,
+void QseSppHorizontalShiftControllerProxy::mouseMoveEvent(QMouseEvent *event,
         const QRect &rect, const QseSppGeometry &geometry)
 {
     QPoint pos = QPoint(event->pos().x() - m_shift, event->pos().y());
@@ -43,7 +43,7 @@ void QseSppHorizontalAxisControllerProxy::mouseMoveEvent(QMouseEvent *event,
     delete e;
 }
 
-void QseSppHorizontalAxisControllerProxy::mousePressEvent(QMouseEvent *event,
+void QseSppHorizontalShiftControllerProxy::mousePressEvent(QMouseEvent *event,
         const QRect &rect, const QseSppGeometry &geometry)
 {
     QPoint pos = QPoint(event->pos().x() - m_shift, event->pos().y());
@@ -53,7 +53,7 @@ void QseSppHorizontalAxisControllerProxy::mousePressEvent(QMouseEvent *event,
     delete e;
 }
 
-void QseSppHorizontalAxisControllerProxy::mouseReleaseEvent(QMouseEvent *event,
+void QseSppHorizontalShiftControllerProxy::mouseReleaseEvent(QMouseEvent *event,
         const QRect &rect, const QseSppGeometry &geometry)
 {
     QPoint pos = QPoint(event->pos().x() - m_shift, event->pos().y());
@@ -63,7 +63,7 @@ void QseSppHorizontalAxisControllerProxy::mouseReleaseEvent(QMouseEvent *event,
     delete e;
 }
 
-void QseSppHorizontalAxisControllerProxy::wheelEvent(QWheelEvent *event,
+void QseSppHorizontalShiftControllerProxy::wheelEvent(QWheelEvent *event,
         const QRect &rect, const QseSppGeometry &geometry)
 {
     QPoint pos = QPoint(event->pos().x() - m_shift, event->pos().y());

@@ -27,7 +27,7 @@
 #include "qsesppstandardverticalcontroller.h"
 #include "qsesppstandardhorizontalzoomcontroller.h"
 #include "qsesppstandardverticalzoomcontroller.h"
-#include "qsespphorizontalaxiscontrollerproxy.h"
+#include "qsespphorizontalshiftcontrollerproxy.h"
 #include "qsesppcompositcontroller.h"
 #include "csppsyncaudiowidget.h"
 #include "csppsyncaudiolimiter.h"
@@ -48,7 +48,7 @@ CComplexMonoAudioWidget::CComplexMonoAudioWidget(QWidget *parent) :
     m_horizontalCtrl->setMouseButtons(Qt::LeftButton);
     m_horizontalZoomCtrl = new QseSppStandardHorizontalZoomController(this);
     m_horizontalZoomCtrl->setKeyboardModifiers(Qt::NoModifier);
-    m_horizontalAxisZoomControllerProxy = new QseSppHorizontalAxisControllerProxy(this);
+    m_horizontalAxisZoomControllerProxy = new QseSppHorizontalShiftControllerProxy(this);
     m_horizontalAxisZoomControllerProxy->setController(m_horizontalZoomCtrl);
     m_horizontalCompositCtrl = new QseSppCompositController(this);
     QList<QseAbstractSppController *> hctrls;
@@ -159,7 +159,6 @@ bool CComplexMonoAudioWidget::eventFilter(QObject *obj, QEvent *event)
         QPoint timeAxisZeroPos = moveEvent->pos()-m_timeAxis->pos();
         m_timeAxis->setZeroPos(timeAxisZeroPos);
         m_horizontalAxisZoomControllerProxy->setShift(timeAxisZeroPos.x());
-//        m_horizontalZoomCtrl->setZeroPos(timeAxisZeroPos);
     }
 
     return QObject::eventFilter(obj, event);

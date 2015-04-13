@@ -13,17 +13,17 @@
 // You should have received a copy of the GNU Lesser General Public
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
-#ifndef QSESPPHORIZONTALAXISCONTROLLERPROXY_H
-#define QSESPPHORIZONTALAXISCONTROLLERPROXY_H
+#ifndef QSESPPHORIZONTALSHIFTCONTROLLERPROXY_H
+#define QSESPPHORIZONTALSHIFTCONTROLLERPROXY_H
 
 #include "qseabstractsppcontrollerproxy.h"
 
 
-class QseSppHorizontalAxisControllerProxy : public QseAbstractSppControllerProxy
+class QseSppHorizontalShiftControllerProxy : public QseAbstractSppControllerProxy
 {
     Q_OBJECT
 public:
-    explicit QseSppHorizontalAxisControllerProxy(QObject *parent = 0);
+    explicit QseSppHorizontalShiftControllerProxy(QObject *parent = 0);
 signals:
     void shiftChanged(int value);
 public slots:
@@ -42,4 +42,4 @@ private:
 };
 
 
-#endif // QSESPPHORIZONTALAXISCONTROLLERPROXY_H
+#endif // QSESPPHORIZONTALSHIFTCONTROLLERPROXY_H
