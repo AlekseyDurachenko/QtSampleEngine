@@ -1,4 +1,4 @@
-// Copyright 2013-2015, Durachenko Aleksey V. <durachenko.aleksey@gmail.com>
+// Copyright 2015, Durachenko Aleksey V. <durachenko.aleksey@gmail.com>
 //
 // This library is free software; you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public
@@ -13,26 +13,21 @@
 // You should have received a copy of the GNU Lesser General Public
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
-#ifndef QSEABSTRACTSPPCONTROLLER_H
-#define QSEABSTRACTSPPCONTROLLER_H
+#ifndef QSESPPHORIZONTALAXISCONTROLLERPROXY_H
+#define QSESPPHORIZONTALAXISCONTROLLERPROXY_H
 
-#include "qseabstractcontroller.h"
-#include "qsesppgeometry.h"
-class QMouseEvent;
-class QWheelEvent;
-class QKeyEvent;
+#include "qseabstractsppcontrollerproxy.h"
 
 
-class QseAbstractSppController : public QseAbstractController
+class QseSppHorizontalAxisControllerProxy : public QseAbstractSppControllerProxy
 {
     Q_OBJECT
-    friend class QseAbstractSppWidget;
-    friend class QseSppCompositController;
-    friend class QseAbstractSppControllerProxy;
 public:
-    explicit QseAbstractSppController(QObject *parent = 0);
+    explicit QseSppHorizontalAxisControllerProxy(QObject *parent = 0);
 signals:
-    void geometryChanged(const QseSppGeometry &geometry);
+    void shiftChanged(int value);
+public slots:
+    void setShift(int value);
 protected:
     virtual void mouseMoveEvent(QMouseEvent *event, const QRect &rect,
                                 const QseSppGeometry &geometry);
@@ -42,11 +37,9 @@ protected:
                                    const QseSppGeometry &geometry);
     virtual void wheelEvent(QWheelEvent *event, const QRect &rect,
                             const QseSppGeometry &geometry);
-    virtual void keyPressEvent(QKeyEvent *event, const QRect &rect,
-                               const QseSppGeometry &geometry);
-    virtual void keyReleaseEvent(QKeyEvent *event, const QRect &rect,
-                                 const QseSppGeometry &geometry);
+private:
+    int m_shift;
 };
 
 
-#endif // QSEABSTRACTSPPCONTROLLER_H
+#endif // QSESPPHORIZONTALAXISCONTROLLERPROXY_H

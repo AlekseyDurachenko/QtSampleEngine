@@ -28,7 +28,7 @@ class QseSppStandardVerticalController;
 class QseSppStandardHorizontalZoomController;
 class QseSppStandardVerticalZoomController;
 class QseSppCompositController;
-
+class QseSppHorizontalAxisControllerProxy;
 
 class CComplexMonoAudioWidget : public QWidget
 {
@@ -56,6 +56,7 @@ private:
     QseSppStandardVerticalZoomController *m_verticalZoomCtrl;
     QseSppCompositController *m_horizontalCompositCtrl;
     QseSppCompositController *m_verticalCompositCtrl;
+    QseSppHorizontalAxisControllerProxy *m_horizontalAxisZoomControllerProxy;
 };
 
 CSppSyncAudioWidget *CComplexMonoAudioWidget::audioWidget() const
