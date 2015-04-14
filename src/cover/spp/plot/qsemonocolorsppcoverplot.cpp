@@ -33,19 +33,14 @@ void QseMonocolorSppCoverPlot::setColor(const QColor &color)
 }
 
 bool QseMonocolorSppCoverPlot::hasChanges(const QRect &rect,
-        const QseSppGeometry &geometry)
+        const QseSppGeometry &/*geometry*/)
 {
-    Q_UNUSED(geometry);
-
     return (isUpdateOnce() || rect != lastRect());
 }
 
-bool QseMonocolorSppCoverPlot::isVisible(const QRect &rect,
-        const QseSppGeometry &geometry)
+bool QseMonocolorSppCoverPlot::isVisible(const QRect &/*rect*/,
+        const QseSppGeometry &/*geometry*/)
 {
-    Q_UNUSED(rect);
-    Q_UNUSED(geometry);
-
     return true;
 }
 

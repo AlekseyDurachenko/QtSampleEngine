@@ -81,6 +81,9 @@ void QseSppAxisCoverPlot::setBackgroundColor(const QColor &color)
 void QseSppAxisCoverPlot::setVerticalMetricProvider(
         QseAbstractSppMetricProvider *provider)
 {
+    if (m_verticalProvider == provider)
+        return;
+
     if (m_verticalProvider)
         disconnect(m_verticalProvider, 0, this, 0);
 
@@ -99,6 +102,9 @@ void QseSppAxisCoverPlot::setVerticalMetricProvider(
 void QseSppAxisCoverPlot::setHorizontalMetricProvider(
         QseAbstractSppMetricProvider *provider)
 {
+    if (m_horizontalProvider == provider)
+        return;
+
     if (m_horizontalProvider)
         disconnect(m_horizontalProvider, 0, this, 0);
 
@@ -151,9 +157,6 @@ void QseSppAxisCoverPlot::draw(QPainter *painter, const QRect &rect,
     foreach (const QseMetricItem &metric, hMetricList)
         if (metric.level() == 1)
             painter->drawLine(metric.offset(), 0, metric.offset(), rect.height());
-    // store last geometry
-    m_lastGeometry = geometry;
-    m_lastRect = rect;
 
     QseAbstractSppPlot::draw(painter, rect, geometry);
 }
