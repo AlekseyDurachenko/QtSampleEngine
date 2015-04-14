@@ -127,7 +127,8 @@ bool QseSppGeometry::checkSampleIndexVisibility(const QseSppGeometry &geometry,
     if (spp > 0)
         return (x <= sampleIndex) && (sampleIndex < x+(width*spp));
     else
-        return (x <= sampleIndex) && (sampleIndex < x-(width/spp));
+        return (x <= sampleIndex)
+                && (sampleIndex < x+(width/-spp)+((width%(-spp)) ? (1) : (0)));
 }
 
 int QseSppGeometry::calcOffset(const QseSppGeometry &geometry,
