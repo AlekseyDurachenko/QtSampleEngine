@@ -50,7 +50,7 @@ void QseSppCompositController::controller_cursorChanged(const QCursor &cursor)
     QseAbstractSppController *controller =
             qobject_cast<QseAbstractSppController *>(sender());
 
-    // TODO: it doen't working for Bitmap default cursor
+    // NOTE: it doen't working for Bitmap default cursor
     if (controller->defaultCursor().shape() == cursor.shape()
             && cursor.shape() != Qt::BitmapCursor)
         emit cursorChanged(defaultCursor());
