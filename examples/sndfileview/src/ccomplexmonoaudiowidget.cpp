@@ -161,7 +161,7 @@ bool CComplexMonoAudioWidget::eventFilter(QObject *obj, QEvent *event)
     if (event->type() == QEvent::Move)
     {
         QMoveEvent *moveEvent = static_cast<QMoveEvent *>(event);
-        QPoint timeAxisZeroPos = moveEvent->pos()-m_timeAxis->pos();
+        const QPoint timeAxisZeroPos = moveEvent->pos()-m_timeAxis->pos();
         m_timeAxis->setShift(timeAxisZeroPos.x());
     }
 

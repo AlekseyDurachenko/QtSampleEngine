@@ -40,8 +40,8 @@ void QseSppHorizontalAxisWidget::setShift(int shift)
     if (m_shift != shift)
     {
         m_shift = shift;
-        emit shiftChanged(m_shift);
         setUpdateOnce(true);
+        emit shiftChanged(m_shift);
     }
 }
 
@@ -57,7 +57,7 @@ void QseSppHorizontalAxisWidget::recalcProviderMinimumSize(
 void QseSppHorizontalAxisWidget::topDownRender(QPainter *painter)
 {
     // fetch metric list
-    QList<QseMetricItem> metricList = m_provider->create(geometry(), width());
+    const QList<QseMetricItem> metricList = m_provider->create(geometry(), width());
 
     // calculate geometry of the metric for top or down postion of them
     int mpY1, mpY2, tpY;

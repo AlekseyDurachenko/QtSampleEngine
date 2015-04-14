@@ -29,6 +29,9 @@ QseSppStandardSelectionController::QseSppStandardSelectionController(QObject *pa
 
 void QseSppStandardSelectionController::setSelection(QseSelection *selection)
 {
+    if (m_selection == selection)
+        return;
+
     if (m_selection)
         disconnect(m_selection, 0, this, 0);
 
@@ -48,7 +51,7 @@ void QseSppStandardSelectionController::mouseMoveEvent(QMouseEvent *event,
             && event->buttons() == mouseButtons()
             && event->modifiers() == keyboardModifiers())
     {
-        qint64 sample = QseSppGeometry::calcSampleIndex(geometry, event->x());
+        const qint64 sample = QseSppGeometry::calcSampleIndex(geometry, event->x());
         m_selection->setSelectedRange(QseRange(m_otherDragSample, sample));
     }
 
@@ -63,17 +66,17 @@ void QseSppStandardSelectionController::mousePressEvent(QMouseEvent *event,
             && event->button() == mouseButtons()
             && event->modifiers() == keyboardModifiers())
     {
-        qint64 sample = QseSppGeometry::calcSampleIndex(geometry, event->x());
+        const qint64 sample = QseSppGeometry::calcSampleIndex(geometry, event->x());
 
         // resize selection if mouse around the selection bounds
         if (!m_selection->isNull())
         {
-            QseRange range = m_selection->selectedRange();
+            const QseRange range = m_selection->selectedRange();
             // left bound of selection
             if (QseSppGeometry::checkSampleIndexVisibility(geometry,
                     range.first(), rect.width()))
             {
-                int pos = QseSppGeometry::calcOffset(geometry, range.first());
+                const int pos = QseSppGeometry::calcOffset(geometry, range.first());
                 if (qAbs(pos - event->x()) < 5)
                 {
                     m_dragAction = true;
@@ -86,7 +89,7 @@ void QseSppStandardSelectionController::mousePressEvent(QMouseEvent *event,
                     && QseSppGeometry::checkSampleIndexVisibility(geometry,
                             range.last(), rect.width()))
             {
-                int pos = QseSppGeometry::calcOffset(geometry, range.last());
+                const int pos = QseSppGeometry::calcOffset(geometry, range.last());
                 if (qAbs(pos - event->x()) < 5)
                 {
                     m_dragAction = true;
@@ -158,12 +161,12 @@ void QseSppStandardSelectionController::updateCursor(Qt::KeyboardModifiers km,
     // show the resize cursor if mouse around the selection bounds
     if (!m_selection->isNull())
     {
-        QseRange range = m_selection->selectedRange();
+        const QseRange range = m_selection->selectedRange();
         // left bound of selection
         if (QseSppGeometry::checkSampleIndexVisibility(geometry, range.first(),
                 rect.width()))
         {
-            int pos = QseSppGeometry::calcOffset(geometry, range.first());
+            const int pos = QseSppGeometry::calcOffset(geometry, range.first());
             if (qAbs(pos - x) < 5)
             {
                 emit cursorChanged(QCursor(Qt::SizeHorCursor));
@@ -174,7 +177,7 @@ void QseSppStandardSelectionController::updateCursor(Qt::KeyboardModifiers km,
         if (QseSppGeometry::checkSampleIndexVisibility(geometry, range.last(),
                 rect.width()))
         {
-            int pos = QseSppGeometry::calcOffset(geometry, range.last());
+            const int pos = QseSppGeometry::calcOffset(geometry, range.last());
             if (qAbs(pos - x) < 5)
             {
                 emit cursorChanged(QCursor(Qt::SizeHorCursor));

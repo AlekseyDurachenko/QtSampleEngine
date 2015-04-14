@@ -47,7 +47,7 @@ void QseMetricMapper::init()
 
 double QseMetricMapper::calcNearestValue(double unitPerPixel, double minimum)
 {
-    double approxIntervalMetric = minimum * unitPerPixel;
+    const double approxIntervalMetric = minimum * unitPerPixel;
 
     // TODO: binary search or something like are required
     if (approxIntervalMetric > 0.5)

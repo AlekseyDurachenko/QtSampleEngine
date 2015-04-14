@@ -37,8 +37,8 @@ public:
     inline qint64 last() const;
     void setLast(qint64 last);
 
-    QseRange replaceFirst(qint64 first);
-    QseRange replaceLast(qint64 last);
+    QseRange replaceFirst(qint64 first) const;
+    QseRange replaceLast(qint64 last) const;
 private:
     bool m_isNull;
     qint64 m_first;

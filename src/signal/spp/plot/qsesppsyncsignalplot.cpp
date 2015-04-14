@@ -126,7 +126,7 @@ void QseSppSyncSignalPlot::draw(QPainter *painter, const QRect &rect,
                         geometry, m_peaksFirstIndex - geometry.x());
 
         // this value will be added to the y coordiante of the each peaks
-        double dy = calcDy(rect);
+        const double dy = calcDy(rect);
 
         // draw the peaks
         if (m_peaks.hasMaximums())

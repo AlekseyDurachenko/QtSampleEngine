@@ -73,7 +73,7 @@ void QseRange::setLast(qint64 last)
         setRange(m_first, last);
 }
 
-QseRange QseRange::replaceFirst(qint64 first)
+QseRange QseRange::replaceFirst(qint64 first) const
 {
     if (m_isNull)
         return QseRange(first, first);
@@ -81,7 +81,7 @@ QseRange QseRange::replaceFirst(qint64 first)
         return QseRange(first, m_last);
 }
 
-QseRange QseRange::replaceLast(qint64 last)
+QseRange QseRange::replaceLast(qint64 last) const
 {
     if (m_isNull)
         return QseRange(last, last);

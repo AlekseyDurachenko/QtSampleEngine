@@ -47,7 +47,7 @@ void QseSppVerticalAxisWidget::leftRightRender(QPainter *painter)
         return;
 
     // fetch metric list
-    QList<QseMetricItem> metricList = m_provider->create(geometry(), height());
+    const QList<QseMetricItem> metricList = m_provider->create(geometry(), height());
 
     int mpX1, mpX2, mtX1, mtY1, mtW, mtH, flags;
     if (m_alignment == AlignRight)
@@ -55,7 +55,7 @@ void QseSppVerticalAxisWidget::leftRightRender(QPainter *painter)
         mpX1 = width() - m_metricSize;
         mpX2 = width();
         mtX1 = 0;
-        mtY1 = - QFontMetrics(m_textFont).height()/2;
+        mtY1 = -QFontMetrics(m_textFont).height()/2;
         mtW  = width() - m_metricSize;
         mtH  = QFontMetrics(m_textFont).height();
         flags= Qt::AlignRight|Qt::AlignVCenter;

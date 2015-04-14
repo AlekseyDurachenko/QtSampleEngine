@@ -29,6 +29,9 @@ QseSppWidget::QseSppWidget(QWidget *parent,
 
 void QseSppWidget::setPreUncachedPlots(const QList<QseAbstractSppPlot *> &plots)
 {
+    if (m_preUncachedPlots == plots)
+        return;
+
     foreach (QseAbstractSppPlot *plot, m_preUncachedPlots)
         disconnect(plot, 0, this, 0);
 
@@ -45,6 +48,9 @@ void QseSppWidget::setPreUncachedPlots(const QList<QseAbstractSppPlot *> &plots)
 
 void QseSppWidget::setCachedPlots(const QList<QseAbstractSppPlot *> &plots)
 {
+    if (m_cachedPlots == plots)
+        return;
+
     foreach (QseAbstractSppPlot *plot, m_cachedPlots)
         disconnect(plot, 0, this, 0);
 
@@ -65,6 +71,9 @@ void QseSppWidget::setCachedPlots(const QList<QseAbstractSppPlot *> &plots)
 
 void QseSppWidget::setPostUncachedPlots(const QList<QseAbstractSppPlot *> &plots)
 {
+    if (m_postUncachedPlots == plots)
+        return;
+
     foreach (QseAbstractSppPlot *plot, m_postUncachedPlots)
         disconnect(plot, 0, this, 0);
 
@@ -99,11 +108,10 @@ void QseSppWidget::postUncachedPlots_destroyed(QObject *obj)
     update();
 }
 
-void QseSppWidget::paintEvent(QPaintEvent *event)
+void QseSppWidget::paintEvent(QPaintEvent */*event*/)
 {
-    Q_UNUSED(event);
-
     QPainter painter(this);
+
     foreach (QseAbstractSppPlot *plot, m_preUncachedPlots)
         plot->draw(&painter, rect(), geometry());
 

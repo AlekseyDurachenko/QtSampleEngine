@@ -148,12 +148,12 @@ void QseSppAudacityController::startSelection(QMouseEvent *event,
         // resize selection if mouse around the selection bounds
         if (!m_selection->isNull())
         {
-            QseRange range = m_selection->selectedRange();
+            const QseRange range = m_selection->selectedRange();
             // left bound of selection
             if (QseSppGeometry::checkSampleIndexVisibility(geometry,
                     range.first(), rect.width()))
             {
-                int pos = QseSppGeometry::calcOffset(geometry, range.first());
+                const int pos = QseSppGeometry::calcOffset(geometry, range.first());
                 if (qAbs(pos - event->x()) < 5)
                 {
                     m_isSelectionAction = true;
@@ -166,7 +166,7 @@ void QseSppAudacityController::startSelection(QMouseEvent *event,
                     && QseSppGeometry::checkSampleIndexVisibility(geometry,
                             range.last(), rect.width()))
             {
-                int pos = QseSppGeometry::calcOffset(geometry, range.last());
+                const int pos = QseSppGeometry::calcOffset(geometry, range.last());
                 if (qAbs(pos - event->x()) < 5)
                 {
                     m_isSelectionAction = true;
@@ -201,7 +201,7 @@ void QseSppAudacityController::extendSelection(QMouseEvent *event,
     if (sample < 0)
         sample = 0;
 
-    QseRange range = m_selection->selectedRange();
+    const QseRange range = m_selection->selectedRange();
     if (sample > range.last())
         m_selection->setSelectedRange(range.replaceLast(sample));
     else if (sample < range.first())

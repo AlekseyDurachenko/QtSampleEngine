@@ -37,10 +37,10 @@ void QseSppSignalLinearPlotDelegate::drawAsLines(QPainter *painter,
 
     for (int i = firstIndex+1; i < points.count(); ++i)
     {
-        double x1 = space + (i-1-firstIndex)*pps;
-        double x2 = x1 + pps;
-        double y1 = dy-(geometry.y()+points[i-1])*rect.height()/geometry.height();
-        double y2 = dy-(geometry.y()+points[i])*rect.height()/geometry.height();
+        const double x1 = space + (i-1-firstIndex)*pps;
+        const double x2 = x1 + pps;
+        const double y1 = dy-(geometry.y()+points[i-1])*rect.height()/geometry.height();
+        const double y2 = dy-(geometry.y()+points[i])*rect.height()/geometry.height();
 
         if (x1 >= rect.width())
             break;

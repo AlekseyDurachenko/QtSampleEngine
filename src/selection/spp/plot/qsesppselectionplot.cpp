@@ -46,6 +46,9 @@ void QseSppSelectionPlot::setOpacity(qreal opacity)
 
 void QseSppSelectionPlot::setSelection(QseSelection *selection)
 {
+    if (m_selection == selection)
+        return;
+
     if (m_selection)
         disconnect(m_selection, 0, this, 0);
 

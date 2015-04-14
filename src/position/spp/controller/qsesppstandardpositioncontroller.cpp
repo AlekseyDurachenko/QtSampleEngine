@@ -27,6 +27,9 @@ QseSppStandardPositionController::QseSppStandardPositionController(
 
 void QseSppStandardPositionController::setPosition(QsePosition *position)
 {
+    if (m_position == position)
+        return;
+
     if (m_position)
         disconnect(m_position, 0, this, 0);
 
