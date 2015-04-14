@@ -26,7 +26,6 @@ HEADERS +=                                                          \
     $$PWD/src/signal/spp/plot/qseabstractsppsignalplot.h \
     $$PWD/src/widget/sppwidget/qsesppwidget.h \
     $$PWD/src/qse_deprecated.h \
-    $$PWD/src/widget/sppaxiswidget/qsesppaxiswidget.h \
     $$PWD/src/axis/spp/metric/qsespplinearmetricprovider.h \
     $$PWD/src/axis/spp/metric/qsesppsignallinearamplmetricprovider.h \
     $$PWD/src/axis/spp/metric/qsespptimemetricprovider.h \
@@ -54,7 +53,8 @@ HEADERS +=                                                          \
     $$PWD/src/core/spp/qseabstractsppcontrollerproxy.h \
     $$PWD/src/core/spp/qsespphorizontalshiftcontrollerproxy.h \
     $$PWD/src/widget/sppaxiswidget/qseabstractsppaxiswidget.h \
-    $$PWD/src/widget/sppaxiswidget/qsespphorizontalaxiswidget.h
+    $$PWD/src/widget/sppaxiswidget/qsespphorizontalaxiswidget.h \
+    $$PWD/src/widget/sppaxiswidget/qsesppverticalaxiswidget.h
 
 
 SOURCES +=                                                          \
@@ -84,7 +84,6 @@ SOURCES +=                                                          \
     $$PWD/src/selection/qseselection.cpp \
     $$PWD/src/signal/spp/plot/qseabstractsppsignalplot.cpp \
     $$PWD/src/widget/sppwidget/qsesppwidget.cpp \
-    $$PWD/src/widget/sppaxiswidget/qsesppaxiswidget.cpp \
     $$PWD/src/axis/spp/metric/qsespplinearmetricprovider.cpp \
     $$PWD/src/axis/spp/metric/qsesppsignallinearamplmetricprovider.cpp \
     $$PWD/src/axis/spp/metric/qsespptimemetricprovider.cpp \
@@ -112,7 +111,8 @@ SOURCES +=                                                          \
     $$PWD/src/core/spp/qseabstractsppcontrollerproxy.cpp \
     $$PWD/src/core/spp/qsespphorizontalshiftcontrollerproxy.cpp \
     $$PWD/src/widget/sppaxiswidget/qseabstractsppaxiswidget.cpp \
-    $$PWD/src/widget/sppaxiswidget/qsespphorizontalaxiswidget.cpp
+    $$PWD/src/widget/sppaxiswidget/qsespphorizontalaxiswidget.cpp \
+    $$PWD/src/widget/sppaxiswidget/qsesppverticalaxiswidget.cpp
 
 
 OTHER_FILES +=                                                      \

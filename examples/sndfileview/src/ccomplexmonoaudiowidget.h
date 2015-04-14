@@ -20,7 +20,6 @@
 #include "qsesppgeometry.h"
 class QScrollBar;
 class CSppSyncAudioWidget;
-class QseSppAxisWidget;
 class QseSppSignalLinearAmplMetricProvider;
 class QseSppTimeMetricProvider;
 class QseSppStandardHorizontalController;
@@ -30,6 +29,7 @@ class QseSppStandardVerticalZoomController;
 class QseSppCompositController;
 class QseSppHorizontalShiftControllerProxy;
 class QseSppHorizontalAxisWidget;
+class QseSppVerticalAxisWidget;
 
 
 class CComplexMonoAudioWidget : public QWidget
@@ -47,7 +47,7 @@ protected:
     bool eventFilter(QObject *obj, QEvent *event);
 private:
     CSppSyncAudioWidget *m_audioWidget;
-    QseSppAxisWidget *m_amplitudeAxis;
+    QseSppVerticalAxisWidget *m_amplitudeAxis;
     QseSppHorizontalAxisWidget *m_timeAxis;
     QseSppSignalLinearAmplMetricProvider *m_amplitudeProvider;
     QseSppTimeMetricProvider *m_timeProvider;

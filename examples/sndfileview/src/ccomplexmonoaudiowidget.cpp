@@ -19,8 +19,8 @@
 #include <QVBoxLayout>
 #include <QMoveEvent>
 #include <QDebug>
-#include "qsesppaxiswidget.h"
 #include "qsespphorizontalaxiswidget.h"
+#include "qsesppverticalaxiswidget.h"
 #include "qsesppsignallinearamplmetricprovider.h"
 #include "qsespptimemetricprovider.h"
 #include "qsesppaxiscoverplot.h"
@@ -75,7 +75,8 @@ CComplexMonoAudioWidget::CComplexMonoAudioWidget(QWidget *parent) :
     m_amplitudeProvider = new QseSppSignalLinearAmplMetricProvider(this);
     m_timeProvider = new QseSppTimeMetricProvider(this);
 
-    m_amplitudeAxis = new QseSppAxisWidget(QseSppAxisWidget::Left, this);
+    m_amplitudeAxis = new QseSppVerticalAxisWidget(this);
+    m_amplitudeAxis->setAlignment(QseSppVerticalAxisWidget::AlignRight);
     m_amplitudeAxis->setMetricProvider(m_amplitudeProvider);
     m_amplitudeAxis->setController(m_verticalCompositCtrl);
     m_amplitudeAxis->setLimiter(m_audioWidget->limiter());

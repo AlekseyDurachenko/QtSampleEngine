@@ -47,7 +47,7 @@ public:
     inline int metricSize() const;
     void setMetricSize(int size);
 
-    inline QseAbstractSppMetricProvider *metricProvider();
+    inline QseAbstractSppMetricProvider *metricProvider() const;
     void setMetricProvider(QseAbstractSppMetricProvider *provider);
 private slots:
     void provider_destroyed();
@@ -90,7 +90,7 @@ int QseAbstractSppAxisWidget::metricSize() const
     return m_metricSize;
 }
 
-inline QseAbstractSppMetricProvider *QseAbstractSppAxisWidget::metricProvider()
+inline QseAbstractSppMetricProvider *QseAbstractSppAxisWidget::metricProvider() const
 {
     return m_provider;
 }
