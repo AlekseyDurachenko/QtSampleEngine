@@ -22,15 +22,35 @@
 class QseAbstractPeakDataSource : public QObject
 {
     Q_OBJECT
+    Q_FLAGS(Options)
 public:
+    enum Option {
+        DontUseCacheOptimization    = 0x0001,
+        Default = 0x0000
+    };
+    Q_DECLARE_FLAGS(Options, Option)
+
     explicit QseAbstractPeakDataSource(QObject *parent = 0);
+
+    inline const Options &options() const;
+    void setOptions(Options options);
+
     virtual qint64 count() const = 0;
     virtual qint64 minIndex() const = 0;
     virtual qint64 maxIndex() const = 0;
 signals:
+    void optionChanged();
     void dataChanged();
     void dataChanged(qint64 first, qint64 last);
+private:
+    Options m_options;
 };
+Q_DECLARE_OPERATORS_FOR_FLAGS(QseAbstractPeakDataSource::Options)
+
+const QseAbstractPeakDataSource::Options &QseAbstractPeakDataSource::options() const
+{
+    return m_options;
+}
 
 
 #endif // QSEABSTRACTPEAKDATASOURCE_H

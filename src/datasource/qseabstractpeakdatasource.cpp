@@ -19,4 +19,14 @@
 QseAbstractPeakDataSource::QseAbstractPeakDataSource(QObject *parent) :
     QObject(parent)
 {
+    m_options = Default;
+}
+
+void QseAbstractPeakDataSource::setOptions(Options options)
+{
+    if (m_options != options)
+    {
+        m_options = options;
+        emit optionChanged();
+    }
 }

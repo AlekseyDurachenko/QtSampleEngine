@@ -174,6 +174,7 @@ void QseSppSyncSignalPlot::calcPeaks(const QRect &rect,
         const QseSppGeometry &geometry)
 {
     if (m_peaks.isEmpty()
+            || m_dataSource->options() & QseAbstractPeakDataSource::DontUseCacheOptimization
             || !checkOptimizationPossibility(lastGeometry(), geometry))
     {
         recalcPeaks(rect, geometry);
