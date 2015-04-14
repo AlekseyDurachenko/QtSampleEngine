@@ -76,13 +76,14 @@ bool QseSppSelectionPlot::isVisible(const QRect &rect,
     if (m_selection->isNull())
         return false;
 
-    // TODO: fix algorithm, because it can cause the overflow
-    int sl = QseSppGeometry::calcOffset(geometry,
-                m_selection->selectedRange().first());
-    int sr = QseSppGeometry::calcOffset(geometry,
-                m_selection->selectedRange().last());
+    const qint64 firstVisibleSample = geometry.x();
+    const qint64 lastVisibleSample = firstVisibleSample
+            + QseSppGeometry::samplesFromWidth(geometry, rect.width());
 
-    if ((sl < 0 && sr < 0) || (sl >= rect.width() && sr >= rect.width()))
+    if (m_selection->selectedRange().first() >= lastVisibleSample)
+        return false;
+
+    if (m_selection->selectedRange().last() <= firstVisibleSample)
         return false;
 
     return true;
@@ -93,16 +94,19 @@ void QseSppSelectionPlot::draw(QPainter *painter, const QRect &rect,
 {
     if (isVisible(rect, geometry))
     {
-        // TODO: fix algorithm, because it can cause the overflow
-        int sl = QseSppGeometry::calcOffset(geometry,
-                    m_selection->selectedRange().first());
-        int sr = QseSppGeometry::calcOffset(geometry,
-                    m_selection->selectedRange().last());
+        const qint64 firstVisibleSample = geometry.x();
+        const qint64 lastVisibleSample =
+                QseSppGeometry::calcSampleIndex(geometry, rect.width());
 
-        if (sl < 0)
-            sl = 0;
-        if (sr >= rect.width())
-            sr = rect.width()-1;
+        int sl = 0;
+        if (m_selection->selectedRange().first() > firstVisibleSample)
+            sl = QseSppGeometry::calcOffset(geometry,
+                    m_selection->selectedRange().first());
+
+        int sr = rect.width()-1;
+        if (m_selection->selectedRange().last() <= lastVisibleSample)
+            sr = QseSppGeometry::calcOffset(geometry,
+                    m_selection->selectedRange().last());
 
         painter->save();
         painter->setOpacity(m_opacity);
