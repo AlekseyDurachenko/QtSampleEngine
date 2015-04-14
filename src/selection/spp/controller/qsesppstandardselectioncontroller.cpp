@@ -49,9 +49,6 @@ void QseSppStandardSelectionController::mouseMoveEvent(QMouseEvent *event,
             && event->modifiers() == keyboardModifiers())
     {
         qint64 sample = QseSppGeometry::calcSampleIndex(geometry, event->x());
-        if (sample < 0)
-            sample = 0;
-
         m_selection->setSelectedRange(QseRange(m_otherDragSample, sample));
     }
 
@@ -67,8 +64,6 @@ void QseSppStandardSelectionController::mousePressEvent(QMouseEvent *event,
             && event->modifiers() == keyboardModifiers())
     {
         qint64 sample = QseSppGeometry::calcSampleIndex(geometry, event->x());
-        if (sample < 0)
-            sample = 0;
 
         // resize selection if mouse around the selection bounds
         if (!m_selection->isNull())
