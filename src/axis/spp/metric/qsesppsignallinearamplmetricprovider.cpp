@@ -50,15 +50,15 @@ QList<QseMetricItem> QseSppSignalLinearAmplMetricProvider::create(
     QList<QseMetricItem> items;
 
     // parameters of the metrics
-    double offset = geometry.y() * m_factor;
-    double unitPerPixel = geometry.height() / size * m_factor;
+    const double offset = geometry.y() * m_factor;
+    const double unitPerPixel = geometry.height() / size * m_factor;
 
     // calculate the absolute position of the central lines
-    double center = size / 2.0 - offset / unitPerPixel;
+    const double center = size / 2.0 - offset / unitPerPixel;
     // value of division
-    double vod = m_mapper->calcNearestValue(unitPerPixel, minimumStep());
+    const double vod = m_mapper->calcNearestValue(unitPerPixel, minimumStep());
     // estimate pixel count betweeen metrics
-    double step = vod / unitPerPixel;
+    const double step = vod / unitPerPixel;
 
     // center line is visible
     if (center >= 0.0 && center < size)
@@ -73,7 +73,7 @@ QList<QseMetricItem> QseSppSignalLinearAmplMetricProvider::create(
     else if (center < 0.0)
     {
         // sc - section count
-        qint64 sc = qAbs(static_cast<qint64>(center / step));
+        const qint64 sc = qAbs(static_cast<qint64>(center / step));
         for (double i = center + step*sc, v = vod*sc; i < size; i += step, v += vod)
             items.push_back(QseMetricItem(qRound(i), 1, QString::number(-v)));
     }
@@ -81,7 +81,7 @@ QList<QseMetricItem> QseSppSignalLinearAmplMetricProvider::create(
     else
     {
         // sc - section count
-        qint64 sc = qAbs(static_cast<qint64>((center - size) / step));
+        const qint64 sc = qAbs(static_cast<qint64>((center - size) / step));
         for (double i = center - step*sc, v = -vod*sc; i >= 0.0; i -= step, v -= vod)
             items.push_back(QseMetricItem(qRound(i), 1, QString::number(-v)));
     }

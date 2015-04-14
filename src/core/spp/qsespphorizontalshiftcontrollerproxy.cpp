@@ -36,7 +36,7 @@ void QseSppHorizontalShiftControllerProxy::setShift(int value)
 void QseSppHorizontalShiftControllerProxy::mouseMoveEvent(QMouseEvent *event,
         const QRect &rect, const QseSppGeometry &geometry)
 {
-    QPoint pos = QPoint(event->pos().x() - m_shift, event->pos().y());
+    const QPoint pos = QPoint(event->pos().x() - m_shift, event->pos().y());
     QMouseEvent *e = new QMouseEvent(event->type(), pos, event->button(),
             event->buttons(), event->modifiers());
     QseAbstractSppControllerProxy::mouseMoveEvent(e, rect, geometry);
@@ -46,7 +46,7 @@ void QseSppHorizontalShiftControllerProxy::mouseMoveEvent(QMouseEvent *event,
 void QseSppHorizontalShiftControllerProxy::mousePressEvent(QMouseEvent *event,
         const QRect &rect, const QseSppGeometry &geometry)
 {
-    QPoint pos = QPoint(event->pos().x() - m_shift, event->pos().y());
+    const QPoint pos = QPoint(event->pos().x() - m_shift, event->pos().y());
     QMouseEvent *e = new QMouseEvent(event->type(), pos, event->button(),
             event->buttons(), event->modifiers());
     QseAbstractSppControllerProxy::mousePressEvent(e, rect, geometry);
@@ -56,7 +56,7 @@ void QseSppHorizontalShiftControllerProxy::mousePressEvent(QMouseEvent *event,
 void QseSppHorizontalShiftControllerProxy::mouseReleaseEvent(QMouseEvent *event,
         const QRect &rect, const QseSppGeometry &geometry)
 {
-    QPoint pos = QPoint(event->pos().x() - m_shift, event->pos().y());
+    const QPoint pos = QPoint(event->pos().x() - m_shift, event->pos().y());
     QMouseEvent *e = new QMouseEvent(event->type(), pos, event->button(),
             event->buttons(), event->modifiers());
     QseAbstractSppControllerProxy::mouseReleaseEvent(e, rect, geometry);
@@ -66,7 +66,7 @@ void QseSppHorizontalShiftControllerProxy::mouseReleaseEvent(QMouseEvent *event,
 void QseSppHorizontalShiftControllerProxy::wheelEvent(QWheelEvent *event,
         const QRect &rect, const QseSppGeometry &geometry)
 {
-    QPoint pos = QPoint(event->pos().x() - m_shift, event->pos().y());
+    const QPoint pos = QPoint(event->pos().x() - m_shift, event->pos().y());
     QWheelEvent *e = new QWheelEvent(pos, event->delta(), event->buttons(),
             event->modifiers(), event->orientation());
     QseAbstractSppControllerProxy::wheelEvent(e, rect, geometry);

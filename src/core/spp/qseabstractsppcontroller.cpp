@@ -21,50 +21,32 @@ QseAbstractSppController::QseAbstractSppController(QObject *parent) :
 {
 }
 
-void QseAbstractSppController::mouseMoveEvent(QMouseEvent *event,
-        const QRect &rect, const QseSppGeometry &geometry)
+void QseAbstractSppController::mouseMoveEvent(QMouseEvent */*event*/,
+        const QRect &/*rect*/, const QseSppGeometry &/*geometry*/)
 {
-    Q_UNUSED(event);
-    Q_UNUSED(rect);
-    Q_UNUSED(geometry);
 }
 
-void QseAbstractSppController::mousePressEvent(QMouseEvent *event,
-        const QRect &rect, const QseSppGeometry &geometry)
+void QseAbstractSppController::mousePressEvent(QMouseEvent */*event*/,
+        const QRect &/*rect*/, const QseSppGeometry &/*geometry*/)
 {
-    Q_UNUSED(event);
-    Q_UNUSED(rect);
-    Q_UNUSED(geometry);
 }
 
-void QseAbstractSppController::mouseReleaseEvent(QMouseEvent *event,
-        const QRect &rect, const QseSppGeometry &geometry)
+void QseAbstractSppController::mouseReleaseEvent(QMouseEvent */*event*/,
+        const QRect &/*rect*/, const QseSppGeometry &/*geometry*/)
 {
-    Q_UNUSED(event);
-    Q_UNUSED(rect);
-    Q_UNUSED(geometry);
 }
 
-void QseAbstractSppController::wheelEvent(QWheelEvent *event,
-        const QRect &rect, const QseSppGeometry &geometry)
+void QseAbstractSppController::wheelEvent(QWheelEvent */*event*/,
+        const QRect &/*rect*/, const QseSppGeometry &/*geometry*/)
 {
-    Q_UNUSED(event);
-    Q_UNUSED(rect);
-    Q_UNUSED(geometry);
 }
 
-void QseAbstractSppController::keyPressEvent(QKeyEvent *event,
-        const QRect &rect, const QseSppGeometry &geometry)
+void QseAbstractSppController::keyPressEvent(QKeyEvent */*event*/,
+        const QRect &/*rect*/, const QseSppGeometry &/*geometry*/)
 {
-    Q_UNUSED(event);
-    Q_UNUSED(rect);
-    Q_UNUSED(geometry);
 }
 
-void QseAbstractSppController::keyReleaseEvent(QKeyEvent *event,
-        const QRect &rect, const QseSppGeometry &geometry)
+void QseAbstractSppController::keyReleaseEvent(QKeyEvent */*event*/,
+        const QRect &/*rect*/, const QseSppGeometry &/*geometry*/)
 {
-    Q_UNUSED(event);
-    Q_UNUSED(rect);
-    Q_UNUSED(geometry);
 }

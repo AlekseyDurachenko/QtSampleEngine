@@ -24,6 +24,9 @@ QseSppCompositController::QseSppCompositController(QObject *parent) :
 void QseSppCompositController::setControllers(
         const QList<QseAbstractSppController *> &controllers)
 {
+    if (m_controllers == controllers)
+        return;
+
     foreach (QseAbstractSppController *controller, m_controllers)
         disconnect(controller, 0, this, 0);
 
@@ -47,7 +50,7 @@ void QseSppCompositController::controller_geometryChanged(
 
 void QseSppCompositController::controller_cursorChanged(const QCursor &cursor)
 {
-    QseAbstractSppController *controller =
+    const QseAbstractSppController *controller =
             qobject_cast<QseAbstractSppController *>(sender());
 
     // NOTE: it doen't working for Bitmap default cursor

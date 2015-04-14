@@ -41,6 +41,9 @@ void QseAbstractSppWidget::setGeometry(const QseSppGeometry &geometry)
 
 void QseAbstractSppWidget::setController(QseAbstractSppController *controller)
 {
+    if (m_controller == controller)
+        return;
+
     if (m_controller)
         disconnect(m_controller, 0, this, 0);
 
@@ -59,6 +62,9 @@ void QseAbstractSppWidget::setController(QseAbstractSppController *controller)
 
 void QseAbstractSppWidget::setLimiter(QseAbstractSppLimiter *limiter)
 {
+    if (m_limiter == limiter)
+        return;
+
     if (m_limiter)
         disconnect(m_limiter, 0, this, 0);
 
@@ -69,8 +75,9 @@ void QseAbstractSppWidget::setLimiter(QseAbstractSppLimiter *limiter)
                 this, SLOT(limiter_changed()));
         connect(m_limiter, SIGNAL(destroyed()),
                 this, SLOT(limiter_destroyed()));
-        setGeometry(geometry());
     }
+
+    setGeometry(geometry());
 }
 
 void QseAbstractSppWidget::controller_destroyed()

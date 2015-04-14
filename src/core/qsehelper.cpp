@@ -48,10 +48,10 @@ void calcIntersection(const double& p11x, const double& p11y,
         const double& p22x, const double& p22y,
         double& x, double& y)
 {
-    double Z  = (p12y-p11y)*(p21x-p22x)-(p21y-p22y)*(p12x-p11x);
-    double Cb = (p21y-p11y)*(p21x-p22x)-(p21y-p22y)*(p21x-p11x);
+    const double Z  = (p12y-p11y)*(p21x-p22x)-(p21y-p22y)*(p12x-p11x);
+    const double Cb = (p21y-p11y)*(p21x-p22x)-(p21y-p22y)*(p21x-p11x);
 
-    double Ub = Cb/Z;
+    const double Ub = Cb/Z;
 
     x = p11x + (p12x - p11x) * Ub;
     y = p11y + (p12y - p11y) * Ub;

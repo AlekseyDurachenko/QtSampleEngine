@@ -54,9 +54,9 @@ void QseSppStandardHorizontalZoomController::wheelEvent(QWheelEvent *event,
                 spp = 2;
         }
 
-        QseSppGeometry result = geometry.replaceSamplesPerPixel(spp);
-        qint64 sampleA = QseSppGeometry::calcSampleIndex(geometry, xpos);
-        qint64 sampleB = QseSppGeometry::calcSampleIndex(result, xpos);
+        const QseSppGeometry result = geometry.replaceSamplesPerPixel(spp);
+        const qint64 sampleA = QseSppGeometry::calcSampleIndex(geometry, xpos);
+        const qint64 sampleB = QseSppGeometry::calcSampleIndex(result, xpos);
         qint64 x = geometry.x() + (sampleA - sampleB);
 
         // optimization: for exclude recalculation the peaks for zoom out

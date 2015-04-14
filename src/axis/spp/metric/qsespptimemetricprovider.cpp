@@ -53,7 +53,7 @@ QList<QseMetricItem> QseSppTimeMetricProvider::create(
     // parameters for current metrics
     //double offset = geometry.toAbsoluteSampleOffset(1.0 / m_sampleRate);
     //double unitPerPixel = //geometry.toAbsoluteSamplePerPixel(1.0 / m_sampleRate);
-    double samplingInterval = 1.0 / m_sampleRate;
+    const double samplingInterval = 1.0 / m_sampleRate;
 
     double offset;
     if (geometry.samplesPerPixel() > 0)
@@ -74,7 +74,7 @@ QList<QseMetricItem> QseSppTimeMetricProvider::create(
     if (vod < 0.001)
         vod = 0.001;
     // estimate pixel count betweeen metrics
-    double step = vod / unitPerPixel;
+    const double step = vod / unitPerPixel;
 
     // sc - section count
     int sc = static_cast<int>(offset / vod);

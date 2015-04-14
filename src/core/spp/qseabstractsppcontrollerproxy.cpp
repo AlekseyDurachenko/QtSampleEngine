@@ -25,6 +25,9 @@ QseAbstractSppControllerProxy::QseAbstractSppControllerProxy(QObject *parent) :
 void QseAbstractSppControllerProxy::setController(
         QseAbstractSppController *controller)
 {
+    if (m_controller == controller)
+        return;
+
     if (m_controller)
         disconnect(m_controller, 0, this, 0);
 
