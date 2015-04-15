@@ -15,6 +15,7 @@
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
 #include "csppsyncaudiolimiter.h"
 #include "qsesppgeometry.h"
+#include "csppsyncpeakdatasource.h"
 
 
 CSppSyncAudioLimiter::CSppSyncAudioLimiter(CSppSyncPeakDataSource *dataSource,
@@ -27,8 +28,8 @@ QseSppGeometry CSppSyncAudioLimiter::limit(const QseSppGeometry &geometry)
 {
     QseSppGeometry limitedGeometry = geometry;
 
-    //if (limitedGeometry.x() < 0)
-//        limitedGeometry.setX(0);
+    if (limitedGeometry.x() < m_dataSource->minIndex())
+        limitedGeometry.setX(m_dataSource->minIndex());
 
     return limitedGeometry;
 }
