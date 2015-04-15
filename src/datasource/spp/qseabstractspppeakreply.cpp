@@ -20,8 +20,3 @@ QseAbstractSppPeakReply::QseAbstractSppPeakReply(QObject *parent) :
     QseAbstractPeakReply(parent)
 {
 }
-
-void QseAbstractSppPeakReply::setGeometry(const QseSppGeometry &geometry)
-{
-    m_geometry = geometry;
-}

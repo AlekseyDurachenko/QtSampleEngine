@@ -18,11 +18,31 @@
 
 QseAbstractPeakReply::QseAbstractPeakReply(QObject *parent) : QObject(parent)
 {
+    m_isAborted = false;
+    m_isWorking = false;
 }
 
-void QseAbstractPeakReply::setWidth(int width)
+void QseAbstractPeakReply::abort()
 {
-    m_width = width;
+    m_isAborted = true;
+    m_isWorking = false;
+}
+
+void QseAbstractPeakReply::start()
+{
+    if (m_isWorking)
+        return;
+
+    m_isAborted = false;
+    m_isWorking = true;
+    QMetaObject::invokeMethod(this, "slot_start", Qt::QueuedConnection);
+}
+
+void QseAbstractPeakReply::slot_started()
+{
+    algorithm();
+    m_isWorking = false;
+    emit finished();
 }
 
 void QseAbstractPeakReply::setPeakArray(const QsePeakArray &peaks)

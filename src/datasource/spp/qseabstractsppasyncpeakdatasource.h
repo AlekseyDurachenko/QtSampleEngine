@@ -24,8 +24,8 @@ class QseAbstractSppAsyncPeakDataSource : public QseAbstractPeakDataSource
 {
 public:
     QseAbstractSppAsyncPeakDataSource(QObject *parent = 0);
-    virtual QseAbstractSppPeakReply *read(const QseSppGeometry &geometry,
-                                          int width) = 0;
+    virtual QseAbstractSppPeakReply *read(qint64 x, qint64 spp, int width,
+                                          bool rightAligh = false) = 0;
 };
 
 

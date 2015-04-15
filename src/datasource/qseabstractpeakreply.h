@@ -26,21 +26,35 @@ class QseAbstractPeakReply : public QObject
 public:
     explicit QseAbstractPeakReply(QObject *parent = 0);
 
-    inline int width() const;
+    inline bool isAborted() const;
+    inline bool isWorking() const;
+    void abort();
+
     inline const QsePeakArray &peaks() const;
 signals:
     void finished();
+public slots:
+    void start();
+private slots:
+    void slot_started();
 protected:
-    void setWidth(int width);
+    virtual void algorithm() = 0;
+protected:
     void setPeakArray(const QsePeakArray &peaks);
 private:
-    int m_width;
+    volatile bool m_isAborted;
+    volatile bool m_isWorking;
     QsePeakArray m_peaks;
 };
 
-int QseAbstractPeakReply::width() const
+bool QseAbstractPeakReply::isAborted() const
 {
-    return m_width;
+    return m_isAborted;
+}
+
+bool QseAbstractPeakReply::isWorking() const
+{
+    return m_isWorking;
 }
 
 const QsePeakArray &QseAbstractPeakReply::peaks() const

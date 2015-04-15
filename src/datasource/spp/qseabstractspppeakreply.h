@@ -17,7 +17,6 @@
 #define QSEABSTRACTSPPPEAKREPLY_H
 
 #include "qseabstractpeakreply.h"
-#include "qsesppgeometry.h"
 
 
 class QseAbstractSppPeakReply : public QseAbstractPeakReply
@@ -25,18 +24,7 @@ class QseAbstractSppPeakReply : public QseAbstractPeakReply
     Q_OBJECT
 public:
     explicit QseAbstractSppPeakReply(QObject *parent = 0);
-
-    inline const QseSppGeometry &geometry() const;
-protected:
-    void setGeometry(const QseSppGeometry &geometry);
-private:
-    QseSppGeometry m_geometry;
 };
-
-const QseSppGeometry &QseAbstractSppPeakReply::geometry() const
-{
-    return m_geometry;
-}
 
 
 #endif // QSEABSTRACTSPPPEAKREPLY_H
