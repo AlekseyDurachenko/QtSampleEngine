@@ -1,3 +1,3 @@
 TEMPLATE = subdirs
 
-SUBDIRS += sndfileview
+SUBDIRS += sndfileview_sync
