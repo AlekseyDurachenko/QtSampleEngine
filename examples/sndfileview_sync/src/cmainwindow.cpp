@@ -31,6 +31,11 @@ CMainWindow::CMainWindow(QWidget *parent) :
 
     m_monoAudioWidget = new CComplexMonoAudioWidget(this);
     setCentralWidget(m_monoAudioWidget);
+
+    QString fileName = QDir::homePath() + QDir::separator() + "example.wav";
+    if (QFileInfo(fileName).exists())
+        QMetaObject::invokeMethod(this, "openSoundFile", Qt::QueuedConnection,
+                Q_ARG(QString, fileName));
 }
 
 CMainWindow::~CMainWindow()
