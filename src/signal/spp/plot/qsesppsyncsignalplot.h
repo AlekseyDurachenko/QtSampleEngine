@@ -17,9 +17,7 @@
 #define QSESPPSYNCSIGNALPLOT_H
 
 #include "qseabstractsppsignalplot.h"
-#include "qsepeakarray.h"
 class QseAbstractSppSyncPeakDataSource;
-class QseAbstractSppSignalPlotDelegate;
 
 
 class QseSppSyncSignalPlot : public QseAbstractSppSignalPlot
@@ -31,31 +29,26 @@ public:
     inline QseAbstractSppSyncPeakDataSource *dataSource() const;
     void setDataSource(QseAbstractSppSyncPeakDataSource *dataSource);
 
-    inline QseAbstractSppSignalPlotDelegate *plotDelegate() const;
-    void setPlotDelegate(QseAbstractSppSignalPlotDelegate *plotDelegate);
-
-    virtual bool hasChanges(const QRect &rect, const QseSppGeometry &geometry);
-    virtual bool isVisible(const QRect &rect, const QseSppGeometry &geometry);
     virtual void draw(QPainter *painter, const QRect &rect,
               const QseSppGeometry &geometry);
 private slots:
     void dataSource_dataChanged();
     void dataSource_dataChanged(qint64 first, qint64 last);
     void dataSource_destroyed();
-    void plotDelegate_changed();
-    void plotDelegate_destroyed();
 private:
     void calcPeaks(const QRect &rect, const QseSppGeometry &geometry);
     void recalcPeaks(const QRect &rect, const QseSppGeometry &geometry);
+    void pushFrontPeaks(const QseSppGeometry &geometry);
+    void pushBackPeaks(const QseSppGeometry &geometry, int width);
     bool checkOptimizationPossibility(const QseSppGeometry &oldGeometry,
                                       const QseSppGeometry &newGeometry);
     void compressPeaks(const QseSppGeometry &oldGeometry,
-                       const QseSppGeometry &newGeometry);
-    void pushFrontPeaks(const QseSppGeometry &geometry);
-    void pushBackPeaks(const QseSppGeometry &geometry, int width);
+                       const QseSppGeometry &newGeometry,
+                       QsePeakArray *peaks);
+private:
+    virtual QseAbstractPeakDataSource *usedDataSource() const;
 private:
     QseAbstractSppSyncPeakDataSource *m_dataSource;
-    QseAbstractSppSignalPlotDelegate *m_plotDelegate;
     QsePeakArray m_peaks;
     qint64 m_peaksFirstIndex;
 };
@@ -63,11 +56,6 @@ private:
 QseAbstractSppSyncPeakDataSource *QseSppSyncSignalPlot::dataSource() const
 {
     return m_dataSource;
-}
-
-QseAbstractSppSignalPlotDelegate *QseSppSyncSignalPlot::plotDelegate() const
-{
-    return m_plotDelegate;
 }
 
 

@@ -18,8 +18,10 @@
 
 #include <QPen>
 #include "qsesppgeometry.h"
+#include "qsepeakarray.h"
 #include "qseabstractsppplot.h"
-
+class QseAbstractSppSignalPlotDelegate;
+class QseAbstractPeakDataSource;
 
 class QseAbstractSppSignalPlot : public QseAbstractSppPlot
 {
@@ -36,13 +38,31 @@ public:
 
     explicit QseAbstractSppSignalPlot(QObject *parent = 0);
 
+    inline QseAbstractSppSignalPlotDelegate *plotDelegate() const;
+    void setPlotDelegate(QseAbstractSppSignalPlotDelegate *plotDelegate);
+
     inline ZeroLine zeroLine() const;
     void setZeroLine(ZeroLine zeroLine);
+
+    virtual bool hasChanges(const QRect &rect, const QseSppGeometry &geometry);
+    virtual bool isVisible(const QRect &rect, const QseSppGeometry &geometry);
+private slots:
+    void plotDelegate_changed();
+    void plotDelegate_destroyed();
 protected:
     inline int calcDy(const QRect &rect);
+protected:
+    // TODO: need to more correct method name
+    virtual QseAbstractPeakDataSource *usedDataSource() const = 0;
 private:
+    QseAbstractSppSignalPlotDelegate *m_plotDelegate;
     ZeroLine m_zeroLine;
 };
+
+QseAbstractSppSignalPlotDelegate *QseAbstractSppSignalPlot::plotDelegate() const
+{
+    return m_plotDelegate;
+}
 
 QseAbstractSppSignalPlot::ZeroLine QseAbstractSppSignalPlot::zeroLine() const
 {
