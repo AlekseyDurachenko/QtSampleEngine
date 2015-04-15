@@ -1,6 +1,7 @@
 TEMPLATE = app
 CONFIG += console debug_and_release
 QT += core gui
+greaterThan(QT_MAJOR_VERSION, 4):QT+=widgets
 
 include($$PWD/../../qtsampleengine.pri)
 
