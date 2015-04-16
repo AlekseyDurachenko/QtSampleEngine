@@ -45,13 +45,12 @@ void CSppSyncPeakDataSource::setSamples(const QVector<double> &samples,
     emit dataChanged();
 }
 
-QsePeakArray CSppSyncPeakDataSource::read(qint64 x, qint64 spp, int width,
-        bool rightAligh)
+QsePeakArray CSppSyncPeakDataSource::read(const QseSppPeakRequest &req)
 {
-    if (spp > 0)
-        return readAsPeaks(x, spp, width, rightAligh);
+    if (req.spp() > 0)
+        return readAsPeaks(req.x(), req.spp(), req.width(), req.rightAlign());
     else
-        return readAsLines(x, -spp, width);
+        return readAsLines(req.x(), -req.spp(), req.width());
 }
 
 QsePeakArray CSppSyncPeakDataSource::readAsLines(qint64 first, qint64 pps,
