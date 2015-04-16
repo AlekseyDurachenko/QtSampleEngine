@@ -13,23 +13,29 @@
 // You should have received a copy of the GNU Lesser General Public
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
-#include "csppsyncaudiolimiter.h"
-#include "qsesppgeometry.h"
-#include "csppsyncpeakdatasource.h"
+#ifndef CSPPPEAKREPLY_H
+#define CSPPPEAKREPLY_H
+
+#include "qseabstractspppeakreply.h"
 
 
-CSppSyncAudioLimiter::CSppSyncAudioLimiter(CSppSyncPeakDataSource *dataSource,
-        QObject *parent) : QseAbstractSppLimiter(parent)
+class CSppPeakReply : public QseAbstractSppPeakReply
 {
-    m_dataSource = dataSource;
-}
+    Q_OBJECT
+public:
+    explicit CSppPeakReply(const QVector<double> &samples,
+                           const QseSppPeakRequest &request,
+                           QObject *parent = 0);
+protected:
+    virtual void algorithm();
+private:
+    QsePeakArray readPeaks(const QseSppPeakRequest &req);
+    QsePeakArray readAsLines(qint64 first, qint64 pps, int width);
+    QsePeakArray readAsPeaks(qint64 first, qint64 spp, int width,
+                             bool rightAligh = false);
+private:
+    QVector<double> m_samples;
+};
 
-QseSppGeometry CSppSyncAudioLimiter::limit(const QseSppGeometry &geometry)
-{
-    QseSppGeometry limitedGeometry = geometry;
 
-    if (limitedGeometry.x() < m_dataSource->minIndex())
-        limitedGeometry.setX(m_dataSource->minIndex());
-
-    return limitedGeometry;
-}
+#endif // CSPPPEAKREPLY_H

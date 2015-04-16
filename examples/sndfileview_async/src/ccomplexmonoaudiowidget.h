@@ -19,7 +19,7 @@
 #include <QWidget>
 #include "qsesppgeometry.h"
 class QScrollBar;
-class CSppSyncAudioWidget;
+class CSppAsyncAudioWidget;
 class QseSppSignalLinearAmplMetricProvider;
 class QseSppTimeMetricProvider;
 class QseSppStandardHorizontalController;
@@ -38,7 +38,7 @@ class CComplexMonoAudioWidget : public QWidget
 public:
     explicit CComplexMonoAudioWidget(QWidget *parent = 0);
     virtual ~CComplexMonoAudioWidget();
-    inline CSppSyncAudioWidget *audioWidget() const;
+    inline CSppAsyncAudioWidget *audioWidget() const;
 private slots:
     void dataSource_dataChanged();
     void audioWidget_geometryChanged(const QseSppGeometry &geometry);
@@ -46,7 +46,7 @@ private slots:
 protected:
     bool eventFilter(QObject *obj, QEvent *event);
 private:
-    CSppSyncAudioWidget *m_audioWidget;
+    CSppAsyncAudioWidget *m_audioWidget;
     QseSppVerticalAxisWidget *m_amplitudeAxis;
     QseSppHorizontalAxisWidget *m_timeAxis;
     QseSppSignalLinearAmplMetricProvider *m_amplitudeProvider;
@@ -61,7 +61,7 @@ private:
     QseSppHorizontalShiftControllerProxy *m_horizontalAxisZoomControllerProxy;
 };
 
-CSppSyncAudioWidget *CComplexMonoAudioWidget::audioWidget() const
+CSppAsyncAudioWidget *CComplexMonoAudioWidget::audioWidget() const
 {
     return m_audioWidget;
 }

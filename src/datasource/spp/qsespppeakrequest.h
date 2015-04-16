@@ -17,13 +17,16 @@
 #define QSESPPPEAKREQUEST_H
 
 #include <QtGlobal>
-
+#include <QRect>
+#include "qsesppgeometry.h"
 
 class QseSppPeakRequest
 {
 public:
-    explicit QseSppPeakRequest(qint64 x = 0, qint64 spp = 0,
-                               int width = 0, bool rightAlign = false);
+    QseSppPeakRequest();
+    QseSppPeakRequest(const QseSppGeometry &geometry, const QRect &rect,
+                      bool rightAlign = false);
+    QseSppPeakRequest(qint64 x, qint64 spp, int width, bool rightAlign = false);
 
     inline const qint64 &x() const;
     void setX(qint64 x);

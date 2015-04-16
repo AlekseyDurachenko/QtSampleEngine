@@ -13,27 +13,27 @@
 // You should have received a copy of the GNU Lesser General Public
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
-#include "csppsyncaudiowidget.h"
+#include "csppasyncaudiowidget.h"
 #include "qseposition.h"
 #include "qseselection.h"
 #include "qsespppositionplot.h"
 #include "qsesppselectionplot.h"
-#include "qsesppsyncsignalplot.h"
+#include "qsesppasyncsignalplot.h"
 #include "qsesppaxiscoverplot.h"
 #include "qsesppaudacitycontroller.h"
 #include "qsesppsignallinearplotdelegate.h"
-#include "csppsyncpeakdatasource.h"
-#include "csppsyncaudiolimiter.h"
+#include "csppasyncpeakdatasource.h"
+#include "csppasyncaudiolimiter.h"
 
 
-CSppSyncAudioWidget::CSppSyncAudioWidget(QWidget *parent,
+CSppAsyncAudioWidget::CSppAsyncAudioWidget(QWidget *parent,
         Qt::WindowFlags f) : QseSppWidget(parent, f)
 {
-    m_dataSource = new CSppSyncPeakDataSource(this);
+    m_dataSource = new CSppAsyncPeakDataSource(this);
     connect(m_dataSource, SIGNAL(dataChanged()),
             this, SLOT(dataSource_dataChanged()));
 
-    m_limiter = new CSppSyncAudioLimiter(m_dataSource, this);
+    m_limiter = new CSppAsyncAudioLimiter(m_dataSource, this);
 
     m_playPosition = new QsePosition(this);
     m_playPositionPlot = new QseSppPositionPlot(this);
@@ -53,7 +53,7 @@ CSppSyncAudioWidget::CSppSyncAudioWidget(QWidget *parent,
     setController(m_controller);
 
     m_coverPlot = new QseSppAxisCoverPlot(this);
-    m_signalPlot = new QseSppSyncSignalPlot(this);
+    m_signalPlot = new QseSppAsyncSignalPlot(this);
     m_signalPlot->setDataSource(m_dataSource);
     m_plotDelegate = new QseSppSignalLinearPlotDelegate(this);
     m_signalPlot->setPlotDelegate(m_plotDelegate);
@@ -72,7 +72,7 @@ CSppSyncAudioWidget::CSppSyncAudioWidget(QWidget *parent,
     setLimiter(m_limiter);
 }
 
-void CSppSyncAudioWidget::dataSource_dataChanged()
+void CSppAsyncAudioWidget::dataSource_dataChanged()
 {
     QseRange avaibleRange(m_dataSource->minIndex(), m_dataSource->maxIndex());
     m_playPosition->setAvailableRange(avaibleRange);

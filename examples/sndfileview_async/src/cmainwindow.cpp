@@ -19,8 +19,8 @@
 #include <QMessageBox>
 #include <sndfile.h>
 #include "ccomplexmonoaudiowidget.h"
-#include "csppsyncaudiowidget.h"
-#include "csppsyncpeakdatasource.h"
+#include "csppasyncaudiowidget.h"
+#include "csppasyncpeakdatasource.h"
 
 
 CMainWindow::CMainWindow(QWidget *parent) :
@@ -72,8 +72,7 @@ void CMainWindow::openSoundFile(const QString &fileName)
     {
         setWindowTitle(fileName + tr(" - Sound File View"));
 
-        m_monoAudioWidget->audioWidget()->dataSource()->setSamples(data,
-                                                                   sampleRate);
+        m_monoAudioWidget->audioWidget()->dataSource()->setSamples(data, sampleRate);
         QseSppGeometry geometry;
         geometry.setHeight(2.6);
         if (data.count() > m_monoAudioWidget->audioWidget()->width()*2)

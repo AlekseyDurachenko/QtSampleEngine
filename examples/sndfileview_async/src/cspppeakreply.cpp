@@ -13,39 +13,24 @@
 // You should have received a copy of the GNU Lesser General Public
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
-#include "csppsyncpeakdatasource.h"
-#include <QDebug>
+#include "cspppeakreply.h"
+#include "qseabstractspppeakreply.h"
 
-CSppSyncPeakDataSource::CSppSyncPeakDataSource(QObject *parent) :
-    QseAbstractSppSyncPeakDataSource(parent)
-{
-}
 
-qint64 CSppSyncPeakDataSource::count() const
-{
-    return m_samples.count();
-}
-
-qint64 CSppSyncPeakDataSource::minIndex() const
-{
-    return 0;
-}
-
-qint64 CSppSyncPeakDataSource::maxIndex() const
-{
-    return m_samples.count()-1;
-}
-
-void CSppSyncPeakDataSource::setSamples(const QVector<double> &samples,
-        double sampleRate)
+CSppPeakReply::CSppPeakReply(const QVector<double> &samples,
+        const QseSppPeakRequest &request, QObject *parent) :
+    QseAbstractSppPeakReply(request, parent)
 {
     m_samples = samples;
-    m_sampleRate = sampleRate;
-
-    emit dataChanged();
 }
 
-QsePeakArray CSppSyncPeakDataSource::read(const QseSppPeakRequest &req)
+void CSppPeakReply::algorithm()
+{
+    if (!isAborted())
+        setPeaks(readPeaks(request()));
+}
+
+QsePeakArray CSppPeakReply::readPeaks(const QseSppPeakRequest &req)
 {
     if (req.spp() > 0)
         return readAsPeaks(req.x(), req.spp(), req.width(), req.rightAlign());
@@ -53,7 +38,7 @@ QsePeakArray CSppSyncPeakDataSource::read(const QseSppPeakRequest &req)
         return readAsLines(req.x(), -req.spp(), req.width());
 }
 
-QsePeakArray CSppSyncPeakDataSource::readAsLines(qint64 first, qint64 pps,
+QsePeakArray CSppPeakReply::readAsLines(qint64 first, qint64 pps,
         int width)
 {
     if (first >= m_samples.count())
@@ -73,7 +58,7 @@ QsePeakArray CSppSyncPeakDataSource::readAsLines(qint64 first, qint64 pps,
     return QsePeakArray(points);
 }
 
-QsePeakArray CSppSyncPeakDataSource::readAsPeaks(qint64 first, qint64 spp,
+QsePeakArray CSppPeakReply::readAsPeaks(qint64 first, qint64 spp,
         int width, bool rightAlign)
 {
     if (first >= m_samples.count())
@@ -91,6 +76,9 @@ QsePeakArray CSppSyncPeakDataSource::readAsPeaks(qint64 first, qint64 spp,
     QVector<double> maximums(count);
     for (qint64 arrIndex = 0; arrIndex < count; ++arrIndex)
     {
+        if (isAborted())
+            return QsePeakArray();
+
         qint64 sampleFirstIndex = first;
         qint64 sampleLastIndex = last;
         if (rightAlign)

@@ -30,15 +30,15 @@
 #include "qsesppstandardverticalzoomcontroller.h"
 #include "qsespphorizontalshiftcontrollerproxy.h"
 #include "qsesppcompositcontroller.h"
-#include "csppsyncaudiowidget.h"
-#include "csppsyncaudiolimiter.h"
-#include "csppsyncpeakdatasource.h"
+#include "csppasyncaudiowidget.h"
+#include "csppasyncaudiolimiter.h"
+#include "csppasyncpeakdatasource.h"
 
 
 CComplexMonoAudioWidget::CComplexMonoAudioWidget(QWidget *parent) :
     QWidget(parent)
 {
-    m_audioWidget = new CSppSyncAudioWidget(this);
+    m_audioWidget = new CSppAsyncAudioWidget(this);
 
     m_timeScrollBar = new QScrollBar(Qt::Horizontal, this);
     connect(m_timeScrollBar, SIGNAL(valueChanged(int)),

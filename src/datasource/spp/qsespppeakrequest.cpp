@@ -16,6 +16,23 @@
 #include "qsespppeakrequest.h"
 
 
+QseSppPeakRequest::QseSppPeakRequest()
+{
+    m_x = 0;
+    m_spp = 0;
+    m_width = 0;
+    m_rightAlign = false;
+}
+
+QseSppPeakRequest::QseSppPeakRequest(const QseSppGeometry &geometry,
+        const QRect &rect, bool rightAlign)
+{
+    m_x = geometry.x();
+    m_spp = geometry.samplesPerPixel();
+    m_width = rect.width();
+    m_rightAlign = rightAlign;
+}
+
 QseSppPeakRequest::QseSppPeakRequest(qint64 x, qint64 spp, int width,
         bool rightAlign)
 {

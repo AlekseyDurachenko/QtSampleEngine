@@ -10,18 +10,20 @@ INCLUDEPATH +=                                              \
 
 SOURCES +=                                                  \
     $$PWD/src/main.cpp                                      \
-    $$PWD/src/csppsyncpeakdatasource.cpp                    \
+    $$PWD/src/csppasyncpeakdatasource.cpp                   \
     $$PWD/src/cmainwindow.cpp                               \
-    $$PWD/src/csppsyncaudiolimiter.cpp                      \
-    $$PWD/src/csppsyncaudiowidget.cpp                       \
+    $$PWD/src/csppasyncaudiolimiter.cpp                     \
+    $$PWD/src/csppasyncaudiowidget.cpp                      \
     $$PWD/src/ccomplexmonoaudiowidget.cpp                   \
+    $$PWD/src/cspppeakreply.cpp                             \
 
 HEADERS +=                                                  \
-    $$PWD/src/csppsyncpeakdatasource.h                      \
+    $$PWD/src/csppasyncpeakdatasource.h                     \
     $$PWD/src/cmainwindow.h                                 \
-    $$PWD/src/csppsyncaudiowidget.h                         \
-    $$PWD/src/csppsyncaudiolimiter.h                        \
+    $$PWD/src/csppasyncaudiowidget.h                        \
+    $$PWD/src/csppasyncaudiolimiter.h                       \
     $$PWD/src/ccomplexmonoaudiowidget.h                     \
+    $$PWD/src/cspppeakreply.h                               \
 
 FORMS +=                                                    \
     $$PWD/src/cmainwindow.ui                                \

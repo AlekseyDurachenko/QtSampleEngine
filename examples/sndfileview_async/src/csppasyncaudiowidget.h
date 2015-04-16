@@ -13,8 +13,8 @@
 // You should have received a copy of the GNU Lesser General Public
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
-#ifndef CSPPSYNCAUDIOWIDGET_H
-#define CSPPSYNCAUDIOWIDGET_H
+#ifndef CSPPASYNCAUDIOWIDGET_H
+#define CSPPASYNCAUDIOWIDGET_H
 
 #include <QWidget>
 #include "qsesppwidget.h"
@@ -22,29 +22,29 @@ class QsePosition;
 class QseSelection;
 class QseSppPositionPlot;
 class QseSppSelectionPlot;
-class QseSppSyncSignalPlot;
+class QseSppAsyncSignalPlot;
 class QseSppAxisCoverPlot;
 class QseSppAudacityController;
-class CSppSyncPeakDataSource;
-class CSppSyncAudioLimiter;
+class CSppAsyncPeakDataSource;
+class CSppAsyncAudioLimiter;
 class QseSppWidget;
 class QseSppSignalLinearPlotDelegate;
 
 
-class CSppSyncAudioWidget : public QseSppWidget
+class CSppAsyncAudioWidget : public QseSppWidget
 {
     Q_OBJECT
 public:
-    explicit CSppSyncAudioWidget(QWidget *parent = 0, Qt::WindowFlags f = 0);
+    explicit CSppAsyncAudioWidget(QWidget *parent = 0, Qt::WindowFlags f = 0);
 
     inline QsePosition *playPosition() const;
     inline QsePosition *cursorPosition() const;
     inline QseSelection *selection() const;
     inline QseSppAxisCoverPlot *coverPlot() const;
-    inline QseSppSyncSignalPlot *signalPlot() const;
+    inline QseSppAsyncSignalPlot *signalPlot() const;
     inline QseSppAudacityController *controller() const;
-    inline CSppSyncPeakDataSource *dataSource() const;
-    inline CSppSyncAudioLimiter *limiter() const;
+    inline CSppAsyncPeakDataSource *dataSource() const;
+    inline CSppAsyncAudioLimiter *limiter() const;
 private slots:
     void dataSource_dataChanged();
 private:
@@ -58,56 +58,56 @@ private:
     QseSppSelectionPlot *m_selectionPlot;
 
     QseSppAxisCoverPlot *m_coverPlot;
-    QseSppSyncSignalPlot *m_signalPlot;
+    QseSppAsyncSignalPlot *m_signalPlot;
     QseSppSignalLinearPlotDelegate *m_plotDelegate;
 
     QseSppAudacityController *m_controller;
 
-    CSppSyncAudioLimiter *m_limiter;
-    CSppSyncPeakDataSource *m_dataSource;
+    CSppAsyncAudioLimiter *m_limiter;
+    CSppAsyncPeakDataSource *m_dataSource;
 
     QseSppWidget *m_sppWidget;
 };
 
-QsePosition *CSppSyncAudioWidget::playPosition() const
+QsePosition *CSppAsyncAudioWidget::playPosition() const
 {
     return m_playPosition;
 }
 
-QsePosition *CSppSyncAudioWidget::cursorPosition() const
+QsePosition *CSppAsyncAudioWidget::cursorPosition() const
 {
     return m_cursorPosition;
 }
 
-QseSelection *CSppSyncAudioWidget::selection() const
+QseSelection *CSppAsyncAudioWidget::selection() const
 {
     return m_selection;
 }
 
-QseSppAxisCoverPlot *CSppSyncAudioWidget::coverPlot() const
+QseSppAxisCoverPlot *CSppAsyncAudioWidget::coverPlot() const
 {
     return m_coverPlot;
 }
 
-QseSppSyncSignalPlot *CSppSyncAudioWidget::signalPlot() const
+QseSppAsyncSignalPlot *CSppAsyncAudioWidget::signalPlot() const
 {
     return m_signalPlot;
 }
 
-QseSppAudacityController *CSppSyncAudioWidget::controller() const
+QseSppAudacityController *CSppAsyncAudioWidget::controller() const
 {
     return m_controller;
 }
 
-CSppSyncPeakDataSource *CSppSyncAudioWidget::dataSource() const
+CSppAsyncPeakDataSource *CSppAsyncAudioWidget::dataSource() const
 {
     return m_dataSource;
 }
 
-CSppSyncAudioLimiter *CSppSyncAudioWidget::limiter() const
+CSppAsyncAudioLimiter *CSppAsyncAudioWidget::limiter() const
 {
     return m_limiter;
 }
 
 
-#endif // CSPPSYNCAUDIOWIDGET_H
+#endif // CSPPASYNCAUDIOWIDGET_H

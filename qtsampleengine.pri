@@ -55,7 +55,8 @@ HEADERS +=                                                          \
     $$PWD/src/widget/sppaxiswidget/qseabstractsppaxiswidget.h \
     $$PWD/src/widget/sppaxiswidget/qsespphorizontalaxiswidget.h \
     $$PWD/src/widget/sppaxiswidget/qsesppverticalaxiswidget.h \
-    $$PWD/src/datasource/spp/qsespppeakrequest.h
+    $$PWD/src/datasource/spp/qsespppeakrequest.h \
+    $$PWD/src/signal/spp/plot/qsesppasyncsignalplot.h
 
 
 SOURCES +=                                                          \
@@ -114,7 +115,8 @@ SOURCES +=                                                          \
     $$PWD/src/widget/sppaxiswidget/qseabstractsppaxiswidget.cpp \
     $$PWD/src/widget/sppaxiswidget/qsespphorizontalaxiswidget.cpp \
     $$PWD/src/widget/sppaxiswidget/qsesppverticalaxiswidget.cpp \
-    $$PWD/src/datasource/spp/qsespppeakrequest.cpp
+    $$PWD/src/datasource/spp/qsespppeakrequest.cpp \
+    $$PWD/src/signal/spp/plot/qsesppasyncsignalplot.cpp
 
 
 OTHER_FILES +=                                                      \

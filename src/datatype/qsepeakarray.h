@@ -34,6 +34,8 @@ public:
 
     void push_front(const QsePeakArray &peaks);
     void push_back(const QsePeakArray &peaks);
+
+    void clear();
 private:
     QVector<double> m_minimums;
     QVector<double> m_maximums;

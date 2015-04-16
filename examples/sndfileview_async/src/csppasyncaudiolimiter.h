@@ -13,39 +13,22 @@
 // You should have received a copy of the GNU Lesser General Public
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
-#include "qseabstractpeakreply.h"
+#ifndef CSPPASYNCAUDIOLIMITER_H
+#define CSPPASYNCAUDIOLIMITER_H
+
+#include "qseabstractspplimiter.h"
+class CSppAsyncPeakDataSource;
 
 
-QseAbstractPeakReply::QseAbstractPeakReply(QObject *parent) : QObject(parent)
+class CSppAsyncAudioLimiter : public QseAbstractSppLimiter
 {
-    m_isAborted = false;
-    m_isWorking = false;
-}
+public:
+    CSppAsyncAudioLimiter(CSppAsyncPeakDataSource *dataSource,
+                            QObject *parent = 0);
+    virtual QseSppGeometry limit(const QseSppGeometry &geometry);
+private:
+    CSppAsyncPeakDataSource *m_dataSource;
+};
 
-void QseAbstractPeakReply::abort()
-{
-    m_isAborted = true;
-    m_isWorking = false;
-}
 
-void QseAbstractPeakReply::start()
-{
-    if (m_isWorking)
-        return;
-
-    m_isAborted = false;
-    m_isWorking = true;
-    QMetaObject::invokeMethod(this, "slot_started", Qt::QueuedConnection);
-}
-
-void QseAbstractPeakReply::slot_started()
-{
-    algorithm();
-    m_isWorking = false;
-    emit finished();
-}
-
-void QseAbstractPeakReply::setPeaks(const QsePeakArray &peaks)
-{
-    m_peaks = peaks;
-}
+#endif // CSPPASYNCAUDIOLIMITER_H

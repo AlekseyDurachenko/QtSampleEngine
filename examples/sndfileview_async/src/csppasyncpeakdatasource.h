@@ -13,17 +13,19 @@
 // You should have received a copy of the GNU Lesser General Public
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
-#ifndef CSPPSYNCDATAPEAKSOURCE_H
-#define CSPPSYNCDATAPEAKSOURCE_H
+#ifndef CSPPASYNCDATAPEAKSOURCE_H
+#define CSPPASYNCDATAPEAKSOURCE_H
 
-#include "qseabstractsppsyncpeakdatasource.h"
+#include "qseabstractsppasyncpeakdatasource.h"
+#include <QVector>
 
 
-class CSppSyncPeakDataSource : public QseAbstractSppSyncPeakDataSource
+class CSppAsyncPeakDataSource : public QseAbstractSppAsyncPeakDataSource
 {
     Q_OBJECT
 public:
-    CSppSyncPeakDataSource(QObject *parent = 0);
+    explicit CSppAsyncPeakDataSource(QObject *parent = 0);
+    virtual ~CSppAsyncPeakDataSource();
 
     virtual qint64 count() const;
     virtual qint64 minIndex() const;
@@ -31,27 +33,25 @@ public:
 
     inline const QVector<double> &samples() const;
     inline double sampleRate() const;
-    virtual QsePeakArray read(const QseSppPeakRequest &request);
+
+    virtual QseAbstractSppPeakReply *read(const QseSppPeakRequest &request);
 public slots:
     void setSamples(const QVector<double> &samples, double sampleRate);
 private:
-    QsePeakArray readAsLines(qint64 first, qint64 pps, int width);
-    QsePeakArray readAsPeaks(qint64 first, qint64 spp, int width,
-                             bool rightAligh = false);
-private:
+    QThread *m_thread;
     QVector<double> m_samples;
     double m_sampleRate;
 };
 
-const QVector<double> &CSppSyncPeakDataSource::samples() const
+const QVector<double> &CSppAsyncPeakDataSource::samples() const
 {
     return m_samples;
 }
 
-double CSppSyncPeakDataSource::sampleRate() const
+double CSppAsyncPeakDataSource::sampleRate() const
 {
     return m_sampleRate;
 }
 
 
-#endif // CSPPSYNCDATAPEAKSOURCE_H
+#endif // CSPPASYNCDATAPEAKSOURCE_H

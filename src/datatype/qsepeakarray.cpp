@@ -42,6 +42,12 @@ void QsePeakArray::push_back(const QsePeakArray &peaks)
     m_maximums += peaks.maximums();
 }
 
+void QsePeakArray::clear()
+{
+    m_maximums.clear();
+    m_minimums.clear();
+}
+
 bool operator ==(const QsePeakArray &l, const QsePeakArray &r)
 {
     return (l.minimums() == r.minimums()
