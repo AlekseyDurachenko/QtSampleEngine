@@ -40,7 +40,7 @@ private slots:
 protected:
     virtual void algorithm() = 0;
 protected:
-    void setPeakArray(const QsePeakArray &peaks);
+    void setPeaks(const QsePeakArray &peaks);
 private:
     volatile bool m_isAborted;
     volatile bool m_isWorking;

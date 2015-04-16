@@ -17,14 +17,25 @@
 #define QSEABSTRACTSPPPEAKREPLY_H
 
 #include "qseabstractpeakreply.h"
+#include "qsespppeakrequest.h"
 
 
 class QseAbstractSppPeakReply : public QseAbstractPeakReply
 {
     Q_OBJECT
 public:
-    explicit QseAbstractSppPeakReply(QObject *parent = 0);
+    explicit QseAbstractSppPeakReply(const QseSppPeakRequest &request,
+                                     QObject *parent = 0);
+
+    inline const QseSppPeakRequest &request() const;
+private:
+    QseSppPeakRequest m_request;
 };
+
+const QseSppPeakRequest &QseAbstractSppPeakReply::request() const
+{
+    return m_request;
+}
 
 
 #endif // QSEABSTRACTSPPPEAKREPLY_H

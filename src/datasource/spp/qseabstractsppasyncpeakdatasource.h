@@ -17,15 +17,15 @@
 #define QSEABSTRACTSPPASYNCPEAKDATASOURCE_H
 
 #include "qseabstractpeakdatasource.h"
-#include "qseabstractspppeakreply.h"
+#include "qsespppeakrequest.h"
+class QseAbstractSppPeakReply;
 
 
 class QseAbstractSppAsyncPeakDataSource : public QseAbstractPeakDataSource
 {
 public:
     QseAbstractSppAsyncPeakDataSource(QObject *parent = 0);
-    virtual QseAbstractSppPeakReply *read(qint64 x, qint64 spp, int width,
-                                          bool rightAligh = false) = 0;
+    virtual QseAbstractSppPeakReply *read(const QseSppPeakRequest &request) = 0;
 };
 
 

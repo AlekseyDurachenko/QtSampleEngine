@@ -13,12 +13,34 @@
 // You should have received a copy of the GNU Lesser General Public
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
-#include "qseabstractspppeakreply.h"
+#include "qsespppeakrequest.h"
 
 
-QseAbstractSppPeakReply::QseAbstractSppPeakReply(
-        const QseSppPeakRequest &request, QObject *parent) :
-    QseAbstractPeakReply(parent)
+QseSppPeakRequest::QseSppPeakRequest(qint64 x, qint64 spp, int width,
+        bool rightAlign)
 {
-    m_request = request;
+    m_x = x;
+    m_spp = spp;
+    m_width = width;
+    m_rightAlign = rightAlign;
+}
+
+void QseSppPeakRequest::setX(qint64 x)
+{
+    m_x = x;
+}
+
+void QseSppPeakRequest::setSpp(qint64 spp)
+{
+    m_spp = spp;
+}
+
+void QseSppPeakRequest::setWidth(int width)
+{
+    m_width = width;
+}
+
+void QseSppPeakRequest::setRightAlign(bool rightAlign)
+{
+    m_rightAlign  = rightAlign;
 }

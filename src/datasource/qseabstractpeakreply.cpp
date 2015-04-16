@@ -45,7 +45,7 @@ void QseAbstractPeakReply::slot_started()
     emit finished();
 }
 
-void QseAbstractPeakReply::setPeakArray(const QsePeakArray &peaks)
+void QseAbstractPeakReply::setPeaks(const QsePeakArray &peaks)
 {
     m_peaks = peaks;
 }

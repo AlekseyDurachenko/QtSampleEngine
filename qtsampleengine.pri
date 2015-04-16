@@ -54,7 +54,8 @@ HEADERS +=                                                          \
     $$PWD/src/core/spp/qsespphorizontalshiftcontrollerproxy.h \
     $$PWD/src/widget/sppaxiswidget/qseabstractsppaxiswidget.h \
     $$PWD/src/widget/sppaxiswidget/qsespphorizontalaxiswidget.h \
-    $$PWD/src/widget/sppaxiswidget/qsesppverticalaxiswidget.h
+    $$PWD/src/widget/sppaxiswidget/qsesppverticalaxiswidget.h \
+    $$PWD/src/datasource/spp/qsespppeakrequest.h
 
 
 SOURCES +=                                                          \
@@ -112,7 +113,8 @@ SOURCES +=                                                          \
     $$PWD/src/core/spp/qsespphorizontalshiftcontrollerproxy.cpp \
     $$PWD/src/widget/sppaxiswidget/qseabstractsppaxiswidget.cpp \
     $$PWD/src/widget/sppaxiswidget/qsespphorizontalaxiswidget.cpp \
-    $$PWD/src/widget/sppaxiswidget/qsesppverticalaxiswidget.cpp
+    $$PWD/src/widget/sppaxiswidget/qsesppverticalaxiswidget.cpp \
+    $$PWD/src/datasource/spp/qsespppeakrequest.cpp
 
 
 OTHER_FILES +=                                                      \
