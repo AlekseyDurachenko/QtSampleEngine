@@ -66,7 +66,8 @@ void QseSppAsyncSignalPlot::draw(QPainter *painter, const QRect &rect,
             {
                 disconnect(m_reply, 0, this, 0);
                 m_reply->abort();
-                m_reply->deleteLater();
+                QMetaObject::invokeMethod(m_reply, "deleteLater", Qt::QueuedConnection);
+                //m_reply->deleteLater();
             }
 
             m_reply = m_dataSource->read(request);
@@ -106,17 +107,21 @@ void QseSppAsyncSignalPlot::dataSource_destroyed()
 
 void QseSppAsyncSignalPlot::reply_aborted(const QseSppPeakRequest &/*request*/)
 {
-    m_reply->deleteLater();
+//    qDebug() << "abort";
+    //m_reply->deleteLater();
+    QMetaObject::invokeMethod(m_reply, "deleteLater", Qt::QueuedConnection);
     m_reply = 0;
 }
 
 void QseSppAsyncSignalPlot::reply_finished(const QsePeakArray &peaks,
         const QseSppPeakRequest &request)
 {
+//    qDebug() << "finished";
     m_peaks = peaks;
     m_lastRequst = request;
     m_peaksFirstIndex = m_lastRequst.x();
-    m_reply->deleteLater();
+    //m_reply->deleteLater();
+    QMetaObject::invokeMethod(m_reply, "deleteLater", Qt::QueuedConnection);
     m_reply = 0;
     setUpdateOnce(true);
 }
