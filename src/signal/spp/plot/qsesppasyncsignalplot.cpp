@@ -68,6 +68,9 @@ void QseSppAsyncSignalPlot::draw(QPainter *painter, const QRect &rect,
             m_reply = m_dataSource->read(request);
             connect(m_reply, SIGNAL(finished()), this, SLOT(reply_finished()));
             connect(m_reply, SIGNAL(finished()), m_reply, SLOT(deleteLater()));
+
+            if (m_lastRequst.spp() != request.spp())
+                m_peaks.clear();
         }
 
         drawAvaiblePeaks(painter, rect, geometry);
