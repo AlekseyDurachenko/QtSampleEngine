@@ -57,17 +57,17 @@ void QseSppAsyncSignalPlot::draw(QPainter *painter, const QRect &rect,
     if (isVisible(rect, geometry))
     {
         QseSppPeakRequest request(geometry, rect);
-        if (/*hasChanges(rect, geometry) && */m_lastRequst != request)
+        if (/*hasChanges(rect, geometry) ||*/ m_lastRequst != request)
         {
             if (m_reply)
             {
                 disconnect(m_reply, 0, this, 0);
                 m_reply->abort();
+                m_reply->deleteLater();
             }
 
             m_reply = m_dataSource->read(request);
-            connect(m_reply, SIGNAL(finished()), this, SLOT(reply_finished()));
-            connect(m_reply, SIGNAL(finished()), m_reply, SLOT(deleteLater()));
+            connect(m_reply, SIGNAL(finished()), this, SLOT(reply_finished()), Qt::QueuedConnection);
 
             if (m_lastRequst.spp() != request.spp())
                 m_peaks.clear();
@@ -98,9 +98,10 @@ void QseSppAsyncSignalPlot::dataSource_destroyed()
 
 void QseSppAsyncSignalPlot::reply_finished()
 {
-    m_peaks = m_reply->peaks();
+    m_peaks = QsePeakArray(m_reply->peaks().minimums(), m_reply->peaks().maximums());
     m_lastRequst = m_reply->request();
     m_peaksFirstIndex = m_lastRequst.x();
+    m_reply->deleteLater();
     m_reply = 0;
     setUpdateOnce(true);
 }
