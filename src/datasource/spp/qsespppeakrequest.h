@@ -46,6 +46,9 @@ private:
     bool m_rightAlign;
 };
 
+bool operator ==(const QseSppPeakRequest &l, const QseSppPeakRequest &r);
+bool operator !=(const QseSppPeakRequest &l, const QseSppPeakRequest &r);
+
 const qint64 &QseSppPeakRequest::x() const
 {
     return m_x;

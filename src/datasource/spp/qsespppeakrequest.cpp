@@ -61,3 +61,21 @@ void QseSppPeakRequest::setRightAlign(bool rightAlign)
 {
     m_rightAlign  = rightAlign;
 }
+
+
+bool operator ==(const QseSppPeakRequest &l, const QseSppPeakRequest &r)
+{
+    return (l.x() == r.x()
+            && l.spp() == r.spp()
+            && l.width() == r.width()
+            && l.rightAlign() == r.rightAlign());
+}
+
+
+bool operator !=(const QseSppPeakRequest &l, const QseSppPeakRequest &r)
+{
+    return (l.x() != r.x()
+            || l.spp() != r.spp()
+            || l.width() != r.width()
+            || l.rightAlign() != r.rightAlign());
+}
