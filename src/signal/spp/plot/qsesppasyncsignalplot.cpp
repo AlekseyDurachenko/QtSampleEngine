@@ -56,7 +56,8 @@ void QseSppAsyncSignalPlot::draw(QPainter *painter, const QRect &rect,
 {
     if (isVisible(rect, geometry))
     {
-        if (hasChanges(rect, geometry) && m_peaks.isEmpty())
+        QseSppPeakRequest request(geometry, rect);
+        if (/*hasChanges(rect, geometry) && */m_lastRequst != request)
         {
             if (m_reply)
             {
@@ -64,40 +65,12 @@ void QseSppAsyncSignalPlot::draw(QPainter *painter, const QRect &rect,
                 m_reply->abort();
             }
 
-            m_reply = m_dataSource->read(QseSppPeakRequest(geometry, rect));
+            m_reply = m_dataSource->read(request);
             connect(m_reply, SIGNAL(finished()), this, SLOT(reply_finished()));
-            connect(m_reply, SIGNAL(destroyed()), m_reply, SLOT(deleteLater()));
+            connect(m_reply, SIGNAL(finished()), m_reply, SLOT(deleteLater()));
         }
 
-        if (m_peaks.isEmpty())
-            return;
-
-        // first index of visible part of peaks
-        qint64 firstIndex = 0;
-        if (m_peaksFirstIndex < geometry.x())
-            firstIndex = geometry.x() - m_peaksFirstIndex;
-        if (geometry.samplesPerPixel() > 0)
-            firstIndex /= geometry.samplesPerPixel();
-        // all peaks are invisible
-        if (firstIndex >= m_peaks.count())
-            return;
-
-        // free space in pixels between left bound and first peaks
-        int space = 0;
-        if (m_peaksFirstIndex > geometry.x())
-            space = QseSppGeometry::widthFromSamples(
-                        geometry, m_peaksFirstIndex - geometry.x());
-
-        // this value will be added to the y coordiante of the each peaks
-        const double dy = calcDy(rect);
-
-        // draw the peaks
-        if (m_peaks.hasMaximums())
-            plotDelegate()->drawAsPeaks(painter, rect, geometry,
-                    m_peaks, firstIndex, space, 0, dy);
-        else
-            plotDelegate()->drawAsLines(painter, rect, geometry,
-                    m_peaks, firstIndex, space, 0, dy);
+        drawAvaiblePeaks(painter, rect, geometry);
     }
 
     QseAbstractSppSignalPlot::draw(painter, rect, geometry);
@@ -123,8 +96,44 @@ void QseSppAsyncSignalPlot::dataSource_destroyed()
 void QseSppAsyncSignalPlot::reply_finished()
 {
     m_peaks = m_reply->peaks();
+    m_lastRequst = m_reply->request();
+    m_peaksFirstIndex = m_lastRequst.x();
     m_reply = 0;
     setUpdateOnce(true);
+}
+
+void QseSppAsyncSignalPlot::drawAvaiblePeaks(QPainter *painter,
+        const QRect &rect, const QseSppGeometry &geometry)
+{
+    if (m_peaks.isEmpty())
+        return;
+
+    // first index of visible part of peaks
+    qint64 firstIndex = 0;
+    if (m_peaksFirstIndex < geometry.x())
+        firstIndex = geometry.x() - m_peaksFirstIndex;
+    if (geometry.samplesPerPixel() > 0)
+        firstIndex /= geometry.samplesPerPixel();
+    // all peaks are invisible
+    if (firstIndex >= m_peaks.count())
+        return;
+
+    // free space in pixels between left bound and first peaks
+    int space = 0;
+    if (m_peaksFirstIndex > geometry.x())
+        space = QseSppGeometry::widthFromSamples(
+                    geometry, m_peaksFirstIndex - geometry.x());
+
+    // this value will be added to the y coordiante of the each peaks
+    const double dy = calcDy(rect);
+
+    // draw the peaks
+    if (m_peaks.hasMaximums())
+        plotDelegate()->drawAsPeaks(painter, rect, geometry,
+                m_peaks, firstIndex, space, 0, dy);
+    else
+        plotDelegate()->drawAsLines(painter, rect, geometry,
+                m_peaks, firstIndex, space, 0, dy);
 }
 
 QseAbstractPeakDataSource *QseSppAsyncSignalPlot::usedDataSource() const

@@ -17,6 +17,7 @@
 #define QSESPPASYNCSIGNALPLOT_H
 
 #include "qseabstractsppsignalplot.h"
+#include "qsespppeakrequest.h"
 class QseAbstractSppAsyncPeakDataSource;
 class QseAbstractSppPeakReply;
 
@@ -31,12 +32,15 @@ public:
     void setDataSource(QseAbstractSppAsyncPeakDataSource *dataSource);
 
     virtual void draw(QPainter *painter, const QRect &rect,
-              const QseSppGeometry &geometry);
+                      const QseSppGeometry &geometry);
 private slots:
     void dataSource_dataChanged();
     void dataSource_dataChanged(qint64 first, qint64 last);
     void dataSource_destroyed();
     void reply_finished();
+private:
+    void drawAvaiblePeaks(QPainter *painter, const QRect &rect,
+                          const QseSppGeometry &geometry);
 private:
     virtual QseAbstractPeakDataSource *usedDataSource() const;
 private:
@@ -44,6 +48,7 @@ private:
     QsePeakArray m_peaks;
     qint64 m_peaksFirstIndex;
     QseAbstractSppPeakReply *m_reply;
+    QseSppPeakRequest m_lastRequst;
 };
 
 QseAbstractSppAsyncPeakDataSource *QseSppAsyncSignalPlot::dataSource() const
