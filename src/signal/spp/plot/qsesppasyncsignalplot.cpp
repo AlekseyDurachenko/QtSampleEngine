@@ -56,7 +56,10 @@ void QseSppAsyncSignalPlot::draw(QPainter *painter, const QRect &rect,
 {
     if (isVisible(rect, geometry))
     {
-        QseSppPeakRequest request(geometry, rect);
+        QseSppGeometry g = geometry;
+        if (g.x() < m_dataSource->minIndex())
+            g.setX(m_dataSource->minIndex());
+        QseSppPeakRequest request(g, rect);
         if (/*hasChanges(rect, geometry) ||*/ m_lastRequst != request)
         {
             if (m_reply)
