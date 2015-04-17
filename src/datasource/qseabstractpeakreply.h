@@ -29,22 +29,17 @@ public:
     inline bool isAborted() const;
     inline bool isWorking() const;
     void abort();
-
-    inline const QsePeakArray &peaks() const;
-signals:
-    void finished();
 public slots:
     void start();
 private slots:
     void slot_started();
 protected:
-    virtual void algorithm() = 0;
-protected:
-    void setPeaks(const QsePeakArray &peaks);
+    virtual void doSuccess() = 0;
+    virtual void doAbort() = 0;
+    virtual void doAlgorithm() = 0;
 private:
     volatile bool m_isAborted;
     volatile bool m_isWorking;
-    QsePeakArray m_peaks;
 };
 
 bool QseAbstractPeakReply::isAborted() const
@@ -55,11 +50,6 @@ bool QseAbstractPeakReply::isAborted() const
 bool QseAbstractPeakReply::isWorking() const
 {
     return m_isWorking;
-}
-
-const QsePeakArray &QseAbstractPeakReply::peaks() const
-{
-    return m_peaks;
 }
 
 

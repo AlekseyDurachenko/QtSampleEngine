@@ -22,3 +22,18 @@ QseAbstractSppPeakReply::QseAbstractSppPeakReply(
 {
     m_request = request;
 }
+
+void QseAbstractSppPeakReply::setPeaks(const QsePeakArray &peaks)
+{
+    m_peaks = peaks;
+}
+
+void QseAbstractSppPeakReply::doSuccess()
+{
+    emit finished(m_peaks, m_request);
+}
+
+void QseAbstractSppPeakReply::doAbort()
+{
+    emit aborted(m_request);
+}

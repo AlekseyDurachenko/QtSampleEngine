@@ -70,7 +70,12 @@ void QseSppAsyncSignalPlot::draw(QPainter *painter, const QRect &rect,
             }
 
             m_reply = m_dataSource->read(request);
-            connect(m_reply, SIGNAL(finished()), this, SLOT(reply_finished()), Qt::QueuedConnection);
+            connect(m_reply, SIGNAL(finished(QsePeakArray,QseSppPeakRequest)),
+                    this, SLOT(reply_finished(QsePeakArray,QseSppPeakRequest)),
+                    Qt::QueuedConnection);
+            connect(m_reply, SIGNAL(aborted(QseSppPeakRequest)),
+                    this, SLOT(reply_aborted(QseSppPeakRequest)),
+                    Qt::QueuedConnection);
 
             if (m_lastRequst.spp() != request.spp())
                 m_peaks.clear();
@@ -99,10 +104,17 @@ void QseSppAsyncSignalPlot::dataSource_destroyed()
     m_dataSource = 0;
 }
 
-void QseSppAsyncSignalPlot::reply_finished()
+void QseSppAsyncSignalPlot::reply_aborted(const QseSppPeakRequest &/*request*/)
 {
-    m_peaks = QsePeakArray(m_reply->peaks().minimums(), m_reply->peaks().maximums());
-    m_lastRequst = m_reply->request();
+    m_reply->deleteLater();
+    m_reply = 0;
+}
+
+void QseSppAsyncSignalPlot::reply_finished(const QsePeakArray &peaks,
+        const QseSppPeakRequest &request)
+{
+    m_peaks = peaks;
+    m_lastRequst = request;
     m_peaksFirstIndex = m_lastRequst.x();
     m_reply->deleteLater();
     m_reply = 0;

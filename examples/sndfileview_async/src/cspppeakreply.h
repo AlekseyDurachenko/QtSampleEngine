@@ -27,7 +27,7 @@ public:
                            const QseSppPeakRequest &request,
                            QObject *parent = 0);
 protected:
-    virtual void algorithm();
+    virtual void doAlgorithm();
 private:
     QsePeakArray readPeaks(const QseSppPeakRequest &req);
     QsePeakArray readAsLines(qint64 first, qint64 pps, int width);

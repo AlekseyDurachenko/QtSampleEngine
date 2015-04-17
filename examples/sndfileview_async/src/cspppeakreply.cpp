@@ -24,7 +24,7 @@ CSppPeakReply::CSppPeakReply(const QVector<double> &samples,
     m_samples = samples;
 }
 
-void CSppPeakReply::algorithm()
+void CSppPeakReply::doAlgorithm()
 {
     if (!isAborted())
         setPeaks(readPeaks(request()));

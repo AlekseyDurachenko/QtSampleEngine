@@ -37,7 +37,9 @@ private slots:
     void dataSource_dataChanged();
     void dataSource_dataChanged(qint64 first, qint64 last);
     void dataSource_destroyed();
-    void reply_finished();
+    void reply_aborted(const QseSppPeakRequest &request);
+    void reply_finished(const QsePeakArray &peaks,
+                        const QseSppPeakRequest &request);
 private:
     void drawAvaiblePeaks(QPainter *painter, const QRect &rect,
                           const QseSppGeometry &geometry);

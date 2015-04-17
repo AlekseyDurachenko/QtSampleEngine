@@ -40,12 +40,10 @@ void QseAbstractPeakReply::start()
 
 void QseAbstractPeakReply::slot_started()
 {
-    algorithm();
+    doAlgorithm();
     m_isWorking = false;
-    emit finished();
-}
-
-void QseAbstractPeakReply::setPeaks(const QsePeakArray &peaks)
-{
-    m_peaks = peaks;
+    if (m_isAborted)
+        doAbort();
+    else
+        doSuccess();
 }

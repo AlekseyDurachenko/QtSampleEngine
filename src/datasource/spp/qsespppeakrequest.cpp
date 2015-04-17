@@ -18,6 +18,8 @@
 
 QseSppPeakRequest::QseSppPeakRequest()
 {
+    qRegisterMetaType<QseSppPeakRequest>("QseSppPeakRequest");
+
     m_x = 0;
     m_spp = 0;
     m_width = 0;
@@ -27,6 +29,8 @@ QseSppPeakRequest::QseSppPeakRequest()
 QseSppPeakRequest::QseSppPeakRequest(const QseSppGeometry &geometry,
         const QRect &rect, bool rightAlign)
 {
+    qRegisterMetaType<QseSppPeakRequest>("QseSppPeakRequest");
+
     m_x = geometry.x();
     m_spp = geometry.samplesPerPixel();
     m_width = rect.width();
@@ -36,6 +40,8 @@ QseSppPeakRequest::QseSppPeakRequest(const QseSppGeometry &geometry,
 QseSppPeakRequest::QseSppPeakRequest(qint64 x, qint64 spp, int width,
         bool rightAlign)
 {
+    qRegisterMetaType<QseSppPeakRequest>("QseSppPeakRequest");
+
     m_x = x;
     m_spp = spp;
     m_width = width;

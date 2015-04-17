@@ -26,15 +26,30 @@ class QseAbstractSppPeakReply : public QseAbstractPeakReply
 public:
     explicit QseAbstractSppPeakReply(const QseSppPeakRequest &request,
                                      QObject *parent = 0);
-
+signals:
+    void aborted(const QseSppPeakRequest &request);
+    void finished(const QsePeakArray &peaks, const QseSppPeakRequest &request);
+protected:
     inline const QseSppPeakRequest &request() const;
+
+    inline const QsePeakArray &peaks() const;
+    void setPeaks(const QsePeakArray &peaks);
+protected:
+    virtual void doSuccess();
+    virtual void doAbort();
 private:
     QseSppPeakRequest m_request;
+    QsePeakArray m_peaks;
 };
 
 const QseSppPeakRequest &QseAbstractSppPeakReply::request() const
 {
     return m_request;
+}
+
+const QsePeakArray &QseAbstractSppPeakReply::peaks() const
+{
+    return m_peaks;
 }
 
 
