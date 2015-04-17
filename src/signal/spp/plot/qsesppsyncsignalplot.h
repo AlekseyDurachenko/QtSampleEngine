@@ -36,6 +36,8 @@ private slots:
     void dataSource_dataChanged(qint64 first, qint64 last);
     void dataSource_destroyed();
 private:
+    void drawAvaiblePeaks(QPainter *painter, const QRect &rect,
+                          const QseSppGeometry &geometry);
     void calcPeaks(const QRect &rect, const QseSppGeometry &geometry);
     void recalcPeaks(const QRect &rect, const QseSppGeometry &geometry);
     void pushFrontPeaks(const QseSppGeometry &geometry);
