@@ -15,6 +15,7 @@
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
 #include "qsesppasyncsignalplot.h"
 #include <QPainter>
+#include <QTimer>
 #include "qseabstractsppasyncpeakdatasource.h"
 #include "qseabstractsppsignalplotdelegate.h"
 #include "qseabstractspppeakreply.h"
@@ -26,6 +27,10 @@ QseSppAsyncSignalPlot::QseSppAsyncSignalPlot(QObject *parent) :
 {
     m_dataSource = 0;
     m_reply = 0;
+    m_queryTimer = new QTimer(this);
+    m_queryTimer->setInterval(200);
+    m_queryTimer->setSingleShot(true);
+    connect(m_queryTimer, SIGNAL(timeout()), this, SLOT(queryTimer_timeout()));
 }
 
 void QseSppAsyncSignalPlot::setDataSource(
@@ -57,10 +62,11 @@ void QseSppAsyncSignalPlot::draw(QPainter *painter, const QRect &rect,
     if (isVisible(rect, geometry))
     {
         if (hasChanges(rect, geometry))
-        {
             queryUnavaiblePeaks(rect, geometry);
-            calcPeaks(rect, geometry);
-        }
+
+        if (m_lastRequst.spp() != geometry.samplesPerPixel())
+            m_peaks.clear();
+
         drawAvaiblePeaks(painter, rect, geometry);
     }
 
@@ -69,7 +75,7 @@ void QseSppAsyncSignalPlot::draw(QPainter *painter, const QRect &rect,
 
 void QseSppAsyncSignalPlot::dataSource_dataChanged()
 {
-    //m_peaks.clear();
+    m_peaks.clear();
     setUpdateOnce(true);
 }
 
@@ -102,14 +108,19 @@ void QseSppAsyncSignalPlot::reply_finished(const QsePeakArray &peaks,
     //m_reply->deleteLater();
     QMetaObject::invokeMethod(m_reply, "deleteLater", Qt::QueuedConnection);
     m_reply = 0;
+    //calcPeaks(rect, geometry);
     setUpdateOnce(true);
 }
 
-void QseSppAsyncSignalPlot::queryUnavaiblePeaks(const QRect &rect, const QseSppGeometry &geometry)
+void QseSppAsyncSignalPlot::queryTimer_timeout()
 {
+    QseSppGeometry geometry = lastGeometry();
+    QRect rect = lastRect();
+
     QseSppGeometry g = geometry;
     if (g.x() < m_dataSource->minIndex())
         g.setX(m_dataSource->minIndex());
+
     QseSppPeakRequest request(g, rect);
     if (/*hasChanges(rect, geometry) ||*/ m_lastRequst != request)
     {
@@ -128,10 +139,21 @@ void QseSppAsyncSignalPlot::queryUnavaiblePeaks(const QRect &rect, const QseSppG
         connect(m_reply, SIGNAL(aborted(QseSppPeakRequest)),
                 this, SLOT(reply_aborted(QseSppPeakRequest)),
                 Qt::QueuedConnection);
-
-        if (m_lastRequst.spp() != request.spp())
-            m_peaks.clear();
     }
+
+    m_lastQueryTimerGeometry = lastGeometry();
+    m_lastQueryTimerRect = lastRect();
+
+    qDebug() << "done";
+}
+
+void QseSppAsyncSignalPlot::queryUnavaiblePeaks(const QRect &rect,
+        const QseSppGeometry &geometry)
+{
+    if (m_lastQueryTimerGeometry.samplesPerPixel() != geometry.samplesPerPixel()
+            || m_lastQueryTimerGeometry.x() != geometry.x()
+            || m_lastQueryTimerRect.width() != rect.width())
+        m_queryTimer->start();
 }
 
 void QseSppAsyncSignalPlot::drawAvaiblePeaks(QPainter *painter,

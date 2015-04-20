@@ -40,6 +40,7 @@ private slots:
     void reply_aborted(const QseSppPeakRequest &request);
     void reply_finished(const QsePeakArray &peaks,
                         const QseSppPeakRequest &request);
+    void queryTimer_timeout();
 private:
     void queryUnavaiblePeaks(const QRect &rect,
                              const QseSppGeometry &geometry);
@@ -63,6 +64,9 @@ private:
     qint64 m_peaksFirstIndex;
     QseAbstractSppPeakReply *m_reply;
     QseSppPeakRequest m_lastRequst;
+    QTimer *m_queryTimer;
+    QRect m_lastQueryTimerRect;
+    QseSppGeometry m_lastQueryTimerGeometry;
 };
 
 QseAbstractSppAsyncPeakDataSource *QseSppAsyncSignalPlot::dataSource() const
