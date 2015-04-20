@@ -41,8 +41,20 @@ private slots:
     void reply_finished(const QsePeakArray &peaks,
                         const QseSppPeakRequest &request);
 private:
+    void queryUnavaiblePeaks(const QRect &rect,
+                             const QseSppGeometry &geometry);
     void drawAvaiblePeaks(QPainter *painter, const QRect &rect,
                           const QseSppGeometry &geometry);
+    void calcPeaks(const QRect &rect, const QseSppGeometry &geometry);
+    bool checkOptimizationPossibility(const QseSppGeometry &oldGeometry,
+                                      const QseSppGeometry &newGeometry);
+    void compressPeaks(const QseSppGeometry &oldGeometry,
+                       const QseSppGeometry &newGeometry,
+                       QsePeakArray *peaks);
+    void pushFrontPeaks(const QseSppGeometry &geometry,
+                        const QsePeakArray &peaks);
+    void pushBackPeaks(const QseSppGeometry &geometry, int width,
+                       const QsePeakArray &peaks);
 private:
     virtual QseAbstractPeakDataSource *usedDataSource() const;
 private:
