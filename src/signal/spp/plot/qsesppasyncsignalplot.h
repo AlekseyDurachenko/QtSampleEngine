@@ -22,6 +22,39 @@ class QseAbstractSppAsyncPeakDataSource;
 class QseAbstractSppPeakReply;
 
 
+class QseSppAsyncSignalPlotReplyItem
+{
+public:
+    QseSppAsyncSignalPlotReplyItem(QseAbstractSppPeakReply *reply,
+                                   const QseSppGeometry &geometry,
+                                   const QRect &rect)
+    {
+        m_reply = reply;
+        m_geometry = geometry;
+        m_rect = rect;
+    }
+
+    inline QseAbstractSppPeakReply *reply() const
+    {
+        return m_reply;
+    }
+
+    inline const QseSppGeometry &geometry() const
+    {
+        return m_geometry;
+    }
+
+    inline const QRect &rect() const
+    {
+        return m_rect;
+    }
+private:
+    QseAbstractSppPeakReply *m_reply;
+    QseSppGeometry m_geometry;
+    QRect m_rect;
+};
+
+
 class QseSppAsyncSignalPlot : public QseAbstractSppSignalPlot
 {
     Q_OBJECT
@@ -63,11 +96,13 @@ private:
     QsePeakArray m_peaks;
     qint64 m_peaksFirstIndex;
 //    QseAbstractSppPeakReply *m_reply;
-    QList<QseAbstractSppPeakReply *> m_replies;
+//    QList<QseAbstractSppPeakReply *> m_replies;
+    QList<QseSppAsyncSignalPlotReplyItem> m_replyItems;
 //    QseSppPeakRequest m_lastRequst;
     QTimer *m_queryTimer;
     QRect m_lastQueryTimerRect;
     QseSppGeometry m_lastQueryTimerGeometry;
+
 };
 
 QseAbstractSppAsyncPeakDataSource *QseSppAsyncSignalPlot::dataSource() const

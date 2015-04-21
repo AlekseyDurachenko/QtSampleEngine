@@ -63,6 +63,7 @@ void CMainWindow::openSoundFile(const QString &fileName)
 {
     double sampleRate;
     QVector<double> data = readSoundFile(fileName, &sampleRate);
+
     if (data.isEmpty())
     {
         QMessageBox::critical(this, tr("Critical"),

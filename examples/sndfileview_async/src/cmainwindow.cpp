@@ -63,6 +63,10 @@ void CMainWindow::openSoundFile(const QString &fileName)
 {
     double sampleRate;
     QVector<double> data = readSoundFile(fileName, &sampleRate);
+    //QVector<double> data(1000000);
+    //for (int i = 0; i < 1000000; ++i)
+    //    data[i] = i%1000/1000.0-0.5;
+
     if (data.isEmpty())
     {
         QMessageBox::critical(this, tr("Critical"),

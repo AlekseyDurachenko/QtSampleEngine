@@ -83,7 +83,7 @@ QsePeakArray CSppPeakReply::readAsPeaks(qint64 first, qint64 spp,
         qint64 sampleLastIndex = last;
         if (rightAlign)
         {
-            sampleLastIndex = last - (arrIndex-count+1)*spp;
+            sampleLastIndex = last - (count-arrIndex)*spp - 1;
             sampleFirstIndex = sampleLastIndex - spp + 1;
             if (sampleFirstIndex < first)
                 sampleFirstIndex = first;
