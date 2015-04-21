@@ -26,7 +26,7 @@ QseSppAsyncSignalPlot::QseSppAsyncSignalPlot(QObject *parent) :
     QseAbstractSppSignalPlot(parent)
 {
     m_dataSource = 0;
-    m_reply = 0;
+    //m_reply = 0;
     m_queryTimer = new QTimer(this);
     m_queryTimer->setInterval(200);
     m_queryTimer->setSingleShot(true);
@@ -62,10 +62,13 @@ void QseSppAsyncSignalPlot::draw(QPainter *painter, const QRect &rect,
     if (isVisible(rect, geometry))
     {
         if (hasChanges(rect, geometry))
+        {
+            calcPeaks(rect, geometry);
             queryUnavaiblePeaks(rect, geometry);
+        }
 
-        if (m_lastRequst.spp() != geometry.samplesPerPixel())
-            m_peaks.clear();
+        //if (m_lastRequst.spp() != geometry.samplesPerPixel())
+        //    m_peaks.clear();
 
         drawAvaiblePeaks(painter, rect, geometry);
     }
@@ -94,55 +97,186 @@ void QseSppAsyncSignalPlot::reply_aborted(const QseSppPeakRequest &/*request*/)
 {
 //    qDebug() << "abort";
     //m_reply->deleteLater();
-    QMetaObject::invokeMethod(m_reply, "deleteLater", Qt::QueuedConnection);
-    m_reply = 0;
+    qDebug() << "reply_aborted (!!!!!!!!!)";
 }
 
 void QseSppAsyncSignalPlot::reply_finished(const QsePeakArray &peaks,
         const QseSppPeakRequest &request)
 {
-//    qDebug() << "finished";
-    m_peaks = peaks;
-    m_lastRequst = request;
-    m_peaksFirstIndex = m_lastRequst.x();
-    //m_reply->deleteLater();
-    QMetaObject::invokeMethod(m_reply, "deleteLater", Qt::QueuedConnection);
-    m_reply = 0;
-    //calcPeaks(rect, geometry);
+    QseAbstractSppPeakReply *reply = qobject_cast<QseAbstractSppPeakReply *>(sender());
+
+    // TODO: it can be unusable code
+    if (!m_replies.contains(reply))
+        return;
+
+    if (m_peaks.isEmpty())
+    {
+        m_peaks = peaks;
+        m_peaksFirstIndex = request.x();
+    }
+    else if (request.rightAlign())
+    {
+        pushFrontPeaks(lastGeometry(), peaks);
+    }
+    else
+    {
+        pushBackPeaks(lastGeometry(), lastRect().width(), peaks);
+    }
     setUpdateOnce(true);
+
+    m_replies.removeAll(reply);
+    QMetaObject::invokeMethod(reply, "deleteLater", Qt::QueuedConnection);
+
+
+    qDebug() << "finished:" << peaks.count();
+//    return;
+////    qDebug() << "finished";
+//    m_peaks = peaks;
+//    m_lastRequst = request;
+//    m_peaksFirstIndex = m_lastRequst.x();
+//    //m_reply->deleteLater();
+//    QMetaObject::invokeMethod(m_reply, "deleteLater", Qt::QueuedConnection);
+//    m_reply = 0;
+//    //calcPeaks(rect, geometry);
+//    setUpdateOnce(true);
 }
 
 void QseSppAsyncSignalPlot::queryTimer_timeout()
 {
-    QseSppGeometry geometry = lastGeometry();
-    QRect rect = lastRect();
-
-    QseSppGeometry g = geometry;
-    if (g.x() < m_dataSource->minIndex())
-        g.setX(m_dataSource->minIndex());
-
-    QseSppPeakRequest request(g, rect);
-    if (/*hasChanges(rect, geometry) ||*/ m_lastRequst != request)
+    foreach (QseAbstractSppPeakReply *reply, m_replies)
     {
-        if (m_reply)
-        {
-            disconnect(m_reply, 0, this, 0);
-            m_reply->abort();
-            QMetaObject::invokeMethod(m_reply, "deleteLater", Qt::QueuedConnection);
-            //m_reply->deleteLater();
-        }
+        reply->disconnect(this);
+        reply->abort();
+        QMetaObject::invokeMethod(reply, "deleteLater", Qt::QueuedConnection);
+    }
+    m_replies.clear();
 
-        m_reply = m_dataSource->read(request);
-        connect(m_reply, SIGNAL(finished(QsePeakArray,QseSppPeakRequest)),
+qDebug() << "query";
+    if (m_peaks.isEmpty())
+    {
+        QseSppGeometry geometry = lastGeometry();
+        if (geometry.x() < m_dataSource->minIndex())
+            geometry.setX(m_dataSource->minIndex());
+
+        QseSppPeakRequest request(geometry, lastRect());
+
+        QseAbstractSppPeakReply *reply = m_dataSource->read(request);
+        connect(reply, SIGNAL(finished(QsePeakArray,QseSppPeakRequest)),
                 this, SLOT(reply_finished(QsePeakArray,QseSppPeakRequest)),
                 Qt::QueuedConnection);
-        connect(m_reply, SIGNAL(aborted(QseSppPeakRequest)),
+        connect(reply, SIGNAL(aborted(QseSppPeakRequest)),
                 this, SLOT(reply_aborted(QseSppPeakRequest)),
                 Qt::QueuedConnection);
+        m_replies.push_back(reply);
     }
+    else
+    {
+
+        try
+        {
+            QseSppGeometry geometry = lastGeometry();
+
+            if (geometry.x() >= m_peaksFirstIndex)
+                throw "";
+
+            if (m_peaksFirstIndex <= m_dataSource->minIndex())
+                throw "";
+
+            qint64 firstIndex = 0;
+            if (geometry.x() < m_dataSource->minIndex())
+                firstIndex = m_dataSource->minIndex();
+            else
+                firstIndex = geometry.x();
+
+            const qint64 sampleCount = m_peaksFirstIndex - firstIndex;
+            const qint64 spp = geometry.samplesPerPixel();
+            const qint64 peakCount = sampleCount/spp + ((sampleCount%spp) ? (1) : (0));
+
+            QseSppPeakRequest request(firstIndex, spp, peakCount, true);
+
+            QseAbstractSppPeakReply *reply = m_dataSource->read(request);
+            connect(reply, SIGNAL(finished(QsePeakArray,QseSppPeakRequest)),
+                    this, SLOT(reply_finished(QsePeakArray,QseSppPeakRequest)),
+                    Qt::QueuedConnection);
+            connect(reply, SIGNAL(aborted(QseSppPeakRequest)),
+                    this, SLOT(reply_aborted(QseSppPeakRequest)),
+                    Qt::QueuedConnection);
+            m_replies.push_back(reply);
+        }
+        catch (...) {}
+
+        try
+        {
+            QseSppGeometry geometry = lastGeometry();
+
+            const qint64 &spp = geometry.samplesPerPixel();
+            const qint64 lastIndex = m_peaksFirstIndex + m_peaks.count()*spp - 1;
+
+            if (lastIndex >= m_dataSource->maxIndex())
+                throw "";
+
+            int alreadyVisibleWidth = 0;
+            if (geometry.x() >= m_peaksFirstIndex)
+                alreadyVisibleWidth =
+                        m_peaks.count() - (geometry.x() - m_peaksFirstIndex)/spp;
+            else
+                alreadyVisibleWidth =
+                        m_peaks.count() + (m_peaksFirstIndex - geometry.x())/spp;
+
+            const int neededWidth = lastRect().width() - alreadyVisibleWidth;
+            if (neededWidth <= 0)
+                throw "";
+
+
+            QseAbstractSppPeakReply *reply = m_dataSource->read(QseSppPeakRequest(lastIndex+1, spp, neededWidth));
+            connect(reply, SIGNAL(finished(QsePeakArray,QseSppPeakRequest)),
+                    this, SLOT(reply_finished(QsePeakArray,QseSppPeakRequest)),
+                    Qt::QueuedConnection);
+            connect(reply, SIGNAL(aborted(QseSppPeakRequest)),
+                    this, SLOT(reply_aborted(QseSppPeakRequest)),
+                    Qt::QueuedConnection);
+            m_replies.push_back(reply);
+        }
+        catch (...) {}
+
+    }
+
 
     m_lastQueryTimerGeometry = lastGeometry();
     m_lastQueryTimerRect = lastRect();
+
+//    return;
+//    {
+//    QseSppGeometry geometry = lastGeometry();
+//    QRect rect = lastRect();
+
+//    QseSppGeometry g = geometry;
+//    if (g.x() < m_dataSource->minIndex())
+//        g.setX(m_dataSource->minIndex());
+
+//    QseSppPeakRequest request(g, rect);
+//    if (/*hasChanges(rect, geometry) ||*/ m_lastRequst != request)
+//    {
+//        if (m_reply)
+//        {
+//            disconnect(m_reply, 0, this, 0);
+//            m_reply->abort();
+//            QMetaObject::invokeMethod(m_reply, "deleteLater", Qt::QueuedConnection);
+//            //m_reply->deleteLater();
+//        }
+
+//        m_reply = m_dataSource->read(request);
+//        connect(m_reply, SIGNAL(finished(QsePeakArray,QseSppPeakRequest)),
+//                this, SLOT(reply_finished(QsePeakArray,QseSppPeakRequest)),
+//                Qt::QueuedConnection);
+//        connect(m_reply, SIGNAL(aborted(QseSppPeakRequest)),
+//                this, SLOT(reply_aborted(QseSppPeakRequest)),
+//                Qt::QueuedConnection);
+//    }
+
+//    m_lastQueryTimerGeometry = lastGeometry();
+//    m_lastQueryTimerRect = lastRect();
+//    }
 
     qDebug() << "done";
 }
@@ -193,17 +327,15 @@ void QseSppAsyncSignalPlot::drawAvaiblePeaks(QPainter *painter,
 void QseSppAsyncSignalPlot::calcPeaks(const QRect &rect,
         const QseSppGeometry &geometry)
 {
-    if (m_peaks.isEmpty()
-            || m_dataSource->options() & QseAbstractPeakDataSource::DontUseCacheOptimization
+    if (m_dataSource->options() & QseAbstractPeakDataSource::DontUseCacheOptimization
             || !checkOptimizationPossibility(lastGeometry(), geometry))
     {
-//        m_peaks.clear();
-//        recalcPeaks(rect, geometry);
+        m_peaks.clear();
     }
     else
     {
 //        m_peaks.clear();
-//        compressPeaks(lastGeometry(), geometry, &m_peaks);
+        compressPeaks(lastGeometry(), geometry, &m_peaks);
 //        pushFrontPeaks(geometry);
 //        pushBackPeaks(geometry, rect.width());
     }

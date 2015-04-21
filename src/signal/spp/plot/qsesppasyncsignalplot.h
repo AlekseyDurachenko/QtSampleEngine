@@ -62,8 +62,9 @@ private:
     QseAbstractSppAsyncPeakDataSource *m_dataSource;
     QsePeakArray m_peaks;
     qint64 m_peaksFirstIndex;
-    QseAbstractSppPeakReply *m_reply;
-    QseSppPeakRequest m_lastRequst;
+//    QseAbstractSppPeakReply *m_reply;
+    QList<QseAbstractSppPeakReply *> m_replies;
+//    QseSppPeakRequest m_lastRequst;
     QTimer *m_queryTimer;
     QRect m_lastQueryTimerRect;
     QseSppGeometry m_lastQueryTimerGeometry;
