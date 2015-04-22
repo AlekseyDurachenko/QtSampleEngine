@@ -26,11 +26,15 @@ QseSppAsyncSignalPlot::QseSppAsyncSignalPlot(QObject *parent) :
     QseAbstractSppSignalPlot(parent)
 {
     m_dataSource = 0;
-    //m_reply = 0;
     m_queryTimer = new QTimer(this);
     m_queryTimer->setInterval(200);
     m_queryTimer->setSingleShot(true);
     connect(m_queryTimer, SIGNAL(timeout()), this, SLOT(queryTimer_timeout()));
+}
+
+QseSppAsyncSignalPlot::~QseSppAsyncSignalPlot()
+{
+    abortAllReplies();
 }
 
 void QseSppAsyncSignalPlot::setDataSource(
@@ -67,9 +71,6 @@ void QseSppAsyncSignalPlot::draw(QPainter *painter, const QRect &rect,
             queryUnavaiblePeaks(rect, geometry);
         }
 
-        //if (m_lastRequst.spp() != geometry.samplesPerPixel())
-        //    m_peaks.clear();
-qDebug() << "draw" << m_peaks.count();
         drawAvaiblePeaks(painter, rect, geometry);
     }
 
@@ -78,7 +79,9 @@ qDebug() << "draw" << m_peaks.count();
 
 void QseSppAsyncSignalPlot::dataSource_dataChanged()
 {
+    // TODO: query needed
     m_peaks.clear();
+
     setUpdateOnce(true);
 }
 
@@ -95,9 +98,15 @@ void QseSppAsyncSignalPlot::dataSource_destroyed()
 
 void QseSppAsyncSignalPlot::reply_aborted(const QseSppPeakRequest &/*request*/)
 {
-//    qDebug() << "abort";
-    //m_reply->deleteLater();
-    qDebug() << "reply_aborted (!!!!!!!!!)";
+    QseAbstractSppPeakReply *reply = qobject_cast<QseAbstractSppPeakReply *>(sender());
+
+    // HACK: it can be unusable code
+    if (!m_replies.contains(reply))
+        return;
+
+    int index = m_replies.indexOf(reply);
+    QMetaObject::invokeMethod(reply, "deleteLater", Qt::QueuedConnection);
+    m_replies.removeAt(index);
 }
 
 void QseSppAsyncSignalPlot::reply_finished(const QsePeakArray &peaks,
@@ -105,209 +114,50 @@ void QseSppAsyncSignalPlot::reply_finished(const QsePeakArray &peaks,
 {
     QseAbstractSppPeakReply *reply = qobject_cast<QseAbstractSppPeakReply *>(sender());
 
-    // TODO: it can be unusable code
-    //if (!m_replies.contains(reply))
-    //    return;
-    bool found = false;
-    foreach (const QseSppAsyncSignalPlotReplyItem &item, m_replyItems)
-    {
-        if (item.reply() == reply)
-        {
-            found = true;
-            break;
-        }
-    }
-    if (!found)
+    // HACK: it can be unusable code
+    if (!m_replies.contains(reply))
         return;
 
-    int index = -1;
-    for (int i = 0; i < m_replyItems.count(); ++i)
-    {
-        if (m_replyItems[i].reply() == reply)
-        {
-            index = i;
-            break;
-        }
-    }
+    int index = m_replies.indexOf(reply);
+    const QseSppSignalPlotPeakReplyItem &item = m_replies.at(index);
 
-
-    if (m_peaks.isEmpty())
+    switch (item.pushType())
     {
+    case QseSppSignalPlotPeakReplyItem::ReplaceAll:
         m_peaks = peaks;
         m_peaksFirstIndex = request.x();
+        break;
+    case QseSppSignalPlotPeakReplyItem::PushFront:
+        m_peaks.push_front(peaks);
+        m_peaksFirstIndex = request.x();
+        break;
+    case QseSppSignalPlotPeakReplyItem::PushBack:
+        m_peaks.push_back(peaks);
+        break;
     }
-    else if (request.rightAlign())
-    {
-        pushFrontPeaks(m_replyItems[index].geometry(), peaks);
-    }
-    else
-    {
-        pushBackPeaks(m_replyItems[index].geometry(), m_replyItems[index].rect().width(), peaks);
-    }
-    setUpdateOnce(true);
-
-    //m_replies.removeAll(reply);
-    if (index != -1)
-        m_replyItems.removeAt(index);
 
     QMetaObject::invokeMethod(reply, "deleteLater", Qt::QueuedConnection);
+    m_replies.removeAt(index);
 
-
-    qDebug() << "finished:" << peaks.count();
-//    return;
-////    qDebug() << "finished";
-//    m_peaks = peaks;
-//    m_lastRequst = request;
-//    m_peaksFirstIndex = m_lastRequst.x();
-//    //m_reply->deleteLater();
-//    QMetaObject::invokeMethod(m_reply, "deleteLater", Qt::QueuedConnection);
-//    m_reply = 0;
-//    //calcPeaks(rect, geometry);
-//    setUpdateOnce(true);
+    setUpdateOnce(true);
 }
 
 void QseSppAsyncSignalPlot::queryTimer_timeout()
 {
-    foreach (const QseSppAsyncSignalPlotReplyItem &item, m_replyItems)
-    {
-        item.reply()->disconnect(this);
-        item.reply()->abort();
-        QMetaObject::invokeMethod(item.reply(), "deleteLater", Qt::QueuedConnection);
-    }
-    m_replyItems.clear();
+    abortAllReplies();
 
-qDebug() << "query";
     if (m_peaks.isEmpty())
     {
-        QseSppGeometry geometry = lastGeometry();
-        if (geometry.x() < m_dataSource->minIndex())
-            geometry.setX(m_dataSource->minIndex());
-
-        QseSppPeakRequest request(geometry, lastRect());
-
-        QseAbstractSppPeakReply *reply = m_dataSource->read(request);
-        connect(reply, SIGNAL(finished(QsePeakArray,QseSppPeakRequest)),
-                this, SLOT(reply_finished(QsePeakArray,QseSppPeakRequest)),
-                Qt::QueuedConnection);
-        connect(reply, SIGNAL(aborted(QseSppPeakRequest)),
-                this, SLOT(reply_aborted(QseSppPeakRequest)),
-                Qt::QueuedConnection);
-
-        //m_replies.push_back(reply);
-        m_replyItems.push_back(QseSppAsyncSignalPlotReplyItem(reply, geometry, lastRect()));
+        queryReplaceAll();
     }
     else
     {
-
-        try
-        {
-            QseSppGeometry geometry = lastGeometry();
-
-            if (geometry.x() >= m_peaksFirstIndex)
-                throw "";
-
-            if (m_peaksFirstIndex <= m_dataSource->minIndex())
-                throw "";
-
-            qint64 firstIndex = 0;
-            if (geometry.x() < m_dataSource->minIndex())
-                firstIndex = m_dataSource->minIndex();
-            else
-                firstIndex = geometry.x();
-
-            const qint64 sampleCount = m_peaksFirstIndex - firstIndex;
-            const qint64 spp = geometry.samplesPerPixel();
-            const qint64 peakCount = sampleCount/spp + ((sampleCount%spp) ? (1) : (0));
-
-            QseSppPeakRequest request(firstIndex, spp, peakCount, true);
-
-            QseAbstractSppPeakReply *reply = m_dataSource->read(request);
-            connect(reply, SIGNAL(finished(QsePeakArray,QseSppPeakRequest)),
-                    this, SLOT(reply_finished(QsePeakArray,QseSppPeakRequest)),
-                    Qt::QueuedConnection);
-            connect(reply, SIGNAL(aborted(QseSppPeakRequest)),
-                    this, SLOT(reply_aborted(QseSppPeakRequest)),
-                    Qt::QueuedConnection);
-            //m_replies.push_back(reply);
-            m_replyItems.push_back(QseSppAsyncSignalPlotReplyItem(reply, geometry, lastRect()));
-        }
-        catch (...) {}
-
-        try
-        {
-            QseSppGeometry geometry = lastGeometry();
-
-            const qint64 &spp = geometry.samplesPerPixel();
-            const qint64 lastIndex = m_peaksFirstIndex + m_peaks.count()*spp - 1;
-
-            if (lastIndex >= m_dataSource->maxIndex())
-                throw "";
-
-            int alreadyVisibleWidth = 0;
-            if (geometry.x() >= m_peaksFirstIndex)
-                alreadyVisibleWidth =
-                        m_peaks.count() - (geometry.x() - m_peaksFirstIndex)/spp;
-            else
-                alreadyVisibleWidth =
-                        m_peaks.count() + (m_peaksFirstIndex - geometry.x())/spp;
-
-            const int neededWidth = lastRect().width() - alreadyVisibleWidth;
-            if (neededWidth <= 0)
-                throw "";
-
-
-            QseAbstractSppPeakReply *reply = m_dataSource->read(QseSppPeakRequest(lastIndex+1, spp, neededWidth));
-            connect(reply, SIGNAL(finished(QsePeakArray,QseSppPeakRequest)),
-                    this, SLOT(reply_finished(QsePeakArray,QseSppPeakRequest)),
-                    Qt::QueuedConnection);
-            connect(reply, SIGNAL(aborted(QseSppPeakRequest)),
-                    this, SLOT(reply_aborted(QseSppPeakRequest)),
-                    Qt::QueuedConnection);
-            //m_replies.push_back(reply);
-            m_replyItems.push_back(QseSppAsyncSignalPlotReplyItem(reply, geometry, lastRect()));
-        }
-        catch (...) {}
-
+        queryPushFront();
+        queryPushBack();
     }
-
 
     m_lastQueryTimerGeometry = lastGeometry();
     m_lastQueryTimerRect = lastRect();
-
-//    return;
-//    {
-//    QseSppGeometry geometry = lastGeometry();
-//    QRect rect = lastRect();
-
-//    QseSppGeometry g = geometry;
-//    if (g.x() < m_dataSource->minIndex())
-//        g.setX(m_dataSource->minIndex());
-
-//    QseSppPeakRequest request(g, rect);
-//    if (/*hasChanges(rect, geometry) ||*/ m_lastRequst != request)
-//    {
-//        if (m_reply)
-//        {
-//            disconnect(m_reply, 0, this, 0);
-//            m_reply->abort();
-//            QMetaObject::invokeMethod(m_reply, "deleteLater", Qt::QueuedConnection);
-//            //m_reply->deleteLater();
-//        }
-
-//        m_reply = m_dataSource->read(request);
-//        connect(m_reply, SIGNAL(finished(QsePeakArray,QseSppPeakRequest)),
-//                this, SLOT(reply_finished(QsePeakArray,QseSppPeakRequest)),
-//                Qt::QueuedConnection);
-//        connect(m_reply, SIGNAL(aborted(QseSppPeakRequest)),
-//                this, SLOT(reply_aborted(QseSppPeakRequest)),
-//                Qt::QueuedConnection);
-//    }
-
-//    m_lastQueryTimerGeometry = lastGeometry();
-//    m_lastQueryTimerRect = lastRect();
-//    }
-
-    qDebug() << "done";
 }
 
 void QseSppAsyncSignalPlot::queryUnavaiblePeaks(const QRect &rect,
@@ -329,10 +179,8 @@ void QseSppAsyncSignalPlot::drawAvaiblePeaks(QPainter *painter,
     qint64 firstIndex = 0;
     if (m_peaksFirstIndex < geometry.x())
         firstIndex = geometry.x() - m_peaksFirstIndex;
-    qDebug() << "f:" << firstIndex;
     if (geometry.samplesPerPixel() > 0)
         firstIndex = firstIndex/geometry.samplesPerPixel();
-    qDebug() << "f:" << firstIndex;
     // all peaks are invisible
     if (firstIndex >= m_peaks.count())
         return;
@@ -345,7 +193,7 @@ void QseSppAsyncSignalPlot::drawAvaiblePeaks(QPainter *painter,
 
     // this value will be added to the y coordiante of the each peaks
     const double dy = calcDy(rect);
-qDebug() << "params: " << firstIndex << space << geometry << m_peaksFirstIndex << m_peaksFirstIndex - geometry.x();
+
     // draw the peaks
     if (m_peaks.hasMaximums())
         plotDelegate()->drawAsPeaks(painter, rect, geometry,
@@ -435,34 +283,70 @@ void QseSppAsyncSignalPlot::compressPeaks(const QseSppGeometry &oldGeometry,
     *peaks = QsePeakArray(newMinimums, newMaximums);
 }
 
-void QseSppAsyncSignalPlot::pushFrontPeaks(const QseSppGeometry &geometry, const QsePeakArray &peaks)
+void QseSppAsyncSignalPlot::abortAllReplies()
 {
+    for (int i = 0; i < m_replies.count(); ++i)
+    {
+        QseAbstractPeakReply *reply = m_replies.at(i).reply();
+        reply->disconnect(this);
+        reply->abort();
+        QMetaObject::invokeMethod(reply, "deleteLater", Qt::QueuedConnection);
+    }
+    m_replies.clear();
+}
+
+QseAbstractSppPeakReply *QseSppAsyncSignalPlot::createReply(
+        const QseSppPeakRequest &request) const
+{
+    QseAbstractSppPeakReply *reply = m_dataSource->read(request);
+    connect(reply, SIGNAL(finished(QsePeakArray,QseSppPeakRequest)),
+            this, SLOT(reply_finished(QsePeakArray,QseSppPeakRequest)),
+            Qt::QueuedConnection);
+    connect(reply, SIGNAL(aborted(QseSppPeakRequest)),
+            this, SLOT(reply_aborted(QseSppPeakRequest)),
+            Qt::QueuedConnection);
+    return reply;
+}
+
+void QseSppAsyncSignalPlot::queryReplaceAll()
+{
+    const QRect &rect = lastRect();
+    QseSppGeometry geometry = lastGeometry();
+    if (geometry.x() < m_dataSource->minIndex())
+        geometry.setX(m_dataSource->minIndex());
+
+    const QseSppPeakRequest request(geometry, rect);
+    QseAbstractSppPeakReply *reply = createReply(request);
+    m_replies.insert(QseSppSignalPlotPeakReplyItem(
+                         QseSppSignalPlotPeakReplyItem::ReplaceAll, reply,
+                         geometry, rect));
+}
+
+void QseSppAsyncSignalPlot::queryPushFront()
+{
+    QseSppGeometry geometry = lastGeometry();
     if (geometry.x() >= m_peaksFirstIndex)
         return;
 
-    if (m_peaksFirstIndex <= m_dataSource->minIndex())
-        return;
-
-    qint64 firstIndex = 0;
-    if (geometry.x() < m_dataSource->minIndex())
+    qint64 firstIndex = geometry.x();
+    if (firstIndex < m_dataSource->minIndex())
         firstIndex = m_dataSource->minIndex();
-    else
-        firstIndex = geometry.x();
 
-    const qint64 &spp = geometry.samplesPerPixel();
     const qint64 sampleCount = m_peaksFirstIndex - firstIndex;
+    const qint64 spp = geometry.samplesPerPixel();
     const qint64 peakCount = sampleCount/spp + ((sampleCount%spp) ? (1) : (0));
-//qDebug() << "push_front" << firstIndex << m_peaksFirstIndex << sampleCount << peakCount << spp;
-//qDebug() << peaks.count();
 
-//    m_peaks.push_front(m_dataSource->read(QseSppPeakRequest(firstIndex, spp, peakCount, true)));
-    m_peaks.push_front(peaks);
-    m_peaksFirstIndex = firstIndex;
+    QseSppPeakRequest request(firstIndex, spp, peakCount, true);
+    QseAbstractSppPeakReply *reply = createReply(request);
+    m_replies.insert(QseSppSignalPlotPeakReplyItem(
+                         QseSppSignalPlotPeakReplyItem::PushFront, reply,
+                         geometry, lastRect()));
 }
 
-void QseSppAsyncSignalPlot::pushBackPeaks(const QseSppGeometry &geometry,
-        int width, const QsePeakArray &peaks)
+void QseSppAsyncSignalPlot::queryPushBack()
 {
+    QseSppGeometry geometry = lastGeometry();
+
     const qint64 &spp = geometry.samplesPerPixel();
     const qint64 lastIndex = m_peaksFirstIndex + m_peaks.count()*spp - 1;
 
@@ -477,12 +361,16 @@ void QseSppAsyncSignalPlot::pushBackPeaks(const QseSppGeometry &geometry,
         alreadyVisibleWidth =
                 m_peaks.count() + (m_peaksFirstIndex - geometry.x())/spp;
 
-    const int neededWidth = width - alreadyVisibleWidth;
+    const int neededWidth = lastRect().width() - alreadyVisibleWidth;
     if (neededWidth <= 0)
         return;
 
-    //m_peaks.push_back(m_dataSource->read(QseSppPeakRequest(lastIndex+1, spp, neededWidth)));
-    m_peaks.push_back(peaks);
+
+    QseSppPeakRequest request(lastIndex+1, spp, neededWidth);
+    QseAbstractSppPeakReply *reply = createReply(request);
+    m_replies.insert(QseSppSignalPlotPeakReplyItem(
+                         QseSppSignalPlotPeakReplyItem::PushBack, reply,
+                         geometry, lastRect()));
 }
 
 QseAbstractPeakDataSource *QseSppAsyncSignalPlot::usedDataSource() const

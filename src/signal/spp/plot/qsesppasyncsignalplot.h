@@ -18,41 +18,8 @@
 
 #include "qseabstractsppsignalplot.h"
 #include "qsespppeakrequest.h"
+#include "qsesppsignalplotpeakreplyitemlist.h"
 class QseAbstractSppAsyncPeakDataSource;
-class QseAbstractSppPeakReply;
-
-
-class QseSppAsyncSignalPlotReplyItem
-{
-public:
-    QseSppAsyncSignalPlotReplyItem(QseAbstractSppPeakReply *reply,
-                                   const QseSppGeometry &geometry,
-                                   const QRect &rect)
-    {
-        m_reply = reply;
-        m_geometry = geometry;
-        m_rect = rect;
-    }
-
-    inline QseAbstractSppPeakReply *reply() const
-    {
-        return m_reply;
-    }
-
-    inline const QseSppGeometry &geometry() const
-    {
-        return m_geometry;
-    }
-
-    inline const QRect &rect() const
-    {
-        return m_rect;
-    }
-private:
-    QseAbstractSppPeakReply *m_reply;
-    QseSppGeometry m_geometry;
-    QRect m_rect;
-};
 
 
 class QseSppAsyncSignalPlot : public QseAbstractSppSignalPlot
@@ -60,6 +27,7 @@ class QseSppAsyncSignalPlot : public QseAbstractSppSignalPlot
     Q_OBJECT
 public:
     explicit QseSppAsyncSignalPlot(QObject *parent = 0);
+    virtual ~QseSppAsyncSignalPlot();
 
     inline QseAbstractSppAsyncPeakDataSource *dataSource() const;
     void setDataSource(QseAbstractSppAsyncPeakDataSource *dataSource);
@@ -85,10 +53,11 @@ private:
     void compressPeaks(const QseSppGeometry &oldGeometry,
                        const QseSppGeometry &newGeometry,
                        QsePeakArray *peaks);
-    void pushFrontPeaks(const QseSppGeometry &geometry,
-                        const QsePeakArray &peaks);
-    void pushBackPeaks(const QseSppGeometry &geometry, int width,
-                       const QsePeakArray &peaks);
+    void abortAllReplies();
+    QseAbstractSppPeakReply *createReply(const QseSppPeakRequest &request) const;
+    void queryReplaceAll();
+    void queryPushFront();
+    void queryPushBack();
 private:
     virtual QseAbstractPeakDataSource *usedDataSource() const;
 private:
@@ -97,8 +66,9 @@ private:
     qint64 m_peaksFirstIndex;
 //    QseAbstractSppPeakReply *m_reply;
 //    QList<QseAbstractSppPeakReply *> m_replies;
-    QList<QseSppAsyncSignalPlotReplyItem> m_replyItems;
+//    QList<QseSppSignalPlotPeakReplyItem> m_replyItems;
 //    QseSppPeakRequest m_lastRequst;
+    QseSppSignalPlotPeakReplyItemList m_replies;
     QTimer *m_queryTimer;
     QRect m_lastQueryTimerRect;
     QseSppGeometry m_lastQueryTimerGeometry;
