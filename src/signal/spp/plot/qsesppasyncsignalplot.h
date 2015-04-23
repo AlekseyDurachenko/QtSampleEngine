@@ -65,12 +65,9 @@ private:
     virtual QseAbstractPeakDataSource *usedDataSource() const;
 private:
     QseAbstractSppAsyncPeakDataSource *m_dataSource;
+    bool m_dataSourceChanged;
     QsePeakArray m_peaks;
     qint64 m_peaksFirstIndex;
-//    QseAbstractSppPeakReply *m_reply;
-//    QList<QseAbstractSppPeakReply *> m_replies;
-//    QList<QseSppSignalPlotPeakReplyItem> m_replyItems;
-//    QseSppPeakRequest m_lastRequst;
     QseSppSignalPlotPeakReplyItemList m_replies;
     QTimer *m_queryTimer;
     QRect m_lastQueryTimerRect;
