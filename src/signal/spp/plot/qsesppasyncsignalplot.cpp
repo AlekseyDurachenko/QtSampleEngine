@@ -73,7 +73,7 @@ void QseSppAsyncSignalPlot::draw(QPainter *painter, const QRect &rect,
             queryUnavaiblePeaks(rect, geometry);
         }
 
-        drawUnavaiblePeaks(painter, rect, geometry);
+        drawCanavs(painter, rect, geometry);
         drawAvaiblePeaks(painter, rect, geometry);
     }
 
@@ -173,12 +173,6 @@ void QseSppAsyncSignalPlot::queryUnavaiblePeaks(const QRect &rect,
             || m_lastQueryTimerRect.width() != rect.width()
             || m_dataSourceChanged)
         m_queryTimer->start();
-}
-
-void QseSppAsyncSignalPlot::drawUnavaiblePeaks(QPainter *painter,
-        const QRect &rect, const QseSppGeometry &geometry)
-{
-    ;
 }
 
 void QseSppAsyncSignalPlot::drawAvaiblePeaks(QPainter *painter,

@@ -16,13 +16,45 @@
 #include "qseabstractsppsignalplot.h"
 #include "qseabstractsppsignalplotdelegate.h"
 #include "qseabstractpeakdatasource.h"
+#include <QPainter>
 
 
 QseAbstractSppSignalPlot::QseAbstractSppSignalPlot(QObject *parent) :
     QseAbstractSppPlot(parent)
 {
+    m_canvasVisible = true;
+    m_opacity = 0.1;
+    m_brush = Qt::black;
+
     m_plotDelegate = 0;
     setZeroLine(Middle);
+}
+
+void QseAbstractSppSignalPlot::setCanvasOpacity(qreal opacity)
+{
+    if (m_opacity != opacity)
+    {
+        m_opacity = opacity;
+        setUpdateOnce(true);
+    }
+}
+
+void QseAbstractSppSignalPlot::setCanvasBrush(const QBrush &brush)
+{
+    if (m_brush != brush)
+    {
+        m_brush = brush;
+        setUpdateOnce(true);
+    }
+}
+
+void QseAbstractSppSignalPlot::setCanvasVisible(bool visible)
+{
+    if (m_canvasVisible != visible)
+    {
+        m_canvasVisible = visible;
+        setUpdateOnce(true);
+    }
 }
 
 void QseAbstractSppSignalPlot::setPlotDelegate(
@@ -90,4 +122,28 @@ void QseAbstractSppSignalPlot::plotDelegate_changed()
 void QseAbstractSppSignalPlot::plotDelegate_destroyed()
 {
     m_plotDelegate = 0;
+}
+
+void QseAbstractSppSignalPlot::drawCanavs(QPainter *painter,
+        const QRect &rect, const QseSppGeometry &geometry)
+{
+    if (!isCanvasVisible())
+        return;
+
+    const qint64 firstVisibleSample = geometry.x();
+    const qint64 lastVisibleSample =
+            QseSppGeometry::calcSampleIndex(geometry, rect.width());
+
+    int sl = 0;
+    if (usedDataSource()->minIndex() > firstVisibleSample)
+        sl = QseSppGeometry::calcOffset(geometry, usedDataSource()->minIndex());
+
+    int sr = rect.width()-1;
+    if (usedDataSource()->maxIndex() <= lastVisibleSample)
+        sr = QseSppGeometry::calcOffset(geometry, usedDataSource()->maxIndex());
+
+    painter->save();
+    painter->setOpacity(m_opacity);
+    painter->fillRect(sl, 0, sr-sl+1, rect.height(), m_brush);
+    painter->restore();
 }

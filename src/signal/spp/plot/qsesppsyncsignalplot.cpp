@@ -57,6 +57,7 @@ void QseSppSyncSignalPlot::draw(QPainter *painter, const QRect &rect,
         if (hasChanges(rect, geometry))
             calcPeaks(rect, geometry);
 
+        drawCanavs(painter, rect, geometry);
         drawAvaiblePeaks(painter, rect, geometry);
     }
 

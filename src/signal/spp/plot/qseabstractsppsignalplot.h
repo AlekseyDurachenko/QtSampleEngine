@@ -28,6 +28,9 @@ class QseAbstractSppSignalPlot : public QseAbstractSppPlot
     Q_OBJECT
     Q_ENUMS(ZeroLine)
     Q_PROPERTY(ZeroLine zeroLine READ zeroLine WRITE setZeroLine)
+    Q_PROPERTY(qreal canvasOpacity READ canvasOpacity WRITE setCanvasOpacity)
+    Q_PROPERTY(QBrush brush READ brush WRITE setBrush)
+    Q_PROPERTY(bool canvasVisible READ isCanvasVisible WRITE setCanvasVisible)
 public:
     enum ZeroLine
     {
@@ -37,6 +40,15 @@ public:
     };
 
     explicit QseAbstractSppSignalPlot(QObject *parent = 0);
+
+    inline qreal canvasOpacity() const;
+    void setCanvasOpacity(qreal opacity);
+
+    inline const QBrush &canvasBrush() const;
+    void setCanvasBrush(const QBrush &brush);
+
+    inline bool isCanvasVisible() const;
+    void setCanvasVisible(bool visible);
 
     inline QseAbstractSppSignalPlotDelegate *plotDelegate() const;
     void setPlotDelegate(QseAbstractSppSignalPlotDelegate *plotDelegate);
@@ -50,6 +62,8 @@ private slots:
     void plotDelegate_changed();
     void plotDelegate_destroyed();
 protected:
+    void drawCanavs(QPainter *painter, const QRect &rect,
+                    const QseSppGeometry &geometry);
     inline int calcDy(const QRect &rect);
 protected:
     // TODO: need to more correct method name
@@ -57,7 +71,25 @@ protected:
 private:
     QseAbstractSppSignalPlotDelegate *m_plotDelegate;
     ZeroLine m_zeroLine;
+    bool m_canvasVisible;
+    qreal m_opacity;
+    QBrush m_brush;
 };
+
+qreal QseAbstractSppSignalPlot::canvasOpacity() const
+{
+    return m_opacity;
+}
+
+const QBrush &QseAbstractSppSignalPlot::canvasBrush() const
+{
+    return m_brush;
+}
+
+bool QseAbstractSppSignalPlot::isCanvasVisible() const
+{
+    return m_canvasVisible;
+}
 
 QseAbstractSppSignalPlotDelegate *QseAbstractSppSignalPlot::plotDelegate() const
 {
