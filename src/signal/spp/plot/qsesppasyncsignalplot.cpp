@@ -213,18 +213,8 @@ void QseSppAsyncSignalPlot::calcPeaks(const QRect &rect,
     }
     else
     {
-        if (lastGeometry().samplesPerPixel() != geometry.samplesPerPixel())
-        {
-            if (lastGeometry().samplesPerPixel() < 0
-                    && geometry.samplesPerPixel() > 0)
-            {
-                compressLinesToPeaks(lastGeometry(), geometry, &m_peaks);
-            }
-            else if (lastGeometry().samplesPerPixel() > 0)
-            {
-                compressPeaksToPeaks(lastGeometry(), geometry, &m_peaks);
-            }
-        }
+        compressLinesToPeaks(lastGeometry(), geometry, &m_peaks);
+        compressPeaksToPeaks(lastGeometry(), geometry, &m_peaks);
     }
 }
 
@@ -254,9 +244,15 @@ void QseSppAsyncSignalPlot::compressLinesToPeaks(
         const QseSppGeometry &newGeometry,
         QsePeakArray *peaks)
 {
+    if (oldGeometry.samplesPerPixel() >= newGeometry.samplesPerPixel())
+        return;
+
+    if (!(oldGeometry.samplesPerPixel() < 0
+          && newGeometry.samplesPerPixel() > 0))
+        return;
+
     const qint64 spp = newGeometry.samplesPerPixel();
     const qint64 peakCount = peaks->count() / spp;
-
     const QVector<double> &values = peaks->minimums();
     QVector<double> newMinimums = QVector<double>(peakCount);
     QVector<double> newMaximums = QVector<double>(peakCount);
@@ -287,6 +283,13 @@ void QseSppAsyncSignalPlot::compressPeaksToPeaks(
         const QseSppGeometry &newGeometry,
         QsePeakArray *peaks)
 {
+    if (oldGeometry.samplesPerPixel() >= newGeometry.samplesPerPixel())
+        return;
+
+    if (oldGeometry.samplesPerPixel() < 0
+          || newGeometry.samplesPerPixel() < 0)
+        return;
+
     const qint64 &oldSpp = oldGeometry.samplesPerPixel();
     const qint64 &newSpp = newGeometry.samplesPerPixel();
     const qint64 newCount = (peaks->count() * oldSpp) / newSpp;
