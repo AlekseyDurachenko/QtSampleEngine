@@ -206,82 +206,6 @@ void QseSppAsyncSignalPlot::drawAvaiblePeaks(QPainter *painter,
 void QseSppAsyncSignalPlot::calcPeaks(const QRect &rect,
         const QseSppGeometry &geometry)
 {
-    /*
-    QseSppGeometry oldGeometry = lastGeometry();
-    QseSppGeometry newGeometry = geometry;
-
-    // zoom in: can't optimize
-    if (oldGeometry.samplesPerPixel() > newGeometry.samplesPerPixel())
-    {
-        m_peaks.clear();
-        return;
-    }
-
-    // zoom out: we can't recalculate the peaks if (newValue % oldValue != 0)
-    if (oldGeometry.samplesPerPixel() < newGeometry.samplesPerPixel())
-    {
-        if (newGeometry.samplesPerPixel() % oldGeometry.samplesPerPixel() != 0)
-        {
-            m_peaks.clear();
-            return;
-        }
-    }
-
-    // scroll x: we can't recalculate the peaks if (value % spp != 0)
-    if (newGeometry.x() % newGeometry.samplesPerPixel() != 0)
-    {
-        m_peaks.clear();
-        return;
-    }
-
-    if (oldGeometry.samplesPerPixel() < newGeometry.samplesPerPixel()
-            && oldGeometry.samplesPerPixel() > 0)
-    {
-        compressPeaksToPeaks(oldGeometry, newGeometry, &m_peaks);
-    }
-    //else
-    //{
-    //    m_peaks.clear();
-    //}
-
-
-    return;
-    // zoom in: can't optimize
-    if (oldGeometry.samplesPerPixel() > newGeometry.samplesPerPixel())
-    {
-        m_peaks.clear();
-        return;
-    }
-
-    // zoom out: we can't recalculate the peaks if (newValue % oldValue != 0)
-    if (oldGeometry.samplesPerPixel() < newGeometry.samplesPerPixel()
-            && newGeometry.samplesPerPixel() % oldGeometry.samplesPerPixel() != 0
-            && oldGeometry.samplesPerPixel() > 0
-            && newGeometry.samplesPerPixel() > 0)
-    {
-        m_peaks.clear();
-        return;
-    }
-
-    // scroll x: we can't recalculate the peaks if (value % spp != 0)
-    if (newGeometry.x() % newGeometry.samplesPerPixel() != 0)
-    {
-        m_peaks.clear();
-        return;
-    }
-
-    if (oldGeometry.samplesPerPixel() < newGeometry.samplesPerPixel()
-            && oldGeometry.samplesPerPixel() > 0)
-    {
-        compressPeaksToPeaks(oldGeometry, newGeometry, &m_peaks);
-    }
-    else
-    {
-        m_peaks.clear();
-    }
-
-
-    return;*/
     if (m_dataSource->options() & QseAbstractPeakDataSource::DontUseCacheOptimization
             || !checkOptimizationPossibility(lastGeometry(), geometry))
     {
@@ -289,9 +213,17 @@ void QseSppAsyncSignalPlot::calcPeaks(const QRect &rect,
     }
     else
     {
-        if (lastGeometry().samplesPerPixel() < geometry.samplesPerPixel())
+        if (lastGeometry().samplesPerPixel() != geometry.samplesPerPixel())
         {
-            compressPeaksToPeaks(lastGeometry(), geometry, &m_peaks);
+            if (lastGeometry().samplesPerPixel() < 0
+                    && geometry.samplesPerPixel() > 0)
+            {
+                compressLinesToPeaks(lastGeometry(), geometry, &m_peaks);
+            }
+            else if (lastGeometry().samplesPerPixel() > 0)
+            {
+                compressPeaksToPeaks(lastGeometry(), geometry, &m_peaks);
+            }
         }
     }
 }
@@ -299,25 +231,20 @@ void QseSppAsyncSignalPlot::calcPeaks(const QRect &rect,
 bool QseSppAsyncSignalPlot::checkOptimizationPossibility(
         const QseSppGeometry &oldGeometry, const QseSppGeometry &newGeometry)
 {
-    // does not make sense to optimize what quickly read (4 is empiric)
-    if (newGeometry.samplesPerPixel() < 2)
-        return false;
-    // can't optimize if sign of samplePerPixel is different
-    if (oldGeometry.samplesPerPixel() < 0)
-        return false;
-
     // zoom in: can't optimize
     if (oldGeometry.samplesPerPixel() > newGeometry.samplesPerPixel())
         return false;
 
     // zoom out: we can't recalculate the peaks if (newValue % oldValue != 0)
     if (oldGeometry.samplesPerPixel() < newGeometry.samplesPerPixel())
-        if (newGeometry.samplesPerPixel() % oldGeometry.samplesPerPixel() != 0)
-            return false;
+        if (oldGeometry.samplesPerPixel() > 0)
+            if (newGeometry.samplesPerPixel() % oldGeometry.samplesPerPixel() != 0)
+                return false;
 
     // scroll x: we can't recalculate the peaks if (value % spp != 0)
     if (newGeometry.x() % newGeometry.samplesPerPixel() != 0)
-        return false;
+        if (oldGeometry.samplesPerPixel() > 0)
+            return false;
 
     return true;
 }
