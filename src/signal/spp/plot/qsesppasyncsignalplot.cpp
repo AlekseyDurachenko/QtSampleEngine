@@ -146,7 +146,7 @@ void QseSppAsyncSignalPlot::queryTimer_timeout()
 {
     abortAllReplies();
 
-    if (m_peaks.isEmpty())
+    if (m_peaks.isEmpty() || lastGeometry().samplesPerPixel() < 0)
     {
         queryReplaceAll();
     }
@@ -206,6 +206,82 @@ void QseSppAsyncSignalPlot::drawAvaiblePeaks(QPainter *painter,
 void QseSppAsyncSignalPlot::calcPeaks(const QRect &rect,
         const QseSppGeometry &geometry)
 {
+    /*
+    QseSppGeometry oldGeometry = lastGeometry();
+    QseSppGeometry newGeometry = geometry;
+
+    // zoom in: can't optimize
+    if (oldGeometry.samplesPerPixel() > newGeometry.samplesPerPixel())
+    {
+        m_peaks.clear();
+        return;
+    }
+
+    // zoom out: we can't recalculate the peaks if (newValue % oldValue != 0)
+    if (oldGeometry.samplesPerPixel() < newGeometry.samplesPerPixel())
+    {
+        if (newGeometry.samplesPerPixel() % oldGeometry.samplesPerPixel() != 0)
+        {
+            m_peaks.clear();
+            return;
+        }
+    }
+
+    // scroll x: we can't recalculate the peaks if (value % spp != 0)
+    if (newGeometry.x() % newGeometry.samplesPerPixel() != 0)
+    {
+        m_peaks.clear();
+        return;
+    }
+
+    if (oldGeometry.samplesPerPixel() < newGeometry.samplesPerPixel()
+            && oldGeometry.samplesPerPixel() > 0)
+    {
+        compressPeaksToPeaks(oldGeometry, newGeometry, &m_peaks);
+    }
+    //else
+    //{
+    //    m_peaks.clear();
+    //}
+
+
+    return;
+    // zoom in: can't optimize
+    if (oldGeometry.samplesPerPixel() > newGeometry.samplesPerPixel())
+    {
+        m_peaks.clear();
+        return;
+    }
+
+    // zoom out: we can't recalculate the peaks if (newValue % oldValue != 0)
+    if (oldGeometry.samplesPerPixel() < newGeometry.samplesPerPixel()
+            && newGeometry.samplesPerPixel() % oldGeometry.samplesPerPixel() != 0
+            && oldGeometry.samplesPerPixel() > 0
+            && newGeometry.samplesPerPixel() > 0)
+    {
+        m_peaks.clear();
+        return;
+    }
+
+    // scroll x: we can't recalculate the peaks if (value % spp != 0)
+    if (newGeometry.x() % newGeometry.samplesPerPixel() != 0)
+    {
+        m_peaks.clear();
+        return;
+    }
+
+    if (oldGeometry.samplesPerPixel() < newGeometry.samplesPerPixel()
+            && oldGeometry.samplesPerPixel() > 0)
+    {
+        compressPeaksToPeaks(oldGeometry, newGeometry, &m_peaks);
+    }
+    else
+    {
+        m_peaks.clear();
+    }
+
+
+    return;*/
     if (m_dataSource->options() & QseAbstractPeakDataSource::DontUseCacheOptimization
             || !checkOptimizationPossibility(lastGeometry(), geometry))
     {
@@ -213,10 +289,10 @@ void QseSppAsyncSignalPlot::calcPeaks(const QRect &rect,
     }
     else
     {
-//        m_peaks.clear();
-        compressPeaks(lastGeometry(), geometry, &m_peaks);
-//        pushFrontPeaks(geometry);
-//        pushBackPeaks(geometry, rect.width());
+        if (lastGeometry().samplesPerPixel() < geometry.samplesPerPixel())
+        {
+            compressPeaksToPeaks(lastGeometry(), geometry, &m_peaks);
+        }
     }
 }
 
@@ -224,7 +300,7 @@ bool QseSppAsyncSignalPlot::checkOptimizationPossibility(
         const QseSppGeometry &oldGeometry, const QseSppGeometry &newGeometry)
 {
     // does not make sense to optimize what quickly read (4 is empiric)
-    if (newGeometry.samplesPerPixel() < 4)
+    if (newGeometry.samplesPerPixel() < 2)
         return false;
     // can't optimize if sign of samplePerPixel is different
     if (oldGeometry.samplesPerPixel() < 0)
@@ -246,12 +322,44 @@ bool QseSppAsyncSignalPlot::checkOptimizationPossibility(
     return true;
 }
 
-void QseSppAsyncSignalPlot::compressPeaks(const QseSppGeometry &oldGeometry,
-        const QseSppGeometry &newGeometry, QsePeakArray *peaks)
+void QseSppAsyncSignalPlot::compressLinesToPeaks(
+        const QseSppGeometry &oldGeometry,
+        const QseSppGeometry &newGeometry,
+        QsePeakArray *peaks)
 {
-    if (oldGeometry.samplesPerPixel() == newGeometry.samplesPerPixel())
-        return;
+    const qint64 spp = newGeometry.samplesPerPixel();
+    const qint64 peakCount = peaks->count() / spp;
 
+    const QVector<double> &values = peaks->minimums();
+    QVector<double> newMinimums = QVector<double>(peakCount);
+    QVector<double> newMaximums = QVector<double>(peakCount);
+
+    for (qint64 index = 0; index < peakCount; ++index)
+    {
+        double minimum = values[index*spp];
+        double maximum = values[index*spp];
+
+        for (qint64 n = 1; n < spp; ++n)
+        {
+            const double value = values[index*spp+n];
+            if (value < minimum)
+                minimum = value;
+            if (value > maximum)
+                maximum = value;
+        }
+
+        newMinimums[index] = minimum;
+        newMaximums[index] = maximum;
+    }
+
+    *peaks = QsePeakArray(newMinimums, newMaximums);
+}
+
+void QseSppAsyncSignalPlot::compressPeaksToPeaks(
+        const QseSppGeometry &oldGeometry,
+        const QseSppGeometry &newGeometry,
+        QsePeakArray *peaks)
+{
     const qint64 &oldSpp = oldGeometry.samplesPerPixel();
     const qint64 &newSpp = newGeometry.samplesPerPixel();
     const qint64 newCount = (peaks->count() * oldSpp) / newSpp;
@@ -310,33 +418,30 @@ QseAbstractSppPeakReply *QseSppAsyncSignalPlot::createReply(
 
 void QseSppAsyncSignalPlot::queryReplaceAll()
 {
-    const QRect &rect = lastRect();
     QseSppGeometry geometry = lastGeometry();
     if (geometry.x() < m_dataSource->minIndex())
         geometry.setX(m_dataSource->minIndex());
 
-    const QseSppPeakRequest request(geometry, rect);
+    const QseSppPeakRequest request(geometry, lastRect());
     QseAbstractSppPeakReply *reply = createReply(request);
     m_replies.insert(QseSppSignalPlotPeakReplyItem(
                          QseSppSignalPlotPeakReplyItem::ReplaceAll, reply,
-                         geometry, rect));
+                         geometry, lastRect()));
 }
 
 void QseSppAsyncSignalPlot::queryPushFront()
 {
-    QseSppGeometry geometry = lastGeometry();
-    if (geometry.x() >= m_peaksFirstIndex)
+    if (lastGeometry().x() >= m_peaksFirstIndex)
         return;
 
-    qint64 firstIndex = geometry.x();
-    if (firstIndex < m_dataSource->minIndex())
-        firstIndex = m_dataSource->minIndex();
+    QseSppGeometry geometry = lastGeometry();
+    if (geometry.x() < m_dataSource->minIndex())
+        geometry.setX(m_dataSource->minIndex());
 
-    const qint64 sampleCount = m_peaksFirstIndex - firstIndex;
-    const qint64 spp = geometry.samplesPerPixel();
-    const qint64 peakCount = sampleCount/spp + ((sampleCount%spp) ? (1) : (0));
+    const qint64 sampleCount = m_peaksFirstIndex - geometry.x();
+    const qint64 width = QseSppGeometry::widthFromSamples(geometry, sampleCount);
 
-    QseSppPeakRequest request(firstIndex, spp, peakCount, true);
+    const QseSppPeakRequest request(geometry, width, true);
     QseAbstractSppPeakReply *reply = createReply(request);
     m_replies.insert(QseSppSignalPlotPeakReplyItem(
                          QseSppSignalPlotPeakReplyItem::PushFront, reply,
@@ -345,32 +450,28 @@ void QseSppAsyncSignalPlot::queryPushFront()
 
 void QseSppAsyncSignalPlot::queryPushBack()
 {
-    QseSppGeometry geometry = lastGeometry();
-
-    const qint64 &spp = geometry.samplesPerPixel();
-    const qint64 lastIndex = m_peaksFirstIndex + m_peaks.count()*spp - 1;
-
-    if (lastIndex >= m_dataSource->maxIndex())
+    const qint64 spp = lastGeometry().samplesPerPixel();
+    const qint64 lastAvaibleIndex = m_peaksFirstIndex + m_peaks.count()*spp - 1;
+    if (lastAvaibleIndex >= m_dataSource->maxIndex())
         return;
 
     int alreadyVisibleWidth = 0;
-    if (geometry.x() >= m_peaksFirstIndex)
+    if (lastGeometry().x() >= m_peaksFirstIndex)
         alreadyVisibleWidth =
-                m_peaks.count() - (geometry.x() - m_peaksFirstIndex)/spp;
+                m_peaks.count() - (lastGeometry().x() - m_peaksFirstIndex)/spp;
     else
         alreadyVisibleWidth =
-                m_peaks.count() + (m_peaksFirstIndex - geometry.x())/spp;
+                m_peaks.count() + (m_peaksFirstIndex - lastGeometry().x())/spp;
 
     const int neededWidth = lastRect().width() - alreadyVisibleWidth;
     if (neededWidth <= 0)
         return;
 
-
-    QseSppPeakRequest request(lastIndex+1, spp, neededWidth);
+    QseSppPeakRequest request(lastAvaibleIndex+1, spp, neededWidth);
     QseAbstractSppPeakReply *reply = createReply(request);
     m_replies.insert(QseSppSignalPlotPeakReplyItem(
                          QseSppSignalPlotPeakReplyItem::PushBack, reply,
-                         geometry, lastRect()));
+                         lastGeometry(), lastRect()));
 }
 
 QseAbstractPeakDataSource *QseSppAsyncSignalPlot::usedDataSource() const

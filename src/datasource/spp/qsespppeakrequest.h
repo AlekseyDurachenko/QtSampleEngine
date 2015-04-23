@@ -26,13 +26,16 @@ public:
     QseSppPeakRequest();
     QseSppPeakRequest(const QseSppGeometry &geometry, const QRect &rect,
                       bool rightAlign = false);
-    QseSppPeakRequest(qint64 x, qint64 spp, int width, bool rightAlign = false);
+    QseSppPeakRequest(const QseSppGeometry &geometry, int width,
+                      bool rightAlign = false);
+    QseSppPeakRequest(qint64 x, qint64 samplePerPixel, int width,
+                      bool rightAlign = false);
 
     inline const qint64 &x() const;
     void setX(qint64 x);
 
-    inline const qint64 &spp() const;
-    void setSpp(qint64 spp);
+    inline const qint64 &samplePerPixel() const;
+    void setSamplePerPixel(qint64 samplePerPixel);
 
     inline const int &width() const;
     void setWidth(int width);
@@ -41,7 +44,7 @@ public:
     void setRightAlign(bool rightAlign);
 private:
     qint64 m_x;
-    qint64 m_spp;
+    qint64 m_samplePerPixel;
     int m_width;
     bool m_rightAlign;
 };
@@ -54,9 +57,9 @@ const qint64 &QseSppPeakRequest::x() const
     return m_x;
 }
 
-const qint64 &QseSppPeakRequest::spp() const
+const qint64 &QseSppPeakRequest::samplePerPixel() const
 {
-    return m_spp;
+    return m_samplePerPixel;
 }
 
 const int &QseSppPeakRequest::width() const

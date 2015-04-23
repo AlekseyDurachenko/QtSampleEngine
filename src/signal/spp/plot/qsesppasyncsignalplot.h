@@ -50,9 +50,12 @@ private:
     void calcPeaks(const QRect &rect, const QseSppGeometry &geometry);
     bool checkOptimizationPossibility(const QseSppGeometry &oldGeometry,
                                       const QseSppGeometry &newGeometry);
-    void compressPeaks(const QseSppGeometry &oldGeometry,
-                       const QseSppGeometry &newGeometry,
-                       QsePeakArray *peaks);
+    void compressLinesToPeaks(const QseSppGeometry &oldGeometry,
+                              const QseSppGeometry &newGeometry,
+                              QsePeakArray *peaks);
+    void compressPeaksToPeaks(const QseSppGeometry &oldGeometry,
+                              const QseSppGeometry &newGeometry,
+                              QsePeakArray *peaks);
     void abortAllReplies();
     QseAbstractSppPeakReply *createReply(const QseSppPeakRequest &request) const;
     void queryReplaceAll();

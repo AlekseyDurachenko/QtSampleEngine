@@ -21,7 +21,7 @@ QseSppPeakRequest::QseSppPeakRequest()
     qRegisterMetaType<QseSppPeakRequest>("QseSppPeakRequest");
 
     m_x = 0;
-    m_spp = 0;
+    m_samplePerPixel = 0;
     m_width = 0;
     m_rightAlign = false;
 }
@@ -32,18 +32,29 @@ QseSppPeakRequest::QseSppPeakRequest(const QseSppGeometry &geometry,
     qRegisterMetaType<QseSppPeakRequest>("QseSppPeakRequest");
 
     m_x = geometry.x();
-    m_spp = geometry.samplesPerPixel();
+    m_samplePerPixel = geometry.samplesPerPixel();
     m_width = rect.width();
     m_rightAlign = rightAlign;
 }
 
-QseSppPeakRequest::QseSppPeakRequest(qint64 x, qint64 spp, int width,
+QseSppPeakRequest::QseSppPeakRequest(const QseSppGeometry &geometry, int width,
         bool rightAlign)
 {
     qRegisterMetaType<QseSppPeakRequest>("QseSppPeakRequest");
 
+    m_x = geometry.x();
+    m_samplePerPixel = geometry.samplesPerPixel();
+    m_width = width;
+    m_rightAlign = rightAlign;
+}
+
+QseSppPeakRequest::QseSppPeakRequest(qint64 x, qint64 samplePerPixel,
+        int width, bool rightAlign)
+{
+    qRegisterMetaType<QseSppPeakRequest>("QseSppPeakRequest");
+
     m_x = x;
-    m_spp = spp;
+    m_samplePerPixel = samplePerPixel;
     m_width = width;
     m_rightAlign = rightAlign;
 }
@@ -53,9 +64,9 @@ void QseSppPeakRequest::setX(qint64 x)
     m_x = x;
 }
 
-void QseSppPeakRequest::setSpp(qint64 spp)
+void QseSppPeakRequest::setSamplePerPixel(qint64 samplePerPixel)
 {
-    m_spp = spp;
+    m_samplePerPixel = samplePerPixel;
 }
 
 void QseSppPeakRequest::setWidth(int width)
@@ -72,7 +83,7 @@ void QseSppPeakRequest::setRightAlign(bool rightAlign)
 bool operator ==(const QseSppPeakRequest &l, const QseSppPeakRequest &r)
 {
     return (l.x() == r.x()
-            && l.spp() == r.spp()
+            && l.samplePerPixel() == r.samplePerPixel()
             && l.width() == r.width()
             && l.rightAlign() == r.rightAlign());
 }
@@ -81,7 +92,7 @@ bool operator ==(const QseSppPeakRequest &l, const QseSppPeakRequest &r)
 bool operator !=(const QseSppPeakRequest &l, const QseSppPeakRequest &r)
 {
     return (l.x() != r.x()
-            || l.spp() != r.spp()
+            || l.samplePerPixel() != r.samplePerPixel()
             || l.width() != r.width()
             || l.rightAlign() != r.rightAlign());
 }
