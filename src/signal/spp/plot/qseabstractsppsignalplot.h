@@ -29,7 +29,7 @@ class QseAbstractSppSignalPlot : public QseAbstractSppPlot
     Q_ENUMS(ZeroLine)
     Q_PROPERTY(ZeroLine zeroLine READ zeroLine WRITE setZeroLine)
     Q_PROPERTY(qreal canvasOpacity READ canvasOpacity WRITE setCanvasOpacity)
-    Q_PROPERTY(QBrush brush READ brush WRITE setBrush)
+    Q_PROPERTY(QBrush canvasBrush READ canvasBrush WRITE setCanvasBrush)
     Q_PROPERTY(bool canvasVisible READ isCanvasVisible WRITE setCanvasVisible)
 public:
     enum ZeroLine
