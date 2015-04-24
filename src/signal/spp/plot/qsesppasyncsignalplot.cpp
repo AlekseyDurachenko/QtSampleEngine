@@ -27,8 +27,9 @@ QseSppAsyncSignalPlot::QseSppAsyncSignalPlot(QObject *parent) :
 {
     m_dataSource = 0;
     m_dataSourceChanged = false;
+    m_queryInterval = 200;
     m_queryTimer = new QTimer(this);
-    m_queryTimer->setInterval(200);
+    m_queryTimer->setInterval(m_queryInterval);
     m_queryTimer->setSingleShot(true);
     connect(m_queryTimer, SIGNAL(timeout()), this, SLOT(queryTimer_timeout()));
 }
@@ -60,6 +61,14 @@ void QseSppAsyncSignalPlot::setDataSource(
 
     m_dataSourceChanged = true;
     setUpdateOnce(true);
+}
+
+void QseSppAsyncSignalPlot::setQueryInterval(int interval)
+{
+    m_queryInterval = interval;
+    m_queryTimer->setInterval(interval);
+    if (m_queryTimer->isActive())
+        m_queryTimer->start();
 }
 
 void QseSppAsyncSignalPlot::draw(QPainter *painter, const QRect &rect,

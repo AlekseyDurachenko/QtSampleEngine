@@ -32,6 +32,9 @@ public:
     inline QseAbstractSppAsyncPeakDataSource *dataSource() const;
     void setDataSource(QseAbstractSppAsyncPeakDataSource *dataSource);
 
+    inline int queryInterval() const;
+    void setQueryInterval(int interval);
+
     virtual void draw(QPainter *painter, const QRect &rect,
                       const QseSppGeometry &geometry);
 private slots:
@@ -72,12 +75,17 @@ private:
     QTimer *m_queryTimer;
     QRect m_lastQueryTimerRect;
     QseSppGeometry m_lastQueryTimerGeometry;
-
+    int m_queryInterval;
 };
 
 QseAbstractSppAsyncPeakDataSource *QseSppAsyncSignalPlot::dataSource() const
 {
     return m_dataSource;
+}
+
+int QseSppAsyncSignalPlot::queryInterval() const
+{
+    return m_queryInterval;
 }
 
 
