@@ -103,7 +103,7 @@ QVector<double> CMainWindow::readSoundFile(const QString &fileName,
         double data[1024];
 
         QVector<double> result;
-        result.reserve(10000000);
+        result.reserve(sfinfo.frames);
 
         while ((readcount = sf_read_double(infile, data, 1024)))
             for (int i = 0; i < readcount; i += sfinfo.channels)
