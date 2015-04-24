@@ -22,6 +22,7 @@ class QsePosition;
 class QseSelection;
 class QseSppPositionPlot;
 class QseSppSelectionPlot;
+class QseSppSignalCanvasPlot;
 class QseSppSyncSignalPlot;
 class QseSppAxisCoverPlot;
 class QseSppAudacityController;
@@ -58,6 +59,7 @@ private:
     QseSppSelectionPlot *m_selectionPlot;
 
     QseSppAxisCoverPlot *m_coverPlot;
+    QseSppSignalCanvasPlot *m_signalCanvasPlot;
     QseSppSyncSignalPlot *m_signalPlot;
     QseSppSignalLinearPlotDelegate *m_plotDelegate;
 

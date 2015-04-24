@@ -34,7 +34,6 @@
 #include "csppasyncaudiolimiter.h"
 #include "csppasyncpeakdatasource.h"
 
-
 CComplexMonoAudioWidget::CComplexMonoAudioWidget(QWidget *parent) :
     QWidget(parent)
 {

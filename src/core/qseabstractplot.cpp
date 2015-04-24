@@ -27,6 +27,7 @@
 QseAbstractPlot::QseAbstractPlot(QObject *parent) : QObject(parent)
 {
     m_updateOnce = true;
+    m_enabled = true;
 }
 
 /*! This method set flag isUpdateOnce() to true, and emit changed()
@@ -39,6 +40,20 @@ void QseAbstractPlot::setUpdateOnce(bool need)
     m_updateOnce = need;
     if (m_updateOnce)
         emit updateNeeded();
+}
+
+void QseAbstractPlot::setEnabled(bool enabled)
+{
+    if (m_enabled != enabled)
+    {
+        m_enabled = enabled;
+        setUpdateOnce(true);
+    }
+}
+
+void QseAbstractPlot::setDisabled(bool disabled)
+{
+    setEnabled(!disabled);
 }
 
 /*! This method used for reset the cached values of the plotter,

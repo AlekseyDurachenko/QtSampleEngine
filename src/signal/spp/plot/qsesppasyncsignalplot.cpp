@@ -73,7 +73,6 @@ void QseSppAsyncSignalPlot::draw(QPainter *painter, const QRect &rect,
             queryUnavaiblePeaks(rect, geometry);
         }
 
-        drawCanavs(painter, rect, geometry);
         drawAvaiblePeaks(painter, rect, geometry);
     }
 

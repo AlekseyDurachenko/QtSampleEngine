@@ -38,18 +38,15 @@ bool QseMonocolorSppCoverPlot::hasChanges(const QRect &rect,
     return (isUpdateOnce() || rect != lastRect());
 }
 
-bool QseMonocolorSppCoverPlot::isVisible(const QRect &/*rect*/,
-        const QseSppGeometry &/*geometry*/)
-{
-    return true;
-}
-
 void QseMonocolorSppCoverPlot::draw(QPainter *painter, const QRect &rect,
         const QseSppGeometry &geometry)
 {
-    painter->save();
-    painter->fillRect(rect, m_color);
-    painter->restore();
+    if (isVisible(rect, geometry))
+    {
+        painter->save();
+        painter->fillRect(rect, m_color);
+        painter->restore();
+    }
 
     QseAbstractSppPlot::draw(painter, rect, geometry);
 }

@@ -32,7 +32,6 @@ public:
     void setColor(const QColor &color);
 
     virtual bool hasChanges(const QRect &rect, const QseSppGeometry &geometry);
-    virtual bool isVisible(const QRect &rect, const QseSppGeometry &geometry);
     virtual void draw(QPainter *painter, const QRect &rect,
               const QseSppGeometry &geometry);
 private:

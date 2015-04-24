@@ -58,7 +58,8 @@ HEADERS +=                                                          \
     $$PWD/src/datasource/spp/qsespppeakrequest.h \
     $$PWD/src/signal/spp/plot/qsesppasyncsignalplot.h \
     $$PWD/src/signal/spp/plot/qsesppsignalplotpeakreplyitem.h \
-    $$PWD/src/signal/spp/plot/qsesppsignalplotpeakreplyitemlist.h
+    $$PWD/src/signal/spp/plot/qsesppsignalplotpeakreplyitemlist.h \
+    $$PWD/src/signalcanvas/spp/plot/qsesppsignalcanvasplot.h
 
 
 SOURCES +=                                                          \
@@ -120,7 +121,8 @@ SOURCES +=                                                          \
     $$PWD/src/datasource/spp/qsespppeakrequest.cpp \
     $$PWD/src/signal/spp/plot/qsesppasyncsignalplot.cpp \
     $$PWD/src/signal/spp/plot/qsesppsignalplotpeakreplyitem.cpp \
-    $$PWD/src/signal/spp/plot/qsesppsignalplotpeakreplyitemlist.cpp
+    $$PWD/src/signal/spp/plot/qsesppsignalplotpeakreplyitemlist.cpp \
+    $$PWD/src/signalcanvas/spp/plot/qsesppsignalcanvasplot.cpp
 
 
 OTHER_FILES +=                                                      \
@@ -155,6 +157,7 @@ INCLUDEPATH +=                                                      \
     $$PWD/src/selection/spp/controller                              \
     $$PWD/src/signal                                                \
     $$PWD/src/signal/spp/plot                                       \
+    $$PWD/src/signalcanvas/spp/plot                                 \
     $$PWD/src/widget                                                \
     $$PWD/src/widget/sppaudacitywidget                              \
     $$PWD/src/widget/sppwidget                                      \

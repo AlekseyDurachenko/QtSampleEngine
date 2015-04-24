@@ -22,18 +22,28 @@
 class QseAbstractPlot : public QObject
 {
     Q_OBJECT
+    Q_PROPERTY(bool enabled READ isEnabled WRITE setEnabled)
 public:
     explicit QseAbstractPlot(QObject *parent = 0);
 
+    inline bool isEnabled() const;
     inline bool isUpdateOnce() const;
 signals:
     void updateNeeded();
 public slots:
     void setUpdateOnce(bool need = true);
+    void setEnabled(bool enabled);
+    void setDisabled(bool disabled);
     virtual void reset();
 private:
     bool m_updateOnce;
+    bool m_enabled;
 };
+
+bool QseAbstractPlot::isEnabled() const
+{
+    return m_enabled;
+}
 
 bool QseAbstractPlot::isUpdateOnce() const
 {

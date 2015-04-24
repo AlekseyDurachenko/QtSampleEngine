@@ -22,6 +22,7 @@ class QsePosition;
 class QseSelection;
 class QseSppPositionPlot;
 class QseSppSelectionPlot;
+class QseSppSignalCanvasPlot;
 class QseSppAsyncSignalPlot;
 class QseSppAxisCoverPlot;
 class QseSppAudacityController;
@@ -29,7 +30,6 @@ class CSppAsyncPeakDataSource;
 class CSppAsyncAudioLimiter;
 class QseSppWidget;
 class QseSppSignalLinearPlotDelegate;
-
 
 class CSppAsyncAudioWidget : public QseSppWidget
 {
@@ -58,6 +58,7 @@ private:
     QseSppSelectionPlot *m_selectionPlot;
 
     QseSppAxisCoverPlot *m_coverPlot;
+    QseSppSignalCanvasPlot *m_signalCanvasPlot;
     QseSppAsyncSignalPlot *m_signalPlot;
     QseSppSignalLinearPlotDelegate *m_plotDelegate;
 

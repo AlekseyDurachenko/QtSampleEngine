@@ -129,34 +129,37 @@ bool QseSppAxisCoverPlot::hasChanges(const QRect &rect,
 void QseSppAxisCoverPlot::draw(QPainter *painter, const QRect &rect,
         const QseSppGeometry &geometry)
 {
-    painter->fillRect(rect, m_backgroundColor);
+    if (isVisible(rect, geometry))
+    {
+        painter->fillRect(rect, m_backgroundColor);
 
-    // fetch metric list
-    QList<QseMetricItem> vMetricList;
-    if (m_verticalProvider)
-        vMetricList = m_verticalProvider->create(geometry, rect.height());
-    QList<QseMetricItem> hMetricList;
-    if (m_horizontalProvider)
-        hMetricList = m_horizontalProvider->create(geometry, rect.width());
+        // fetch metric list
+        QList<QseMetricItem> vMetricList;
+        if (m_verticalProvider)
+            vMetricList = m_verticalProvider->create(geometry, rect.height());
+        QList<QseMetricItem> hMetricList;
+        if (m_horizontalProvider)
+            hMetricList = m_horizontalProvider->create(geometry, rect.width());
 
-    // draw center lines (with level 0)
-    painter->setPen(m_clPen);
-    painter->setOpacity(m_clOpacity);
-    foreach (const QseMetricItem &metric, vMetricList)
-        if (metric.level() == 0)
-            painter->drawLine(0, metric.offset(), rect.width(), metric.offset());
-    foreach (const QseMetricItem &metric, hMetricList)
-        if (metric.level() == 0)
-            painter->drawLine(metric.offset(), 0, metric.offset(), rect.height());
-    // draw main lines (with level 1)
-    painter->setPen(m_lPen);
-    painter->setOpacity(m_lOpacity);
-    foreach (const QseMetricItem &metric, vMetricList)
-        if (metric.level() == 1)
-            painter->drawLine(0, metric.offset(), rect.width(), metric.offset());
-    foreach (const QseMetricItem &metric, hMetricList)
-        if (metric.level() == 1)
-            painter->drawLine(metric.offset(), 0, metric.offset(), rect.height());
+        // draw center lines (with level 0)
+        painter->setPen(m_clPen);
+        painter->setOpacity(m_clOpacity);
+        foreach (const QseMetricItem &metric, vMetricList)
+            if (metric.level() == 0)
+                painter->drawLine(0, metric.offset(), rect.width(), metric.offset());
+        foreach (const QseMetricItem &metric, hMetricList)
+            if (metric.level() == 0)
+                painter->drawLine(metric.offset(), 0, metric.offset(), rect.height());
+        // draw main lines (with level 1)
+        painter->setPen(m_lPen);
+        painter->setOpacity(m_lOpacity);
+        foreach (const QseMetricItem &metric, vMetricList)
+            if (metric.level() == 1)
+                painter->drawLine(0, metric.offset(), rect.width(), metric.offset());
+        foreach (const QseMetricItem &metric, hMetricList)
+            if (metric.level() == 1)
+                painter->drawLine(metric.offset(), 0, metric.offset(), rect.height());
+    }
 
     QseAbstractSppPlot::draw(painter, rect, geometry);
 }

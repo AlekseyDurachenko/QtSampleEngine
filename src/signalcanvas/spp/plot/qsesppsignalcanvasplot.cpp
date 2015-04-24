@@ -13,20 +13,20 @@
 // You should have received a copy of the GNU Lesser General Public
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
-#include "qsesppselectionplot.h"
+#include "qsesppsignalcanvasplot.h"
 #include <QPainter>
-#include "qseselection.h"
+#include "qseabstractpeakdatasource.h"
 
 
-QseSppSelectionPlot::QseSppSelectionPlot(QObject *parent)
+QseSppSignalCanvasPlot::QseSppSignalCanvasPlot(QObject *parent)
     : QseAbstractSppPlot(parent)
 {
-    m_brush = Qt::blue;
-    m_opacity = 0.5;
-    m_selection = 0;
+    m_brush = Qt::black;
+    m_opacity = 0.1;
+    m_dataSource = 0;
 }
 
-void QseSppSelectionPlot::setBrush(const QBrush &brush)
+void QseSppSignalCanvasPlot::setBrush(const QBrush &brush)
 {
     if (m_brush != brush)
     {
@@ -35,7 +35,7 @@ void QseSppSelectionPlot::setBrush(const QBrush &brush)
     }
 }
 
-void QseSppSelectionPlot::setOpacity(qreal opacity)
+void QseSppSignalCanvasPlot::setOpacity(qreal opacity)
 {
     if (m_opacity != opacity)
     {
@@ -44,75 +44,76 @@ void QseSppSelectionPlot::setOpacity(qreal opacity)
     }
 }
 
-void QseSppSelectionPlot::setSelection(QseSelection *selection)
+void QseSppSignalCanvasPlot::setDataSource(
+        QseAbstractPeakDataSource *dataSource)
 {
-    if (m_selection == selection)
+    if (!isEnabled())
         return;
 
-    if (m_selection)
-        disconnect(m_selection, 0, this, 0);
+    if (m_dataSource == dataSource)
+        return;
 
-    m_selection = selection;
-    if (m_selection)
+    if (m_dataSource)
+        disconnect(m_dataSource, 0, this, 0);
+
+    m_dataSource = dataSource;
+    if (m_dataSource)
     {
-        connect(m_selection, SIGNAL(selectionChanged()),
-                this, SLOT(setUpdateOnce()));
-        connect(m_selection, SIGNAL(destroyed(QObject*)),
-                this, SLOT(selection_destroyed(QObject*)));
+        connect(m_dataSource, SIGNAL(destroyed(QObject*)),
+                this, SLOT(dataSource_destroyed(QObject*)));
+        connect(m_dataSource, SIGNAL(dataChanged()),
+                this, SLOT(dataSource_dataChanged()));
     }
 
     setUpdateOnce(true);
 }
 
-bool QseSppSelectionPlot::hasChanges(const QRect &rect,
+bool QseSppSignalCanvasPlot::hasChanges(const QRect &rect,
         const QseSppGeometry &geometry)
 {
-    return (isUpdateOnce() || rect != lastRect() || geometry != lastGeometry());
+    return (isUpdateOnce()
+            || rect != lastRect()
+            || geometry != lastGeometry());
 }
 
-bool QseSppSelectionPlot::isVisible(const QRect &rect,
+bool QseSppSignalCanvasPlot::isVisible(const QRect &rect,
         const QseSppGeometry &geometry)
 {
-    if (!isEnabled())
+    if (m_dataSource == 0)
         return false;
 
-    if (m_selection == 0)
-        return false;
-
-    if (m_selection->isNull())
+    if (m_dataSource->count() == 0)
         return false;
 
     const qint64 firstVisibleSample = geometry.x();
     const qint64 lastVisibleSample = firstVisibleSample
             + QseSppGeometry::samplesFromWidth(geometry, rect.width());
 
-    if (m_selection->selectedRange().first() >= lastVisibleSample)
+    if (m_dataSource->minIndex() >= lastVisibleSample)
         return false;
 
-    if (m_selection->selectedRange().last() <= firstVisibleSample)
+    if (m_dataSource->maxIndex() <= firstVisibleSample)
         return false;
 
     return true;
 }
 
-void QseSppSelectionPlot::draw(QPainter *painter, const QRect &rect,
+void QseSppSignalCanvasPlot::draw(QPainter *painter, const QRect &rect,
         const QseSppGeometry &geometry)
 {
     if (isVisible(rect, geometry))
     {
         const qint64 firstVisibleSample = geometry.x();
         const qint64 lastVisibleSample =
-                QseSppGeometry::calcSampleIndex(geometry, rect.width());
+                 QseSppGeometry::calcSampleIndex(geometry, rect.width());
 
         int sl = 0;
-        if (m_selection->selectedRange().first() > firstVisibleSample)
-            sl = QseSppGeometry::calcOffset(geometry,
-                    m_selection->selectedRange().first());
+        if (m_dataSource->minIndex() > firstVisibleSample)
+            sl = QseSppGeometry::calcOffset(geometry, m_dataSource->minIndex());
 
         int sr = rect.width()-1;
-        if (m_selection->selectedRange().last() <= lastVisibleSample)
-            sr = QseSppGeometry::calcOffset(geometry,
-                    m_selection->selectedRange().last());
+        if (m_dataSource->maxIndex() <= lastVisibleSample)
+            sr = QseSppGeometry::calcOffset(geometry, m_dataSource->maxIndex());
 
         painter->save();
         painter->setOpacity(m_opacity);
@@ -123,8 +124,15 @@ void QseSppSelectionPlot::draw(QPainter *painter, const QRect &rect,
     QseAbstractSppPlot::draw(painter, rect, geometry);
 }
 
-void QseSppSelectionPlot::selection_destroyed(QObject *obj)
+void QseSppSignalCanvasPlot::dataSource_dataChanged()
 {
-    if (obj == m_selection)
-        m_selection = 0;
+    setUpdateOnce(true);
+}
+
+void QseSppSignalCanvasPlot::dataSource_destroyed(QObject *obj)
+{
+    if (obj == m_dataSource)
+        m_dataSource = 0;
+
+    setUpdateOnce(true);
 }

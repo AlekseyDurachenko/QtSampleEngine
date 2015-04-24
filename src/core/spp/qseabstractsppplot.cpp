@@ -24,7 +24,7 @@ QseAbstractSppPlot::QseAbstractSppPlot(QObject *parent) :
 bool QseAbstractSppPlot::isVisible(const QRect &/*rect*/,
         const QseSppGeometry &/*geometry*/)
 {
-    return true;
+    return isEnabled();
 }
 
 bool QseAbstractSppPlot::hasChanges(const QRect &/*rect*/,

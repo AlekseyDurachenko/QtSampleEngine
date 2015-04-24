@@ -37,6 +37,9 @@ void QseSppPositionPlot::setOpacity(qreal opacity)
 
 void QseSppPositionPlot::setPosition(QsePosition *position)
 {
+    if (!isEnabled())
+        return;
+
     if (m_position == position)
         return;
 
