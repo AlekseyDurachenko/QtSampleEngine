@@ -208,7 +208,7 @@ void QseSppAsyncSignalPlot::drawAvaiblePeaks(QPainter *painter,
                                     m_peaks, firstIndex, space, 0, dy);
 }
 
-void QseSppAsyncSignalPlot::calcPeaks(const QRect &rect,
+void QseSppAsyncSignalPlot::calcPeaks(const QRect &/*rect*/,
         const QseSppGeometry &geometry)
 {
     if (!checkOptimizationPossibility(lastGeometry(), geometry))

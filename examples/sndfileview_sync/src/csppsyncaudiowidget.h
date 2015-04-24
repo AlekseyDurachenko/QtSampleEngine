@@ -24,7 +24,7 @@ class QseSppPositionPlot;
 class QseSppSelectionPlot;
 class QseSppSignalCanvasPlot;
 class QseSppSyncSignalPlot;
-class QseSppAxisCoverPlot;
+class QseSppAxisCanvasPlot;
 class QseSppAudacityController;
 class CSppSyncPeakDataSource;
 class CSppSyncAudioLimiter;
@@ -41,7 +41,8 @@ public:
     inline QsePosition *playPosition() const;
     inline QsePosition *cursorPosition() const;
     inline QseSelection *selection() const;
-    inline QseSppAxisCoverPlot *coverPlot() const;
+    inline QseSppAxisCanvasPlot *canvasPlot() const;
+    inline QseSppSignalCanvasPlot *signalCanvasPlot() const;
     inline QseSppSyncSignalPlot *signalPlot() const;
     inline QseSppAudacityController *controller() const;
     inline CSppSyncPeakDataSource *dataSource() const;
@@ -58,7 +59,7 @@ private:
     QseSelection *m_selection;
     QseSppSelectionPlot *m_selectionPlot;
 
-    QseSppAxisCoverPlot *m_coverPlot;
+    QseSppAxisCanvasPlot *m_canvasPlot;
     QseSppSignalCanvasPlot *m_signalCanvasPlot;
     QseSppSyncSignalPlot *m_signalPlot;
     QseSppSignalLinearPlotDelegate *m_plotDelegate;
@@ -86,9 +87,14 @@ QseSelection *CSppSyncAudioWidget::selection() const
     return m_selection;
 }
 
-QseSppAxisCoverPlot *CSppSyncAudioWidget::coverPlot() const
+QseSppAxisCanvasPlot *CSppSyncAudioWidget::canvasPlot() const
 {
-    return m_coverPlot;
+    return m_canvasPlot;
+}
+
+QseSppSignalCanvasPlot *CSppSyncAudioWidget::signalCanvasPlot() const
+{
+    return m_signalCanvasPlot;
 }
 
 QseSppSyncSignalPlot *CSppSyncAudioWidget::signalPlot() const

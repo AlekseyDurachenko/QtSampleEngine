@@ -13,8 +13,8 @@
 // You should have received a copy of the GNU Lesser General Public
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
-#ifndef QSESPPAXISCOVERPLOT_H
-#define QSESPPAXISCOVERPLOT_H
+#ifndef QSESPPAXISCANVASPLOT_H
+#define QSESPPAXISCANVASPLOT_H
 
 #include "qseabstractsppplot.h"
 #include <QPen>
@@ -22,7 +22,7 @@
 class QseAbstractSppMetricProvider;
 
 
-class QseSppAxisCoverPlot : public QseAbstractSppPlot
+class QseSppAxisCanvasPlot : public QseAbstractSppPlot
 {
     Q_OBJECT
     Q_PROPERTY(QPen centerLinePen READ centerLinePen
@@ -34,7 +34,7 @@ class QseSppAxisCoverPlot : public QseAbstractSppPlot
     Q_PROPERTY(QColor backgroundColor READ backgroundColor
                WRITE setBackgroundColor)
 public:
-    explicit QseSppAxisCoverPlot(QObject *parent = 0);
+    explicit QseSppAxisCanvasPlot(QObject *parent = 0);
 
     inline const QPen &centerLinePen() const;
     void setCenterLinePen(const QPen &pen);
@@ -72,30 +72,30 @@ private:
 };
 
 
-const QPen &QseSppAxisCoverPlot::centerLinePen() const
+const QPen &QseSppAxisCanvasPlot::centerLinePen() const
 {
     return m_clPen;
 }
 
-qreal QseSppAxisCoverPlot::centerLineOpacity() const
+qreal QseSppAxisCanvasPlot::centerLineOpacity() const
 {
     return m_clOpacity;
 }
 
-const QPen &QseSppAxisCoverPlot::linePen() const
+const QPen &QseSppAxisCanvasPlot::linePen() const
 {
     return m_lPen;
 }
 
-qreal QseSppAxisCoverPlot::lineOpacity() const
+qreal QseSppAxisCanvasPlot::lineOpacity() const
 {
     return m_lOpacity;
 }
 
-const QColor &QseSppAxisCoverPlot::backgroundColor() const
+const QColor &QseSppAxisCanvasPlot::backgroundColor() const
 {
     return m_backgroundColor;
 }
 
 
-#endif // QSESPPAXISCOVERPLOT_H
+#endif // QSESPPAXISCANVASPLOT_H

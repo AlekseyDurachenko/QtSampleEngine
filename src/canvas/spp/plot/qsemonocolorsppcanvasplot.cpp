@@ -13,17 +13,17 @@
 // You should have received a copy of the GNU Lesser General Public
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
-#include "qsemonocolorsppcoverplot.h"
+#include "qsemonocolorsppcanvasplot.h"
 #include <QPainter>
 
 
-QseMonocolorSppCoverPlot::QseMonocolorSppCoverPlot(QObject *parent) :
+QseMonocolorSppCanvasPlot::QseMonocolorSppCanvasPlot(QObject *parent) :
     QseAbstractSppPlot(parent)
 {
     m_color = qRgb(230, 230, 230);
 }
 
-void QseMonocolorSppCoverPlot::setColor(const QColor &color)
+void QseMonocolorSppCanvasPlot::setColor(const QColor &color)
 {
     if (m_color != color)
     {
@@ -32,13 +32,13 @@ void QseMonocolorSppCoverPlot::setColor(const QColor &color)
     }
 }
 
-bool QseMonocolorSppCoverPlot::hasChanges(const QRect &rect,
+bool QseMonocolorSppCanvasPlot::hasChanges(const QRect &rect,
         const QseSppGeometry &/*geometry*/)
 {
     return (isUpdateOnce() || rect != lastRect());
 }
 
-void QseMonocolorSppCoverPlot::draw(QPainter *painter, const QRect &rect,
+void QseMonocolorSppCanvasPlot::draw(QPainter *painter, const QRect &rect,
         const QseSppGeometry &geometry)
 {
     if (isVisible(rect, geometry))

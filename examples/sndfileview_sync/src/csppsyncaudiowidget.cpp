@@ -20,7 +20,7 @@
 #include "qsesppselectionplot.h"
 #include "qsesppsignalcanvasplot.h"
 #include "qsesppsyncsignalplot.h"
-#include "qsesppaxiscoverplot.h"
+#include "qsesppaxiscanvasplot.h"
 #include "qsesppaudacitycontroller.h"
 #include "qsesppsignallinearplotdelegate.h"
 #include "csppsyncpeakdatasource.h"
@@ -53,7 +53,7 @@ CSppSyncAudioWidget::CSppSyncAudioWidget(QWidget *parent,
     m_controller->setSelection(m_selection);
     setController(m_controller);
 
-    m_coverPlot = new QseSppAxisCoverPlot(this);
+    m_canvasPlot = new QseSppAxisCanvasPlot(this);
     m_signalCanvasPlot = new QseSppSignalCanvasPlot(this);
     m_signalCanvasPlot->setDataSource(m_dataSource);
     m_signalPlot = new QseSppSyncSignalPlot(this);
@@ -62,7 +62,7 @@ CSppSyncAudioWidget::CSppSyncAudioWidget(QWidget *parent,
     m_signalPlot->setPlotDelegate(m_plotDelegate);
 
     QList<QseAbstractSppPlot *> cachedPlots;
-    cachedPlots << m_coverPlot;
+    cachedPlots << m_canvasPlot;
     cachedPlots << m_signalCanvasPlot;
     cachedPlots << m_signalPlot;
 

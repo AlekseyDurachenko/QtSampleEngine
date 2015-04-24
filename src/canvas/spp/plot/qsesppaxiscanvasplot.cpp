@@ -13,12 +13,12 @@
 // You should have received a copy of the GNU Lesser General Public
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
-#include "qsesppaxiscoverplot.h"
+#include "qsesppaxiscanvasplot.h"
 #include "qseabstractsppmetricprovider.h"
 #include <QPainter>
 
 
-QseSppAxisCoverPlot::QseSppAxisCoverPlot(QObject *parent) :
+QseSppAxisCanvasPlot::QseSppAxisCanvasPlot(QObject *parent) :
     QseAbstractSppPlot(parent)
 {
     m_horizontalProvider = 0;
@@ -32,7 +32,7 @@ QseSppAxisCoverPlot::QseSppAxisCoverPlot(QObject *parent) :
     m_backgroundColor = qRgb(230, 230, 230);
 }
 
-void QseSppAxisCoverPlot::setCenterLinePen(const QPen &pen)
+void QseSppAxisCanvasPlot::setCenterLinePen(const QPen &pen)
 {
     if (m_clPen != pen)
     {
@@ -41,7 +41,7 @@ void QseSppAxisCoverPlot::setCenterLinePen(const QPen &pen)
     }
 }
 
-void QseSppAxisCoverPlot::setCenterLineOpacity(qreal opacity)
+void QseSppAxisCanvasPlot::setCenterLineOpacity(qreal opacity)
 {
     if (m_clOpacity != opacity)
     {
@@ -50,7 +50,7 @@ void QseSppAxisCoverPlot::setCenterLineOpacity(qreal opacity)
     }
 }
 
-void QseSppAxisCoverPlot::setLinePen(const QPen &pen)
+void QseSppAxisCanvasPlot::setLinePen(const QPen &pen)
 {
     if (m_lPen != pen)
     {
@@ -59,7 +59,7 @@ void QseSppAxisCoverPlot::setLinePen(const QPen &pen)
     }
 }
 
-void QseSppAxisCoverPlot::setLineOpacity(qreal opacity)
+void QseSppAxisCanvasPlot::setLineOpacity(qreal opacity)
 {
     if (m_lOpacity != opacity)
     {
@@ -69,7 +69,7 @@ void QseSppAxisCoverPlot::setLineOpacity(qreal opacity)
 }
 
 
-void QseSppAxisCoverPlot::setBackgroundColor(const QColor &color)
+void QseSppAxisCanvasPlot::setBackgroundColor(const QColor &color)
 {
     if (m_backgroundColor != color)
     {
@@ -78,7 +78,7 @@ void QseSppAxisCoverPlot::setBackgroundColor(const QColor &color)
     }
 }
 
-void QseSppAxisCoverPlot::setVerticalMetricProvider(
+void QseSppAxisCanvasPlot::setVerticalMetricProvider(
         QseAbstractSppMetricProvider *provider)
 {
     if (m_verticalProvider == provider)
@@ -99,7 +99,7 @@ void QseSppAxisCoverPlot::setVerticalMetricProvider(
     setUpdateOnce(true);
 }
 
-void QseSppAxisCoverPlot::setHorizontalMetricProvider(
+void QseSppAxisCanvasPlot::setHorizontalMetricProvider(
         QseAbstractSppMetricProvider *provider)
 {
     if (m_horizontalProvider == provider)
@@ -120,13 +120,13 @@ void QseSppAxisCoverPlot::setHorizontalMetricProvider(
     setUpdateOnce(true);
 }
 
-bool QseSppAxisCoverPlot::hasChanges(const QRect &rect,
+bool QseSppAxisCanvasPlot::hasChanges(const QRect &rect,
         const QseSppGeometry &geometry)
 {
     return (isUpdateOnce() || rect != m_lastRect || geometry != m_lastGeometry);
 }
 
-void QseSppAxisCoverPlot::draw(QPainter *painter, const QRect &rect,
+void QseSppAxisCanvasPlot::draw(QPainter *painter, const QRect &rect,
         const QseSppGeometry &geometry)
 {
     if (isVisible(rect, geometry))
@@ -164,12 +164,12 @@ void QseSppAxisCoverPlot::draw(QPainter *painter, const QRect &rect,
     QseAbstractSppPlot::draw(painter, rect, geometry);
 }
 
-void QseSppAxisCoverPlot::verticalProvider_destroyed()
+void QseSppAxisCanvasPlot::verticalProvider_destroyed()
 {
     m_verticalProvider = 0;
 }
 
-void QseSppAxisCoverPlot::horizontalProvider_destroyed()
+void QseSppAxisCanvasPlot::horizontalProvider_destroyed()
 {
     m_horizontalProvider = 0;
 }

@@ -23,7 +23,7 @@
 #include "qsesppverticalaxiswidget.h"
 #include "qsesppsignallinearamplmetricprovider.h"
 #include "qsespptimemetricprovider.h"
-#include "qsesppaxiscoverplot.h"
+#include "qsesppaxiscanvasplot.h"
 #include "qsesppstandardhorizontalcontroller.h"
 #include "qsesppstandardverticalcontroller.h"
 #include "qsesppstandardhorizontalzoomcontroller.h"
@@ -89,8 +89,8 @@ CComplexMonoAudioWidget::CComplexMonoAudioWidget(QWidget *parent) :
             m_horizontalAxisZoomControllerProxy, SLOT(setShift(int)));
 
     m_audioWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-    m_audioWidget->coverPlot()->setVerticalMetricProvider(m_amplitudeProvider);
-    m_audioWidget->coverPlot()->setHorizontalMetricProvider(m_timeProvider);
+    m_audioWidget->canvasPlot()->setVerticalMetricProvider(m_amplitudeProvider);
+    m_audioWidget->canvasPlot()->setHorizontalMetricProvider(m_timeProvider);
     m_audioWidget->installEventFilter(this);
     connect(m_audioWidget, SIGNAL(geometryChanged(QseSppGeometry)),
             m_amplitudeAxis, SLOT(setGeometry(QseSppGeometry)));

@@ -13,20 +13,20 @@
 // You should have received a copy of the GNU Lesser General Public
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
-#ifndef QSEMONOCOLORCOVERPLOT_H
-#define QSEMONOCOLORCOVERPLOT_H
+#ifndef QSEMONOCOLORCANVASPLOT_H
+#define QSEMONOCOLORCANVASPLOT_H
 
 #include <QPen>
 #include <QColor>
 #include "qseabstractsppplot.h"
 
 
-class QseMonocolorSppCoverPlot : public QseAbstractSppPlot
+class QseMonocolorSppCanvasPlot : public QseAbstractSppPlot
 {
     Q_OBJECT
     Q_PROPERTY(QColor color READ color WRITE setColor)
 public:
-    explicit QseMonocolorSppCoverPlot(QObject *parent = 0);
+    explicit QseMonocolorSppCanvasPlot(QObject *parent = 0);
 
     inline const QColor &color() const;
     void setColor(const QColor &color);
@@ -38,10 +38,10 @@ private:
     QColor m_color;
 };
 
-const QColor &QseMonocolorSppCoverPlot::color() const
+const QColor &QseMonocolorSppCanvasPlot::color() const
 {
     return m_color;
 }
 
 
-#endif // QSEMONOCOLORCOVERPLOT_H
+#endif // QSEMONOCOLORCANVASPLOT_H

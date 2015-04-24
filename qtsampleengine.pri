@@ -9,7 +9,6 @@ HEADERS +=                                                          \
     $$PWD/src/core/qseabstractplot.h \
     $$PWD/src/core/qseabstractwidget.h \
     $$PWD/src/core/qsehelper.h \
-    $$PWD/src/cover/spp/plot/qsemonocolorsppcoverplot.h \
     $$PWD/src/datasource/spp/qseabstractspppeakreply.h \
     $$PWD/src/datasource/spw/qseabstractspwpeakreply.h \
     $$PWD/src/datasource/qseabstractpeakreply.h \
@@ -29,7 +28,6 @@ HEADERS +=                                                          \
     $$PWD/src/axis/spp/metric/qsespplinearmetricprovider.h \
     $$PWD/src/axis/spp/metric/qsesppsignallinearamplmetricprovider.h \
     $$PWD/src/axis/spp/metric/qsespptimemetricprovider.h \
-    $$PWD/src/cover/spp/plot/qsesppaxiscoverplot.h \
     $$PWD/src/core/spp/qseabstractsppstandardcontroller.h \
     $$PWD/src/core/spp/qsesppstandardhorizontalcontroller.h \
     $$PWD/src/core/spp/qsesppstandardverticalcontroller.h \
@@ -59,7 +57,9 @@ HEADERS +=                                                          \
     $$PWD/src/signal/spp/plot/qsesppasyncsignalplot.h \
     $$PWD/src/signal/spp/plot/qsesppsignalplotpeakreplyitem.h \
     $$PWD/src/signal/spp/plot/qsesppsignalplotpeakreplyitemlist.h \
-    $$PWD/src/signalcanvas/spp/plot/qsesppsignalcanvasplot.h
+    $$PWD/src/signalcanvas/spp/plot/qsesppsignalcanvasplot.h \
+    $$PWD/src/canvas/spp/plot/qsesppaxiscanvasplot.h \
+    $$PWD/src/canvas/spp/plot/qsemonocolorsppcanvasplot.h
 
 
 SOURCES +=                                                          \
@@ -73,7 +73,6 @@ SOURCES +=                                                          \
     $$PWD/src/core/qseabstractplot.cpp \
     $$PWD/src/core/qseabstractwidget.cpp \
     $$PWD/src/core/qsehelper.cpp \
-    $$PWD/src/cover/spp/plot/qsemonocolorsppcoverplot.cpp \
     $$PWD/src/datasource/spp/qseabstractspppeakreply.cpp \
     $$PWD/src/datasource/spw/qseabstractspwpeakreply.cpp \
     $$PWD/src/datasource/qseabstractpeakreply.cpp \
@@ -92,7 +91,6 @@ SOURCES +=                                                          \
     $$PWD/src/axis/spp/metric/qsespplinearmetricprovider.cpp \
     $$PWD/src/axis/spp/metric/qsesppsignallinearamplmetricprovider.cpp \
     $$PWD/src/axis/spp/metric/qsespptimemetricprovider.cpp \
-    $$PWD/src/cover/spp/plot/qsesppaxiscoverplot.cpp \
     $$PWD/src/core/spp/qseabstractsppstandardcontroller.cpp \
     $$PWD/src/core/spp/qsesppstandardhorizontalcontroller.cpp \
     $$PWD/src/core/spp/qsesppstandardverticalcontroller.cpp \
@@ -122,7 +120,9 @@ SOURCES +=                                                          \
     $$PWD/src/signal/spp/plot/qsesppasyncsignalplot.cpp \
     $$PWD/src/signal/spp/plot/qsesppsignalplotpeakreplyitem.cpp \
     $$PWD/src/signal/spp/plot/qsesppsignalplotpeakreplyitemlist.cpp \
-    $$PWD/src/signalcanvas/spp/plot/qsesppsignalcanvasplot.cpp
+    $$PWD/src/signalcanvas/spp/plot/qsesppsignalcanvasplot.cpp \
+    $$PWD/src/canvas/spp/plot/qsemonocolorsppcanvasplot.cpp \
+    $$PWD/src/canvas/spp/plot/qsesppaxiscanvasplot.cpp
 
 
 OTHER_FILES +=                                                      \
@@ -140,8 +140,8 @@ INCLUDEPATH +=                                                      \
     $$PWD/src/core                                                  \
     $$PWD/src/core/spp                                              \
     $$PWD/src/core/spw                                              \
-    $$PWD/src/cover                                                 \
-    $$PWD/src/cover/spp/plot                                        \
+    $$PWD/src/canvas                                                \
+    $$PWD/src/canvas/spp/plot                                       \
     $$PWD/src/position                                              \
     $$PWD/src/position/spp/plot                                     \
     $$PWD/src/position/spp/controller                               \
