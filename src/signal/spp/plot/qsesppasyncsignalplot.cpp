@@ -149,7 +149,8 @@ void QseSppAsyncSignalPlot::queryTimer_timeout()
     abortAllReplies();
 
     if (m_peaks.isEmpty()
-            || lastGeometry().samplesPerPixel() < 0)
+            || lastGeometry().samplesPerPixel() < 0
+            || m_dataSource->options() & QseAbstractPeakDataSource::DontUseCacheOptimization)
     {
         queryReplaceAll();
     }
