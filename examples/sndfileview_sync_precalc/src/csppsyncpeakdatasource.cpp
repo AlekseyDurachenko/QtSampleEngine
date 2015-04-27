@@ -144,7 +144,7 @@ QsePeakArray CSppSyncPeakDataSource::readAsLines(qint64 first, qint64 pps,
 }
 
 QsePeakArray CSppSyncPeakDataSource::readAsPeaks(qint64 first, qint64 spp,
-        int width, bool rightAligh)
+        int width, bool /*rightAligh*/)
 {
     if (!m_peakCount.contains(spp))
         return QsePeakArray();
