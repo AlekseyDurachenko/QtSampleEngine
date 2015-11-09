@@ -18,7 +18,6 @@
 #include "test_qseposition.h"
 #include "test_qseselection.h"
 #include "test_qsesppgeometry.h"
-#include "test_qsespwgeometry.h"
 #include "test_qsepeakarray.h"
 
 
@@ -31,8 +30,6 @@ int main(int argc, char *argv[])
     if (QTest::qExec(new TestQseSelection, argc, argv))
         return -1;
     if (QTest::qExec(new TestQseSppGeometry, argc, argv))
-        return -1;
-    if (QTest::qExec(new TestQseSpwGeometry, argc, argv))
         return -1;
     if (QTest::qExec(new TestQsePeakArray, argc, argv))
         return -1;

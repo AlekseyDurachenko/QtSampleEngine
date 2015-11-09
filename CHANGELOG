@@ -1,0 +1,14 @@
+ChangeLog
+=========
+
+V 0.1.2
+-------
+* remove swp (currently not implemented and moved to branch for future)
+
+V 0.1.1
+-------
+* new interface
+
+V 0.1.0
+-------
+* first release
