@@ -13,29 +13,35 @@
 // You should have received a copy of the GNU Lesser General Public
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
+#ifndef TESTQSESPWGEOMETRY_H
+#define TESTQSESPWGEOMETRY_H
+
+#include <QObject>
 #include <QtTest>
-#include "test_qserange.h"
-#include "test_qseposition.h"
-#include "test_qseselection.h"
-#include "test_qsesppgeometry.h"
-#include "test_qsespwgeometry.h"
-#include "test_qsepeakarray.h"
 
 
-int main(int argc, char *argv[])
+class TestQseSpwGeometry : public QObject
 {
-    if (QTest::qExec(new TestQseRange, argc, argv))
-        return -1;
-    if (QTest::qExec(new TestQsePosition, argc, argv))
-        return -1;
-    if (QTest::qExec(new TestQseSelection, argc, argv))
-        return -1;
-    if (QTest::qExec(new TestQseSppGeometry, argc, argv))
-        return -1;
-    if (QTest::qExec(new TestQseSpwGeometry, argc, argv))
-        return -1;
-    if (QTest::qExec(new TestQsePeakArray, argc, argv))
-        return -1;
+    Q_OBJECT
+public:
+    explicit TestQseSpwGeometry(QObject *parent = 0);
+private slots:
+    void constructor();
+    void setX();
+    void setY();
+    void setSamplesPerWindow();
+    void setHeight();
+    void addX();
+    void addY();
+    void addSamplesPerWindow();
+    void addHeight();
+    void replaceX();
+    void replaceY();
+    void replaceSamplePerWindow();
+    void replaceHeight();
+    void operator_eq();
+    void operator_neq();
+};
 
-    return 0;
-}
+
+#endif // TESTQSESPWGEOMETRY_H

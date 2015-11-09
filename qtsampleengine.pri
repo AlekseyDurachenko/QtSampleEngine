@@ -53,6 +53,13 @@ HEADERS +=                                                              \
     $$PWD/src/widget/sppaxiswidget/qsesppverticalaxiswidget.h           \
     $$PWD/src/widget/sppwidget/qsesppwidget.h                           \
     $$PWD/src/qse_deprecated.h                                          \
+    $$PWD/src/core/spw/qseabstractspwcontroller.h                       \
+    $$PWD/src/core/spw/qseabstractspwplot.h                             \
+    $$PWD/src/core/spw/qseabstractspwwidget.h                           \
+    $$PWD/src/datasource/spw/qseabstractspwasyncpeakdatasource.h        \
+    $$PWD/src/datasource/spw/qseabstractspwpeakreply.h                  \
+    $$PWD/src/datasource/spw/qseabstractspwsyncpeakdatasource.h         \
+    $$PWD/src/datatype/qsespwgeometry.h                                 \
 
 
 
@@ -110,6 +117,13 @@ SOURCES +=                                                              \
     $$PWD/src/widget/sppaxiswidget/qsespphorizontalaxiswidget.cpp       \
     $$PWD/src/widget/sppaxiswidget/qsesppverticalaxiswidget.cpp         \
     $$PWD/src/widget/sppwidget/qsesppwidget.cpp                         \
+    $$PWD/src/core/spw/qseabstractspwcontroller.cpp                     \
+    $$PWD/src/core/spw/qseabstractspwplot.cpp                           \
+    $$PWD/src/core/spw/qseabstractspwwidget.cpp                         \
+    $$PWD/src/datasource/spw/qseabstractspwasyncpeakdatasource.cpp      \
+    $$PWD/src/datasource/spw/qseabstractspwpeakreply.cpp                \
+    $$PWD/src/datasource/spw/qseabstractspwsyncpeakdatasource.cpp       \
+    $$PWD/src/datatype/qsespwgeometry.cpp                               \
 
 
 
