@@ -16,6 +16,7 @@
 #ifndef QSEABSTRACTSPPWIDGET_H
 #define QSEABSTRACTSPPWIDGET_H
 
+
 #include "qseabstractwidget.h"
 #include "qsesppgeometry.h"
 class QseAbstractSppController;
@@ -35,14 +36,18 @@ public:
     void setLimiter(QseAbstractSppLimiter *limiter);
 
     inline const QseSppGeometry &geometry() const;
+
 signals:
     void geometryChanged(const QseSppGeometry& geometry);
+
 public slots:
     void setGeometry(const QseSppGeometry& geometry);
+
 private slots:
     void controller_destroyed();
     void limiter_changed();
     void limiter_destroyed();
+
 protected:
     void mouseMoveEvent(QMouseEvent *event);
     void mousePressEvent(QMouseEvent *event);
@@ -50,6 +55,7 @@ protected:
     void wheelEvent(QWheelEvent *event);
     void keyPressEvent(QKeyEvent *event);
     void keyReleaseEvent(QKeyEvent *event);
+
 private:
     QseAbstractSppController *m_controller;
     QseAbstractSppLimiter *m_limiter;

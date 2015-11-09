@@ -16,6 +16,7 @@
 #ifndef QSEABSTRACTSPPSTANDARDCONTROLLER_H
 #define QSEABSTRACTSPPSTANDARDCONTROLLER_H
 
+
 #include "qseabstractsppcontroller.h"
 
 
@@ -30,6 +31,7 @@ public:
 
     inline const Qt::KeyboardModifiers &keyboardModifiers() const;
     void setKeyboardModifiers(Qt::KeyboardModifiers keyboardModifiers);
+
 private:
     Qt::MouseButtons m_mouseButtons;
     Qt::KeyboardModifiers m_keyboardModifiers;

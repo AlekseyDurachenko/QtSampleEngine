@@ -18,7 +18,8 @@
 #include <QDebug>
 
 
-TestQseSppGeometry::TestQseSppGeometry(QObject *parent) : QObject(parent)
+TestQseSppGeometry::TestQseSppGeometry(QObject *parent)
+    : QObject(parent)
 {
 }
 

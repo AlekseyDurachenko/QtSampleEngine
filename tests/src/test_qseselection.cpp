@@ -19,14 +19,14 @@
 #include <QDebug>
 
 
-TestQseSelection::TestQseSelection(QObject *parent) : QObject(parent)
+TestQseSelection::TestQseSelection(QObject *parent)
+    : QObject(parent)
 {
 }
 
 void TestQseSelection::setAvailableRange()
 {
-    QSharedPointer<QseSelection> selection
-            = QSharedPointer<QseSelection>(new QseSelection);
+    QSharedPointer<QseSelection> selection = QSharedPointer<QseSelection>(new QseSelection);
 
     selection->setAvailableRange(QseRange(10, 20));
     QVERIFY(selection->availableRange() == QseRange(10, 20));
@@ -37,8 +37,7 @@ void TestQseSelection::setAvailableRange()
 
 void TestQseSelection::setSelectedRange()
 {
-    QSharedPointer<QseSelection> selection
-            = QSharedPointer<QseSelection>(new QseSelection);
+    QSharedPointer<QseSelection> selection = QSharedPointer<QseSelection>(new QseSelection);
 
     selection->setAvailableRange(QseRange());
     selection->setSelectedRange(QseRange());
@@ -61,8 +60,7 @@ void TestQseSelection::setSelectedRange()
 
 void TestQseSelection::resetAvailableRange()
 {
-    QSharedPointer<QseSelection> selection
-            = QSharedPointer<QseSelection>(new QseSelection);
+    QSharedPointer<QseSelection> selection = QSharedPointer<QseSelection>(new QseSelection);
 
     selection->setAvailableRange(QseRange(10, 99));
     selection->setSelectedRange(QseRange(0, 100));
@@ -73,8 +71,7 @@ void TestQseSelection::resetAvailableRange()
 
 void TestQseSelection::resetSelectedRange()
 {
-    QSharedPointer<QseSelection> selection
-            = QSharedPointer<QseSelection>(new QseSelection);
+    QSharedPointer<QseSelection> selection = QSharedPointer<QseSelection>(new QseSelection);
 
     selection->setAvailableRange(QseRange(10, 99));
     selection->setSelectedRange(QseRange(0, 100));

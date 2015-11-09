@@ -18,13 +18,14 @@
 
 
 QsePeakArray::QsePeakArray(const QVector<double> &minimums,
-        const QVector<double> &maximums)
+                           const QVector<double> &maximums)
 {
     qRegisterMetaType<QsePeakArray>("QsePeakArray");
 
-    if (!maximums.isEmpty())
+    if (!maximums.isEmpty()) {
         Q_ASSERT_X((maximums.count() == minimums.count()), "compare",
                    "count of minimums must be equal to count of maximums");
+    }
 
     m_minimums = minimums;
     m_maximums = maximums;
@@ -67,53 +68,47 @@ QsePeakArray operator +(const QsePeakArray &a, const QsePeakArray &b)
     QVector<double> minimums(count);
     QVector<double> maximums(count);
 
-    for (int i = 0; i < a.count(); ++i)
-    {
+    for (int i = 0; i < a.count(); ++i) {
         minimums[i] = a.minimums().at(i);
         maximums[i] = a.maximums().at(i);
     }
-    for (int i = 0; i < b.count(); ++i)
-    {
-        minimums[a.count()+i] = b.minimums().at(i);
-        maximums[a.count()+i] = b.maximums().at(i);
+    for (int i = 0; i < b.count(); ++i) {
+        minimums[a.count() + i] = b.minimums().at(i);
+        maximums[a.count() + i] = b.maximums().at(i);
     }
 
     return QsePeakArray(minimums, maximums);
 }
 
-QDebug operator<<(QDebug dbg, const QsePeakArray &peaks)
+QDebug operator <<(QDebug dbg, const QsePeakArray &peaks)
 {
-    if (peaks.isEmpty())
-    {
+    if (peaks.isEmpty()) {
         dbg.nospace() << "QsePeakArray()";
     }
-    else if (!peaks.hasMaximums())
-    {
+    else if (!peaks.hasMaximums()) {
         dbg.nospace() << "QsePeakArray(";
-        for (int i = 0; i < peaks.count(); ++i)
-        {
+        for (int i = 0; i < peaks.count(); ++i) {
             dbg.nospace() << peaks.minimums().at(i);
-            if (i < peaks.count()-1)
+            if (i < peaks.count() - 1) {
                 dbg.nospace() << ", ";
+            }
         }
         dbg.nospace() << ")";
     }
-    else
-    {
+    else {
         dbg.nospace() << "QsePeakArray(";
-        for (int i = 0; i < peaks.count(); ++i)
-        {
+        for (int i = 0; i < peaks.count(); ++i) {
             dbg.nospace() << "(";
             dbg.nospace() << peaks.minimums().at(i);
             dbg.nospace() << ", ";
             dbg.nospace() << peaks.maximums().at(i);
             dbg.nospace() << ")";
-            if (i < peaks.count()-1)
+            if (i < peaks.count() - 1) {
                 dbg.nospace() << ", ";
+            }
         }
         dbg.nospace() << ")";
     }
 
     return dbg.space();
 }
-

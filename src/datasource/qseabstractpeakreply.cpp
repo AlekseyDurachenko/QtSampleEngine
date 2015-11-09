@@ -16,7 +16,8 @@
 #include "qseabstractpeakreply.h"
 
 
-QseAbstractPeakReply::QseAbstractPeakReply(QObject *parent) : QObject(parent)
+QseAbstractPeakReply::QseAbstractPeakReply(QObject *parent)
+    : QObject(parent)
 {
     m_isAborted = false;
     m_isWorking = false;

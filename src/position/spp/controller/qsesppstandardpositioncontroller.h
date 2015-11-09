@@ -28,19 +28,19 @@ public:
 
     inline QsePosition *position() const;
     void setPosition(QsePosition *position);
+
 protected:
-    virtual void mouseMoveEvent(QMouseEvent *event, const QRect &rect,
-                        const QseSppGeometry &geometry);
-    virtual void mousePressEvent(QMouseEvent *event, const QRect &rect,
-                         const QseSppGeometry &geometry);
-    virtual void keyPressEvent(QKeyEvent *event, const QRect &rect,
-                               const QseSppGeometry &geometry);
-    virtual void keyReleaseEvent(QKeyEvent *event, const QRect &rect,
-                                 const QseSppGeometry &geometry);
+    virtual void mouseMoveEvent(QMouseEvent *event, const QRect &rect, const QseSppGeometry &geometry);
+    virtual void mousePressEvent(QMouseEvent *event, const QRect &rect, const QseSppGeometry &geometry);
+    virtual void keyPressEvent(QKeyEvent *event, const QRect &rect, const QseSppGeometry &geometry);
+    virtual void keyReleaseEvent(QKeyEvent *event, const QRect &rect, const QseSppGeometry &geometry);
+
 private slots:
     void position_destroyed();
+
 private:
     void updateCursor(Qt::KeyboardModifiers km);
+
 private:
     QsePosition *m_position;
 };

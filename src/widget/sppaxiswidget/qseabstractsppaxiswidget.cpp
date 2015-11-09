@@ -17,8 +17,8 @@
 #include "qseabstractsppmetricprovider.h"
 
 
-QseAbstractSppAxisWidget::QseAbstractSppAxisWidget(QWidget *parent) :
-    QseAbstractSppWidget(parent)
+QseAbstractSppAxisWidget::QseAbstractSppAxisWidget(QWidget *parent)
+    : QseAbstractSppWidget(parent)
 {
     setMouseTracking(true);
     setAutoFillBackground(false);
@@ -36,8 +36,7 @@ QseAbstractSppAxisWidget::QseAbstractSppAxisWidget(QWidget *parent) :
 
 void QseAbstractSppAxisWidget::setMetricPen(const QPen &pen)
 {
-    if (pen != m_metricPen)
-    {
+    if (pen != m_metricPen) {
         m_metricPen = pen;
         setUpdatesEnabled(true);
     }
@@ -45,8 +44,7 @@ void QseAbstractSppAxisWidget::setMetricPen(const QPen &pen)
 
 void QseAbstractSppAxisWidget::setTextPen(const QPen &pen)
 {
-    if (pen != m_textPen)
-    {
+    if (pen != m_textPen) {
         m_textPen = pen;
         setUpdatesEnabled(true);
     }
@@ -54,8 +52,7 @@ void QseAbstractSppAxisWidget::setTextPen(const QPen &pen)
 
 void QseAbstractSppAxisWidget::setBackground(const QBrush &brush)
 {
-    if (brush != m_background)
-    {
+    if (brush != m_background) {
         m_background = brush;
         setUpdatesEnabled(true);
     }
@@ -63,8 +60,7 @@ void QseAbstractSppAxisWidget::setBackground(const QBrush &brush)
 
 void QseAbstractSppAxisWidget::setTextFont(const QFont &font)
 {
-    if (font != m_textFont)
-    {
+    if (font != m_textFont) {
         m_textFont = font;
         endModifyTextFont(m_textFont);
         setUpdatesEnabled(true);
@@ -73,16 +69,14 @@ void QseAbstractSppAxisWidget::setTextFont(const QFont &font)
 
 void QseAbstractSppAxisWidget::setMetricSize(int size)
 {
-    if (size != m_metricSize)
-    {
+    if (size != m_metricSize) {
         m_metricSize = size;
         endModifyMetricSize(m_metricSize);
         setUpdateOnce(true);
     }
 }
 
-void QseAbstractSppAxisWidget::setMetricProvider(
-        QseAbstractSppMetricProvider *provider)
+void QseAbstractSppAxisWidget::setMetricProvider(QseAbstractSppMetricProvider *provider)
 {
     if (m_provider == provider)
         return;
@@ -91,8 +85,7 @@ void QseAbstractSppAxisWidget::setMetricProvider(
         disconnect(m_provider, 0, this, 0);
 
     m_provider = provider;
-    if (m_provider)
-    {
+    if (m_provider) {
         connect(m_provider, SIGNAL(changed()),
                 this, SLOT(setUpdateOnce()));
         connect(m_provider, SIGNAL(destroyed()),
@@ -117,7 +110,6 @@ void QseAbstractSppAxisWidget::endModifyMetricSize(int /*size*/)
 {
 }
 
-void QseAbstractSppAxisWidget::endModifyMetricProvider(
-        QseAbstractSppMetricProvider */*provider*/)
+void QseAbstractSppAxisWidget::endModifyMetricProvider(QseAbstractSppMetricProvider */*provider*/)
 {
 }

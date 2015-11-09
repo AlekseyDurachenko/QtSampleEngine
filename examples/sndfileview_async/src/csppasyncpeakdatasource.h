@@ -35,8 +35,10 @@ public:
     inline double sampleRate() const;
 
     virtual QseAbstractSppPeakReply *read(const QseSppPeakRequest &request);
+
 public slots:
     void setSamples(const QVector<double> &samples, double sampleRate);
+
 private:
     QThread *m_thread;
     QVector<double> m_samples;

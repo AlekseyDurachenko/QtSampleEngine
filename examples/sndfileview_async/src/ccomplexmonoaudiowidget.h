@@ -38,13 +38,17 @@ class CComplexMonoAudioWidget : public QWidget
 public:
     explicit CComplexMonoAudioWidget(QWidget *parent = 0);
     virtual ~CComplexMonoAudioWidget();
+
     inline CSppAsyncAudioWidget *audioWidget() const;
+
 private slots:
     void dataSource_dataChanged();
     void audioWidget_geometryChanged(const QseSppGeometry &geometry);
     void scrollBar_valueChanged(int value);
+
 protected:
     bool eventFilter(QObject *obj, QEvent *event);
+
 private:
     CSppAsyncAudioWidget *m_audioWidget;
     QseSppVerticalAxisWidget *m_amplitudeAxis;

@@ -16,13 +16,12 @@
 #include "qsesppcompositcontroller.h"
 
 
-QseSppCompositController::QseSppCompositController(QObject *parent) :
-    QseAbstractSppController(parent)
+QseSppCompositController::QseSppCompositController(QObject *parent)
+    : QseAbstractSppController(parent)
 {
 }
 
-void QseSppCompositController::setControllers(
-        const QList<QseAbstractSppController *> &controllers)
+void QseSppCompositController::setControllers(const QList<QseAbstractSppController *> &controllers)
 {
     if (m_controllers == controllers)
         return;
@@ -31,19 +30,17 @@ void QseSppCompositController::setControllers(
         disconnect(controller, 0, this, 0);
 
     m_controllers = controllers;
-    foreach (QseAbstractSppController *controller, m_controllers)
-    {
+    foreach (QseAbstractSppController *controller, m_controllers) {
         connect(controller, SIGNAL(cursorChanged(QCursor)),
                 this, SLOT(controller_cursorChanged(QCursor)));
         connect(controller, SIGNAL(geometryChanged(QseSppGeometry)),
                 this, SLOT(controller_geometryChanged(QseSppGeometry)));
-        connect(controller, SIGNAL(destroyed(QObject*)),
-                this, SLOT(controller_destroyed(QObject*)));
+        connect(controller, SIGNAL(destroyed(QObject *)),
+                this, SLOT(controller_destroyed(QObject *)));
     }
 }
 
-void QseSppCompositController::controller_geometryChanged(
-        const QseSppGeometry &geometry)
+void QseSppCompositController::controller_geometryChanged(const QseSppGeometry &geometry)
 {
     emit geometryChanged(geometry);
 }
@@ -51,14 +48,16 @@ void QseSppCompositController::controller_geometryChanged(
 void QseSppCompositController::controller_cursorChanged(const QCursor &cursor)
 {
     const QseAbstractSppController *controller =
-            qobject_cast<QseAbstractSppController *>(sender());
+        qobject_cast<QseAbstractSppController *>(sender());
 
     // NOTE: it doen't working for Bitmap default cursor
     if (controller->defaultCursor().shape() == cursor.shape()
-            && cursor.shape() != Qt::BitmapCursor)
+            && cursor.shape() != Qt::BitmapCursor) {
         emit cursorChanged(defaultCursor());
-    else
+    }
+    else {
         emit cursorChanged(cursor);
+    }
 }
 
 void QseSppCompositController::controller_destroyed(QObject *obj)
@@ -67,42 +66,48 @@ void QseSppCompositController::controller_destroyed(QObject *obj)
 }
 
 void QseSppCompositController::mouseMoveEvent(QMouseEvent *event,
-        const QRect &rect, const QseSppGeometry &geometry)
+                                              const QRect &rect,
+                                              const QseSppGeometry &geometry)
 {
     foreach (QseAbstractSppController *controller, m_controllers)
         controller->mouseMoveEvent(event, rect, geometry);
 }
 
 void QseSppCompositController::mousePressEvent(QMouseEvent *event,
-        const QRect &rect, const QseSppGeometry &geometry)
+                                               const QRect &rect,
+                                               const QseSppGeometry &geometry)
 {
     foreach (QseAbstractSppController *controller, m_controllers)
         controller->mousePressEvent(event, rect, geometry);
 }
 
 void QseSppCompositController::mouseReleaseEvent(QMouseEvent *event,
-        const QRect &rect, const QseSppGeometry &geometry)
+                                                 const QRect &rect,
+                                                 const QseSppGeometry &geometry)
 {
     foreach (QseAbstractSppController *controller, m_controllers)
         controller->mouseReleaseEvent(event, rect, geometry);
 }
 
 void QseSppCompositController::wheelEvent(QWheelEvent *event,
-        const QRect &rect, const QseSppGeometry &geometry)
+                                          const QRect &rect,
+                                          const QseSppGeometry &geometry)
 {
     foreach (QseAbstractSppController *controller, m_controllers)
         controller->wheelEvent(event, rect, geometry);
 }
 
 void QseSppCompositController::keyPressEvent(QKeyEvent *event,
-        const QRect &rect, const QseSppGeometry &geometry)
+                                             const QRect &rect,
+                                             const QseSppGeometry &geometry)
 {
     foreach (QseAbstractSppController *controller, m_controllers)
         controller->keyPressEvent(event, rect, geometry);
 }
 
 void QseSppCompositController::keyReleaseEvent(QKeyEvent *event,
-        const QRect &rect, const QseSppGeometry &geometry)
+                                               const QRect &rect,
+                                               const QseSppGeometry &geometry)
 {
     foreach (QseAbstractSppController *controller, m_controllers)
         controller->keyReleaseEvent(event, rect, geometry);

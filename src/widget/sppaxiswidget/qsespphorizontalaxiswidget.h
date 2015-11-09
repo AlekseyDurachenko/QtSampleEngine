@@ -26,11 +26,10 @@ class QseSppHorizontalAxisWidget : public QseAbstractSppAxisWidget
     Q_PROPERTY(Alignment alignment READ alignment WRITE setAlignment)
     Q_PROPERTY(int shift READ shift WRITE setShift)
 public:
-    enum Alignment
-    {
+    enum Alignment {
         AlignTop    = 0x0020,
         AlignBottom = 0x0040,
-        AlignVCenter= 0x0080
+        AlignVCenter = 0x0080
     };
 
     explicit QseSppHorizontalAxisWidget(QWidget *parent = 0);
@@ -39,19 +38,25 @@ public:
     void setAlignment(Alignment alignment);
 
     inline int shift() const;
+
 signals:
     void shiftChanged(int value);
+
 public slots:
     void setShift(int shift);
+
 protected:
     void recalcProviderMinimumSize(QseAbstractSppMetricProvider *provider);
     void topDownRender(QPainter *painter);
+
 protected:
     virtual void paintEvent(QPaintEvent *event);
     virtual QSize minimumSizeHint() const;
+
 protected:
     virtual void endModifyTextFont(const QFont &font);
     virtual void endModifyMetricProvider(QseAbstractSppMetricProvider *provider);
+
 private:
     QImage m_cache;
     Alignment m_alignment;

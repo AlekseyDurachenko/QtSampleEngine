@@ -23,23 +23,24 @@
 class QseSelection : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QseRange selectedRange READ selectedRange WRITE setSelectedRange
-               RESET resetSelectedRange)
-    Q_PROPERTY(QseRange availableRange READ availableRange
-               WRITE setAvailableRange)
+    Q_PROPERTY(QseRange selectedRange READ selectedRange WRITE setSelectedRange RESET resetSelectedRange)
+    Q_PROPERTY(QseRange availableRange READ availableRange WRITE setAvailableRange)
 public:
     explicit QseSelection(QObject *parent = 0);
 
     inline bool isNull() const;
     inline const QseRange &availableRange() const;
     inline const QseRange &selectedRange() const;
+
 signals:
     void selectionChanged();
+
 public slots:
     void setAvailableRange(const QseRange &availableRange);
     void setSelectedRange(const QseRange &selectedRange);
     void resetAvailableRange();
     void resetSelectedRange();
+
 private:
     QseRange m_availableRange;
     QseRange m_selectedRange;

@@ -19,7 +19,8 @@
 
 
 CSppSyncAudioLimiter::CSppSyncAudioLimiter(CSppSyncPeakDataSource *dataSource,
-        QObject *parent) : QseAbstractSppLimiter(parent)
+                                           QObject *parent)
+    : QseAbstractSppLimiter(parent)
 {
     m_dataSource = dataSource;
 }

@@ -27,7 +27,8 @@ QseSppPeakRequest::QseSppPeakRequest()
 }
 
 QseSppPeakRequest::QseSppPeakRequest(const QseSppGeometry &geometry,
-        const QRect &rect, bool rightAlign)
+                                     const QRect &rect,
+                                     bool rightAlign)
 {
     qRegisterMetaType<QseSppPeakRequest>("QseSppPeakRequest");
 
@@ -37,8 +38,9 @@ QseSppPeakRequest::QseSppPeakRequest(const QseSppGeometry &geometry,
     m_rightAlign = rightAlign;
 }
 
-QseSppPeakRequest::QseSppPeakRequest(const QseSppGeometry &geometry, int width,
-        bool rightAlign)
+QseSppPeakRequest::QseSppPeakRequest(const QseSppGeometry &geometry,
+                                     int width,
+                                     bool rightAlign)
 {
     qRegisterMetaType<QseSppPeakRequest>("QseSppPeakRequest");
 
@@ -48,8 +50,10 @@ QseSppPeakRequest::QseSppPeakRequest(const QseSppGeometry &geometry, int width,
     m_rightAlign = rightAlign;
 }
 
-QseSppPeakRequest::QseSppPeakRequest(qint64 x, qint64 samplePerPixel,
-        int width, bool rightAlign)
+QseSppPeakRequest::QseSppPeakRequest(qint64 x,
+                                     qint64 samplePerPixel,
+                                     int width,
+                                     bool rightAlign)
 {
     qRegisterMetaType<QseSppPeakRequest>("QseSppPeakRequest");
 

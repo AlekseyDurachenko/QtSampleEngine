@@ -23,14 +23,16 @@ class QseAbstractMetricProvider : public QObject
 {
     Q_OBJECT
 public:
-    QseAbstractMetricProvider(QObject *parent = 0);
+    explicit QseAbstractMetricProvider(QObject *parent = 0);
 
     inline int minimumStep() const;
     void setMinimumStep(int step);
 
     virtual int maximumTextLenght() const = 0;
+
 signals:
     void changed();
+
 private:
     int m_minimumStep;
 };

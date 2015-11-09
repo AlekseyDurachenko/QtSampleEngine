@@ -16,6 +16,7 @@
 #ifndef QSELINEMETRICPROVIDER_H
 #define QSELINEMETRICPROVIDER_H
 
+
 #include "qseabstractsppmetricprovider.h"
 class QseMetricMapper;
 
@@ -25,13 +26,11 @@ class QseSppLinearMetricProvider : public QseAbstractSppMetricProvider
     Q_OBJECT
     Q_ENUMS(Orientation)
 public:
-    enum Orientation
-    {
+    enum Orientation {
         Horizontal  = 0x1,
         Vertical    = 0x2
     };
-    explicit QseSppLinearMetricProvider(Orientation orientation,
-                                        QObject *parent = 0);
+    explicit QseSppLinearMetricProvider(Orientation orientation, QObject *parent = 0);
     virtual ~QseSppLinearMetricProvider();
 
     inline double factor() const;
@@ -41,8 +40,8 @@ public:
     void setOrientation(Orientation orientation);
 
     virtual int maximumTextLenght() const;
-    virtual QList<QseMetricItem> create(const QseSppGeometry &geometry,
-                                        int size) const;
+    virtual QList<QseMetricItem> create(const QseSppGeometry &geometry, int size) const;
+
 private:
     QseMetricMapper *m_mapper;
     Orientation m_orientation;

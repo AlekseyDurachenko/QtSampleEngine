@@ -42,22 +42,20 @@ public:
     inline QseSelection *selection();
     void setSelection(QseSelection *selection);
 
-    virtual void mouseMoveEvent(QMouseEvent *event, const QRect &rect,
-                                const QseSppGeometry &geometry);
-    virtual void mousePressEvent(QMouseEvent *event, const QRect &rect,
-                                 const QseSppGeometry &geometry);
-    virtual void mouseReleaseEvent(QMouseEvent *event, const QRect &rect,
-                                   const QseSppGeometry &geometry);
-    virtual void wheelEvent(QWheelEvent *event, const QRect &rect,
-                            const QseSppGeometry &geometry);
+    virtual void mouseMoveEvent(QMouseEvent *event, const QRect &rect, const QseSppGeometry &geometry);
+    virtual void mousePressEvent(QMouseEvent *event, const QRect &rect, const QseSppGeometry &geometry);
+    virtual void mouseReleaseEvent(QMouseEvent *event, const QRect &rect, const QseSppGeometry &geometry);
+    virtual void wheelEvent(QWheelEvent *event, const QRect &rect, const QseSppGeometry &geometry);
+
 signals:
     void playClicked(qint64 index);
+
 private slots:
     void position_destroyed();
     void selection_destroyed();
+
 private:
-    void startSelection(QMouseEvent *event, const QRect &rect,
-                        const QseSppGeometry &geometry);
+    void startSelection(QMouseEvent *event, const QRect &rect, const QseSppGeometry &geometry);
     void extendSelection(QMouseEvent *event, const QseSppGeometry &geometry);
     void changeSelection(QMouseEvent *event, const QseSppGeometry &geometry);
     void endSelection();
@@ -65,6 +63,7 @@ private:
     void horizontalZoom(QWheelEvent *event, const QseSppGeometry &geometry);
     void horizontalScroll(QWheelEvent *event, const QseSppGeometry &geometry);
     void updateCursor(int x, const QRect &rect, const QseSppGeometry &geometry);
+
 private:
     QsePosition *m_position;
     QseSelection *m_selection;

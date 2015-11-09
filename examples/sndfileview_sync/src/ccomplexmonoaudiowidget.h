@@ -16,6 +16,7 @@
 #ifndef CCOMPLEXMONOAUDIOWIDGET_H
 #define CCOMPLEXMONOAUDIOWIDGET_H
 
+
 #include <QWidget>
 #include "qsesppgeometry.h"
 class QScrollBar;
@@ -38,13 +39,17 @@ class CComplexMonoAudioWidget : public QWidget
 public:
     explicit CComplexMonoAudioWidget(QWidget *parent = 0);
     virtual ~CComplexMonoAudioWidget();
+
     inline CSppSyncAudioWidget *audioWidget() const;
+
 private slots:
     void dataSource_dataChanged();
     void audioWidget_geometryChanged(const QseSppGeometry &geometry);
     void scrollBar_valueChanged(int value);
+
 protected:
     bool eventFilter(QObject *obj, QEvent *event);
+
 private:
     CSppSyncAudioWidget *m_audioWidget;
     QseSppVerticalAxisWidget *m_amplitudeAxis;

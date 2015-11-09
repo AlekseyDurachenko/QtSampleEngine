@@ -28,8 +28,7 @@ QseSppSignalCanvasPlot::QseSppSignalCanvasPlot(QObject *parent)
 
 void QseSppSignalCanvasPlot::setBrush(const QBrush &brush)
 {
-    if (m_brush != brush)
-    {
+    if (m_brush != brush) {
         m_brush = brush;
         setUpdateOnce(true);
     }
@@ -37,15 +36,14 @@ void QseSppSignalCanvasPlot::setBrush(const QBrush &brush)
 
 void QseSppSignalCanvasPlot::setOpacity(qreal opacity)
 {
-    if (m_opacity != opacity)
-    {
+    if (m_opacity != opacity) {
         m_opacity = opacity;
         setUpdateOnce(true);
     }
 }
 
 void QseSppSignalCanvasPlot::setDataSource(
-        QseAbstractPeakDataSource *dataSource)
+    QseAbstractPeakDataSource *dataSource)
 {
     if (!isEnabled())
         return;
@@ -57,10 +55,9 @@ void QseSppSignalCanvasPlot::setDataSource(
         disconnect(m_dataSource, 0, this, 0);
 
     m_dataSource = dataSource;
-    if (m_dataSource)
-    {
-        connect(m_dataSource, SIGNAL(destroyed(QObject*)),
-                this, SLOT(dataSource_destroyed(QObject*)));
+    if (m_dataSource) {
+        connect(m_dataSource, SIGNAL(destroyed(QObject *)),
+                this, SLOT(dataSource_destroyed(QObject *)));
         connect(m_dataSource, SIGNAL(dataChanged()),
                 this, SLOT(dataSource_dataChanged()));
     }
@@ -69,7 +66,7 @@ void QseSppSignalCanvasPlot::setDataSource(
 }
 
 bool QseSppSignalCanvasPlot::hasChanges(const QRect &rect,
-        const QseSppGeometry &geometry)
+                                        const QseSppGeometry &geometry)
 {
     return (isUpdateOnce()
             || rect != lastRect()
@@ -77,7 +74,7 @@ bool QseSppSignalCanvasPlot::hasChanges(const QRect &rect,
 }
 
 bool QseSppSignalCanvasPlot::isVisible(const QRect &rect,
-        const QseSppGeometry &geometry)
+                                       const QseSppGeometry &geometry)
 {
     if (m_dataSource == 0)
         return false;
@@ -86,8 +83,7 @@ bool QseSppSignalCanvasPlot::isVisible(const QRect &rect,
         return false;
 
     const qint64 firstVisibleSample = geometry.x();
-    const qint64 lastVisibleSample = firstVisibleSample
-            + QseSppGeometry::samplesFromWidth(geometry, rect.width());
+    const qint64 lastVisibleSample = firstVisibleSample + QseSppGeometry::samplesFromWidth(geometry, rect.width());
 
     if (m_dataSource->minIndex() >= lastVisibleSample)
         return false;
@@ -98,26 +94,26 @@ bool QseSppSignalCanvasPlot::isVisible(const QRect &rect,
     return true;
 }
 
-void QseSppSignalCanvasPlot::draw(QPainter *painter, const QRect &rect,
-        const QseSppGeometry &geometry)
+void QseSppSignalCanvasPlot::draw(QPainter *painter,
+                                  const QRect &rect,
+                                  const QseSppGeometry &geometry)
 {
-    if (isVisible(rect, geometry))
-    {
+    if (isVisible(rect, geometry)) {
         const qint64 firstVisibleSample = geometry.x();
         const qint64 lastVisibleSample =
-                 QseSppGeometry::calcSampleIndex(geometry, rect.width());
+            QseSppGeometry::calcSampleIndex(geometry, rect.width());
 
         int sl = 0;
         if (m_dataSource->minIndex() > firstVisibleSample)
             sl = QseSppGeometry::calcOffset(geometry, m_dataSource->minIndex());
 
-        int sr = rect.width()-1;
+        int sr = rect.width() - 1;
         if (m_dataSource->maxIndex() <= lastVisibleSample)
             sr = QseSppGeometry::calcOffset(geometry, m_dataSource->maxIndex());
 
         painter->save();
         painter->setOpacity(m_opacity);
-        painter->fillRect(sl, 0, sr-sl+1, rect.height(), m_brush);
+        painter->fillRect(sl, 0, sr - sl + 1, rect.height(), m_brush);
         painter->restore();
     }
 

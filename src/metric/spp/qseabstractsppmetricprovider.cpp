@@ -15,6 +15,7 @@
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
 #include "qseabstractsppmetricprovider.h"
 
+
 /*!\fn QseAbstractMetricProvider::create()
  *
  * \brief create creates the metric points
@@ -25,8 +26,6 @@
  * \param minStep the minimum step between main (level 1) metrics
  * \param size the width/height of the widget
  */
-
-
 QseAbstractSppMetricProvider::QseAbstractSppMetricProvider(QObject *parent)
     : QseAbstractMetricProvider(parent)
 {

@@ -16,14 +16,14 @@
 #ifndef QSEMETRICITEM_H
 #define QSEMETRICITEM_H
 
+
 #include <QString>
 
 
 class QseMetricItem
 {
 public:
-    QseMetricItem(int offset = -1, int level = 1,
-                  const QString &text = QString());
+    explicit QseMetricItem(int offset = -1, int level = 1, const QString &text = QString());
 
     inline bool isNull() const;
 
@@ -35,6 +35,7 @@ public:
 
     inline const QString &text() const;
     void setText(const QString &text);
+
 private:
     int m_offset;
     int m_level;

@@ -23,9 +23,10 @@ class CSppAsyncPeakDataSource;
 class CSppAsyncAudioLimiter : public QseAbstractSppLimiter
 {
 public:
-    CSppAsyncAudioLimiter(CSppAsyncPeakDataSource *dataSource,
-                            QObject *parent = 0);
+    CSppAsyncAudioLimiter(CSppAsyncPeakDataSource *dataSource, QObject *parent = 0);
+
     virtual QseSppGeometry limit(const QseSppGeometry &geometry);
+
 private:
     CSppAsyncPeakDataSource *m_dataSource;
 };

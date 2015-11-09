@@ -16,8 +16,8 @@
 #include "qseabstractcontroller.h"
 
 
-QseAbstractController::QseAbstractController(QObject *parent) :
-    QObject(parent)
+QseAbstractController::QseAbstractController(QObject *parent)
+    : QObject(parent)
 {
     m_defaultCursor = QCursor();
 }

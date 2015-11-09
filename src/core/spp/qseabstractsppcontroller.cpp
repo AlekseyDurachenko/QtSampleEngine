@@ -16,37 +16,43 @@
 #include "qseabstractsppcontroller.h"
 
 
-QseAbstractSppController::QseAbstractSppController(QObject *parent) :
-    QseAbstractController(parent)
+QseAbstractSppController::QseAbstractSppController(QObject *parent)
+    : QseAbstractController(parent)
 {
 }
 
 void QseAbstractSppController::mouseMoveEvent(QMouseEvent */*event*/,
-        const QRect &/*rect*/, const QseSppGeometry &/*geometry*/)
+                                              const QRect &/*rect*/,
+                                              const QseSppGeometry &/*geometry*/)
 {
 }
 
 void QseAbstractSppController::mousePressEvent(QMouseEvent */*event*/,
-        const QRect &/*rect*/, const QseSppGeometry &/*geometry*/)
+                                               const QRect &/*rect*/,
+                                               const QseSppGeometry &/*geometry*/)
 {
 }
 
 void QseAbstractSppController::mouseReleaseEvent(QMouseEvent */*event*/,
-        const QRect &/*rect*/, const QseSppGeometry &/*geometry*/)
+                                                 const QRect &/*rect*/,
+                                                 const QseSppGeometry &/*geometry*/)
 {
 }
 
 void QseAbstractSppController::wheelEvent(QWheelEvent */*event*/,
-        const QRect &/*rect*/, const QseSppGeometry &/*geometry*/)
+                                          const QRect &/*rect*/,
+                                          const QseSppGeometry &/*geometry*/)
 {
 }
 
 void QseAbstractSppController::keyPressEvent(QKeyEvent */*event*/,
-        const QRect &/*rect*/, const QseSppGeometry &/*geometry*/)
+                                             const QRect &/*rect*/,
+                                             const QseSppGeometry &/*geometry*/)
 {
 }
 
 void QseAbstractSppController::keyReleaseEvent(QKeyEvent */*event*/,
-        const QRect &/*rect*/, const QseSppGeometry &/*geometry*/)
+                                               const QRect &/*rect*/,
+                                               const QseSppGeometry &/*geometry*/)
 {
 }

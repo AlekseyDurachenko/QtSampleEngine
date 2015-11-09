@@ -18,8 +18,8 @@
 #include <QPainter>
 
 
-QseSppAxisCanvasPlot::QseSppAxisCanvasPlot(QObject *parent) :
-    QseAbstractSppPlot(parent)
+QseSppAxisCanvasPlot::QseSppAxisCanvasPlot(QObject *parent)
+    : QseAbstractSppPlot(parent)
 {
     m_horizontalProvider = 0;
     m_verticalProvider = 0;
@@ -34,8 +34,7 @@ QseSppAxisCanvasPlot::QseSppAxisCanvasPlot(QObject *parent) :
 
 void QseSppAxisCanvasPlot::setCenterLinePen(const QPen &pen)
 {
-    if (m_clPen != pen)
-    {
+    if (m_clPen != pen) {
         m_clPen = pen;
         setUpdateOnce(true);
     }
@@ -43,8 +42,7 @@ void QseSppAxisCanvasPlot::setCenterLinePen(const QPen &pen)
 
 void QseSppAxisCanvasPlot::setCenterLineOpacity(qreal opacity)
 {
-    if (m_clOpacity != opacity)
-    {
+    if (m_clOpacity != opacity) {
         m_clOpacity = opacity;
         setUpdateOnce(true);
     }
@@ -52,8 +50,7 @@ void QseSppAxisCanvasPlot::setCenterLineOpacity(qreal opacity)
 
 void QseSppAxisCanvasPlot::setLinePen(const QPen &pen)
 {
-    if (m_lPen != pen)
-    {
+    if (m_lPen != pen) {
         m_lPen = pen;
         setUpdateOnce(true);
     }
@@ -61,8 +58,7 @@ void QseSppAxisCanvasPlot::setLinePen(const QPen &pen)
 
 void QseSppAxisCanvasPlot::setLineOpacity(qreal opacity)
 {
-    if (m_lOpacity != opacity)
-    {
+    if (m_lOpacity != opacity) {
         m_lOpacity = opacity;
         setUpdateOnce(true);
     }
@@ -71,15 +67,13 @@ void QseSppAxisCanvasPlot::setLineOpacity(qreal opacity)
 
 void QseSppAxisCanvasPlot::setBackgroundColor(const QColor &color)
 {
-    if (m_backgroundColor != color)
-    {
+    if (m_backgroundColor != color) {
         m_backgroundColor = color;
         setUpdateOnce(true);
     }
 }
 
-void QseSppAxisCanvasPlot::setVerticalMetricProvider(
-        QseAbstractSppMetricProvider *provider)
+void QseSppAxisCanvasPlot::setVerticalMetricProvider(QseAbstractSppMetricProvider *provider)
 {
     if (m_verticalProvider == provider)
         return;
@@ -88,8 +82,7 @@ void QseSppAxisCanvasPlot::setVerticalMetricProvider(
         disconnect(m_verticalProvider, 0, this, 0);
 
     m_verticalProvider = provider;
-    if (m_verticalProvider)
-    {
+    if (m_verticalProvider) {
         connect(m_verticalProvider, SIGNAL(changed()),
                 this, SLOT(setUpdateOnce()));
         connect(m_verticalProvider, SIGNAL(destroyed()),
@@ -99,8 +92,7 @@ void QseSppAxisCanvasPlot::setVerticalMetricProvider(
     setUpdateOnce(true);
 }
 
-void QseSppAxisCanvasPlot::setHorizontalMetricProvider(
-        QseAbstractSppMetricProvider *provider)
+void QseSppAxisCanvasPlot::setHorizontalMetricProvider(QseAbstractSppMetricProvider *provider)
 {
     if (m_horizontalProvider == provider)
         return;
@@ -109,8 +101,7 @@ void QseSppAxisCanvasPlot::setHorizontalMetricProvider(
         disconnect(m_horizontalProvider, 0, this, 0);
 
     m_horizontalProvider = provider;
-    if (m_horizontalProvider)
-    {
+    if (m_horizontalProvider) {
         connect(m_horizontalProvider, SIGNAL(changed()),
                 this, SLOT(setUpdateOnce()));
         connect(m_horizontalProvider, SIGNAL(destroyed()),
@@ -121,16 +112,16 @@ void QseSppAxisCanvasPlot::setHorizontalMetricProvider(
 }
 
 bool QseSppAxisCanvasPlot::hasChanges(const QRect &rect,
-        const QseSppGeometry &geometry)
+                                      const QseSppGeometry &geometry)
 {
     return (isUpdateOnce() || rect != m_lastRect || geometry != m_lastGeometry);
 }
 
-void QseSppAxisCanvasPlot::draw(QPainter *painter, const QRect &rect,
-        const QseSppGeometry &geometry)
+void QseSppAxisCanvasPlot::draw(QPainter *painter,
+                                const QRect &rect,
+                                const QseSppGeometry &geometry)
 {
-    if (isVisible(rect, geometry))
-    {
+    if (isVisible(rect, geometry)) {
         painter->fillRect(rect, m_backgroundColor);
 
         // fetch metric list

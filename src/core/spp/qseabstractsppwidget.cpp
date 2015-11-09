@@ -18,8 +18,8 @@
 #include "qseabstractspplimiter.h"
 
 
-QseAbstractSppWidget::QseAbstractSppWidget(QWidget *parent,
-        Qt::WindowFlags f) : QseAbstractWidget(parent, f)
+QseAbstractSppWidget::QseAbstractSppWidget(QWidget *parent, Qt::WindowFlags f)
+    : QseAbstractWidget(parent, f)
 {
     m_controller = 0;
     m_limiter = 0;
@@ -31,8 +31,7 @@ void QseAbstractSppWidget::setGeometry(const QseSppGeometry &geometry)
     if (m_limiter)
         limitedGeometry = m_limiter->limit(limitedGeometry);
 
-    if (m_geometry != limitedGeometry)
-    {
+    if (m_geometry != limitedGeometry) {
         m_geometry = limitedGeometry;
         setUpdateOnce(true);
         emit geometryChanged(m_geometry);
@@ -48,8 +47,7 @@ void QseAbstractSppWidget::setController(QseAbstractSppController *controller)
         disconnect(m_controller, 0, this, 0);
 
     m_controller = controller;
-    if (m_controller)
-    {
+    if (m_controller) {
         connect(m_controller, SIGNAL(cursorChanged(QCursor)),
                 this, SLOT(setCurrentCursor(QCursor)));
         connect(m_controller, SIGNAL(geometryChanged(QseSppGeometry)),
@@ -69,8 +67,7 @@ void QseAbstractSppWidget::setLimiter(QseAbstractSppLimiter *limiter)
         disconnect(m_limiter, 0, this, 0);
 
     m_limiter = limiter;
-    if (m_limiter)
-    {
+    if (m_limiter) {
         connect(m_limiter, SIGNAL(changed()),
                 this, SLOT(limiter_changed()));
         connect(m_limiter, SIGNAL(destroyed()),

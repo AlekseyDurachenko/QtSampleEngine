@@ -16,6 +16,7 @@
 #ifndef QSEABSTRACTSPPMETRICPROVIDER_H
 #define QSEABSTRACTSPPMETRICPROVIDER_H
 
+
 #include <QList>
 #include "qseabstractmetricprovider.h"
 #include "qsemetricitem.h"
@@ -28,8 +29,7 @@ class QseAbstractSppMetricProvider : public QseAbstractMetricProvider
 public:
     QseAbstractSppMetricProvider(QObject *parent = 0);
 
-    virtual QList<QseMetricItem> create(const QseSppGeometry &geometry,
-                                        int size) const = 0;
+    virtual QList<QseMetricItem> create(const QseSppGeometry &geometry, int size) const = 0;
 };
 
 

@@ -16,6 +16,7 @@
 #ifndef QSEPOSITION_H
 #define QSEPOSITION_H
 
+
 #include <QObject>
 #include "qserange.h"
 
@@ -23,23 +24,24 @@
 class QsePosition : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(qint64 index READ index WRITE setIndex
-               RESET resetIndex)
-    Q_PROPERTY(QseRange availableRange READ availableRange
-               WRITE setAvailableRange RESET resetAvailableRange)
+    Q_PROPERTY(qint64 index READ index WRITE setIndex RESET resetIndex)
+    Q_PROPERTY(QseRange availableRange READ availableRange WRITE setAvailableRange RESET resetAvailableRange)
 public:
     explicit QsePosition(QObject *parent = 0);
 
     inline bool isNull() const;
     inline qint64 index() const;
     inline const QseRange &availableRange() const;
+
 signals:
     void indexChanged();
+
 public slots:
     void setAvailableRange(const QseRange &range);
     void setIndex(qint64 index);
     void resetAvailableRange();
     void resetIndex();
+
 private:
     qint64 m_index;
     bool m_isNull;

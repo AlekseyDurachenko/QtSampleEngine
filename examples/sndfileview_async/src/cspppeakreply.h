@@ -23,16 +23,16 @@ class CSppPeakReply : public QseAbstractSppPeakReply
 {
     Q_OBJECT
 public:
-    explicit CSppPeakReply(const QVector<double> &samples,
-                           const QseSppPeakRequest &request,
-                           QObject *parent = 0);
+    explicit CSppPeakReply(const QVector<double> &samples, const QseSppPeakRequest &request, QObject *parent = 0);
+
 protected:
     virtual void doAlgorithm();
+
 private:
     QsePeakArray readPeaks(const QseSppPeakRequest &req);
     QsePeakArray readAsLines(qint64 first, qint64 pps, int width);
-    QsePeakArray readAsPeaks(qint64 first, qint64 spp, int width,
-                             bool rightAligh = false);
+    QsePeakArray readAsPeaks(qint64 first, qint64 spp, int width, bool rightAligh = false);
+
 private:
     QVector<double> m_samples;
 };

@@ -16,14 +16,13 @@
 #include "qseabstractsppcontrollerproxy.h"
 
 
-QseAbstractSppControllerProxy::QseAbstractSppControllerProxy(QObject *parent) :
-    QseAbstractSppController(parent)
+QseAbstractSppControllerProxy::QseAbstractSppControllerProxy(QObject *parent)
+    : QseAbstractSppController(parent)
 {
     m_controller = 0;
 }
 
-void QseAbstractSppControllerProxy::setController(
-        QseAbstractSppController *controller)
+void QseAbstractSppControllerProxy::setController(QseAbstractSppController *controller)
 {
     if (m_controller == controller)
         return;
@@ -32,8 +31,7 @@ void QseAbstractSppControllerProxy::setController(
         disconnect(m_controller, 0, this, 0);
 
     m_controller = controller;
-    if (m_controller)
-    {
+    if (m_controller) {
         connect(m_controller, SIGNAL(cursorChanged(QCursor)),
                 this, SIGNAL(cursorChanged(QCursor)));
         connect(m_controller, SIGNAL(geometryChanged(QseSppGeometry)),
@@ -49,42 +47,48 @@ void QseAbstractSppControllerProxy::controller_destroyed()
 }
 
 void QseAbstractSppControllerProxy::mouseMoveEvent(QMouseEvent *event,
-        const QRect &rect, const QseSppGeometry &geometry)
+                                                   const QRect &rect,
+                                                   const QseSppGeometry &geometry)
 {
     if (m_controller)
         m_controller->mouseMoveEvent(event, rect, geometry);
 }
 
 void QseAbstractSppControllerProxy::mousePressEvent(QMouseEvent *event,
-        const QRect &rect, const QseSppGeometry &geometry)
+                                                    const QRect &rect,
+                                                    const QseSppGeometry &geometry)
 {
     if (m_controller)
         m_controller->mousePressEvent(event, rect, geometry);
 }
 
 void QseAbstractSppControllerProxy::mouseReleaseEvent(QMouseEvent *event,
-        const QRect &rect, const QseSppGeometry &geometry)
+                                                      const QRect &rect,
+                                                      const QseSppGeometry &geometry)
 {
     if (m_controller)
         m_controller->mouseReleaseEvent(event, rect, geometry);
 }
 
 void QseAbstractSppControllerProxy::wheelEvent(QWheelEvent *event,
-        const QRect &rect, const QseSppGeometry &geometry)
+                                               const QRect &rect,
+                                               const QseSppGeometry &geometry)
 {
     if (m_controller)
         m_controller->wheelEvent(event, rect, geometry);
 }
 
 void QseAbstractSppControllerProxy::keyPressEvent(QKeyEvent *event,
-        const QRect &rect, const QseSppGeometry &geometry)
+                                                  const QRect &rect,
+                                                  const QseSppGeometry &geometry)
 {
     if (m_controller)
         m_controller->keyPressEvent(event, rect, geometry);
 }
 
 void QseAbstractSppControllerProxy::keyReleaseEvent(QKeyEvent *event,
-        const QRect &rect, const QseSppGeometry &geometry)
+                                                    const QRect &rect,
+                                                    const QseSppGeometry &geometry)
 {
     if (m_controller)
         m_controller->keyReleaseEvent(event, rect, geometry);

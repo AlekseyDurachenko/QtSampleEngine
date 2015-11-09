@@ -18,8 +18,8 @@
 #include "qseposition.h"
 
 
-QseSppPositionPlot::QseSppPositionPlot(QObject *parent) :
-    QseAbstractSppPlot(parent)
+QseSppPositionPlot::QseSppPositionPlot(QObject *parent)
+    : QseAbstractSppPlot(parent)
 {
     m_position = 0;
     m_opacity = 1.0;
@@ -28,8 +28,7 @@ QseSppPositionPlot::QseSppPositionPlot(QObject *parent) :
 
 void QseSppPositionPlot::setOpacity(qreal opacity)
 {
-    if (m_opacity != opacity)
-    {
+    if (m_opacity != opacity) {
         m_opacity = opacity;
         setUpdateOnce(true);
     }
@@ -47,26 +46,27 @@ void QseSppPositionPlot::setPosition(QsePosition *position)
         disconnect(m_position, 0, this, 0);
 
     m_position = position;
-    if (m_position)
-    {
-        connect(m_position, SIGNAL(indexChanged()), this, SLOT(setUpdateOnce()));
-        connect(m_position, SIGNAL(destroyed(QObject*)),
-                this, SLOT(position_destroyed(QObject*)));
+    if (m_position) {
+        connect(m_position, SIGNAL(indexChanged()),
+                this, SLOT(setUpdateOnce()));
+        connect(m_position, SIGNAL(destroyed(QObject *)),
+                this, SLOT(position_destroyed(QObject *)));
     }
 
     setUpdateOnce(true);
 }
 
 bool QseSppPositionPlot::hasChanges(const QRect &rect,
-        const QseSppGeometry &geometry)
+                                    const QseSppGeometry &geometry)
 {
-    return (isUpdateOnce() || rect != lastRect() || geometry != lastGeometry());
+    return (isUpdateOnce()
+            || rect != lastRect()
+            || geometry != lastGeometry());
 }
 
 void QseSppPositionPlot::setPen(const QPen &pen)
 {
-    if (m_pen != pen)
-    {
+    if (m_pen != pen) {
         m_pen = pen;
         setUpdateOnce(true);
     }
@@ -74,7 +74,7 @@ void QseSppPositionPlot::setPen(const QPen &pen)
 
 
 bool QseSppPositionPlot::isVisible(const QRect &rect,
-        const QseSppGeometry &geometry)
+                                   const QseSppGeometry &geometry)
 {
     if (m_position == 0)
         return false;
@@ -83,14 +83,14 @@ bool QseSppPositionPlot::isVisible(const QRect &rect,
         return false;
 
     return QseSppGeometry::checkSampleIndexVisibility(
-                geometry, m_position->index(), rect.width());
+               geometry, m_position->index(), rect.width());
 }
 
-void QseSppPositionPlot::draw(QPainter *painter, const QRect &rect,
-        const QseSppGeometry &geometry)
+void QseSppPositionPlot::draw(QPainter *painter,
+                              const QRect &rect,
+                              const QseSppGeometry &geometry)
 {
-    if (isVisible(rect, geometry))
-    {
+    if (isVisible(rect, geometry)) {
         int pos = QseSppGeometry::calcOffset(geometry, m_position->index());
         painter->save();
         painter->setPen(m_pen);

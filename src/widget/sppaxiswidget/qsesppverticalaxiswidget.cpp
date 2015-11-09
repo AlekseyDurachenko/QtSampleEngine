@@ -18,24 +18,21 @@
 #include <QPainter>
 
 
-QseSppVerticalAxisWidget::QseSppVerticalAxisWidget(QWidget *parent) :
-    QseAbstractSppAxisWidget(parent)
+QseSppVerticalAxisWidget::QseSppVerticalAxisWidget(QWidget *parent)
+    : QseAbstractSppAxisWidget(parent)
 {
     m_alignment = AlignRight;
 }
 
-void QseSppVerticalAxisWidget::setAlignment(
-        QseSppVerticalAxisWidget::Alignment alignment)
+void QseSppVerticalAxisWidget::setAlignment(Alignment alignment)
 {
-    if (m_alignment != alignment)
-    {
+    if (m_alignment != alignment) {
         m_alignment = alignment;
         setUpdateOnce(true);
     }
 }
 
-void QseSppVerticalAxisWidget::recalcProviderMinimumSize(
-        QseAbstractSppMetricProvider *provider)
+void QseSppVerticalAxisWidget::recalcProviderMinimumSize(QseAbstractSppMetricProvider *provider)
 {
     if (provider)
         provider->setMinimumStep(QFontMetrics(textFont()).height() * 2.0);
@@ -50,25 +47,23 @@ void QseSppVerticalAxisWidget::leftRightRender(QPainter *painter)
     const QList<QseMetricItem> metricList = m_provider->create(geometry(), height());
 
     int mpX1, mpX2, mtX1, mtY1, mtW, mtH, flags;
-    if (m_alignment == AlignRight)
-    {
+    if (m_alignment == AlignRight) {
         mpX1 = width() - m_metricSize;
         mpX2 = width();
         mtX1 = 0;
-        mtY1 = -QFontMetrics(m_textFont).height()/2;
+        mtY1 = -QFontMetrics(m_textFont).height() / 2;
         mtW  = width() - m_metricSize;
         mtH  = QFontMetrics(m_textFont).height();
-        flags= Qt::AlignRight|Qt::AlignVCenter;
+        flags = Qt::AlignRight | Qt::AlignVCenter;
     }
-    else // m_orientation == Right
-    {
+    else { // m_orientation == Right
         mpX1 = 0;
         mpX2 = m_metricSize;
         mtX1 = m_metricSize + 2;
-        mtY1 = - QFontMetrics(m_textFont).height()/2;
+        mtY1 = - QFontMetrics(m_textFont).height() / 2;
         mtW  = width() - m_metricSize;
         mtH  = QFontMetrics(m_textFont).height();
-        flags= Qt::AlignLeft|Qt::AlignVCenter;
+        flags = Qt::AlignLeft | Qt::AlignVCenter;
     }
 
     // draw only center and main metric
@@ -82,14 +77,13 @@ void QseSppVerticalAxisWidget::leftRightRender(QPainter *painter)
     painter->setPen(m_metricPen);
     foreach (const QseMetricItem &metric, metricList)
         if (metric.level() == 0 || metric.level() == 1)
-            painter->drawText(QRect(mtX1, metric.offset()+mtY1,
+            painter->drawText(QRect(mtX1, metric.offset() + mtY1,
                                     mtW, mtH), flags, metric.text());
 }
 
 void QseSppVerticalAxisWidget::paintEvent(QPaintEvent */*event*/)
 {
-    if (isUpdateOnce() || m_cache.size() != size())
-    {
+    if (isUpdateOnce() || m_cache.size() != size()) {
         // resize image, if needed
         if (size() != m_cache.size())
             m_cache = QImage(size(), QImage::Format_RGB32);
@@ -110,18 +104,17 @@ void QseSppVerticalAxisWidget::paintEvent(QPaintEvent */*event*/)
 
 QSize QseSppVerticalAxisWidget::minimumSizeHint() const
 {
-    if (metricProvider()) switch (m_alignment)
-    {
-    case AlignLeft:
-    case AlignRight:
-        return QSize(QFontMetrics(textFont()).width(
-                QString(m_provider->maximumTextLenght(), '0'))
-                     + metricSize() + 2, 0);
-    case AlignHCenter:
-        return QSize(QFontMetrics(textFont()).width(
-                QString(m_provider->maximumTextLenght(), '0'))
-                     + metricSize()*2 + 4, 0);
-    }
+    if (metricProvider()) switch (m_alignment) {
+        case AlignLeft:
+        case AlignRight:
+            return QSize(QFontMetrics(textFont()).width(
+                             QString(m_provider->maximumTextLenght(), '0'))
+                         + metricSize() + 2, 0);
+        case AlignHCenter:
+            return QSize(QFontMetrics(textFont()).width(
+                             QString(m_provider->maximumTextLenght(), '0'))
+                         + metricSize() * 2 + 4, 0);
+        }
 
     return QseAbstractSppAxisWidget::minimumSizeHint();
 }
@@ -132,7 +125,7 @@ void QseSppVerticalAxisWidget::endModifyTextFont(const QFont &/*font*/)
 }
 
 void QseSppVerticalAxisWidget::endModifyMetricProvider(
-        QseAbstractSppMetricProvider */*provider*/)
+    QseAbstractSppMetricProvider */*provider*/)
 {
     recalcProviderMinimumSize(metricProvider());
 }

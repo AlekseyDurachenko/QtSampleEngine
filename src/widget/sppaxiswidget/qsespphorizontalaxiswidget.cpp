@@ -18,18 +18,16 @@
 #include <QPainter>
 
 
-QseSppHorizontalAxisWidget::QseSppHorizontalAxisWidget(QWidget *parent) :
-    QseAbstractSppAxisWidget(parent)
+QseSppHorizontalAxisWidget::QseSppHorizontalAxisWidget(QWidget *parent)
+    : QseAbstractSppAxisWidget(parent)
 {
     m_alignment = AlignBottom;
     m_shift = 0;
 }
 
-void QseSppHorizontalAxisWidget::setAlignment(
-        QseSppHorizontalAxisWidget::Alignment alignment)
+void QseSppHorizontalAxisWidget::setAlignment(QseSppHorizontalAxisWidget::Alignment alignment)
 {
-    if (m_alignment != alignment)
-    {
+    if (m_alignment != alignment) {
         m_alignment = alignment;
         setUpdateOnce(true);
     }
@@ -37,21 +35,17 @@ void QseSppHorizontalAxisWidget::setAlignment(
 
 void QseSppHorizontalAxisWidget::setShift(int shift)
 {
-    if (m_shift != shift)
-    {
+    if (m_shift != shift) {
         m_shift = shift;
         setUpdateOnce(true);
         emit shiftChanged(m_shift);
     }
 }
 
-void QseSppHorizontalAxisWidget::recalcProviderMinimumSize(
-        QseAbstractSppMetricProvider *provider)
+void QseSppHorizontalAxisWidget::recalcProviderMinimumSize(QseAbstractSppMetricProvider *provider)
 {
     if (provider)
-        provider->setMinimumStep(
-                QFontMetrics(textFont()).width(
-                        QString(provider->maximumTextLenght(), '0')));
+        provider->setMinimumStep(QFontMetrics(textFont()).width(QString(provider->maximumTextLenght(), '0')));
 }
 
 void QseSppHorizontalAxisWidget::topDownRender(QPainter *painter)
@@ -61,15 +55,13 @@ void QseSppHorizontalAxisWidget::topDownRender(QPainter *painter)
 
     // calculate geometry of the metric for top or down postion of them
     int mpY1, mpY2, tpY;
-    if (m_alignment == AlignBottom)
-    {
+    if (m_alignment == AlignBottom) {
         mpY1 = height() - m_metricSize;
         mpY2 = height();
         //tpY  = height() - 2;
         tpY  = height() - m_metricSize - 2;
     }
-    else // m_orientation == Down
-    {
+    else { // m_orientation == Down
         mpY1 = 0;
         mpY2 = m_metricSize;
         tpY  = height() - 2;
@@ -79,24 +71,27 @@ void QseSppHorizontalAxisWidget::topDownRender(QPainter *painter)
 
     // draw only center and main metric
     painter->setPen(m_metricPen);
-    foreach (const QseMetricItem &metric, metricList)
-        if (metric.level() == 0 || metric.level() == 1)
-            painter->drawLine(metric.offset()+shift(), mpY1,
-                              metric.offset()+shift(), mpY2);
+    foreach (const QseMetricItem &metric, metricList) {
+        if (metric.level() == 0 || metric.level() == 1) {
+            painter->drawLine(metric.offset() + shift(), mpY1,
+                              metric.offset() + shift(), mpY2);
+        }
+    }
 
     // draw the help text for the metric
     painter->setPen(m_metricPen);
-    foreach (const QseMetricItem &metric, metricList)
-        if (metric.level() == 0 || metric.level() == 1)
-            painter->drawText(QPoint(metric.offset()+shift(), tpY),
+    foreach (const QseMetricItem &metric, metricList) {
+        if (metric.level() == 0 || metric.level() == 1) {
+            painter->drawText(QPoint(metric.offset() + shift(), tpY),
                               metric.text());
-            //painter->drawText(QPoint(metric.offset()+2, tpY), metric.text());
+        }
+    }
+    //painter->drawText(QPoint(metric.offset()+2, tpY), metric.text());
 }
 
 void QseSppHorizontalAxisWidget::paintEvent(QPaintEvent */*event*/)
 {
-    if (isUpdateOnce() || m_cache.size() != size())
-    {
+    if (isUpdateOnce() || m_cache.size() != size()) {
         // resize image, if needed
         if (size() != m_cache.size())
             m_cache = QImage(size(), QImage::Format_RGB32);
@@ -117,14 +112,13 @@ void QseSppHorizontalAxisWidget::paintEvent(QPaintEvent */*event*/)
 
 QSize QseSppHorizontalAxisWidget::minimumSizeHint() const
 {
-    if (metricProvider()) switch (m_alignment)
-    {
-    case AlignBottom:
-    case AlignTop:
-        return QSize(0, QFontMetrics(textFont()).height() + metricSize() + 2);
-    case AlignVCenter:
-        return QSize(0, QFontMetrics(textFont()).height() + metricSize()*2 + 4);
-    }
+    if (metricProvider()) switch (m_alignment) {
+        case AlignBottom:
+        case AlignTop:
+            return QSize(0, QFontMetrics(textFont()).height() + metricSize() + 2);
+        case AlignVCenter:
+            return QSize(0, QFontMetrics(textFont()).height() + metricSize() * 2 + 4);
+        }
 
     return QseAbstractSppAxisWidget::minimumSizeHint();
 }
@@ -134,8 +128,7 @@ void QseSppHorizontalAxisWidget::endModifyTextFont(const QFont &/*font*/)
     recalcProviderMinimumSize(metricProvider());
 }
 
-void QseSppHorizontalAxisWidget::endModifyMetricProvider(
-        QseAbstractSppMetricProvider */*provider*/)
+void QseSppHorizontalAxisWidget::endModifyMetricProvider(QseAbstractSppMetricProvider */*provider*/)
 {
     recalcProviderMinimumSize(metricProvider());
 }

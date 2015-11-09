@@ -16,21 +16,19 @@
 #include "qseabstractsppstandardcontroller.h"
 
 
-QseAbstractSppStandardController::QseAbstractSppStandardController(
-        QObject *parent) : QseAbstractSppController(parent)
+QseAbstractSppStandardController::QseAbstractSppStandardController(QObject *parent)
+    : QseAbstractSppController(parent)
 {
     m_mouseButtons = Qt::NoButton;
     m_keyboardModifiers = Qt::NoModifier;
 }
 
-void QseAbstractSppStandardController::setMouseButtons(
-        Qt::MouseButtons mouseButtons)
+void QseAbstractSppStandardController::setMouseButtons(Qt::MouseButtons mouseButtons)
 {
     m_mouseButtons = mouseButtons;
 }
 
-void QseAbstractSppStandardController::setKeyboardModifiers(
-        Qt::KeyboardModifiers keyboardModifiers)
+void QseAbstractSppStandardController::setKeyboardModifiers(Qt::KeyboardModifiers keyboardModifiers)
 {
     m_keyboardModifiers = keyboardModifiers;
 }

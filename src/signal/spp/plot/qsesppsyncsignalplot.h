@@ -16,6 +16,7 @@
 #ifndef QSESPPSYNCSIGNALPLOT_H
 #define QSESPPSYNCSIGNALPLOT_H
 
+
 #include "qseabstractsppsignalplot.h"
 class QseAbstractSppSyncPeakDataSource;
 
@@ -29,26 +30,25 @@ public:
     inline QseAbstractSppSyncPeakDataSource *dataSource() const;
     void setDataSource(QseAbstractSppSyncPeakDataSource *dataSource);
 
-    virtual void draw(QPainter *painter, const QRect &rect,
-              const QseSppGeometry &geometry);
+    virtual void draw(QPainter *painter, const QRect &rect, const QseSppGeometry &geometry);
+
 private slots:
     void dataSource_dataChanged();
     void dataSource_dataChanged(qint64 first, qint64 last);
     void dataSource_destroyed();
+
 private:
-    void drawAvaiblePeaks(QPainter *painter, const QRect &rect,
-                          const QseSppGeometry &geometry);
+    void drawAvaiblePeaks(QPainter *painter, const QRect &rect, const QseSppGeometry &geometry);
     void calcPeaks(const QRect &rect, const QseSppGeometry &geometry);
     void recalcPeaks(const QRect &rect, const QseSppGeometry &geometry);
     void pushFrontPeaks(const QseSppGeometry &geometry);
     void pushBackPeaks(const QseSppGeometry &geometry, int width);
-    bool checkOptimizationPossibility(const QseSppGeometry &oldGeometry,
-                                      const QseSppGeometry &newGeometry);
-    void compressPeaks(const QseSppGeometry &oldGeometry,
-                       const QseSppGeometry &newGeometry,
-                       QsePeakArray *peaks);
+    bool checkOptimizationPossibility(const QseSppGeometry &oldGeometry, const QseSppGeometry &newGeometry);
+    void compressPeaks(const QseSppGeometry &oldGeometry, const QseSppGeometry &newGeometry, QsePeakArray *peaks);
+
 private:
     virtual QseAbstractPeakDataSource *usedDataSource() const;
+
 private:
     QseAbstractSppSyncPeakDataSource *m_dataSource;
     QsePeakArray m_peaks;

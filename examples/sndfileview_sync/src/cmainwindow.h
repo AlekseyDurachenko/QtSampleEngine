@@ -16,8 +16,10 @@
 #ifndef CMAINWINDOW_H
 #define CMAINWINDOW_H
 
+
 #include <QMainWindow>
 class CComplexMonoAudioWidget;
+
 
 namespace Ui {
 class CMainWindow;
@@ -30,13 +32,15 @@ class CMainWindow : public QMainWindow
 public:
     explicit CMainWindow(QWidget *parent = 0);
     virtual ~CMainWindow();
+
 private slots:
     void on_action_Open_triggered();
     void on_action_Quit_triggered();
     void openSoundFile(const QString &fileName);
+
 private:
-    QVector<double> readSoundFile(const QString &fileName,
-                                  double *sampleRage = 0);
+    QVector<double> readSoundFile(const QString &fileName, double *sampleRage = 0);
+
 private:
     Ui::CMainWindow *ui;
     CComplexMonoAudioWidget *m_monoAudioWidget;

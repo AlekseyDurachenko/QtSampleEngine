@@ -16,6 +16,7 @@
 #ifndef QSESPPSTANDARDHORIZONTALZOOMCONTROLLER_H
 #define QSESPPSTANDARDHORIZONTALZOOMCONTROLLER_H
 
+
 #include "qseabstractsppstandardcontroller.h"
 
 
@@ -24,9 +25,9 @@ class QseSppStandardHorizontalZoomController : public QseAbstractSppStandardCont
     Q_OBJECT
 public:
     explicit QseSppStandardHorizontalZoomController(QObject *parent = 0);
+
 protected:
-    virtual void wheelEvent(QWheelEvent *event, const QRect &rect,
-                            const QseSppGeometry &geometry);
+    virtual void wheelEvent(QWheelEvent *event, const QRect &rect, const QseSppGeometry &geometry);
 };
 
 

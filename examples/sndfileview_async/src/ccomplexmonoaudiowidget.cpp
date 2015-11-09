@@ -34,8 +34,9 @@
 #include "csppasyncaudiolimiter.h"
 #include "csppasyncpeakdatasource.h"
 
-CComplexMonoAudioWidget::CComplexMonoAudioWidget(QWidget *parent) :
-    QWidget(parent)
+
+CComplexMonoAudioWidget::CComplexMonoAudioWidget(QWidget *parent)
+    : QWidget(parent)
 {
     m_audioWidget = new CSppAsyncAudioWidget(this);
 
@@ -124,22 +125,19 @@ void CComplexMonoAudioWidget::dataSource_dataChanged()
     audioWidget_geometryChanged(m_audioWidget->geometry());
 }
 
-void CComplexMonoAudioWidget::audioWidget_geometryChanged(
-        const QseSppGeometry &geometry)
+void CComplexMonoAudioWidget::audioWidget_geometryChanged(const QseSppGeometry &geometry)
 {
     m_timeScrollBar->blockSignals(true);
     const qint64 maxIndex = m_audioWidget->dataSource()->maxIndex();
     const qint64 minIndex = m_audioWidget->dataSource()->minIndex();
-    if (geometry.samplesPerPixel() < 0)
-    {
+    if (geometry.samplesPerPixel() < 0) {
         m_timeScrollBar->setRange(minIndex, maxIndex);
         m_timeScrollBar->setValue(geometry.x());
     }
-    else
-    {
-        m_timeScrollBar->setRange(minIndex/geometry.samplesPerPixel(),
-                                  maxIndex/geometry.samplesPerPixel());
-        m_timeScrollBar->setValue(geometry.x()/geometry.samplesPerPixel());
+    else {
+        m_timeScrollBar->setRange(minIndex / geometry.samplesPerPixel(),
+                                  maxIndex / geometry.samplesPerPixel());
+        m_timeScrollBar->setValue(geometry.x() / geometry.samplesPerPixel());
     }
     m_timeScrollBar->blockSignals(false);
 }
@@ -157,10 +155,9 @@ void CComplexMonoAudioWidget::scrollBar_valueChanged(int value)
 
 bool CComplexMonoAudioWidget::eventFilter(QObject *obj, QEvent *event)
 {
-    if (event->type() == QEvent::Move)
-    {
+    if (event->type() == QEvent::Move) {
         QMoveEvent *moveEvent = static_cast<QMoveEvent *>(event);
-        const QPoint timeAxisZeroPos = moveEvent->pos()-m_timeAxis->pos();
+        const QPoint timeAxisZeroPos = moveEvent->pos() - m_timeAxis->pos();
         m_timeAxis->setShift(timeAxisZeroPos.x());
     }
 

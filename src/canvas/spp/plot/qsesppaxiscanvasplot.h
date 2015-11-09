@@ -25,14 +25,11 @@ class QseAbstractSppMetricProvider;
 class QseSppAxisCanvasPlot : public QseAbstractSppPlot
 {
     Q_OBJECT
-    Q_PROPERTY(QPen centerLinePen READ centerLinePen
-               WRITE setCenterLinePen)
-    Q_PROPERTY(qreal centerLineOpacity READ centerLineOpacity
-               WRITE setCenterLineOpacity)
+    Q_PROPERTY(QPen centerLinePen READ centerLinePen WRITE setCenterLinePen)
+    Q_PROPERTY(qreal centerLineOpacity READ centerLineOpacity WRITE setCenterLineOpacity)
     Q_PROPERTY(QPen linePen READ linePen WRITE setLinePen)
     Q_PROPERTY(qreal lineOpacity READ lineOpacity WRITE setLineOpacity)
-    Q_PROPERTY(QColor backgroundColor READ backgroundColor
-               WRITE setBackgroundColor)
+    Q_PROPERTY(QColor backgroundColor READ backgroundColor WRITE setBackgroundColor)
 public:
     explicit QseSppAxisCanvasPlot(QObject *parent = 0);
 
@@ -55,11 +52,12 @@ public:
     void setHorizontalMetricProvider(QseAbstractSppMetricProvider *horizontal);
 
     virtual bool hasChanges(const QRect &rect, const QseSppGeometry &geometry);
-    virtual void draw(QPainter *painter, const QRect &rect,
-                      const QseSppGeometry &geometry);
+    virtual void draw(QPainter *painter, const QRect &rect, const QseSppGeometry &geometry);
+
 private slots:
     void verticalProvider_destroyed();
     void horizontalProvider_destroyed();
+
 private:
     QseAbstractSppMetricProvider *m_verticalProvider;
     QseAbstractSppMetricProvider *m_horizontalProvider;

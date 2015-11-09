@@ -16,6 +16,7 @@
 #ifndef QSESPPSTANDARDVERTICALZOOMCONTROLLER_H
 #define QSESPPSTANDARDVERTICALZOOMCONTROLLER_H
 
+
 #include "qseabstractsppstandardcontroller.h"
 
 
@@ -24,9 +25,9 @@ class QseSppStandardVerticalZoomController : public QseAbstractSppStandardContro
     Q_OBJECT
 public:
     explicit QseSppStandardVerticalZoomController(QObject *parent = 0);
+
 protected:
-    virtual void wheelEvent(QWheelEvent *event, const QRect &rect,
-                            const QseSppGeometry &geometry);
+    virtual void wheelEvent(QWheelEvent *event, const QRect &rect, const QseSppGeometry &geometry);
 };
 
 

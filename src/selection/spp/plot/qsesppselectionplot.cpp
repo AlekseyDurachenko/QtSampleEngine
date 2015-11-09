@@ -28,8 +28,7 @@ QseSppSelectionPlot::QseSppSelectionPlot(QObject *parent)
 
 void QseSppSelectionPlot::setBrush(const QBrush &brush)
 {
-    if (m_brush != brush)
-    {
+    if (m_brush != brush) {
         m_brush = brush;
         setUpdateOnce(true);
     }
@@ -37,8 +36,7 @@ void QseSppSelectionPlot::setBrush(const QBrush &brush)
 
 void QseSppSelectionPlot::setOpacity(qreal opacity)
 {
-    if (m_opacity != opacity)
-    {
+    if (m_opacity != opacity) {
         m_opacity = opacity;
         setUpdateOnce(true);
     }
@@ -53,25 +51,26 @@ void QseSppSelectionPlot::setSelection(QseSelection *selection)
         disconnect(m_selection, 0, this, 0);
 
     m_selection = selection;
-    if (m_selection)
-    {
+    if (m_selection) {
         connect(m_selection, SIGNAL(selectionChanged()),
                 this, SLOT(setUpdateOnce()));
-        connect(m_selection, SIGNAL(destroyed(QObject*)),
-                this, SLOT(selection_destroyed(QObject*)));
+        connect(m_selection, SIGNAL(destroyed(QObject *)),
+                this, SLOT(selection_destroyed(QObject *)));
     }
 
     setUpdateOnce(true);
 }
 
 bool QseSppSelectionPlot::hasChanges(const QRect &rect,
-        const QseSppGeometry &geometry)
+                                     const QseSppGeometry &geometry)
 {
-    return (isUpdateOnce() || rect != lastRect() || geometry != lastGeometry());
+    return (isUpdateOnce()
+            || rect != lastRect()
+            || geometry != lastGeometry());
 }
 
 bool QseSppSelectionPlot::isVisible(const QRect &rect,
-        const QseSppGeometry &geometry)
+                                    const QseSppGeometry &geometry)
 {
     if (!isEnabled())
         return false;
@@ -83,8 +82,7 @@ bool QseSppSelectionPlot::isVisible(const QRect &rect,
         return false;
 
     const qint64 firstVisibleSample = geometry.x();
-    const qint64 lastVisibleSample = firstVisibleSample
-            + QseSppGeometry::samplesFromWidth(geometry, rect.width());
+    const qint64 lastVisibleSample = firstVisibleSample + QseSppGeometry::samplesFromWidth(geometry, rect.width());
 
     if (m_selection->selectedRange().first() >= lastVisibleSample)
         return false;
@@ -95,28 +93,25 @@ bool QseSppSelectionPlot::isVisible(const QRect &rect,
     return true;
 }
 
-void QseSppSelectionPlot::draw(QPainter *painter, const QRect &rect,
-        const QseSppGeometry &geometry)
+void QseSppSelectionPlot::draw(QPainter *painter,
+                               const QRect &rect,
+                               const QseSppGeometry &geometry)
 {
-    if (isVisible(rect, geometry))
-    {
+    if (isVisible(rect, geometry)) {
         const qint64 firstVisibleSample = geometry.x();
-        const qint64 lastVisibleSample =
-                QseSppGeometry::calcSampleIndex(geometry, rect.width());
+        const qint64 lastVisibleSample = QseSppGeometry::calcSampleIndex(geometry, rect.width());
 
         int sl = 0;
         if (m_selection->selectedRange().first() > firstVisibleSample)
-            sl = QseSppGeometry::calcOffset(geometry,
-                    m_selection->selectedRange().first());
+            sl = QseSppGeometry::calcOffset(geometry, m_selection->selectedRange().first());
 
-        int sr = rect.width()-1;
+        int sr = rect.width() - 1;
         if (m_selection->selectedRange().last() <= lastVisibleSample)
-            sr = QseSppGeometry::calcOffset(geometry,
-                    m_selection->selectedRange().last());
+            sr = QseSppGeometry::calcOffset(geometry, m_selection->selectedRange().last());
 
         painter->save();
         painter->setOpacity(m_opacity);
-        painter->fillRect(sl, 0, sr-sl+1, rect.height(), m_brush);
+        painter->fillRect(sl, 0, sr - sl + 1, rect.height(), m_brush);
         painter->restore();
     }
 

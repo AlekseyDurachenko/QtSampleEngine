@@ -18,7 +18,8 @@
 #include <QDebug>
 
 
-TestQseRange::TestQseRange(QObject *parent) : QObject(parent)
+TestQseRange::TestQseRange(QObject *parent)
+    : QObject(parent)
 {
 }
 

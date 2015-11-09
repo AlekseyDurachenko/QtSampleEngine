@@ -20,8 +20,7 @@ QseSppSignalPlotPeakReplyItemList::QseSppSignalPlotPeakReplyItemList()
 {
 }
 
-bool QseSppSignalPlotPeakReplyItemList::contains(
-        QseAbstractSppPeakReply *reply) const
+bool QseSppSignalPlotPeakReplyItemList::contains(QseAbstractSppPeakReply *reply) const
 {
     for (int i = 0; i < m_items.count(); ++i)
         if (m_items[i].reply() == reply)
@@ -29,8 +28,7 @@ bool QseSppSignalPlotPeakReplyItemList::contains(
     return false;
 }
 
-int QseSppSignalPlotPeakReplyItemList::indexOf(
-        QseAbstractSppPeakReply *reply) const
+int QseSppSignalPlotPeakReplyItemList::indexOf(QseAbstractSppPeakReply *reply) const
 {
     for (int i = 0; i < m_items.count(); ++i)
         if (m_items[i].reply() == reply)
@@ -38,8 +36,7 @@ int QseSppSignalPlotPeakReplyItemList::indexOf(
     return -1;
 }
 
-void QseSppSignalPlotPeakReplyItemList::insert(
-        const QseSppSignalPlotPeakReplyItem &item)
+void QseSppSignalPlotPeakReplyItemList::insert(const QseSppSignalPlotPeakReplyItem &item)
 {
     m_items.push_back(item);
 }

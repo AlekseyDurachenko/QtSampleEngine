@@ -16,6 +16,7 @@
 #ifndef QSERANGE_H
 #define QSERANGE_H
 
+
 #include <QtGlobal>
 #include <QMetaType>
 
@@ -39,6 +40,7 @@ public:
 
     QseRange replaceFirst(qint64 first) const;
     QseRange replaceLast(qint64 last) const;
+
 private:
     bool m_isNull;
     qint64 m_first;
@@ -48,7 +50,7 @@ Q_DECLARE_METATYPE(QseRange)
 
 bool operator ==(const QseRange &l, const QseRange &r);
 bool operator !=(const QseRange &l, const QseRange &r);
-QDebug operator<<(QDebug dbg, const QseRange &range);
+QDebug operator <<(QDebug dbg, const QseRange &range);
 
 bool QseRange::isNull() const
 {

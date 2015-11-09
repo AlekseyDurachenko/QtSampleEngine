@@ -16,6 +16,7 @@
 #ifndef QSEABSTRACTSPPSIGNALPLOT_H
 #define QSEABSTRACTSPPSIGNALPLOT_H
 
+
 #include <QPen>
 #include "qsesppgeometry.h"
 #include "qsepeakarray.h"
@@ -23,14 +24,14 @@
 class QseAbstractSppSignalPlotDelegate;
 class QseAbstractPeakDataSource;
 
+
 class QseAbstractSppSignalPlot : public QseAbstractSppPlot
 {
     Q_OBJECT
     Q_ENUMS(ZeroLine)
     Q_PROPERTY(ZeroLine zeroLine READ zeroLine WRITE setZeroLine)
 public:
-    enum ZeroLine
-    {
+    enum ZeroLine {
         Top     = 0x01,
         Middle  = 0x02,
         Bottom  = 0x03
@@ -46,14 +47,18 @@ public:
 
     virtual bool hasChanges(const QRect &rect, const QseSppGeometry &geometry);
     virtual bool isVisible(const QRect &rect, const QseSppGeometry &geometry);
+
 private slots:
     void plotDelegate_changed();
     void plotDelegate_destroyed();
+
 protected:
     inline int calcDy(const QRect &rect);
+
 protected:
     // TODO: need to more correct method name
     virtual QseAbstractPeakDataSource *usedDataSource() const = 0;
+
 private:
     QseAbstractSppSignalPlotDelegate *m_plotDelegate;
     ZeroLine m_zeroLine;
@@ -71,17 +76,16 @@ QseAbstractSppSignalPlot::ZeroLine QseAbstractSppSignalPlot::zeroLine() const
 
 int QseAbstractSppSignalPlot::calcDy(const QRect &rect)
 {
-    switch (zeroLine())
-    {
+    switch (zeroLine()) {
     case Top:
         return 0;
     case Middle:
-        return rect.height()/2.0;
+        return rect.height() / 2.0;
     case Bottom:
         return rect.height();
     }
 
-    return rect.height()/2.0;
+    return rect.height() / 2.0;
 }
 
 

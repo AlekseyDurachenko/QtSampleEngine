@@ -18,8 +18,8 @@
 #include <QThread>
 
 
-CSppAsyncPeakDataSource::CSppAsyncPeakDataSource(QObject *parent) :
-    QseAbstractSppAsyncPeakDataSource(parent)
+CSppAsyncPeakDataSource::CSppAsyncPeakDataSource(QObject *parent)
+    : QseAbstractSppAsyncPeakDataSource(parent)
 {
     m_thread = new QThread(this);
     m_thread->start();
@@ -43,11 +43,10 @@ qint64 CSppAsyncPeakDataSource::minIndex() const
 
 qint64 CSppAsyncPeakDataSource::maxIndex() const
 {
-    return m_samples.count()-1;
+    return m_samples.count() - 1;
 }
 
-QseAbstractSppPeakReply *CSppAsyncPeakDataSource::read(
-        const QseSppPeakRequest &request)
+QseAbstractSppPeakReply *CSppAsyncPeakDataSource::read(const QseSppPeakRequest &request)
 {
     CSppPeakReply *reply = new CSppPeakReply(m_samples, request);
     reply->moveToThread(m_thread);
@@ -56,7 +55,7 @@ QseAbstractSppPeakReply *CSppAsyncPeakDataSource::read(
 }
 
 void CSppAsyncPeakDataSource::setSamples(const QVector<double> &samples,
-        double sampleRate)
+                                         double sampleRate)
 {
     m_samples = samples;
     m_sampleRate = sampleRate;

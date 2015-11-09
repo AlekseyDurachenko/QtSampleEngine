@@ -41,8 +41,7 @@
 class QseSppGeometry
 {
 public:
-    QseSppGeometry(qint64 x = 0, double y = 0, qint64 samplesPerPixel = -1,
-                   double height = 2.0);
+    explicit QseSppGeometry(qint64 x = 0, double y = 0, qint64 samplesPerPixel = -1, double height = 2.0);
 
     inline qint64 x() const;
     void setX(qint64 x);
@@ -67,13 +66,14 @@ public:
     QseSppGeometry replaceHeight(double height) const;
 
     double toRealSamplesPerPixel() const;
+
 public:
-    static bool checkSampleIndexVisibility(const QseSppGeometry &geometry,
-                                           qint64 sampleIndex, int width);
+    static bool checkSampleIndexVisibility(const QseSppGeometry &geometry, qint64 sampleIndex, int width);
     static int calcOffset(const QseSppGeometry &geometry, qint64 sampleIndex);
     static int widthFromSamples(const QseSppGeometry &geometry, qint64 count);
     static qint64 samplesFromWidth(const QseSppGeometry &geometry, int width);
     static qint64 calcSampleIndex(const QseSppGeometry &geometry, int offset);
+
 private:
     qint64 m_x;
     double m_y;
@@ -84,7 +84,7 @@ Q_DECLARE_METATYPE(QseSppGeometry)
 
 bool operator ==(const QseSppGeometry &l, const QseSppGeometry &r);
 bool operator !=(const QseSppGeometry &l, const QseSppGeometry &r);
-QDebug operator<<(QDebug dbg, const QseSppGeometry &geometry);
+QDebug operator <<(QDebug dbg, const QseSppGeometry &geometry);
 
 qint64 QseSppGeometry::x() const
 {

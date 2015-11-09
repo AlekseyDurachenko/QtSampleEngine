@@ -16,6 +16,7 @@
 #ifndef QSEABSTRACTPEAKREPLY_H
 #define QSEABSTRACTPEAKREPLY_H
 
+
 #include <QObject>
 #include "qsepeakarray.h"
 
@@ -29,14 +30,18 @@ public:
     inline bool isAborted() const;
     inline bool isWorking() const;
     void abort();
+
 public slots:
     void start();
+
 private slots:
     void slot_started();
+
 protected:
     virtual void doSuccess() = 0;
     virtual void doAbort() = 0;
     virtual void doAlgorithm() = 0;
+
 private:
     volatile bool m_isAborted;
     volatile bool m_isWorking;

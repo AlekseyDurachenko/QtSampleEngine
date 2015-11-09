@@ -18,8 +18,8 @@
 #include <QDebug>
 
 
-QseSppSignalLinearAmplMetricProvider::QseSppSignalLinearAmplMetricProvider(
-        QObject *parent) : QseAbstractSppMetricProvider(parent)
+QseSppSignalLinearAmplMetricProvider::QseSppSignalLinearAmplMetricProvider(QObject *parent)
+    : QseAbstractSppMetricProvider(parent)
 {
     m_mapper = new QseMetricMapper();
     m_factor = 1.0;
@@ -32,8 +32,7 @@ QseSppSignalLinearAmplMetricProvider::~QseSppSignalLinearAmplMetricProvider()
 
 void QseSppSignalLinearAmplMetricProvider::setFactor(double factor)
 {
-    if (m_factor != factor)
-    {
+    if (m_factor != factor) {
         m_factor = factor;
         emit changed();
     }
@@ -44,8 +43,8 @@ int QseSppSignalLinearAmplMetricProvider::maximumTextLenght() const
     return 8;
 }
 
-QList<QseMetricItem> QseSppSignalLinearAmplMetricProvider::create(
-        const QseSppGeometry &geometry, int size) const
+QList<QseMetricItem> QseSppSignalLinearAmplMetricProvider::create(const QseSppGeometry &geometry,
+                                                                  int size) const
 {
     QList<QseMetricItem> items;
 
@@ -61,8 +60,7 @@ QList<QseMetricItem> QseSppSignalLinearAmplMetricProvider::create(
     const double step = vod / unitPerPixel;
 
     // center line is visible
-    if (center >= 0.0 && center < size)
-    {
+    if (center >= 0.0 && center < size) {
         items.push_back(QseMetricItem(center, 0, "0"));
         for (double i = center + step, v = vod; i < size; i += step, v += vod)
             items.push_back(QseMetricItem(qRound(i), 1, QString::number(-v)));
@@ -70,19 +68,17 @@ QList<QseMetricItem> QseSppSignalLinearAmplMetricProvider::create(
             items.push_back(QseMetricItem(qRound(i), 1, QString::number(-v)));
     }
     // center line is too up
-    else if (center < 0.0)
-    {
+    else if (center < 0.0) {
         // sc - section count
         const qint64 sc = qAbs(static_cast<qint64>(center / step));
-        for (double i = center + step*sc, v = vod*sc; i < size; i += step, v += vod)
+        for (double i = center + step * sc, v = vod * sc; i < size; i += step, v += vod)
             items.push_back(QseMetricItem(qRound(i), 1, QString::number(-v)));
     }
     // center line is too down
-    else
-    {
+    else {
         // sc - section count
         const qint64 sc = qAbs(static_cast<qint64>((center - size) / step));
-        for (double i = center - step*sc, v = -vod*sc; i >= 0.0; i -= step, v -= vod)
+        for (double i = center - step * sc, v = -vod * sc; i >= 0.0; i -= step, v -= vod)
             items.push_back(QseMetricItem(qRound(i), 1, QString::number(-v)));
     }
 

@@ -16,7 +16,7 @@
 #include "qseabstractspplimiter.h"
 
 
-QseAbstractSppLimiter::QseAbstractSppLimiter(QObject *parent) :
-    QObject(parent)
+QseAbstractSppLimiter::QseAbstractSppLimiter(QObject *parent)
+    : QObject(parent)
 {
 }

@@ -16,6 +16,7 @@
 #ifndef QSESPPSIGNALLINEARAMPLMETRICPROVIDER_H
 #define QSESPPSIGNALLINEARAMPLMETRICPROVIDER_H
 
+
 #include "qseabstractsppmetricprovider.h"
 class QseMetricMapper;
 
@@ -31,8 +32,8 @@ public:
     void setFactor(double factor);
 
     virtual int maximumTextLenght() const;
-    virtual QList<QseMetricItem> create(const QseSppGeometry &geometry,
-                                        int size) const;
+    virtual QList<QseMetricItem> create(const QseSppGeometry &geometry, int size) const;
+
 private:
     QseMetricMapper *m_mapper;
     double m_factor;

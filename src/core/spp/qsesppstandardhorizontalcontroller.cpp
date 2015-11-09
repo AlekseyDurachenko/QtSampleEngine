@@ -18,23 +18,21 @@
 #include <QDebug>
 
 
-QseSppStandardHorizontalController::QseSppStandardHorizontalController(
-        QObject *parent) : QseAbstractSppStandardController(parent)
+QseSppStandardHorizontalController::QseSppStandardHorizontalController(QObject *parent)
+    : QseAbstractSppStandardController(parent)
 {
     m_dragAction = false;
     setDefaultCursor(Qt::OpenHandCursor);
 }
 
 void QseSppStandardHorizontalController::mouseMoveEvent(QMouseEvent *event,
-        const QRect &/*rect*/, const QseSppGeometry &geometry)
+                                                        const QRect &/*rect*/,
+                                                        const QseSppGeometry &geometry)
 {
-    if (m_dragAction)
-    {
+    if (m_dragAction) {
         const int diff = m_dragPrevPos.x() - event->x();
-        const qint64 value =
-                static_cast<qint64>(geometry.toRealSamplesPerPixel()*diff);
-        if (value != 0)
-        {
+        const qint64 value = static_cast<qint64>(geometry.toRealSamplesPerPixel() * diff);
+        if (value != 0) {
             m_dragPrevPos = event->pos();
             emit geometryChanged(geometry.addX(value));
         }
@@ -42,11 +40,11 @@ void QseSppStandardHorizontalController::mouseMoveEvent(QMouseEvent *event,
 }
 
 void QseSppStandardHorizontalController::mousePressEvent(QMouseEvent *event,
-        const QRect &/*rect*/, const QseSppGeometry &/*geometry*/)
+                                                         const QRect &/*rect*/,
+                                                         const QseSppGeometry &/*geometry*/)
 {
     if (event->buttons() == mouseButtons()
-            && event->modifiers() == keyboardModifiers())
-    {
+            && event->modifiers() == keyboardModifiers()) {
         m_dragAction = true;
         m_dragPrevPos = event->pos();
         emit cursorChanged(QCursor(Qt::ClosedHandCursor));
@@ -54,20 +52,20 @@ void QseSppStandardHorizontalController::mousePressEvent(QMouseEvent *event,
 }
 
 void QseSppStandardHorizontalController::mouseReleaseEvent(QMouseEvent *event,
-        const QRect &/*rect*/, const QseSppGeometry &/*geometry*/)
+                                                           const QRect &/*rect*/,
+                                                           const QseSppGeometry &/*geometry*/)
 {
-    if (event->buttons() != mouseButtons())
-    {
+    if (event->buttons() != mouseButtons()) {
         m_dragAction = false;
         emit cursorChanged(defaultCursor());
     }
 }
 
 void QseSppStandardHorizontalController::keyReleaseEvent(QKeyEvent *event,
-        const QRect &/*rect*/, const QseSppGeometry &/*geometry*/)
+                                                         const QRect &/*rect*/,
+                                                         const QseSppGeometry &/*geometry*/)
 {
-    if (event->modifiers() != keyboardModifiers())
-    {
+    if (event->modifiers() != keyboardModifiers()) {
         m_dragAction = false;
         emit cursorChanged(defaultCursor());
     }

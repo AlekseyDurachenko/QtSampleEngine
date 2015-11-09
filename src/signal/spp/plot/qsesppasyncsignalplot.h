@@ -16,6 +16,7 @@
 #ifndef QSESPPASYNCSIGNALPLOT_H
 #define QSESPPASYNCSIGNALPLOT_H
 
+
 #include "qseabstractsppsignalplot.h"
 #include "qsespppeakrequest.h"
 #include "qsesppsignalplotpeakreplyitemlist.h"
@@ -35,21 +36,19 @@ public:
     inline int queryInterval() const;
     void setQueryInterval(int interval);
 
-    virtual void draw(QPainter *painter, const QRect &rect,
-                      const QseSppGeometry &geometry);
+    virtual void draw(QPainter *painter, const QRect &rect, const QseSppGeometry &geometry);
+
 private slots:
     void dataSource_dataChanged();
     void dataSource_dataChanged(qint64 first, qint64 last);
     void dataSource_destroyed();
     void reply_aborted(const QseSppPeakRequest &request);
-    void reply_finished(const QsePeakArray &peaks,
-                        const QseSppPeakRequest &request);
+    void reply_finished(const QsePeakArray &peaks, const QseSppPeakRequest &request);
     void queryTimer_timeout();
+
 private:
-    void queryUnavaiblePeaks(const QRect &rect,
-                             const QseSppGeometry &geometry);
-    void drawAvaiblePeaks(QPainter *painter, const QRect &rect,
-                          const QseSppGeometry &geometry);
+    void queryUnavaiblePeaks(const QRect &rect, const QseSppGeometry &geometry);
+    void drawAvaiblePeaks(QPainter *painter, const QRect &rect, const QseSppGeometry &geometry);
     void calcPeaks(const QRect &rect, const QseSppGeometry &geometry);
     bool checkOptimizationPossibility(const QseSppGeometry &oldGeometry,
                                       const QseSppGeometry &newGeometry);
@@ -64,8 +63,10 @@ private:
     void queryReplaceAll();
     void queryPushFront();
     void queryPushBack();
+
 private:
     virtual QseAbstractPeakDataSource *usedDataSource() const;
+
 private:
     QseAbstractSppAsyncPeakDataSource *m_dataSource;
     bool m_dataSourceChanged;

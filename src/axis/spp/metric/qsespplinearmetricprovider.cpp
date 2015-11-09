@@ -18,7 +18,8 @@
 
 
 QseSppLinearMetricProvider::QseSppLinearMetricProvider(Orientation orientation,
-    QObject *parent) : QseAbstractSppMetricProvider(parent)
+                                                       QObject *parent)
+    : QseAbstractSppMetricProvider(parent)
 {
     m_mapper = new QseMetricMapper();
     m_orientation = orientation;
@@ -33,18 +34,15 @@ QseSppLinearMetricProvider::~QseSppLinearMetricProvider()
 
 void QseSppLinearMetricProvider::setFactor(double factor)
 {
-    if (m_factor != factor)
-    {
+    if (m_factor != factor) {
         m_factor = factor;
         emit changed();
     }
 }
 
-void QseSppLinearMetricProvider::setOrientation(
-        QseSppLinearMetricProvider::Orientation orientation)
+void QseSppLinearMetricProvider::setOrientation(Orientation orientation)
 {
-    if (m_orientation != orientation)
-    {
+    if (m_orientation != orientation) {
         m_orientation = orientation;
         emit changed();
     }
@@ -55,30 +53,26 @@ int QseSppLinearMetricProvider::maximumTextLenght() const
     return 8;
 }
 
-QList<QseMetricItem> QseSppLinearMetricProvider::create(
-        const QseSppGeometry &geometry, int size) const
+QList<QseMetricItem> QseSppLinearMetricProvider::create(const QseSppGeometry &geometry,
+                                                        int size) const
 {
     QList<QseMetricItem> items;
 
     // parameters of the metrics
     double offset, unitPerPixel, center;
-    if (m_orientation == Vertical)
-    {
+    if (m_orientation == Vertical) {
         offset = geometry.y();
         unitPerPixel = geometry.height() / size;
         center = - offset / unitPerPixel;
     }
-    else
-    {
+    else {
         offset = geometry.x() * m_factor;
-        if (geometry.samplesPerPixel() > 0)
-        {
+        if (geometry.samplesPerPixel() > 0) {
             unitPerPixel = geometry.samplesPerPixel() * m_factor;
             center = - (offset) / unitPerPixel;
         }
-        else
-        {
-            unitPerPixel = 1.0 / -geometry.samplesPerPixel() * m_factor;
+        else {
+            unitPerPixel = (1.0 / -geometry.samplesPerPixel()) * m_factor;
             center = - offset / unitPerPixel;
         }
     }
@@ -91,8 +85,7 @@ QList<QseMetricItem> QseSppLinearMetricProvider::create(
     const double step = vod / unitPerPixel;
 
     // center line is visible
-    if (center >= 0.0 && center < size)
-    {
+    if (center >= 0.0 && center < size) {
         items.push_back(QseMetricItem(center, 1, "0"));
         for (double i = center + step, v = vod; i < size; i += step, v += vod)
             items.push_back(QseMetricItem(qRound(i), 1, QString::number(v)));
@@ -100,19 +93,17 @@ QList<QseMetricItem> QseSppLinearMetricProvider::create(
             items.push_back(QseMetricItem(qRound(i), 1, QString::number(v)));
     }
     // center line is too up
-    else if (center < 0.0)
-    {
+    else if (center < 0.0) {
         // sc - section count
         const qint64 sc = qAbs(static_cast<qint64>(center / step));
-        for (double i = center + step*sc, v = vod*sc; i < size; i += step, v += vod)
+        for (double i = center + step * sc, v = vod * sc; i < size; i += step, v += vod)
             items.push_back(QseMetricItem(qRound(i), 1, QString::number(v)));
     }
     // center line is too down
-    else
-    {
+    else {
         // sc - section count
         const qint64 sc = qAbs(static_cast<qint64>((center - size) / step));
-        for (double i = center - step*sc, v = -vod*sc; i >= 0.0; i -= step, v -= vod)
+        for (double i = center - step * sc, v = -vod * sc; i >= 0.0; i -= step, v -= vod)
             items.push_back(QseMetricItem(qRound(i), 1, QString::number(v)));
     }
 

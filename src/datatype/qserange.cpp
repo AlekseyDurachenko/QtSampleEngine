@@ -33,15 +33,12 @@ QseRange::QseRange(qint64 first, qint64 last)
 
 void QseRange::setRange(qint64 first, qint64 last)
 {
-    if (m_first != first || m_last != last)
-    {
-        if (last > first)
-        {
+    if (m_first != first || m_last != last) {
+        if (last > first) {
             m_first = first;
             m_last = last;
         }
-        else
-        {
+        else {
             m_first = last;
             m_last = first;
         }
@@ -105,10 +102,16 @@ bool operator !=(const QseRange &l, const QseRange &r)
 
 QDebug operator<<(QDebug dbg, const QseRange &range)
 {
-    if (range.isNull())
+    if (range.isNull()) {
         dbg.nospace() << "QseRange()";
-    else
-        dbg.nospace() << "QseRange([" << range.first() << ";" << range.last()
+    }
+    else {
+        dbg.nospace() << "QseRange(["
+                      << range.first()
+                      << ";"
+                      << range.last()
                       << "])";
+    }
+
     return dbg.space();
 }

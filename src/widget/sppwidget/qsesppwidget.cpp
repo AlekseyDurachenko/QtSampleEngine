@@ -18,8 +18,8 @@
 #include "qseabstractsppplot.h"
 
 
-QseSppWidget::QseSppWidget(QWidget *parent,
-        Qt::WindowFlags f) : QseAbstractSppWidget(parent, f)
+QseSppWidget::QseSppWidget(QWidget *parent, Qt::WindowFlags f)
+    : QseAbstractSppWidget(parent, f)
 {
     setMouseTracking(true);
     setAutoFillBackground(false);
@@ -36,11 +36,10 @@ void QseSppWidget::setPreUncachedPlots(const QList<QseAbstractSppPlot *> &plots)
         disconnect(plot, 0, this, 0);
 
     m_preUncachedPlots = plots;
-    foreach (QseAbstractSppPlot *plot, m_preUncachedPlots)
-    {
+    foreach (QseAbstractSppPlot *plot, m_preUncachedPlots) {
         connect(plot, SIGNAL(updateNeeded()), this, SLOT(update()));
-        connect(plot, SIGNAL(destroyed(QObject*)),
-                this, SLOT(preUncachedPlots_destroyed(QObject*)));
+        connect(plot, SIGNAL(destroyed(QObject *)),
+                this, SLOT(preUncachedPlots_destroyed(QObject *)));
     }
 
     update();
@@ -55,11 +54,10 @@ void QseSppWidget::setCachedPlots(const QList<QseAbstractSppPlot *> &plots)
         disconnect(plot, 0, this, 0);
 
     m_cachedPlots = plots;
-    foreach (QseAbstractSppPlot *plot, m_cachedPlots)
-    {
+    foreach (QseAbstractSppPlot *plot, m_cachedPlots) {
         connect(plot, SIGNAL(updateNeeded()), this, SLOT(update()));
-        connect(plot, SIGNAL(destroyed(QObject*)),
-                this, SLOT(cachedPlots_destroyed(QObject*)));
+        connect(plot, SIGNAL(destroyed(QObject *)),
+                this, SLOT(cachedPlots_destroyed(QObject *)));
     }
 
     m_caches.clear();
@@ -78,11 +76,10 @@ void QseSppWidget::setPostUncachedPlots(const QList<QseAbstractSppPlot *> &plots
         disconnect(plot, 0, this, 0);
 
     m_postUncachedPlots = plots;
-    foreach (QseAbstractSppPlot *plot, m_postUncachedPlots)
-    {
+    foreach (QseAbstractSppPlot *plot, m_postUncachedPlots) {
         connect(plot, SIGNAL(updateNeeded()), this, SLOT(update()));
-        connect(plot, SIGNAL(destroyed(QObject*)),
-                this, SLOT(postUncachedPlots_destroyed(QObject*)));
+        connect(plot, SIGNAL(destroyed(QObject *)),
+                this, SLOT(postUncachedPlots_destroyed(QObject *)));
     }
 
     update();
@@ -115,8 +112,7 @@ void QseSppWidget::paintEvent(QPaintEvent */*event*/)
     foreach (QseAbstractSppPlot *plot, m_preUncachedPlots)
         plot->draw(&painter, rect(), geometry());
 
-    for (int i = 0; i < m_cachedPlots.count(); ++i)
-    {
+    for (int i = 0; i < m_cachedPlots.count(); ++i) {
         if (!m_cachedPlots.at(i)->hasChanges(rect(), geometry()))
             continue;
 

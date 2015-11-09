@@ -16,14 +16,14 @@
 #include "qseselection.h"
 
 
-QseSelection::QseSelection(QObject *parent) : QObject(parent)
+QseSelection::QseSelection(QObject *parent)
+    : QObject(parent)
 {
 }
 
 void QseSelection::setAvailableRange(const QseRange &availableRange)
 {
-    if (availableRange != m_availableRange)
-    {
+    if (availableRange != m_availableRange) {
         m_availableRange = availableRange;
         setSelectedRange(m_selectedRange);
     }
@@ -32,21 +32,17 @@ void QseSelection::setAvailableRange(const QseRange &availableRange)
 void QseSelection::setSelectedRange(const QseRange &selectedRange)
 {
     QseRange newSelectedRange = selectedRange;
-    if (newSelectedRange.isNull() || m_availableRange.isNull())
-    {
+    if (newSelectedRange.isNull() || m_availableRange.isNull()) {
         newSelectedRange.reset();
     }
-    else
-    {
+    else {
         if ((newSelectedRange.first() > m_availableRange.last()
                 && newSelectedRange.last() > m_availableRange.last())
                 || (newSelectedRange.first() < m_availableRange.first()
-                    && newSelectedRange.last() < m_availableRange.first()))
-        {
+                    && newSelectedRange.last() < m_availableRange.first())) {
             newSelectedRange.reset();
         }
-        else
-        {
+        else {
             if (newSelectedRange.first() < m_availableRange.first())
                 newSelectedRange.setFirst(m_availableRange.first());
             if (newSelectedRange.last() > m_availableRange.last())
@@ -54,8 +50,7 @@ void QseSelection::setSelectedRange(const QseRange &selectedRange)
         }
     }
 
-    if (newSelectedRange != m_selectedRange)
-    {
+    if (newSelectedRange != m_selectedRange) {
         m_selectedRange = newSelectedRange;
         emit selectionChanged();
     }

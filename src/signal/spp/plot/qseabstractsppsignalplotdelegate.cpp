@@ -16,8 +16,8 @@
 #include "qseabstractsppsignalplotdelegate.h"
 
 
-QseAbstractSppSignalPlotDelegate::QseAbstractSppSignalPlotDelegate(
-        QObject *parent) : QObject(parent)
+QseAbstractSppSignalPlotDelegate::QseAbstractSppSignalPlotDelegate(QObject *parent)
+    : QObject(parent)
 {
     m_opacity = 1.0;
     m_pen = QPen(QColor(Qt::darkBlue));
@@ -25,8 +25,7 @@ QseAbstractSppSignalPlotDelegate::QseAbstractSppSignalPlotDelegate(
 
 void QseAbstractSppSignalPlotDelegate::setOpacity(qreal opacity)
 {
-    if (m_opacity != opacity)
-    {
+    if (m_opacity != opacity) {
         m_opacity = opacity;
         emit changed();
     }
@@ -34,8 +33,7 @@ void QseAbstractSppSignalPlotDelegate::setOpacity(qreal opacity)
 
 void QseAbstractSppSignalPlotDelegate::setPen(const QPen &pen)
 {
-    if (m_pen != pen)
-    {
+    if (m_pen != pen) {
         m_pen = pen;
         emit changed();
     }

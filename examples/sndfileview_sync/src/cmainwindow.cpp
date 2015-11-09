@@ -23,8 +23,9 @@
 #include "csppsyncpeakdatasource.h"
 
 
-CMainWindow::CMainWindow(QWidget *parent) :
-    QMainWindow(parent), ui(new Ui::CMainWindow)
+CMainWindow::CMainWindow(QWidget *parent)
+    : QMainWindow(parent)
+    , ui(new Ui::CMainWindow)
 {
     ui->setupUi(this);
     setWindowTitle(tr("Sound File View"));
@@ -34,8 +35,7 @@ CMainWindow::CMainWindow(QWidget *parent) :
 
     QString fileName = QDir::homePath() + QDir::separator() + "example.wav";
     if (QFileInfo(fileName).exists())
-        QMetaObject::invokeMethod(this, "openSoundFile", Qt::QueuedConnection,
-                Q_ARG(QString, fileName));
+        QMetaObject::invokeMethod(this, "openSoundFile", Qt::QueuedConnection, Q_ARG(QString, fileName));
 }
 
 CMainWindow::~CMainWindow()
@@ -45,8 +45,11 @@ CMainWindow::~CMainWindow()
 
 void CMainWindow::on_action_Open_triggered()
 {
-    QString fileName = QFileDialog::getOpenFileName(this,
-            tr("Open Sound File"), "", tr("Sound Files (* *.*)"));
+    QString fileName = QFileDialog::getOpenFileName(
+                           this,
+                           tr("Open Sound File"),
+                           "",
+                           tr("Sound Files (* *.*)"));
 
     if (fileName.isEmpty())
         return;
@@ -64,22 +67,19 @@ void CMainWindow::openSoundFile(const QString &fileName)
     double sampleRate;
     QVector<double> data = readSoundFile(fileName, &sampleRate);
 
-    if (data.isEmpty())
-    {
-        QMessageBox::critical(this, tr("Critical"),
+    if (data.isEmpty()) {
+        QMessageBox::critical(this,
+                              tr("Critical"),
                               tr("Sound format not support"));
     }
-    else
-    {
+    else {
         setWindowTitle(fileName + tr(" - Sound File View"));
 
-        m_monoAudioWidget->audioWidget()->dataSource()->setSamples(data,
-                                                                   sampleRate);
+        m_monoAudioWidget->audioWidget()->dataSource()->setSamples(data, sampleRate);
         QseSppGeometry geometry;
         geometry.setHeight(2.6);
-        if (data.count() > m_monoAudioWidget->audioWidget()->width()*2)
-            geometry.setSamplesPerPixel(
-                    data.count()/m_monoAudioWidget->audioWidget()->width());
+        if (data.count() > m_monoAudioWidget->audioWidget()->width() * 2)
+            geometry.setSamplesPerPixel(data.count() / m_monoAudioWidget->audioWidget()->width());
 
         m_monoAudioWidget->audioWidget()->setGeometry(geometry);
     }
@@ -87,14 +87,13 @@ void CMainWindow::openSoundFile(const QString &fileName)
 
 
 QVector<double> CMainWindow::readSoundFile(const QString &fileName,
-        double *sampleRage)
+                                           double *sampleRage)
 {
     SNDFILE *infile;
     SF_INFO sfinfo;
     int readcount;
 
-    if ((infile = sf_open(fileName.toLatin1().data(), SFM_READ, &sfinfo)))
-    {
+    if ((infile = sf_open(fileName.toLatin1().data(), SFM_READ, &sfinfo))) {
         if (sampleRage)
             *sampleRage = sfinfo.samplerate;
 

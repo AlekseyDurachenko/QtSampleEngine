@@ -16,7 +16,8 @@
 #include "qseposition.h"
 
 
-QsePosition::QsePosition(QObject *parent) : QObject(parent)
+QsePosition::QsePosition(QObject *parent)
+    : QObject(parent)
 {
     m_index = 0;
     m_isNull = true;
@@ -24,8 +25,7 @@ QsePosition::QsePosition(QObject *parent) : QObject(parent)
 
 void QsePosition::setAvailableRange(const QseRange &availableRange)
 {
-    if (availableRange != m_availableRange)
-    {
+    if (availableRange != m_availableRange) {
         m_availableRange = availableRange;
         if (!m_isNull)
             setIndex(m_index);
@@ -34,21 +34,18 @@ void QsePosition::setAvailableRange(const QseRange &availableRange)
 
 void QsePosition::setIndex(qint64 index)
 {
-    if (m_availableRange.isNull() && !m_isNull)
-    {
+    if (m_availableRange.isNull() && !m_isNull) {
         m_isNull = true;
         emit indexChanged();
     }
-    else if (!m_availableRange.isNull())
-    {
+    else if (!m_availableRange.isNull()) {
         qint64 newIndex = index;
         if (newIndex < m_availableRange.first())
             newIndex = m_availableRange.first();
         else if (newIndex > m_availableRange.last())
             newIndex = m_availableRange.last();
 
-        if (newIndex != m_index || m_isNull)
-        {
+        if (newIndex != m_index || m_isNull) {
             m_isNull = false;
             m_index = newIndex;
 
@@ -64,8 +61,7 @@ void QsePosition::resetAvailableRange()
 
 void QsePosition::resetIndex()
 {
-    if (!isNull())
-    {
+    if (!isNull()) {
         m_isNull = true;
         emit indexChanged();
     }

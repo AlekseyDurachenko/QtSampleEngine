@@ -41,10 +41,11 @@ public:
 
     virtual bool hasChanges(const QRect &rect, const QseSppGeometry &geometry);
     virtual bool isVisible(const QRect &rect, const QseSppGeometry &geometry);
-    virtual void draw(QPainter *painter, const QRect &rect,
-                      const QseSppGeometry &geometry);
+    virtual void draw(QPainter *painter, const QRect &rect, const QseSppGeometry &geometry);
+
 private slots:
     void selection_destroyed(QObject*);
+
 private:
     QseSelection *m_selection;
     QBrush m_brush;

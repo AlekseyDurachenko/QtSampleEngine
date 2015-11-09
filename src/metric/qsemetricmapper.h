@@ -16,6 +16,7 @@
 #ifndef QSEMETRICMAPPER_H
 #define QSEMETRICMAPPER_H
 
+
 #include <QVector>
 #include <cfloat>
 
@@ -25,8 +26,10 @@ class QseMetricMapper
 public:
     QseMetricMapper();
     double calcNearestValue(double unitPerPixel, double minimum);
+
 private:
     void init();
+
 private:
     QVector<double> m_relativeLessOne;
     QVector<double> m_relativeMoreOne;

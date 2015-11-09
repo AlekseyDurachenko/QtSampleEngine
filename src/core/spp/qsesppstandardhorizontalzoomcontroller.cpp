@@ -18,24 +18,23 @@
 #include <QDebug>
 
 
-QseSppStandardHorizontalZoomController::QseSppStandardHorizontalZoomController(
-        QObject *parent) : QseAbstractSppStandardController(parent)
+QseSppStandardHorizontalZoomController::QseSppStandardHorizontalZoomController(QObject *parent)
+    : QseAbstractSppStandardController(parent)
 {
 }
 
 
 void QseSppStandardHorizontalZoomController::wheelEvent(QWheelEvent *event,
-        const QRect &/*rect*/, const QseSppGeometry &geometry)
+                                                        const QRect &/*rect*/,
+                                                        const QseSppGeometry &geometry)
 {
-    if (event->modifiers() == keyboardModifiers())
-    {
+    if (event->modifiers() == keyboardModifiers()) {
         // calculate zoom
         const int xpos = event->x();
         const int degree = event->delta() / 60;
         qint64 spp = geometry.samplesPerPixel();
         // zoom in
-        if (degree > 0)
-        {
+        if (degree > 0) {
             if (spp > 0)
                 spp /= qAbs(degree);
             else
@@ -44,8 +43,7 @@ void QseSppStandardHorizontalZoomController::wheelEvent(QWheelEvent *event,
                 spp = -1;
         }
         // zoom out
-        else if (degree < 0)
-        {
+        else if (degree < 0) {
             if (spp > 0)
                 spp *= qAbs(degree);
             else

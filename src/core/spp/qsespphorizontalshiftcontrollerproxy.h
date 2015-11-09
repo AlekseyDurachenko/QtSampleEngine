@@ -16,6 +16,7 @@
 #ifndef QSESPPHORIZONTALSHIFTCONTROLLERPROXY_H
 #define QSESPPHORIZONTALSHIFTCONTROLLERPROXY_H
 
+
 #include "qseabstractsppcontrollerproxy.h"
 
 
@@ -24,19 +25,19 @@ class QseSppHorizontalShiftControllerProxy : public QseAbstractSppControllerProx
     Q_OBJECT
 public:
     explicit QseSppHorizontalShiftControllerProxy(QObject *parent = 0);
+
 signals:
     void shiftChanged(int value);
+
 public slots:
     void setShift(int value);
+
 protected:
-    virtual void mouseMoveEvent(QMouseEvent *event, const QRect &rect,
-                                const QseSppGeometry &geometry);
-    virtual void mousePressEvent(QMouseEvent *event, const QRect &rect,
-                                 const QseSppGeometry &geometry);
-    virtual void mouseReleaseEvent(QMouseEvent *event, const QRect &rect,
-                                   const QseSppGeometry &geometry);
-    virtual void wheelEvent(QWheelEvent *event, const QRect &rect,
-                            const QseSppGeometry &geometry);
+    virtual void mouseMoveEvent(QMouseEvent *event, const QRect &rect, const QseSppGeometry &geometry);
+    virtual void mousePressEvent(QMouseEvent *event, const QRect &rect, const QseSppGeometry &geometry);
+    virtual void mouseReleaseEvent(QMouseEvent *event, const QRect &rect, const QseSppGeometry &geometry);
+    virtual void wheelEvent(QWheelEvent *event, const QRect &rect, const QseSppGeometry &geometry);
+
 private:
     int m_shift;
 };

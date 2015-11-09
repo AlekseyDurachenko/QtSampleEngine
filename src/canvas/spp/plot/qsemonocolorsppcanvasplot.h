@@ -16,6 +16,7 @@
 #ifndef QSEMONOCOLORCANVASPLOT_H
 #define QSEMONOCOLORCANVASPLOT_H
 
+
 #include <QPen>
 #include <QColor>
 #include "qseabstractsppplot.h"
@@ -32,8 +33,8 @@ public:
     void setColor(const QColor &color);
 
     virtual bool hasChanges(const QRect &rect, const QseSppGeometry &geometry);
-    virtual void draw(QPainter *painter, const QRect &rect,
-              const QseSppGeometry &geometry);
+    virtual void draw(QPainter *painter, const QRect &rect, const QseSppGeometry &geometry);
+
 private:
     QColor m_color;
 };

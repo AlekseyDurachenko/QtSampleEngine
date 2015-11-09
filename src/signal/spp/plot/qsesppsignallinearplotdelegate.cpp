@@ -18,15 +18,19 @@
 #include "qsehelper.h"
 
 
-QseSppSignalLinearPlotDelegate::QseSppSignalLinearPlotDelegate(
-        QObject *parent) : QseAbstractSppSignalPlotDelegate(parent)
+QseSppSignalLinearPlotDelegate::QseSppSignalLinearPlotDelegate(QObject *parent)
+    : QseAbstractSppSignalPlotDelegate(parent)
 {
 }
 
 void QseSppSignalLinearPlotDelegate::drawAsLines(QPainter *painter,
-        const QRect &rect, const QseSppGeometry &geometry,
-        const QsePeakArray &peaks, int firstIndex,
-        int space, double /*dx*/, double dy)
+                                                 const QRect &rect,
+                                                 const QseSppGeometry &geometry,
+                                                 const QsePeakArray &peaks,
+                                                 int firstIndex,
+                                                 int space,
+                                                 double /*dx*/,
+                                                 double dy)
 {
     painter->save();
     painter->setPen(pen());
@@ -35,12 +39,11 @@ void QseSppSignalLinearPlotDelegate::drawAsLines(QPainter *painter,
     const qint64 pps = -geometry.samplesPerPixel();
     const QVector<double> &points = peaks.minimums();
 
-    for (int i = firstIndex+1; i < points.count(); ++i)
-    {
-        const double x1 = space + (i-1-firstIndex)*pps;
+    for (int i = firstIndex + 1; i < points.count(); ++i) {
+        const double x1 = space + (i - 1 - firstIndex) * pps;
         const double x2 = x1 + pps;
-        const double y1 = dy-(geometry.y()+points[i-1])*rect.height()/geometry.height();
-        const double y2 = dy-(geometry.y()+points[i])*rect.height()/geometry.height();
+        const double y1 = dy - (geometry.y() + points[i - 1]) * rect.height() / geometry.height();
+        const double y2 = dy - (geometry.y() + points[i]) * rect.height() / geometry.height();
 
         if (x1 >= rect.width())
             break;
@@ -54,9 +57,9 @@ void QseSppSignalLinearPlotDelegate::drawAsLines(QPainter *painter,
         double xx2 = x2;
 
         if (y1 >= rect.height())
-            Qse::calcIntersection(x1, y1, x2, y2, x1, rect.height()-1, x2, rect.height()-1, xx1, yy1);
+            Qse::calcIntersection(x1, y1, x2, y2, x1, rect.height() - 1, x2, rect.height() - 1, xx1, yy1);
         if (y2 >= rect.height())
-            Qse::calcIntersection(x1, y1, x2, y2, x1, rect.height()-1, x2, rect.height()-1, xx2, yy2);
+            Qse::calcIntersection(x1, y1, x2, y2, x1, rect.height() - 1, x2, rect.height() - 1, xx2, yy2);
         if (y1 < 0)
             Qse::calcIntersection(x1, y1, x2, y2, x1, 0, x2, 0, xx1, yy1);
         if (y2 < 0)
@@ -69,23 +72,27 @@ void QseSppSignalLinearPlotDelegate::drawAsLines(QPainter *painter,
 }
 
 void QseSppSignalLinearPlotDelegate::drawAsPeaks(QPainter *painter,
-        const QRect &rect, const QseSppGeometry &geometry,
-        const QsePeakArray &peaks, int firstIndex,
-        int space, double /*dx*/, double dy)
+                                                 const QRect &rect,
+                                                 const QseSppGeometry &geometry,
+                                                 const QsePeakArray &peaks,
+                                                 int firstIndex,
+                                                 int space,
+                                                 double /*dx*/,
+                                                 double dy)
 {
     const QVector<double> &minimums = peaks.minimums();
     const QVector<double> &maximums = peaks.maximums();
 
-    double prevMin = dy-(geometry.y()+minimums[firstIndex])*rect.height()/geometry.height();
-    double prevMax = dy-(geometry.y()+maximums[firstIndex])*rect.height()/geometry.height();
+    double prevMin = dy - (geometry.y() + minimums[firstIndex]) * rect.height() / geometry.height();
+    double prevMax = dy - (geometry.y() + maximums[firstIndex]) * rect.height() / geometry.height();
     int x1 = space;
     int x2 = space;
     if (x1 >= rect.width())
         return;
     if (prevMin < 0.0) prevMin = 0.0;
     if (prevMax < 0.0) prevMax = 0.0;
-    if (prevMin >= rect.height()) prevMin = rect.height()-1;
-    if (prevMax >= rect.height()) prevMax = rect.height()-1;
+    if (prevMin >= rect.height()) prevMin = rect.height() - 1;
+    if (prevMax >= rect.height()) prevMax = rect.height() - 1;
 
     painter->save();
     painter->setPen(pen());
@@ -96,25 +103,23 @@ void QseSppSignalLinearPlotDelegate::drawAsPeaks(QPainter *painter,
     else
         painter->drawLine(QPointF(x1, prevMin), QPointF(x2, prevMax));
 
-    for (int i = firstIndex+1; i < minimums.count(); ++i)
-    {
+    for (int i = firstIndex + 1; i < minimums.count(); ++i) {
         x1 = space + i - firstIndex;
         x2 = space + i - firstIndex;
         if (x1 >= rect.width())
             break;
-        double curMin = dy-(geometry.y()+minimums[i])*rect.height()/geometry.height();
-        double curMax = dy-(geometry.y()+maximums[i])*rect.height()/geometry.height();
+        double curMin = dy - (geometry.y() + minimums[i]) * rect.height() / geometry.height();
+        double curMax = dy - (geometry.y() + maximums[i]) * rect.height() / geometry.height();
         if (! ((curMin < 0.0 && curMax < 0.0)
-              || (curMin >= rect.height() && curMax >= rect.height())))
-        {
+                || (curMin >= rect.height() && curMax >= rect.height()))) {
             if (curMin < 0.0) curMin = 0.0;
             if (curMax < 0.0) curMax = 0.0;
-            if (curMin >= rect.height()) curMin = rect.height()-1;
-            if (curMax >= rect.height()) curMax = rect.height()-1;
+            if (curMin >= rect.height()) curMin = rect.height() - 1;
+            if (curMax >= rect.height()) curMax = rect.height() - 1;
 
             // fill the gap between the two lines, if exists
-            if (curMin < prevMax) curMin = prevMax-1;
-            if (curMax > prevMin) curMax = prevMin+1;
+            if (curMin < prevMax) curMin = prevMax - 1;
+            if (curMax > prevMin) curMax = prevMin + 1;
 
             //
             prevMin = curMin;

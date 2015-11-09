@@ -19,15 +19,14 @@
 #include <QPainter>
 
 
-QseAbstractSppSignalPlot::QseAbstractSppSignalPlot(QObject *parent) :
-    QseAbstractSppPlot(parent)
+QseAbstractSppSignalPlot::QseAbstractSppSignalPlot(QObject *parent)
+    : QseAbstractSppPlot(parent)
 {
     m_plotDelegate = 0;
     setZeroLine(Middle);
 }
 
-void QseAbstractSppSignalPlot::setPlotDelegate(
-        QseAbstractSppSignalPlotDelegate *plotDelegate)
+void QseAbstractSppSignalPlot::setPlotDelegate(QseAbstractSppSignalPlotDelegate *plotDelegate)
 {
     if (m_plotDelegate == plotDelegate)
         return;
@@ -36,8 +35,7 @@ void QseAbstractSppSignalPlot::setPlotDelegate(
         disconnect(m_plotDelegate, 0, this, 0);
 
     m_plotDelegate = plotDelegate;
-    if (m_plotDelegate)
-    {
+    if (m_plotDelegate) {
         connect(m_plotDelegate, SIGNAL(changed()),
                 this, SLOT(plotDelegate_changed()));
         connect(m_plotDelegate, SIGNAL(destroyed()),
@@ -47,18 +45,16 @@ void QseAbstractSppSignalPlot::setPlotDelegate(
     setUpdateOnce(true);
 }
 
-void QseAbstractSppSignalPlot::setZeroLine(
-        QseAbstractSppSignalPlot::ZeroLine zeroPoint)
+void QseAbstractSppSignalPlot::setZeroLine(QseAbstractSppSignalPlot::ZeroLine zeroPoint)
 {
-    if (m_zeroLine != zeroPoint)
-    {
+    if (m_zeroLine != zeroPoint) {
         m_zeroLine = zeroPoint;
         setUpdateOnce(true);
     }
 }
 
 bool QseAbstractSppSignalPlot::hasChanges(const QRect &rect,
-        const QseSppGeometry &geometry)
+                                          const QseSppGeometry &geometry)
 {
     return (isUpdateOnce()
             || rect != lastRect()
@@ -66,22 +62,22 @@ bool QseAbstractSppSignalPlot::hasChanges(const QRect &rect,
 }
 
 bool QseAbstractSppSignalPlot::isVisible(const QRect &rect,
-        const QseSppGeometry &geometry)
+                                         const QseSppGeometry &geometry)
 {
     if (!isEnabled())
         return false;
 
     if (rect.width() == 0
             || !plotDelegate()
-            || !usedDataSource() || usedDataSource()->count() == 0)
+            || !usedDataSource()
+            || usedDataSource()->count() == 0)
         return false;
 
     const qint64 sampleFirst = usedDataSource()->minIndex();
     const qint64 sampleLast = usedDataSource()->maxIndex();
 
     const qint64 visibleFirst = geometry.x();
-    const qint64 visibleLast = visibleFirst
-            + QseSppGeometry::samplesFromWidth(geometry, rect.width()) - 1;
+    const qint64 visibleLast = visibleFirst + QseSppGeometry::samplesFromWidth(geometry, rect.width()) - 1;
 
     return ((visibleFirst <= sampleLast) && (sampleFirst <= visibleLast));
 }

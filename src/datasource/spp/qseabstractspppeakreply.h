@@ -16,6 +16,7 @@
 #ifndef QSEABSTRACTSPPPEAKREPLY_H
 #define QSEABSTRACTSPPPEAKREPLY_H
 
+
 #include "qseabstractpeakreply.h"
 #include "qsespppeakrequest.h"
 
@@ -24,19 +25,22 @@ class QseAbstractSppPeakReply : public QseAbstractPeakReply
 {
     Q_OBJECT
 public:
-    explicit QseAbstractSppPeakReply(const QseSppPeakRequest &request,
-                                     QObject *parent = 0);
+    explicit QseAbstractSppPeakReply(const QseSppPeakRequest &request, QObject *parent = 0);
+
 signals:
     void aborted(const QseSppPeakRequest &request);
     void finished(const QsePeakArray &peaks, const QseSppPeakRequest &request);
+
 protected:
     inline const QseSppPeakRequest &request() const;
 
     inline const QsePeakArray &peaks() const;
     void setPeaks(const QsePeakArray &peaks);
+
 protected:
     virtual void doSuccess();
     virtual void doAbort();
+
 private:
     QseSppPeakRequest m_request;
     QsePeakArray m_peaks;

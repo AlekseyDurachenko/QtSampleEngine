@@ -19,14 +19,14 @@
 #include <QDebug>
 
 
-TestQsePosition::TestQsePosition(QObject *parent) : QObject(parent)
+TestQsePosition::TestQsePosition(QObject *parent)
+    : QObject(parent)
 {
 }
 
 void TestQsePosition::setAvailableRange()
 {
-    QSharedPointer<QsePosition> cursor
-            = QSharedPointer<QsePosition>(new QsePosition);
+    QSharedPointer<QsePosition> cursor = QSharedPointer<QsePosition>(new QsePosition);
 
     cursor->setAvailableRange(QseRange(10, 20));
     QVERIFY(cursor->availableRange() == QseRange(10, 20));
@@ -51,8 +51,7 @@ void TestQsePosition::setAvailableRange()
 
 void TestQsePosition::setIndex()
 {
-    QSharedPointer<QsePosition> cursor
-            = QSharedPointer<QsePosition>(new QsePosition);
+    QSharedPointer<QsePosition> cursor = QSharedPointer<QsePosition>(new QsePosition);
 
     cursor->setAvailableRange(QseRange(0, 20));
     cursor->setIndex(0);
@@ -76,8 +75,7 @@ void TestQsePosition::setIndex()
 
 void TestQsePosition::resetIndex()
 {
-    QSharedPointer<QsePosition> cursor
-            = QSharedPointer<QsePosition>(new QsePosition);
+    QSharedPointer<QsePosition> cursor = QSharedPointer<QsePosition>(new QsePosition);
 
     cursor->setAvailableRange(QseRange(0, 20));
     cursor->setIndex(10);
@@ -87,8 +85,7 @@ void TestQsePosition::resetIndex()
 
 void TestQsePosition::resetAvailableRange()
 {
-    QSharedPointer<QsePosition> cursor
-            = QSharedPointer<QsePosition>(new QsePosition);
+    QSharedPointer<QsePosition> cursor = QSharedPointer<QsePosition>(new QsePosition);
 
     cursor->setAvailableRange(QseRange(0, 20));
     cursor->setIndex(10);

@@ -19,8 +19,8 @@
 #include <QTime>
 
 
-QseSppTimeMetricProvider::QseSppTimeMetricProvider(QObject *parent) :
-    QseAbstractSppMetricProvider(parent)
+QseSppTimeMetricProvider::QseSppTimeMetricProvider(QObject *parent)
+    : QseAbstractSppMetricProvider(parent)
 {
     m_mapper = new QseMetricMapper();
     m_sampleRate = 1.0;
@@ -33,8 +33,7 @@ QseSppTimeMetricProvider::~QseSppTimeMetricProvider()
 
 void QseSppTimeMetricProvider::setSampleRate(double sampleRate)
 {
-    if (sampleRate != m_sampleRate)
-    {
+    if (sampleRate != m_sampleRate) {
         m_sampleRate = sampleRate;
         emit changed();
     }
@@ -45,8 +44,8 @@ int QseSppTimeMetricProvider::maximumTextLenght() const
     return 15;
 }
 
-QList<QseMetricItem> QseSppTimeMetricProvider::create(
-        const QseSppGeometry &geometry, int size) const
+QList<QseMetricItem> QseSppTimeMetricProvider::create(const QseSppGeometry &geometry,
+                                                      int size) const
 {
     QList<QseMetricItem> items;
 
@@ -79,9 +78,8 @@ QList<QseMetricItem> QseSppTimeMetricProvider::create(
     // sc - section count
     int sc = static_cast<int>(offset / vod);
 
-    for (double i = step*sc - offset/unitPerPixel, v = sc*vod; i < size; i += step, v += vod)
-    {
-        QTime time = QTime(0, 0, 0).addMSecs(static_cast<int>(v*1000.0));
+    for (double i = step * sc - offset / unitPerPixel, v = sc * vod; i < size; i += step, v += vod) {
+        QTime time = QTime(0, 0, 0).addMSecs(static_cast<int>(v * 1000.0));
         QString text = time.toString("hh:mm:ss.zzz");
         items.push_back(QseMetricItem(qRound(i), 1, text));
     }

@@ -22,13 +22,13 @@
  * This signal emitted each time when update is needed.
  * Typically this signal should be connected to QWidget::update() slot.
  */
-
-
-QseAbstractPlot::QseAbstractPlot(QObject *parent) : QObject(parent)
+QseAbstractPlot::QseAbstractPlot(QObject *parent)
+    : QObject(parent)
 {
     m_updateOnce = true;
     m_enabled = true;
 }
+
 
 /*! This method set flag isUpdateOnce() to true, and emit changed()
  */
@@ -44,8 +44,7 @@ void QseAbstractPlot::setUpdateOnce(bool need)
 
 void QseAbstractPlot::setEnabled(bool enabled)
 {
-    if (m_enabled != enabled)
-    {
+    if (m_enabled != enabled) {
         m_enabled = enabled;
         setUpdateOnce(true);
     }

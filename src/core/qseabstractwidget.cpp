@@ -16,8 +16,8 @@
 #include "qseabstractwidget.h"
 
 
-QseAbstractWidget::QseAbstractWidget(QWidget *parent, Qt::WindowFlags f) :
-    QWidget(parent, f)
+QseAbstractWidget::QseAbstractWidget(QWidget *parent, Qt::WindowFlags f)
+    : QWidget(parent, f)
 {
     m_updateOnce = true;
 }

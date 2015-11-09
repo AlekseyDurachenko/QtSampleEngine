@@ -17,23 +17,23 @@
 #include <QWheelEvent>
 
 
-QseSppStandardVerticalZoomController::QseSppStandardVerticalZoomController(
-        QObject *parent) : QseAbstractSppStandardController(parent)
+QseSppStandardVerticalZoomController::QseSppStandardVerticalZoomController(QObject *parent)
+    : QseAbstractSppStandardController(parent)
 {
 }
 
 
 void QseSppStandardVerticalZoomController::wheelEvent(QWheelEvent *event,
-        const QRect &/*rect*/, const QseSppGeometry &geometry)
+                                                      const QRect &/*rect*/,
+                                                      const QseSppGeometry &geometry)
 {
-    if (event->modifiers() == keyboardModifiers())
-    {
+    if (event->modifiers() == keyboardModifiers()) {
         QseSppGeometry result = geometry;
 
         if (event->delta() > 0)
-            result.setHeight(geometry.height()/qAbs(event->delta()/120)/1.5);
+            result.setHeight(geometry.height() / qAbs(event->delta() / 120) / 1.5);
         else if (event->delta() < 0)
-            result.setHeight(geometry.height()*qAbs(event->delta()/120)*1.5);
+            result.setHeight(geometry.height()*qAbs(event->delta() / 120) * 1.5);
 
         emit geometryChanged(result);
     }

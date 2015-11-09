@@ -16,6 +16,7 @@
 #ifndef QSEPEAKARRAY_H
 #define QSEPEAKARRAY_H
 
+
 #include <QVector>
 #include <QMetaType>
 
@@ -23,8 +24,8 @@
 class QsePeakArray
 {
 public:
-    QsePeakArray(const QVector<double> &minimums = QVector<double>(),
-                 const QVector<double> &maximums = QVector<double>());
+    explicit QsePeakArray(const QVector<double> &minimums = QVector<double>(),
+                          const QVector<double> &maximums = QVector<double>());
 
     inline bool isEmpty() const;
     inline bool hasMaximums() const;
@@ -36,6 +37,7 @@ public:
     void push_back(const QsePeakArray &peaks);
 
     void clear();
+
 private:
     QVector<double> m_minimums;
     QVector<double> m_maximums;
@@ -45,7 +47,7 @@ Q_DECLARE_METATYPE(QsePeakArray)
 bool operator ==(const QsePeakArray &l, const QsePeakArray &r);
 bool operator !=(const QsePeakArray &l, const QsePeakArray &r);
 QsePeakArray operator +(const QsePeakArray &a, const QsePeakArray &b);
-QDebug operator<<(QDebug dbg, const QsePeakArray &peaks);
+QDebug operator <<(QDebug dbg, const QsePeakArray &peaks);
 
 bool QsePeakArray::isEmpty() const
 {

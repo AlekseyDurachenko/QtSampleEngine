@@ -16,6 +16,7 @@
 #ifndef QSEABSTRACTSPPPLOT_H
 #define QSEABSTRACTSPPPLOT_H
 
+
 #include <QRect>
 #include "qseabstractplot.h"
 #include "qsesppgeometry.h"
@@ -33,8 +34,8 @@ public:
 
     virtual bool isVisible(const QRect &rect, const QseSppGeometry &geometry);
     virtual bool hasChanges(const QRect &rect, const QseSppGeometry &geometry);
-    virtual void draw(QPainter *painter, const QRect &rect,
-                      const QseSppGeometry &geometry);
+    virtual void draw(QPainter *painter, const QRect &rect, const QseSppGeometry &geometry);
+
 protected:
     QRect m_lastRect;
     QseSppGeometry m_lastGeometry;

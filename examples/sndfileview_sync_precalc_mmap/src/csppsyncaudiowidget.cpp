@@ -27,8 +27,8 @@
 #include "csppsyncaudiolimiter.h"
 
 
-CSppSyncAudioWidget::CSppSyncAudioWidget(QWidget *parent,
-        Qt::WindowFlags f) : QseSppWidget(parent, f)
+CSppSyncAudioWidget::CSppSyncAudioWidget(QWidget *parent, Qt::WindowFlags f)
+    : QseSppWidget(parent, f)
 {
     m_dataSource = new CSppSyncPeakDataSource(this);
     connect(m_dataSource, SIGNAL(dataChanged()),

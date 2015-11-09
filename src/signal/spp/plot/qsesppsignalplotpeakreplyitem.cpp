@@ -16,10 +16,10 @@
 #include "qsesppsignalplotpeakreplyitem.h"
 
 
-QseSppSignalPlotPeakReplyItem::QseSppSignalPlotPeakReplyItem(
-        QseSppSignalPlotPeakReplyItem::PushType type,
-        QseAbstractSppPeakReply *reply,
-        const QseSppGeometry &geometry, const QRect &rect)
+QseSppSignalPlotPeakReplyItem::QseSppSignalPlotPeakReplyItem(QseSppSignalPlotPeakReplyItem::PushType type,
+                                                             QseAbstractSppPeakReply *reply,
+                                                             const QseSppGeometry &geometry,
+                                                             const QRect &rect)
 {
     m_appendType = type;
     m_reply = reply;

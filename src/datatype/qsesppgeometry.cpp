@@ -17,8 +17,10 @@
 #include <QDebug>
 
 
-QseSppGeometry::QseSppGeometry(qint64 x, double y, qint64 samplePerPixel,
-        double height)
+QseSppGeometry::QseSppGeometry(qint64 x,
+                               double y,
+                               qint64 samplePerPixel,
+                               double height)
 {
     qRegisterMetaType<QseSppGeometry>("QseSppGeometry");
 
@@ -40,12 +42,15 @@ void QseSppGeometry::setY(double y)
 
 void QseSppGeometry::setSamplesPerPixel(qint64 samplePerPixel)
 {
-    if (samplePerPixel == 1)
+    if (samplePerPixel == 1) {
         m_samplesPerPixel = -1;
-    else if (samplePerPixel == 0)
+    }
+    else if (samplePerPixel == 0) {
         m_samplesPerPixel = 2;
-    else
+    }
+    else {
         m_samplesPerPixel = samplePerPixel;
+    }
 }
 
 void QseSppGeometry::setHeight(double height)
@@ -84,7 +89,7 @@ QseSppGeometry QseSppGeometry::replaceY(double y) const
 }
 
 QseSppGeometry QseSppGeometry::replaceSamplesPerPixel(
-        qint64 samplesPerPixel) const
+    qint64 samplesPerPixel) const
 {
     return QseSppGeometry(m_x, m_y, samplesPerPixel, m_height);
 }
@@ -119,23 +124,24 @@ bool operator !=(const QseSppGeometry &l, const QseSppGeometry &r)
 }
 
 bool QseSppGeometry::checkSampleIndexVisibility(const QseSppGeometry &geometry,
-        qint64 sampleIndex, int width)
+                                                qint64 sampleIndex,
+                                                int width)
 {
-    const qint64 &x = geometry.x();
-    const qint64 &spp = geometry.samplesPerPixel();
+    const qint64 x = geometry.x();
+    const qint64 spp = geometry.samplesPerPixel();
 
     if (spp > 0)
-        return (x <= sampleIndex) && (sampleIndex < x+(width*spp));
+        return ((x <= sampleIndex) && (sampleIndex < x + (width * spp)));
     else
-        return (x <= sampleIndex)
-                && (sampleIndex < x+(width/-spp)+((width%(-spp)) ? (1) : (0)));
+        return ((x <= sampleIndex)
+                && (sampleIndex < x + (width / -spp) + ((width % (-spp)) ? (1) : (0))));
 }
 
 int QseSppGeometry::calcOffset(const QseSppGeometry &geometry,
-        qint64 sampleIndex)
+                               qint64 sampleIndex)
 {
-    const qint64 &x = geometry.x();
-    const qint64 &spp = geometry.samplesPerPixel();
+    const qint64 x = geometry.x();
+    const qint64 spp = geometry.samplesPerPixel();
 
     if (spp > 0)
         return (sampleIndex - x) / spp;
@@ -144,41 +150,41 @@ int QseSppGeometry::calcOffset(const QseSppGeometry &geometry,
 }
 
 int QseSppGeometry::widthFromSamples(const QseSppGeometry &geometry,
-        qint64 count)
+                                     qint64 count)
 {
-    const qint64 &spp = geometry.samplesPerPixel();
+    const qint64 spp = geometry.samplesPerPixel();
 
     if (spp > 0)
-        return count/spp + ((count%spp)?(1):(0));
+        return count / spp + ((count % spp) ? (1) : (0));
     else
-        return count*(-spp);
+        return count * (-spp);
 }
 
 qint64 QseSppGeometry::samplesFromWidth(const QseSppGeometry &geometry,
-        int width)
+                                        int width)
 {
-    const qint64 &spp = geometry.samplesPerPixel();
+    const qint64 spp = geometry.samplesPerPixel();
 
     if (spp > 0)
-        return width*spp;
+        return width * spp;
     else
-        return width/(-spp) + ((width%(-spp)) ? (1) : (0));
+        return width / (-spp) + ((width % (-spp)) ? (1) : (0));
 }
 
 qint64 QseSppGeometry::calcSampleIndex(const QseSppGeometry &geometry,
-        int offset)
+                                       int offset)
 {
-    const qint64 &x = geometry.x();
-    const qint64 &spp = geometry.samplesPerPixel();
+    const qint64 x = geometry.x();
+    const qint64 spp = geometry.samplesPerPixel();
 
     if (spp > 0)
-        return x + (offset * spp);
+        return (x + (offset * spp));
     else
-        return x + qRound64(static_cast<double>(offset) / (-spp));
+        return (x + qRound64(static_cast<double>(offset) / (-spp)));
 }
 
 
-QDebug operator<<(QDebug dbg, const QseSppGeometry &geometry)
+QDebug operator <<(QDebug dbg, const QseSppGeometry &geometry)
 {
     dbg.nospace() << "QseSppGeometry({";
     dbg.nospace() << "X: " << geometry.x() << ", ";

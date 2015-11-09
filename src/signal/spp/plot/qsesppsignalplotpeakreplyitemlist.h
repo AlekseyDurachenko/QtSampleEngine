@@ -34,6 +34,7 @@ public:
     void insert(const QseSppSignalPlotPeakReplyItem &item);
     void removeAt(int i);
     void clear();
+
 private:
     QList<QseSppSignalPlotPeakReplyItem> m_items;
 };

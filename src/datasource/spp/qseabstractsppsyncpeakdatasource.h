@@ -16,6 +16,7 @@
 #ifndef QSEABSTRACTSPPSYNCPEAKDATASOURCE_H
 #define QSEABSTRACTSPPSYNCPEAKDATASOURCE_H
 
+
 #include "qseabstractpeakdatasource.h"
 #include "qsesppgeometry.h"
 #include "qsespppeakrequest.h"
@@ -27,7 +28,9 @@ class QseAbstractSppSyncPeakDataSource : public QseAbstractPeakDataSource
     Q_OBJECT
 public:
     QseAbstractSppSyncPeakDataSource(QObject *parent = 0);
+
     virtual QsePeakArray read(const QseSppPeakRequest &request) = 0;
+
 };
 
 

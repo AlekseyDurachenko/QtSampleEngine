@@ -16,9 +16,9 @@
 #include "qseabstractspppeakreply.h"
 
 
-QseAbstractSppPeakReply::QseAbstractSppPeakReply(
-        const QseSppPeakRequest &request, QObject *parent) :
-    QseAbstractPeakReply(parent)
+QseAbstractSppPeakReply::QseAbstractSppPeakReply(const QseSppPeakRequest &request,
+                                                 QObject *parent)
+    : QseAbstractPeakReply(parent)
 {
     m_request = request;
 }

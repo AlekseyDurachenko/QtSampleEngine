@@ -16,6 +16,7 @@
 #ifndef QSEABSTRACTWIDGET_H
 #define QSEABSTRACTWIDGET_H
 
+
 #include <QWidget>
 
 
@@ -26,10 +27,13 @@ public:
     explicit QseAbstractWidget(QWidget *parent = 0, Qt::WindowFlags f = 0);
 
     inline bool isUpdateOnce() const;
+
 public slots:
     void setUpdateOnce(bool need = true);
+
 protected slots:
     void setCurrentCursor(const QCursor &cursor);
+
 private:
     bool m_updateOnce;
 };

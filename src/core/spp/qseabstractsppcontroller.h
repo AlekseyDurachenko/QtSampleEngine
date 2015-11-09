@@ -16,6 +16,7 @@
 #ifndef QSEABSTRACTSPPCONTROLLER_H
 #define QSEABSTRACTSPPCONTROLLER_H
 
+
 #include "qseabstractcontroller.h"
 #include "qsesppgeometry.h"
 class QMouseEvent;
@@ -31,21 +32,17 @@ class QseAbstractSppController : public QseAbstractController
     friend class QseAbstractSppControllerProxy;
 public:
     explicit QseAbstractSppController(QObject *parent = 0);
+
 signals:
     void geometryChanged(const QseSppGeometry &geometry);
+
 protected:
-    virtual void mouseMoveEvent(QMouseEvent *event, const QRect &rect,
-                                const QseSppGeometry &geometry);
-    virtual void mousePressEvent(QMouseEvent *event, const QRect &rect,
-                                 const QseSppGeometry &geometry);
-    virtual void mouseReleaseEvent(QMouseEvent *event, const QRect &rect,
-                                   const QseSppGeometry &geometry);
-    virtual void wheelEvent(QWheelEvent *event, const QRect &rect,
-                            const QseSppGeometry &geometry);
-    virtual void keyPressEvent(QKeyEvent *event, const QRect &rect,
-                               const QseSppGeometry &geometry);
-    virtual void keyReleaseEvent(QKeyEvent *event, const QRect &rect,
-                                 const QseSppGeometry &geometry);
+    virtual void mouseMoveEvent(QMouseEvent *event, const QRect &rect, const QseSppGeometry &geometry);
+    virtual void mousePressEvent(QMouseEvent *event, const QRect &rect, const QseSppGeometry &geometry);
+    virtual void mouseReleaseEvent(QMouseEvent *event, const QRect &rect, const QseSppGeometry &geometry);
+    virtual void wheelEvent(QWheelEvent *event, const QRect &rect, const QseSppGeometry &geometry);
+    virtual void keyPressEvent(QKeyEvent *event, const QRect &rect, const QseSppGeometry &geometry);
+    virtual void keyReleaseEvent(QKeyEvent *event, const QRect &rect, const QseSppGeometry &geometry);
 };
 
 

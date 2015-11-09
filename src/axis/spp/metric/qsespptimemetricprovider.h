@@ -16,6 +16,7 @@
 #ifndef QSESPPTIMEMETRICPROVIDER_H
 #define QSESPPTIMEMETRICPROVIDER_H
 
+
 #include "qseabstractsppmetricprovider.h"
 class QseMetricMapper;
 
@@ -31,8 +32,8 @@ public:
     void setSampleRate(double sampleRate);
 
     virtual int maximumTextLenght() const;
-    virtual QList<QseMetricItem> create(const QseSppGeometry &geometry,
-                                        int size) const;
+    virtual QList<QseMetricItem> create(const QseSppGeometry &geometry, int size) const;
+
 private:
     QseMetricMapper *m_mapper;
     double m_sampleRate;

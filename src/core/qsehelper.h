@@ -16,20 +16,22 @@
 #ifndef QSEHELPER_H
 #define QSEHELPER_H
 
+
 // ----------------------------------------------------------------------
 namespace Qse {
 // ----------------------------------------------------------------------
 
 
-void calcIntersection(const double& p11x, const double& p11y,
-                      const double& p12x, const double& p12y,
-                      const double& p21x, const double& p21y,
-                      const double& p22x, const double& p22y,
-                      double& x, double& y);
+void calcIntersection(const double &p11x, const double &p11y,
+                      const double &p12x, const double &p12y,
+                      const double &p21x, const double &p21y,
+                      const double &p22x, const double &p22y,
+                      double &x, double &y);
 
 
 // ----------------------------------------------------------------------
 } // namespace Qse
 // ----------------------------------------------------------------------
+
 
 #endif // QSEHELPER_H

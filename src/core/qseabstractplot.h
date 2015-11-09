@@ -16,6 +16,7 @@
 #ifndef QSEABSTRACTPLOT_H
 #define QSEABSTRACTPLOT_H
 
+
 #include <QObject>
 
 
@@ -28,13 +29,16 @@ public:
 
     inline bool isEnabled() const;
     inline bool isUpdateOnce() const;
+
 signals:
     void updateNeeded();
+
 public slots:
     void setUpdateOnce(bool need = true);
     void setEnabled(bool enabled);
     void setDisabled(bool disabled);
     virtual void reset();
+
 private:
     bool m_updateOnce;
     bool m_enabled;

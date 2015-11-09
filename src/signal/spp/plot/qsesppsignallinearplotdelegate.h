@@ -16,6 +16,7 @@
 #ifndef QSEABSTRACTSPPSIGNALLINEARPLOTDELEGATE_H
 #define QSEABSTRACTSPPSIGNALLINEARPLOTDELEGATE_H
 
+
 #include "qseabstractsppsignalplotdelegate.h"
 
 
@@ -26,13 +27,21 @@ public:
     explicit QseSppSignalLinearPlotDelegate(QObject *parent = 0);
 
     virtual void drawAsLines(QPainter *painter,
-                             const QRect &rect, const QseSppGeometry &geometry,
-                             const QsePeakArray &peaks, int firstIndex,
-                             int space, double dx, double dy);
+                             const QRect &rect,
+                             const QseSppGeometry &geometry,
+                             const QsePeakArray &peaks,
+                             int firstIndex,
+                             int space,
+                             double dx,
+                             double dy);
     virtual void drawAsPeaks(QPainter *painter,
-                             const QRect &rect, const QseSppGeometry &geometry,
-                             const QsePeakArray &peaks, int firstIndex,
-                             int space, double dx, double dy);
+                             const QRect &rect,
+                             const QseSppGeometry &geometry,
+                             const QsePeakArray &peaks,
+                             int firstIndex,
+                             int space,
+                             double dx,
+                             double dy);
 };
 
 

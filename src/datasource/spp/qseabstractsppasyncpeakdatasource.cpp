@@ -16,7 +16,7 @@
 #include "qseabstractsppasyncpeakdatasource.h"
 
 
-QseAbstractSppAsyncPeakDataSource::QseAbstractSppAsyncPeakDataSource(
-        QObject *parent) : QseAbstractPeakDataSource(parent)
+QseAbstractSppAsyncPeakDataSource::QseAbstractSppAsyncPeakDataSource(QObject *parent)
+    : QseAbstractPeakDataSource(parent)
 {
 }

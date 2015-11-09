@@ -25,8 +25,7 @@ class QseAbstractSppPeakReply;
 class QseSppSignalPlotPeakReplyItem
 {
 public:
-    enum PushType
-    {
+    enum PushType {
         PushBack    = 0x00,
         PushFront   = 0x01,
         ReplaceAll  = 0x02
@@ -56,6 +55,7 @@ public:
     {
         return m_rect;
     }
+
 private:
     PushType m_appendType;
     QseAbstractSppPeakReply *m_reply;

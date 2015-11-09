@@ -34,12 +34,15 @@ public:
 
     inline const QList<QseAbstractSppPlot *> &postUncachedPlots() const;
     void setPostUncachedPlots(const QList<QseAbstractSppPlot *> &plots);
+
 private slots:
     void preUncachedPlots_destroyed(QObject *obj);
     void cachedPlots_destroyed(QObject *obj);
     void postUncachedPlots_destroyed(QObject *obj);
+
 protected:
     void paintEvent(QPaintEvent *event);
+
 private:
     QList<QImage> m_caches;
     QList<QseAbstractSppPlot *> m_preUncachedPlots;

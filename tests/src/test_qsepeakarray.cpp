@@ -19,7 +19,8 @@
 #include <QDebug>
 
 
-TestQsePeakArray::TestQsePeakArray(QObject *parent) : QObject(parent)
+TestQsePeakArray::TestQsePeakArray(QObject *parent)
+    : QObject(parent)
 {
 }
 

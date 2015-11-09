@@ -16,6 +16,7 @@
 #ifndef QSESPPSTANDARDSELECTIONCONTROLLER_H
 #define QSESPPSTANDARDSELECTIONCONTROLLER_H
 
+
 #include "qseabstractsppstandardcontroller.h"
 class QseSelection;
 
@@ -28,22 +29,20 @@ public:
 
     inline QseSelection *selection() const;
     void setSelection(QseSelection *selection);
+
 protected:
-    virtual void mouseMoveEvent(QMouseEvent *event, const QRect &rect,
-                        const QseSppGeometry &geometry);
-    virtual void mousePressEvent(QMouseEvent *event, const QRect &rect,
-                         const QseSppGeometry &geometry);
-    virtual void mouseReleaseEvent(QMouseEvent *event, const QRect &rect,
-                                   const QseSppGeometry &geometry);
-    virtual void keyPressEvent(QKeyEvent *event, const QRect &rect,
-                               const QseSppGeometry &geometry);
-    virtual void keyReleaseEvent(QKeyEvent *event, const QRect &rect,
-                                 const QseSppGeometry &geometry);
+    virtual void mouseMoveEvent(QMouseEvent *event, const QRect &rect, const QseSppGeometry &geometry);
+    virtual void mousePressEvent(QMouseEvent *event, const QRect &rect, const QseSppGeometry &geometry);
+    virtual void mouseReleaseEvent(QMouseEvent *event, const QRect &rect, const QseSppGeometry &geometry);
+    virtual void keyPressEvent(QKeyEvent *event, const QRect &rect, const QseSppGeometry &geometry);
+    virtual void keyReleaseEvent(QKeyEvent *event, const QRect &rect, const QseSppGeometry &geometry);
+
 private:
-    void updateCursor(Qt::KeyboardModifiers km, int x,
-                      const QRect &rect, const QseSppGeometry &geometry);
+    void updateCursor(Qt::KeyboardModifiers km, int x, const QRect &rect, const QseSppGeometry &geometry);
+
 private slots:
     void selection_destroyed();
+
 private:
     QseSelection *m_selection;
     // true  -- ready to move the selection

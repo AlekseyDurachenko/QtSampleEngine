@@ -49,12 +49,15 @@ public:
 
     inline QseAbstractSppMetricProvider *metricProvider() const;
     void setMetricProvider(QseAbstractSppMetricProvider *provider);
+
 private slots:
     void provider_destroyed();
+
 protected:
     virtual void endModifyTextFont(const QFont &font);
     virtual void endModifyMetricSize(int size);
     virtual void endModifyMetricProvider(QseAbstractSppMetricProvider *provider);
+
 protected:
     QseAbstractSppMetricProvider *m_provider;
     QImage m_cache;

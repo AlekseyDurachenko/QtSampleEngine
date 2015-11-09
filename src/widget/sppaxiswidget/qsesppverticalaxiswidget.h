@@ -25,8 +25,7 @@ class QseSppVerticalAxisWidget : public QseAbstractSppAxisWidget
     Q_ENUMS(Alignment)
     Q_PROPERTY(Alignment alignment READ alignment WRITE setAlignment)
 public:
-    enum Alignment
-    {
+    enum Alignment {
         AlignLeft       = 0x0001,
         AlignRight      = 0x0002,
         AlignHCenter    = 0x0004
@@ -36,15 +35,19 @@ public:
 
     inline Alignment alignment() const;
     void setAlignment(Alignment alignment);
+
 protected:
     void recalcProviderMinimumSize(QseAbstractSppMetricProvider *provider);
     void leftRightRender(QPainter *painter);
+
 protected:
     virtual void paintEvent(QPaintEvent *event);
     virtual QSize minimumSizeHint() const;
+
 protected:
     virtual void endModifyTextFont(const QFont &font);
     virtual void endModifyMetricProvider(QseAbstractSppMetricProvider *provider);
+
 private:
     QImage m_cache;
     Alignment m_alignment;

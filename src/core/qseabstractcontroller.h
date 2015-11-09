@@ -16,6 +16,7 @@
 #ifndef QSEABSTRACTCONTROLLER_H
 #define QSEABSTRACTCONTROLLER_H
 
+
 #include <QObject>
 #include <QCursor>
 
@@ -28,8 +29,10 @@ public:
 
     virtual QCursor defaultCursor() const;
     void setDefaultCursor(const QCursor &cursor);
+
 signals:
     void cursorChanged(const QCursor &cursor);
+
 private:
     QCursor m_defaultCursor;
 };

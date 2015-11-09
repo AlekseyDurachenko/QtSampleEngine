@@ -24,15 +24,13 @@ class QseSppStandardHorizontalController : public QseAbstractSppStandardControll
     Q_OBJECT
 public:
     explicit QseSppStandardHorizontalController(QObject *parent = 0);
+
 protected:
-    virtual void mouseMoveEvent(QMouseEvent *event, const QRect &rect,
-                        const QseSppGeometry &geometry);
-    virtual void mousePressEvent(QMouseEvent *event, const QRect &rect,
-                         const QseSppGeometry &geometry);
-    virtual void mouseReleaseEvent(QMouseEvent *event, const QRect &rect,
-                           const QseSppGeometry &geometry);
-    virtual void keyReleaseEvent(QKeyEvent *event, const QRect &rect,
-                                 const QseSppGeometry &geometry);
+    virtual void mouseMoveEvent(QMouseEvent *event, const QRect &rect, const QseSppGeometry &geometry);
+    virtual void mousePressEvent(QMouseEvent *event, const QRect &rect, const QseSppGeometry &geometry);
+    virtual void mouseReleaseEvent(QMouseEvent *event, const QRect &rect, const QseSppGeometry &geometry);
+    virtual void keyReleaseEvent(QKeyEvent *event, const QRect &rect, const QseSppGeometry &geometry);
+
 private:
     // true  -- ready to move
     // false -- not ready to move

@@ -25,6 +25,7 @@ class TestQsePeakArray : public QObject
     Q_OBJECT
 public:
     explicit TestQsePeakArray(QObject *parent = 0);
+
 private slots:
     void constructor();
 };

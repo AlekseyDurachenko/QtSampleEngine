@@ -16,6 +16,7 @@
 #ifndef QSEABSTRACTPEAKDATASOURCE_H
 #define QSEABSTRACTPEAKDATASOURCE_H
 
+
 #include <QObject>
 
 
@@ -38,10 +39,12 @@ public:
     virtual qint64 count() const = 0;
     virtual qint64 minIndex() const = 0;
     virtual qint64 maxIndex() const = 0;
+
 signals:
     void optionChanged();
     void dataChanged();
     void dataChanged(qint64 first, qint64 last);
+
 private:
     Options m_options;
 };

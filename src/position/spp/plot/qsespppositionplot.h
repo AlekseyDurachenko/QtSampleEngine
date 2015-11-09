@@ -16,6 +16,7 @@
 #ifndef QSESPPPOSITIONPLOT_H
 #define QSESPPPOSITIONPLOT_H
 
+
 #include <QPen>
 #include "qsesppgeometry.h"
 #include "qseabstractsppplot.h"
@@ -41,10 +42,11 @@ public:
 
     virtual bool hasChanges(const QRect &rect, const QseSppGeometry &geometry);
     virtual bool isVisible(const QRect &rect, const QseSppGeometry &geometry);
-    virtual void draw(QPainter *painter, const QRect &rect,
-              const QseSppGeometry &geometry);
+    virtual void draw(QPainter *painter, const QRect &rect, const QseSppGeometry &geometry);
+
 private slots:
     void position_destroyed(QObject *obj);
+
 private:
     QsePosition *m_position;
     qreal m_opacity;

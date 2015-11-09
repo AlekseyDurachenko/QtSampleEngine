@@ -16,15 +16,19 @@
 #ifndef QSEABSTRACTSPPLIMITER_H
 #define QSEABSTRACTSPPLIMITER_H
 
+
 #include <QObject>
 class QseSppGeometry;
+
 
 class QseAbstractSppLimiter : public QObject
 {
     Q_OBJECT
 public:
     explicit QseAbstractSppLimiter(QObject *parent);
+
     virtual QseSppGeometry limit(const QseSppGeometry& geometry) = 0;
+
 signals:
     void changed();
 };

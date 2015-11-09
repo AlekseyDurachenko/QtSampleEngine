@@ -16,20 +16,19 @@
 #ifndef QSESPPPEAKREQUEST_H
 #define QSESPPPEAKREQUEST_H
 
+
 #include <QtGlobal>
 #include <QRect>
 #include "qsesppgeometry.h"
+
 
 class QseSppPeakRequest
 {
 public:
     QseSppPeakRequest();
-    QseSppPeakRequest(const QseSppGeometry &geometry, const QRect &rect,
-                      bool rightAlign = false);
-    QseSppPeakRequest(const QseSppGeometry &geometry, int width,
-                      bool rightAlign = false);
-    QseSppPeakRequest(qint64 x, qint64 samplePerPixel, int width,
-                      bool rightAlign = false);
+    QseSppPeakRequest(const QseSppGeometry &geometry, const QRect &rect, bool rightAlign = false);
+    QseSppPeakRequest(const QseSppGeometry &geometry, int width, bool rightAlign = false);
+    QseSppPeakRequest(qint64 x, qint64 samplePerPixel, int width, bool rightAlign = false);
 
     inline const qint64 &x() const;
     void setX(qint64 x);
@@ -42,6 +41,7 @@ public:
 
     inline const bool &rightAlign() const;
     void setRightAlign(bool rightAlign);
+
 private:
     qint64 m_x;
     qint64 m_samplePerPixel;

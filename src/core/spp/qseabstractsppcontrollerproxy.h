@@ -16,6 +16,7 @@
 #ifndef QSEABSTRACTSPPCONTROLLERPROXY_H
 #define QSEABSTRACTSPPCONTROLLERPROXY_H
 
+
 #include "qseabstractsppcontroller.h"
 
 
@@ -27,21 +28,18 @@ public:
 
     inline const QseAbstractSppController *controller() const;
     void setController(QseAbstractSppController *controller);
+
 private slots:
     void controller_destroyed();
+
 protected:
-    virtual void mouseMoveEvent(QMouseEvent *event, const QRect &rect,
-                                const QseSppGeometry &geometry);
-    virtual void mousePressEvent(QMouseEvent *event, const QRect &rect,
-                                 const QseSppGeometry &geometry);
-    virtual void mouseReleaseEvent(QMouseEvent *event, const QRect &rect,
-                                   const QseSppGeometry &geometry);
-    virtual void wheelEvent(QWheelEvent *event, const QRect &rect,
-                            const QseSppGeometry &geometry);
-    virtual void keyPressEvent(QKeyEvent *event, const QRect &rect,
-                               const QseSppGeometry &geometry);
-    virtual void keyReleaseEvent(QKeyEvent *event, const QRect &rect,
-                                 const QseSppGeometry &geometry);
+    virtual void mouseMoveEvent(QMouseEvent *event, const QRect &rect, const QseSppGeometry &geometry);
+    virtual void mousePressEvent(QMouseEvent *event, const QRect &rect, const QseSppGeometry &geometry);
+    virtual void mouseReleaseEvent(QMouseEvent *event, const QRect &rect, const QseSppGeometry &geometry);
+    virtual void wheelEvent(QWheelEvent *event, const QRect &rect, const QseSppGeometry &geometry);
+    virtual void keyPressEvent(QKeyEvent *event, const QRect &rect, const QseSppGeometry &geometry);
+    virtual void keyReleaseEvent(QKeyEvent *event, const QRect &rect, const QseSppGeometry &geometry);
+
 private:
     QseAbstractSppController *m_controller;
 };

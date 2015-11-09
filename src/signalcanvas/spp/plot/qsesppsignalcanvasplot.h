@@ -41,11 +41,12 @@ public:
 
     virtual bool hasChanges(const QRect &rect, const QseSppGeometry &geometry);
     virtual bool isVisible(const QRect &rect, const QseSppGeometry &geometry);
-    virtual void draw(QPainter *painter, const QRect &rect,
-                      const QseSppGeometry &geometry);
+    virtual void draw(QPainter *painter, const QRect &rect, const QseSppGeometry &geometry);
+
 private slots:
     void dataSource_destroyed(QObject *obj);
     void dataSource_dataChanged();
+
 private:
     QseAbstractPeakDataSource *m_dataSource;
     QBrush m_brush;

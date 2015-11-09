@@ -17,32 +17,31 @@
 #include <QPainter>
 
 
-QseMonocolorSppCanvasPlot::QseMonocolorSppCanvasPlot(QObject *parent) :
-    QseAbstractSppPlot(parent)
+QseMonocolorSppCanvasPlot::QseMonocolorSppCanvasPlot(QObject *parent)
+    : QseAbstractSppPlot(parent)
 {
     m_color = qRgb(230, 230, 230);
 }
 
 void QseMonocolorSppCanvasPlot::setColor(const QColor &color)
 {
-    if (m_color != color)
-    {
+    if (m_color != color) {
         m_color = color;
         setUpdateOnce(true);
     }
 }
 
 bool QseMonocolorSppCanvasPlot::hasChanges(const QRect &rect,
-        const QseSppGeometry &/*geometry*/)
+                                           const QseSppGeometry &/*geometry*/)
 {
     return (isUpdateOnce() || rect != lastRect());
 }
 
-void QseMonocolorSppCanvasPlot::draw(QPainter *painter, const QRect &rect,
-        const QseSppGeometry &geometry)
+void QseMonocolorSppCanvasPlot::draw(QPainter *painter,
+                                     const QRect &rect,
+                                     const QseSppGeometry &geometry)
 {
-    if (isVisible(rect, geometry))
-    {
+    if (isVisible(rect, geometry)) {
         painter->save();
         painter->fillRect(rect, m_color);
         painter->restore();

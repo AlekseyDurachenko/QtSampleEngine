@@ -42,16 +42,16 @@ namespace Qse {
 *                       *(p22x,p22y)
 *   \endcode
 */
-void calcIntersection(const double& p11x, const double& p11y,
-        const double& p12x, const double& p12y,
-        const double& p21x, const double& p21y,
-        const double& p22x, const double& p22y,
-        double& x, double& y)
+void calcIntersection(const double &p11x, const double &p11y,
+                      const double &p12x, const double &p12y,
+                      const double &p21x, const double &p21y,
+                      const double &p22x, const double &p22y,
+                      double &x, double &y)
 {
-    const double Z  = (p12y-p11y)*(p21x-p22x)-(p21y-p22y)*(p12x-p11x);
-    const double Cb = (p21y-p11y)*(p21x-p22x)-(p21y-p22y)*(p21x-p11x);
+    const double Z  = (p12y - p11y) * (p21x - p22x) - (p21y - p22y) * (p12x - p11x);
+    const double Cb = (p21y - p11y) * (p21x - p22x) - (p21y - p22y) * (p21x - p11x);
 
-    const double Ub = Cb/Z;
+    const double Ub = Cb / Z;
 
     x = p11x + (p12x - p11x) * Ub;
     y = p11y + (p12y - p11y) * Ub;

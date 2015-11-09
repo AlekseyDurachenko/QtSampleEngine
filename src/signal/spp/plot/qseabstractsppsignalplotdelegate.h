@@ -37,15 +37,25 @@ public:
     void setOpacity(qreal opacity);
 
     virtual void drawAsLines(QPainter *painter,
-                             const QRect &rect, const QseSppGeometry &geometry,
-                             const QsePeakArray &peaks, int firstIndex,
-                             int space, double dx, double dy) = 0;
+                             const QRect &rect,
+                             const QseSppGeometry &geometry,
+                             const QsePeakArray &peaks,
+                             int firstIndex,
+                             int space,
+                             double dx,
+                             double dy) = 0;
     virtual void drawAsPeaks(QPainter *painter,
-                             const QRect &rect, const QseSppGeometry &geometry,
-                             const QsePeakArray &peaks, int firstIndex,
-                             int space, double dx, double dy) = 0;
+                             const QRect &rect,
+                             const QseSppGeometry &geometry,
+                             const QsePeakArray &peaks,
+                             int firstIndex,
+                             int space,
+                             double dx,
+                             double dy) = 0;
+
 signals:
     void changed();
+
 private:
     qreal m_opacity;
     QPen m_pen;

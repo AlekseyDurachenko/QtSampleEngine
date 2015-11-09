@@ -22,8 +22,8 @@
 #include "qsesppgeometry.h"
 
 
-QseSppAudacityController::QseSppAudacityController(QObject *parent) :
-    QseAbstractSppController(parent)
+QseSppAudacityController::QseSppAudacityController(QObject *parent)
+    : QseAbstractSppController(parent)
 {
     m_position = 0;
     m_selection = 0;
@@ -40,8 +40,7 @@ void QseSppAudacityController::setPosition(QsePosition *position)
         disconnect(m_position, 0, this, 0);
 
     m_position = position;
-    if (m_position)
-    {
+    if (m_position) {
         connect(m_position, SIGNAL(destroyed()),
                 this, SLOT(position_destroyed()));
     }
@@ -56,18 +55,17 @@ void QseSppAudacityController::setSelection(QseSelection *selection)
         disconnect(m_selection, 0, this, 0);
 
     m_selection = selection;
-    if (m_selection)
-    {
+    if (m_selection) {
         connect(m_selection, SIGNAL(destroyed()),
                 this, SLOT(selection_destroyed()));
     }
 }
 
 void QseSppAudacityController::mouseMoveEvent(QMouseEvent *event,
-        const QRect &rect, const QseSppGeometry &geometry)
+                                              const QRect &rect,
+                                              const QseSppGeometry &geometry)
 {
-    if (event->buttons() & Qt::LeftButton)
-    {
+    if (event->buttons() & Qt::LeftButton) {
         changeSelection(event, geometry);
     }
 
@@ -75,24 +73,20 @@ void QseSppAudacityController::mouseMoveEvent(QMouseEvent *event,
 }
 
 void QseSppAudacityController::mousePressEvent(QMouseEvent *event,
-        const QRect &rect, const QseSppGeometry &geometry)
+                                               const QRect &rect,
+                                               const QseSppGeometry &geometry)
 {
-    if (event->modifiers() & Qt::ShiftModifier)
-    {
+    if (event->modifiers() & Qt::ShiftModifier) {
         extendSelection(event, geometry);
         startSelection(event, rect, geometry);
     }
-    else if (event->modifiers() & Qt::ControlModifier)
-    {
-        if (event->buttons() & Qt::LeftButton)
-        {
+    else if (event->modifiers() & Qt::ControlModifier) {
+        if (event->buttons() & Qt::LeftButton) {
             clickPlayPosition(event, geometry);
         }
     }
-    else
-    {
-        if (event->buttons() & Qt::LeftButton)
-        {
+    else {
+        if (event->buttons() & Qt::LeftButton) {
             startSelection(event, rect, geometry);
         }
     }
@@ -101,10 +95,10 @@ void QseSppAudacityController::mousePressEvent(QMouseEvent *event,
 }
 
 void QseSppAudacityController::mouseReleaseEvent(QMouseEvent *event,
-        const QRect &rect, const QseSppGeometry &geometry)
+                                                 const QRect &rect,
+                                                 const QseSppGeometry &geometry)
 {
-    if (!(event->buttons() & Qt::LeftButton))
-    {
+    if (!(event->buttons() & Qt::LeftButton)) {
         endSelection();
     }
 
@@ -112,14 +106,13 @@ void QseSppAudacityController::mouseReleaseEvent(QMouseEvent *event,
 }
 
 void QseSppAudacityController::wheelEvent(QWheelEvent *event,
-        const QRect &rect, const QseSppGeometry &geometry)
+                                          const QRect &rect,
+                                          const QseSppGeometry &geometry)
 {
-    if (event->modifiers() & Qt::ShiftModifier)
-    {
+    if (event->modifiers() & Qt::ShiftModifier) {
         horizontalScroll(event, geometry);
     }
-    else if (event->modifiers() & Qt::ControlModifier)
-    {
+    else if (event->modifiers() & Qt::ControlModifier) {
         horizontalZoom(event, geometry);
     }
 
@@ -137,25 +130,21 @@ void QseSppAudacityController::selection_destroyed()
 }
 
 void QseSppAudacityController::startSelection(QMouseEvent *event,
-        const QRect &rect, const QseSppGeometry &geometry)
+                                              const QRect &rect,
+                                              const QseSppGeometry &geometry)
 {
     qint64 sample = QseSppGeometry::calcSampleIndex(geometry, event->x());
     if (sample < 0)
         sample = 0;
 
-    if (m_selection)
-    {
+    if (m_selection) {
         // resize selection if mouse around the selection bounds
-        if (!m_selection->isNull())
-        {
+        if (!m_selection->isNull()) {
             const QseRange range = m_selection->selectedRange();
             // left bound of selection
-            if (QseSppGeometry::checkSampleIndexVisibility(geometry,
-                    range.first(), rect.width()))
-            {
+            if (QseSppGeometry::checkSampleIndexVisibility(geometry, range.first(), rect.width())) {
                 const int pos = QseSppGeometry::calcOffset(geometry, range.first());
-                if (qAbs(pos - event->x()) < 5)
-                {
+                if (qAbs(pos - event->x()) < 5) {
                     m_isSelectionAction = true;
                     m_otherSample = range.last();
                     m_selection->setSelectedRange(range.replaceFirst(sample));
@@ -163,12 +152,9 @@ void QseSppAudacityController::startSelection(QMouseEvent *event,
             }
             // right bound of selection
             if (!m_isSelectionAction
-                    && QseSppGeometry::checkSampleIndexVisibility(geometry,
-                            range.last(), rect.width()))
-            {
+                    && QseSppGeometry::checkSampleIndexVisibility(geometry, range.last(), rect.width())) {
                 const int pos = QseSppGeometry::calcOffset(geometry, range.last());
-                if (qAbs(pos - event->x()) < 5)
-                {
+                if (qAbs(pos - event->x()) < 5) {
                     m_isSelectionAction = true;
                     m_otherSample = range.first();
                     m_selection->setSelectedRange(range.replaceLast(sample));
@@ -177,8 +163,7 @@ void QseSppAudacityController::startSelection(QMouseEvent *event,
         }
 
         // start new selection if mouse away the selection bounds
-        if (!m_isSelectionAction)
-        {
+        if (!m_isSelectionAction) {
             m_isSelectionAction = true;
             m_otherSample = sample;
             m_selection->resetSelectedRange();
@@ -192,7 +177,7 @@ void QseSppAudacityController::startSelection(QMouseEvent *event,
 }
 
 void QseSppAudacityController::extendSelection(QMouseEvent *event,
-        const QseSppGeometry &geometry)
+                                               const QseSppGeometry &geometry)
 {
     if (!m_selection || m_selection->isNull())
         return;
@@ -215,7 +200,7 @@ void QseSppAudacityController::extendSelection(QMouseEvent *event,
 }
 
 void QseSppAudacityController::changeSelection(QMouseEvent *event,
-        const QseSppGeometry &geometry)
+                                               const QseSppGeometry &geometry)
 {
     if (!m_isSelectionAction)
         return;
@@ -235,20 +220,19 @@ void QseSppAudacityController::endSelection()
 }
 
 void QseSppAudacityController::clickPlayPosition(QMouseEvent *event,
-        const QseSppGeometry &geometry)
+                                                 const QseSppGeometry &geometry)
 {
     emit playClicked(QseSppGeometry::calcSampleIndex(geometry, event->x()));
 }
 
 void QseSppAudacityController::horizontalZoom(QWheelEvent *event,
-        const QseSppGeometry &geometry)
+                                              const QseSppGeometry &geometry)
 {
     // calculate zoom
     int degree = event->delta() / 60;
     qint64 spp = geometry.samplesPerPixel();
     // zoom in
-    if (degree > 0)
-    {
+    if (degree > 0) {
         if (spp > 0)
             spp /= qAbs(degree);
         else
@@ -257,8 +241,7 @@ void QseSppAudacityController::horizontalZoom(QWheelEvent *event,
             spp = -1;
     }
     // zoom out
-    else if (degree < 0)
-    {
+    else if (degree < 0) {
         if (spp > 0)
             spp *= qAbs(degree);
         else
@@ -281,7 +264,7 @@ void QseSppAudacityController::horizontalZoom(QWheelEvent *event,
 }
 
 void QseSppAudacityController::horizontalScroll(QWheelEvent *event,
-        const QseSppGeometry &geometry)
+                                                const QseSppGeometry &geometry)
 {
     int stepWidth = event->delta() / 4;
     qint64 spp = geometry.samplesPerPixel();
@@ -291,30 +274,24 @@ void QseSppAudacityController::horizontalScroll(QWheelEvent *event,
     emit geometryChanged(geometry.addX(-stepWidth));
 }
 
-void QseSppAudacityController::updateCursor(int x, const QRect &rect,
-        const QseSppGeometry &geometry)
+void QseSppAudacityController::updateCursor(int x,
+                                            const QRect &rect,
+                                            const QseSppGeometry &geometry)
 {
-    if (m_selection && !m_selection->isNull())
-    {
+    if (m_selection && !m_selection->isNull()) {
         QseRange range = m_selection->selectedRange();
         // left bound of selection
-        if (QseSppGeometry::checkSampleIndexVisibility(geometry, range.first(),
-                rect.width()))
-        {
+        if (QseSppGeometry::checkSampleIndexVisibility(geometry, range.first(), rect.width())) {
             int pos = QseSppGeometry::calcOffset(geometry, range.first());
-            if (qAbs(pos - x) < 5)
-            {
+            if (qAbs(pos - x) < 5) {
                 emit cursorChanged(QCursor(Qt::SizeHorCursor));
                 return;
             }
         }
         // right bound of selection
-        if (QseSppGeometry::checkSampleIndexVisibility(geometry, range.last(),
-                rect.width()))
-        {
+        if (QseSppGeometry::checkSampleIndexVisibility(geometry, range.last(), rect.width())) {
             int pos = QseSppGeometry::calcOffset(geometry, range.last());
-            if (qAbs(pos - x) < 5)
-            {
+            if (qAbs(pos - x) < 5) {
                 emit cursorChanged(QCursor(Qt::SizeHorCursor));
                 return;
             }

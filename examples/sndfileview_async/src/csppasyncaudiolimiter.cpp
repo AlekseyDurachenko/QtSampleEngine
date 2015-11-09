@@ -18,9 +18,9 @@
 #include "csppasyncpeakdatasource.h"
 
 
-CSppAsyncAudioLimiter::CSppAsyncAudioLimiter(
-        CSppAsyncPeakDataSource *dataSource,QObject *parent) :
-    QseAbstractSppLimiter(parent)
+CSppAsyncAudioLimiter::CSppAsyncAudioLimiter(CSppAsyncPeakDataSource *dataSource,
+                                             QObject *parent)
+    : QseAbstractSppLimiter(parent)
 {
     m_dataSource = dataSource;
 }

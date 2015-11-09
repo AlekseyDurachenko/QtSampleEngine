@@ -16,25 +16,26 @@
 #include "qseabstractsppplot.h"
 
 
-QseAbstractSppPlot::QseAbstractSppPlot(QObject *parent) :
-    QseAbstractPlot(parent)
+QseAbstractSppPlot::QseAbstractSppPlot(QObject *parent)
+    : QseAbstractPlot(parent)
 {
 }
 
 bool QseAbstractSppPlot::isVisible(const QRect &/*rect*/,
-        const QseSppGeometry &/*geometry*/)
+                                   const QseSppGeometry &/*geometry*/)
 {
     return isEnabled();
 }
 
 bool QseAbstractSppPlot::hasChanges(const QRect &/*rect*/,
-        const QseSppGeometry &/*geometry*/)
+                                    const QseSppGeometry &/*geometry*/)
 {
     return false;
 }
 
-void QseAbstractSppPlot::draw(QPainter */*painter*/, const QRect &rect,
-        const QseSppGeometry &geometry)
+void QseAbstractSppPlot::draw(QPainter */*painter*/,
+                              const QRect &rect,
+                              const QseSppGeometry &geometry)
 {
     m_lastRect = rect;
     m_lastGeometry = geometry;

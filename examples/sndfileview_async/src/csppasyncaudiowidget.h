@@ -16,6 +16,7 @@
 #ifndef CSPPASYNCAUDIOWIDGET_H
 #define CSPPASYNCAUDIOWIDGET_H
 
+
 #include <QWidget>
 #include "qsesppwidget.h"
 class QsePosition;
@@ -30,6 +31,7 @@ class CSppAsyncPeakDataSource;
 class CSppAsyncAudioLimiter;
 class QseSppWidget;
 class QseSppSignalLinearPlotDelegate;
+
 
 class CSppAsyncAudioWidget : public QseSppWidget
 {
@@ -46,8 +48,10 @@ public:
     inline QseSppAudacityController *controller() const;
     inline CSppAsyncPeakDataSource *dataSource() const;
     inline CSppAsyncAudioLimiter *limiter() const;
+
 private slots:
     void dataSource_dataChanged();
+
 private:
     QsePosition *m_playPosition;
     QseSppPositionPlot *m_playPositionPlot;

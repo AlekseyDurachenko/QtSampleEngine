@@ -19,8 +19,8 @@
 #include "qseposition.h"
 
 
-QseSppStandardPositionController::QseSppStandardPositionController(
-        QObject *parent) : QseAbstractSppStandardController(parent)
+QseSppStandardPositionController::QseSppStandardPositionController(QObject *parent)
+    : QseAbstractSppStandardController(parent)
 {
     m_position = 0;
 }
@@ -34,20 +34,19 @@ void QseSppStandardPositionController::setPosition(QsePosition *position)
         disconnect(m_position, 0, this, 0);
 
     m_position = position;
-    if (m_position)
-    {
+    if (m_position) {
         connect(m_position, SIGNAL(destroyed()),
                 this, SLOT(position_destroyed()));
     }
 }
 
 void QseSppStandardPositionController::mouseMoveEvent(QMouseEvent *event,
-        const QRect &/*rect*/, const QseSppGeometry &geometry)
+                                                      const QRect &/*rect*/,
+                                                      const QseSppGeometry &geometry)
 {
     if (m_position
             && event->buttons() == Qt::LeftButton
-            && event->modifiers() == Qt::ControlModifier)
-    {
+            && event->modifiers() == Qt::ControlModifier) {
         m_position->setIndex(QseSppGeometry::calcSampleIndex(geometry, event->x()));
     }
 
@@ -55,12 +54,12 @@ void QseSppStandardPositionController::mouseMoveEvent(QMouseEvent *event,
 }
 
 void QseSppStandardPositionController::mousePressEvent(QMouseEvent *event,
-        const QRect &/*rect*/, const QseSppGeometry &geometry)
+                                                       const QRect &/*rect*/,
+                                                       const QseSppGeometry &geometry)
 {
     if (m_position
             && event->button() == mouseButtons()
-            && event->modifiers() == keyboardModifiers())
-    {
+            && event->modifiers() == keyboardModifiers()) {
         m_position->setIndex(QseSppGeometry::calcSampleIndex(geometry, event->x()));
     }
 
@@ -68,13 +67,15 @@ void QseSppStandardPositionController::mousePressEvent(QMouseEvent *event,
 }
 
 void QseSppStandardPositionController::keyPressEvent(QKeyEvent *event,
-        const QRect &/*rect*/, const QseSppGeometry &/*geometry*/)
+                                                     const QRect &/*rect*/,
+                                                     const QseSppGeometry &/*geometry*/)
 {
     updateCursor(event->modifiers());
 }
 
 void QseSppStandardPositionController::keyReleaseEvent(QKeyEvent *event,
-        const QRect &/*rect*/, const QseSppGeometry &/*geometry*/)
+                                                       const QRect &/*rect*/,
+                                                       const QseSppGeometry &/*geometry*/)
 {
     updateCursor(event->modifiers());
 }
@@ -86,12 +87,10 @@ void QseSppStandardPositionController::position_destroyed()
 
 void QseSppStandardPositionController::updateCursor(Qt::KeyboardModifiers km)
 {
-    if (m_position && km == keyboardModifiers())
-    {
+    if (m_position && km == keyboardModifiers()) {
         emit cursorChanged(QCursor(Qt::IBeamCursor));
     }
-    else
-    {
+    else {
         emit cursorChanged(defaultCursor());
     }
 }
