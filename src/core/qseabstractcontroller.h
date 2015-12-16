@@ -17,13 +17,20 @@
 #define QSEABSTRACTCONTROLLER_H
 
 
+#include "qsegeometry.h"
 #include <QObject>
 #include <QCursor>
+class QMouseEvent;
+class QWheelEvent;
+class QKeyEvent;
 
 
 class QseAbstractController : public QObject
 {
     Q_OBJECT
+    friend class QseAbstractWidget;
+    friend class QseCompositController;
+    friend class QseAbstractControllerProxy;
 public:
     explicit QseAbstractController(QObject *parent = 0);
 
@@ -32,6 +39,15 @@ public:
 
 signals:
     void cursorChanged(const QCursor &cursor);
+    void geometryChanged(const QseGeometry &geometry);
+
+protected:
+    virtual void mouseMoveEvent(QMouseEvent *event, const QRect &rect, const QseGeometry &geometry);
+    virtual void mousePressEvent(QMouseEvent *event, const QRect &rect, const QseGeometry &geometry);
+    virtual void mouseReleaseEvent(QMouseEvent *event, const QRect &rect, const QseGeometry &geometry);
+    virtual void wheelEvent(QWheelEvent *event, const QRect &rect, const QseGeometry &geometry);
+    virtual void keyPressEvent(QKeyEvent *event, const QRect &rect, const QseGeometry &geometry);
+    virtual void keyReleaseEvent(QKeyEvent *event, const QRect &rect, const QseGeometry &geometry);
 
 private:
     QCursor m_defaultCursor;

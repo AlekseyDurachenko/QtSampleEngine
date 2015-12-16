@@ -22,6 +22,7 @@
  * This signal emitted each time when update is needed.
  * Typically this signal should be connected to QWidget::update() slot.
  */
+
 QseAbstractPlot::QseAbstractPlot(QObject *parent)
     : QObject(parent)
 {
@@ -29,17 +30,16 @@ QseAbstractPlot::QseAbstractPlot(QObject *parent)
     m_enabled = true;
 }
 
-
 /*! This method set flag isUpdateOnce() to true, and emit changed()
  */
 void QseAbstractPlot::setUpdateOnce(bool need)
 {
-    if (m_updateOnce == need)
-        return;
-
-    m_updateOnce = need;
-    if (m_updateOnce)
-        emit updateNeeded();
+    if (m_updateOnce != need) {
+        m_updateOnce = need;
+        if (m_updateOnce) {
+            emit updateNeeded();
+        }
+    }
 }
 
 void QseAbstractPlot::setEnabled(bool enabled)
@@ -60,4 +60,27 @@ void QseAbstractPlot::setDisabled(bool disabled)
  */
 void QseAbstractPlot::reset()
 {
+}
+
+
+bool QseAbstractPlot::isVisible(const QRect &/*rect*/,
+                                const QseGeometry &/*geometry*/)
+{
+    return isEnabled();
+}
+
+bool QseAbstractPlot::hasChanges(const QRect &/*rect*/,
+                                 const QseGeometry &/*geometry*/)
+{
+    return false;
+}
+
+void QseAbstractPlot::draw(QPainter */*painter*/,
+                           const QRect &rect,
+                           const QseGeometry &geometry)
+{
+    m_lastRect = rect;
+    m_lastGeometry = geometry;
+
+    setUpdateOnce(false);
 }

@@ -1,115 +1,89 @@
 HEADERS +=                                                              \
-    $$PWD/src/axis/spp/metric/qsespplinearmetricprovider.h              \
-    $$PWD/src/axis/spp/metric/qsesppsignallinearamplmetricprovider.h    \
-    $$PWD/src/axis/spp/metric/qsespptimemetricprovider.h                \
-    $$PWD/src/canvas/spp/plot/qsemonocolorsppcanvasplot.h               \
-    $$PWD/src/canvas/spp/plot/qsesppaxiscanvasplot.h                    \
-    $$PWD/src/core/spp/qseabstractsppcontroller.h                       \
-    $$PWD/src/core/spp/qseabstractsppcontrollerproxy.h                  \
-    $$PWD/src/core/spp/qseabstractspplimiter.h                          \
-    $$PWD/src/core/spp/qseabstractsppplot.h                             \
-    $$PWD/src/core/spp/qseabstractsppstandardcontroller.h               \
-    $$PWD/src/core/spp/qseabstractsppwidget.h                           \
-    $$PWD/src/core/spp/qsesppcompositcontroller.h                       \
-    $$PWD/src/core/spp/qsespphorizontalshiftcontrollerproxy.h           \
-    $$PWD/src/core/spp/qsesppstandardhorizontalcontroller.h             \
-    $$PWD/src/core/spp/qsesppstandardhorizontalzoomcontroller.h         \
-    $$PWD/src/core/spp/qsesppstandardverticalcontroller.h               \
-    $$PWD/src/core/spp/qsesppstandardverticalzoomcontroller.h           \
-    $$PWD/src/core/qseabstractcontroller.h                              \
-    $$PWD/src/core/qseabstractplot.h                                    \
-    $$PWD/src/core/qseabstractwidget.h                                  \
-    $$PWD/src/core/qsehelper.h                                          \
-    $$PWD/src/datasource/spp/qseabstractsppasyncpeakdatasource.h        \
-    $$PWD/src/datasource/spp/qseabstractspppeakreply.h                  \
-    $$PWD/src/datasource/spp/qseabstractsppsyncpeakdatasource.h         \
-    $$PWD/src/datasource/spp/qsespppeakrequest.h                        \
-    $$PWD/src/datasource/qseabstractpeakdatasource.h                    \
-    $$PWD/src/datasource/qseabstractpeakreply.h                         \
-    $$PWD/src/datatype/qsepeakarray.h                                   \
-    $$PWD/src/datatype/qserange.h                                       \
-    $$PWD/src/datatype/qsesppgeometry.h                                 \
-    $$PWD/src/metric/spp/qseabstractsppmetricprovider.h                 \
-    $$PWD/src/metric/qseabstractmetricprovider.h                        \
-    $$PWD/src/metric/qsemetricitem.h                                    \
-    $$PWD/src/metric/qsemetricmapper.h                                  \
-    $$PWD/src/position/spp/controller/qsesppstandardpositioncontroller.h    \
-    $$PWD/src/position/spp/plot/qsespppositionplot.h                    \
-    $$PWD/src/position/qseposition.h                                    \
-    $$PWD/src/selection/spp/controller/qsesppstandardselectioncontroller.h  \
-    $$PWD/src/selection/spp/plot/qsesppselectionplot.h                  \
-    $$PWD/src/selection/qseselection.h                                  \
-    $$PWD/src/signal/spp/plot/qseabstractsppsignalplot.h                \
-    $$PWD/src/signal/spp/plot/qseabstractsppsignalplotdelegate.h        \
-    $$PWD/src/signal/spp/plot/qsesppasyncsignalplot.h                   \
-    $$PWD/src/signal/spp/plot/qsesppsignallinearplotdelegate.h          \
-    $$PWD/src/signal/spp/plot/qsesppsignalplotpeakreplyitem.h           \
-    $$PWD/src/signal/spp/plot/qsesppsignalplotpeakreplyitemlist.h       \
-    $$PWD/src/signal/spp/plot/qsesppsyncsignalplot.h                    \
-    $$PWD/src/signalcanvas/spp/plot/qsesppsignalcanvasplot.h            \
-    $$PWD/src/widget/sppaudacitywidget/qsesppaudacitycontroller.h       \
-    $$PWD/src/widget/sppaxiswidget/qseabstractsppaxiswidget.h           \
-    $$PWD/src/widget/sppaxiswidget/qsespphorizontalaxiswidget.h         \
-    $$PWD/src/widget/sppaxiswidget/qsesppverticalaxiswidget.h           \
-    $$PWD/src/widget/sppwidget/qsesppwidget.h                           \
-    $$PWD/src/qse_deprecated.h                                          \
+    $$PWD/src/canvas/qseaxiscanvasplot.h \
+    $$PWD/src/canvas/qsemonocolorcanvasplot.h \
+    $$PWD/src/core/qseabstractcontroller.h \
+    $$PWD/src/core/qseabstractcontrollerproxy.h \
+    $$PWD/src/core/qseabstractlimiter.h \
+    $$PWD/src/core/qseabstractplot.h \
+    $$PWD/src/core/qseabstractstandardcontroller.h \
+    $$PWD/src/core/qseabstractwidget.h \
+    $$PWD/src/core/qsecompositcontroller.h \
+    $$PWD/src/core/qsehorizontalshiftcontrollerproxy.h \
+    $$PWD/src/core/qsestandardhorizontalcontroller.h \
+    $$PWD/src/core/qsestandardhorizontalzoomcontroller.h \
+    $$PWD/src/core/qsestandardverticalcontroller.h \
+    $$PWD/src/core/qsestandardverticalzoomcontroller.h \
+    $$PWD/src/datatype/qsegeometry.h \
+    $$PWD/src/datatype/qserange.h \
+    $$PWD/src/helper/qsehelper.h \
+    $$PWD/src/metric/qseabstractmetricprovider.h \
+    $$PWD/src/metric/qselinearmetricprovider.h \
+    $$PWD/src/metric/qsemetricitem.h \
+    $$PWD/src/metric/qsemetricmapper.h \
+    $$PWD/src/metric/qsesignallinearmetricprovider.h \
+    $$PWD/src/metric/qsetimemetricprovider.h \
+    $$PWD/src/position/qseposition.h \
+    $$PWD/src/position/qsepositionplot.h \
+    $$PWD/src/position/qsestandardpositioncontroller.h \
+    $$PWD/src/selection/qseselection.h \
+    $$PWD/src/selection/qseselectionplot.h \
+    $$PWD/src/selection/qsestandardselectioncontroller.h \
+    $$PWD/src/signal/qseabstractsignalplotdelegate.h \
+    $$PWD/src/signal/qsesignalcanvasplot.h \
+    $$PWD/src/signal/qsesignallinearplotdelegate.h \
+    $$PWD/src/signal/qsesignalplot.h \
+    $$PWD/src/widget/audacitywidget/qseaudacitycontroller.h \
+    $$PWD/src/widget/axiswidget/qseabstractaxiswidget.h \
+    $$PWD/src/widget/axiswidget/qsehorizontalaxiswidget.h \
+    $$PWD/src/widget/axiswidget/qseverticalaxiswidget.h \
+    $$PWD/src/widget/widget/qsewidget.h \
+    $$PWD/src/qse_deprecated.h \
+    $$PWD/src/signal/qseabstractsignaldatasource.h
+
 
 
 
 SOURCES +=                                                              \
-    $$PWD/src/axis/spp/metric/qsespplinearmetricprovider.cpp            \
-    $$PWD/src/axis/spp/metric/qsesppsignallinearamplmetricprovider.cpp  \
-    $$PWD/src/axis/spp/metric/qsespptimemetricprovider.cpp              \
-    $$PWD/src/canvas/spp/plot/qsemonocolorsppcanvasplot.cpp             \
-    $$PWD/src/canvas/spp/plot/qsesppaxiscanvasplot.cpp                  \
-    $$PWD/src/core/spp/qseabstractsppcontroller.cpp                     \
-    $$PWD/src/core/spp/qseabstractsppcontrollerproxy.cpp                \
-    $$PWD/src/core/spp/qseabstractspplimiter.cpp                        \
-    $$PWD/src/core/spp/qseabstractsppplot.cpp                           \
-    $$PWD/src/core/spp/qseabstractsppstandardcontroller.cpp             \
-    $$PWD/src/core/spp/qseabstractsppwidget.cpp                         \
-    $$PWD/src/core/spp/qsesppcompositcontroller.cpp                     \
-    $$PWD/src/core/spp/qsespphorizontalshiftcontrollerproxy.cpp         \
-    $$PWD/src/core/spp/qsesppstandardhorizontalcontroller.cpp           \
-    $$PWD/src/core/spp/qsesppstandardhorizontalzoomcontroller.cpp       \
-    $$PWD/src/core/spp/qsesppstandardverticalcontroller.cpp             \
-    $$PWD/src/core/spp/qsesppstandardverticalzoomcontroller.cpp         \
-    $$PWD/src/core/qseabstractcontroller.cpp                            \
-    $$PWD/src/core/qseabstractplot.cpp                                  \
-    $$PWD/src/core/qseabstractwidget.cpp                                \
-    $$PWD/src/core/qsehelper.cpp                                        \
-    $$PWD/src/datasource/spp/qseabstractsppasyncpeakdatasource.cpp      \
-    $$PWD/src/datasource/spp/qseabstractspppeakreply.cpp                \
-    $$PWD/src/datasource/spp/qseabstractsppsyncpeakdatasource.cpp       \
-    $$PWD/src/datasource/spp/qsespppeakrequest.cpp                      \
-    $$PWD/src/datasource/qseabstractpeakdatasource.cpp                  \
-    $$PWD/src/datasource/qseabstractpeakreply.cpp                       \
-    $$PWD/src/datatype/qsepeakarray.cpp                                 \
-    $$PWD/src/datatype/qserange.cpp                                     \
-    $$PWD/src/datatype/qsesppgeometry.cpp                               \
-    $$PWD/src/metric/spp/qseabstractsppmetricprovider.cpp               \
-    $$PWD/src/metric/qseabstractmetricprovider.cpp                      \
-    $$PWD/src/metric/qsemetricitem.cpp                                  \
-    $$PWD/src/metric/qsemetricmapper.cpp                                \
-    $$PWD/src/position/spp/controller/qsesppstandardpositioncontroller.cpp  \
-    $$PWD/src/position/spp/plot/qsespppositionplot.cpp                  \
-    $$PWD/src/position/qseposition.cpp                                  \
-    $$PWD/src/selection/spp/controller/qsesppstandardselectioncontroller.cpp\
-    $$PWD/src/selection/spp/plot/qsesppselectionplot.cpp                \
-    $$PWD/src/selection/qseselection.cpp                                \
-    $$PWD/src/signal/spp/plot/qseabstractsppsignalplot.cpp              \
-    $$PWD/src/signal/spp/plot/qseabstractsppsignalplotdelegate.cpp      \
-    $$PWD/src/signal/spp/plot/qsesppasyncsignalplot.cpp                 \
-    $$PWD/src/signal/spp/plot/qsesppsignallinearplotdelegate.cpp        \
-    $$PWD/src/signal/spp/plot/qsesppsignalplotpeakreplyitem.cpp         \
-    $$PWD/src/signal/spp/plot/qsesppsignalplotpeakreplyitemlist.cpp     \
-    $$PWD/src/signal/spp/plot/qsesppsyncsignalplot.cpp                  \
-    $$PWD/src/signalcanvas/spp/plot/qsesppsignalcanvasplot.cpp          \
-    $$PWD/src/widget/sppaudacitywidget/qsesppaudacitycontroller.cpp     \
-    $$PWD/src/widget/sppaxiswidget/qseabstractsppaxiswidget.cpp         \
-    $$PWD/src/widget/sppaxiswidget/qsespphorizontalaxiswidget.cpp       \
-    $$PWD/src/widget/sppaxiswidget/qsesppverticalaxiswidget.cpp         \
-    $$PWD/src/widget/sppwidget/qsesppwidget.cpp                         \
+    $$PWD/src/canvas/qseaxiscanvasplot.cpp \
+    $$PWD/src/canvas/qsemonocolorcanvasplot.cpp \
+    $$PWD/src/core/qseabstractcontroller.cpp \
+    $$PWD/src/core/qseabstractcontrollerproxy.cpp \
+    $$PWD/src/core/qseabstractlimiter.cpp \
+    $$PWD/src/core/qseabstractplot.cpp \
+    $$PWD/src/core/qseabstractstandardcontroller.cpp \
+    $$PWD/src/core/qseabstractwidget.cpp \
+    $$PWD/src/core/qsecompositcontroller.cpp \
+    $$PWD/src/core/qsehorizontalshiftcontrollerproxy.cpp \
+    $$PWD/src/core/qsestandardhorizontalcontroller.cpp \
+    $$PWD/src/core/qsestandardhorizontalzoomcontroller.cpp \
+    $$PWD/src/core/qsestandardverticalcontroller.cpp \
+    $$PWD/src/core/qsestandardverticalzoomcontroller.cpp \
+    $$PWD/src/datatype/qsegeometry.cpp \
+    $$PWD/src/datatype/qserange.cpp \
+    $$PWD/src/helper/qsehelper.cpp \
+    $$PWD/src/metric/qseabstractmetricprovider.cpp \
+    $$PWD/src/metric/qselinearmetricprovider.cpp \
+    $$PWD/src/metric/qsemetricitem.cpp \
+    $$PWD/src/metric/qsemetricmapper.cpp \
+    $$PWD/src/metric/qsesignallinearmetricprovider.cpp \
+    $$PWD/src/metric/qsetimemetricprovider.cpp \
+    $$PWD/src/position/qseposition.cpp \
+    $$PWD/src/position/qsepositionplot.cpp \
+    $$PWD/src/position/qsestandardpositioncontroller.cpp \
+    $$PWD/src/selection/qseselection.cpp \
+    $$PWD/src/selection/qseselectionplot.cpp \
+    $$PWD/src/selection/qsestandardselectioncontroller.cpp \
+    $$PWD/src/signal/qseabstractsignalplotdelegate.cpp \
+    $$PWD/src/signal/qsesignalcanvasplot.cpp \
+    $$PWD/src/signal/qsesignallinearplotdelegate.cpp \
+    $$PWD/src/signal/qsesignalplot.cpp \
+    $$PWD/src/widget/audacitywidget/qseaudacitycontroller.cpp \
+    $$PWD/src/widget/axiswidget/qseabstractaxiswidget.cpp \
+    $$PWD/src/widget/axiswidget/qsehorizontalaxiswidget.cpp \
+    $$PWD/src/widget/axiswidget/qseverticalaxiswidget.cpp \
+    $$PWD/src/widget/widget/qsewidget.cpp \
+    $$PWD/src/signal/qseabstractsignaldatasource.cpp
+
 
 
 
@@ -123,30 +97,18 @@ OTHER_FILES +=                                                      \
 
 INCLUDEPATH +=                                                      \
     $$PWD/src                                                       \
-    $$PWD/src/axis                                                  \
-    $$PWD/src/axis/spp/metric                                       \
-    $$PWD/src/core                                                  \
-    $$PWD/src/core/spp                                              \
     $$PWD/src/canvas                                                \
-    $$PWD/src/canvas/spp/plot                                       \
-    $$PWD/src/position                                              \
-    $$PWD/src/position/spp/plot                                     \
-    $$PWD/src/position/spp/controller                               \
-    $$PWD/src/datasource                                            \
-    $$PWD/src/datasource/spp                                        \
+    $$PWD/src/core                                                  \
     $$PWD/src/datatype                                              \
+    $$PWD/src/helper                                                \
     $$PWD/src/metric                                                \
-    $$PWD/src/metric/spp                                            \
+    $$PWD/src/position                                              \
     $$PWD/src/selection                                             \
-    $$PWD/src/selection/spp/plot                                    \
-    $$PWD/src/selection/spp/controller                              \
     $$PWD/src/signal                                                \
-    $$PWD/src/signal/spp/plot                                       \
-    $$PWD/src/signalcanvas/spp/plot                                 \
     $$PWD/src/widget                                                \
-    $$PWD/src/widget/sppaudacitywidget                              \
-    $$PWD/src/widget/sppwidget                                      \
-    $$PWD/src/widget/sppaxiswidget                                  \
+    $$PWD/src/widget/audacitywidget                              \
+    $$PWD/src/widget/widget                                      \
+    $$PWD/src/widget/axiswidget                                  \
 
 
 DEFINES +=                                                          \

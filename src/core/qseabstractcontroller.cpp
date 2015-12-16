@@ -31,3 +31,39 @@ void QseAbstractController::setDefaultCursor(const QCursor &cursor)
 {
     m_defaultCursor = cursor;
 }
+
+void QseAbstractController::mouseMoveEvent(QMouseEvent */*event*/,
+                                           const QRect &/*rect*/,
+                                           const QseGeometry &/*geometry*/)
+{
+}
+
+void QseAbstractController::mousePressEvent(QMouseEvent */*event*/,
+                                            const QRect &/*rect*/,
+                                            const QseGeometry &/*geometry*/)
+{
+}
+
+void QseAbstractController::mouseReleaseEvent(QMouseEvent */*event*/,
+                                              const QRect &/*rect*/,
+                                              const QseGeometry &/*geometry*/)
+{
+}
+
+void QseAbstractController::wheelEvent(QWheelEvent */*event*/,
+                                       const QRect &/*rect*/,
+                                       const QseGeometry &/*geometry*/)
+{
+}
+
+void QseAbstractController::keyPressEvent(QKeyEvent */*event*/,
+                                          const QRect &/*rect*/,
+                                          const QseGeometry &/*geometry*/)
+{
+}
+
+void QseAbstractController::keyReleaseEvent(QKeyEvent */*event*/,
+                                            const QRect &/*rect*/,
+                                            const QseGeometry &/*geometry*/)
+{
+}

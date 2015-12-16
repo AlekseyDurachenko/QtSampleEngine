@@ -37,7 +37,7 @@ CMainWindow::CMainWindow(QWidget *parent) :
     QString fileName = QDir::homePath() + QDir::separator() + "example.wav";
     if (QFileInfo(fileName).exists())
         QMetaObject::invokeMethod(this, "openSoundFile", Qt::QueuedConnection,
-                Q_ARG(QString, fileName));
+                                  Q_ARG(QString, fileName));
 }
 
 CMainWindow::~CMainWindow()
@@ -48,7 +48,7 @@ CMainWindow::~CMainWindow()
 void CMainWindow::on_action_Open_triggered()
 {
     QString fileName = QFileDialog::getOpenFileName(this,
-            tr("Open Sound File"), "", tr("Sound Files (* *.*)"));
+                                                    tr("Open Sound File"), "", tr("Sound Files (* *.*)"));
 
     if (fileName.isEmpty())
         return;
@@ -68,13 +68,11 @@ void CMainWindow::openSoundFile(const QString &fileName)
     double sampleRate;
     bool ok = readSoundFile(fileName, &data, &count, &sampleRate);
 
-    if (!ok)
-    {
+    if (!ok) {
         QMessageBox::critical(this, tr("Critical"),
                               tr("Sound format not support"));
     }
-    else
-    {
+    else {
         setWindowTitle(fileName + tr(" - Sound File View"));
 
         m_monoAudioWidget->audioWidget()->dataSource()->setSamples(data, count, sampleRate);
@@ -84,9 +82,9 @@ void CMainWindow::openSoundFile(const QString &fileName)
         while (spp < approxSpp)
             spp *= 2;
 
-        QseSppGeometry geometry;
+        QseGeometry geometry;
         geometry.setHeight(2.6);
-        geometry.setSamplesPerPixel(spp);
+        geometry.setSpp(spp);
 
         m_monoAudioWidget->audioWidget()->setGeometry(geometry);
     }
@@ -94,23 +92,22 @@ void CMainWindow::openSoundFile(const QString &fileName)
 
 
 bool CMainWindow::readSoundFile(const QString &fileName,
-        float **samples, qint64 *count, double *sampleRate)
+                                float **samples, qint64 *count, double *sampleRate)
 {
     SNDFILE *infile;
     SF_INFO sfinfo;
     int readcount;
 
-    if ((infile = sf_open(fileName.toLatin1().data(), SFM_READ, &sfinfo)))
-    {
+    if ((infile = sf_open(fileName.toLatin1().data(), SFM_READ, &sfinfo))) {
         double data[1024];
         qint64 n = 0;
 
         QTemporaryFile *file = new QTemporaryFile();
         if (!file->open())
             return false;
-        file->resize(sfinfo.frames*sizeof(float));
+        file->resize(sfinfo.frames * sizeof(float));
 
-        float *result = (float*)(file->map(0, sfinfo.frames*sizeof(float)));
+        float *result = (float *)(file->map(0, sfinfo.frames * sizeof(float)));
         while ((readcount = sf_read_double(infile, data, 1024)))
             for (int i = 0; i < readcount; i += sfinfo.channels, ++n)
                 result[n] = data[i];

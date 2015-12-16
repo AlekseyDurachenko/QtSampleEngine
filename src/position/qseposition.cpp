@@ -27,8 +27,9 @@ void QsePosition::setAvailableRange(const QseRange &availableRange)
 {
     if (availableRange != m_availableRange) {
         m_availableRange = availableRange;
-        if (!m_isNull)
+        if (!m_isNull) {
             setIndex(m_index);
+        }
     }
 }
 

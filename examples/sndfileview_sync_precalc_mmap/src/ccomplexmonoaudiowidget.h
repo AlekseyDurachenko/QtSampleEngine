@@ -17,19 +17,19 @@
 #define CCOMPLEXMONOAUDIOWIDGET_H
 
 #include <QWidget>
-#include "qsesppgeometry.h"
+#include "qsegeometry.h"
 class QScrollBar;
 class CSppSyncAudioWidget;
-class QseSppSignalLinearAmplMetricProvider;
-class QseSppTimeMetricProvider;
-class QseSppStandardHorizontalController;
-class QseSppStandardVerticalController;
-class QseSppStandardHorizontalZoomController;
-class QseSppStandardVerticalZoomController;
-class QseSppCompositController;
-class QseSppHorizontalShiftControllerProxy;
-class QseSppHorizontalAxisWidget;
-class QseSppVerticalAxisWidget;
+class QseSignalLinearMetricProvider;
+class QseTimeMetricProvider;
+class QseStandardHorizontalController;
+class QseStandardVerticalController;
+class QseStandardHorizontalZoomController;
+class QseStandardVerticalZoomController;
+class QseCompositController;
+class QseHorizontalShiftControllerProxy;
+class QseHorizontalAxisWidget;
+class QseVerticalAxisWidget;
 
 
 class CComplexMonoAudioWidget : public QWidget
@@ -43,7 +43,7 @@ public:
 
 private slots:
     void dataSource_dataChanged();
-    void audioWidget_geometryChanged(const QseSppGeometry &geometry);
+    void audioWidget_geometryChanged(const QseGeometry &geometry);
     void scrollBar_valueChanged(int value);
 
 protected:
@@ -51,18 +51,18 @@ protected:
 
 private:
     CSppSyncAudioWidget *m_audioWidget;
-    QseSppVerticalAxisWidget *m_amplitudeAxis;
-    QseSppHorizontalAxisWidget *m_timeAxis;
-    QseSppSignalLinearAmplMetricProvider *m_amplitudeProvider;
-    QseSppTimeMetricProvider *m_timeProvider;
+    QseVerticalAxisWidget *m_amplitudeAxis;
+    QseHorizontalAxisWidget *m_timeAxis;
+    QseSignalLinearMetricProvider *m_amplitudeProvider;
+    QseTimeMetricProvider *m_timeProvider;
     QScrollBar *m_timeScrollBar;
-    QseSppStandardHorizontalController *m_horizontalCtrl;
-    QseSppStandardVerticalController *m_verticalCtrl;
-    QseSppStandardHorizontalZoomController *m_horizontalZoomCtrl;
-    QseSppStandardVerticalZoomController *m_verticalZoomCtrl;
-    QseSppCompositController *m_horizontalCompositCtrl;
-    QseSppCompositController *m_verticalCompositCtrl;
-    QseSppHorizontalShiftControllerProxy *m_horizontalAxisZoomControllerProxy;
+    QseStandardHorizontalController *m_horizontalCtrl;
+    QseStandardVerticalController *m_verticalCtrl;
+    QseStandardHorizontalZoomController *m_horizontalZoomCtrl;
+    QseStandardVerticalZoomController *m_verticalZoomCtrl;
+    QseCompositController *m_horizontalCompositCtrl;
+    QseCompositController *m_verticalCompositCtrl;
+    QseHorizontalShiftControllerProxy *m_horizontalAxisZoomControllerProxy;
 };
 
 CSppSyncAudioWidget *CComplexMonoAudioWidget::audioWidget() const

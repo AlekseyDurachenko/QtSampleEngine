@@ -16,16 +16,16 @@
 #ifndef CSPPSYNCAUDIOLIMITER_H
 #define CSPPSYNCAUDIOLIMITER_H
 
-#include "qseabstractspplimiter.h"
+#include "qseabstractlimiter.h"
 class CSppSyncPeakDataSource;
 
 
-class CSppSyncAudioLimiter : public QseAbstractSppLimiter
+class CSppSyncAudioLimiter : public QseAbstractLimiter
 {
 public:
     CSppSyncAudioLimiter(CSppSyncPeakDataSource *dataSource, QObject *parent = 0);
 
-    virtual QseSppGeometry limit(const QseSppGeometry &geometry);
+    virtual QseGeometry limit(const QseGeometry &geometry);
 
 private:
     CSppSyncPeakDataSource *m_dataSource;

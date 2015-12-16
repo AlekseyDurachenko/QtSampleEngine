@@ -17,7 +17,10 @@
 #define QSEABSTRACTWIDGET_H
 
 
+#include "qsegeometry.h"
 #include <QWidget>
+class QseAbstractController;
+class QseAbstractLimiter;
 
 
 class QseAbstractWidget : public QWidget
@@ -28,19 +31,62 @@ public:
 
     inline bool isUpdateOnce() const;
 
+    inline QseAbstractController *controller() const;
+    void setController(QseAbstractController *controller);
+
+    inline QseAbstractLimiter *limiter() const;
+    void setLimiter(QseAbstractLimiter *limiter);
+
+    inline const QseGeometry &geometry() const;
+
+signals:
+    void geometryChanged(const QseGeometry &geometry);
+
 public slots:
     void setUpdateOnce(bool need = true);
+    void setGeometry(const QseGeometry &geometry);
 
 protected slots:
     void setCurrentCursor(const QCursor &cursor);
 
+private slots:
+    void controller_destroyed();
+    void limiter_changed();
+    void limiter_destroyed();
+
+protected:
+    void mouseMoveEvent(QMouseEvent *event);
+    void mousePressEvent(QMouseEvent *event);
+    void mouseReleaseEvent(QMouseEvent *event);
+    void wheelEvent(QWheelEvent *event);
+    void keyPressEvent(QKeyEvent *event);
+    void keyReleaseEvent(QKeyEvent *event);
+
 private:
+    QseAbstractController *m_controller;
+    QseAbstractLimiter *m_limiter;
+    QseGeometry m_geometry;
     bool m_updateOnce;
 };
 
 bool QseAbstractWidget::isUpdateOnce() const
 {
     return m_updateOnce;
+}
+
+QseAbstractController *QseAbstractWidget::controller() const
+{
+    return m_controller;
+}
+
+QseAbstractLimiter *QseAbstractWidget::limiter() const
+{
+    return m_limiter;
+}
+
+const QseGeometry &QseAbstractWidget::geometry() const
+{
+    return m_geometry;
 }
 
 

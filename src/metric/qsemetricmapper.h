@@ -25,6 +25,7 @@ class QseMetricMapper
 {
 public:
     QseMetricMapper();
+
     double calcNearestValue(double unitPerPixel, double minimum);
 
 private:

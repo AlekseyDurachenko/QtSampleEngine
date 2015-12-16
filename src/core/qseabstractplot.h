@@ -17,7 +17,10 @@
 #define QSEABSTRACTPLOT_H
 
 
+#include "qsegeometry.h"
 #include <QObject>
+#include <QRect>
+class QPainter;
 
 
 class QseAbstractPlot : public QObject
@@ -30,6 +33,13 @@ public:
     inline bool isEnabled() const;
     inline bool isUpdateOnce() const;
 
+    inline const QRect &lastRect() const;
+    inline const QseGeometry &lastGeometry() const;
+
+    virtual bool isVisible(const QRect &rect, const QseGeometry &geometry);
+    virtual bool hasChanges(const QRect &rect, const QseGeometry &geometry);
+    virtual void draw(QPainter *painter, const QRect &rect, const QseGeometry &geometry);
+
 signals:
     void updateNeeded();
 
@@ -39,9 +49,14 @@ public slots:
     void setDisabled(bool disabled);
     virtual void reset();
 
+protected:
+    QRect m_lastRect;
+    QseGeometry m_lastGeometry;
+
 private:
     bool m_updateOnce;
     bool m_enabled;
+
 };
 
 bool QseAbstractPlot::isEnabled() const
@@ -52,6 +67,16 @@ bool QseAbstractPlot::isEnabled() const
 bool QseAbstractPlot::isUpdateOnce() const
 {
     return m_updateOnce;
+}
+
+const QRect &QseAbstractPlot::lastRect() const
+{
+    return m_lastRect;
+}
+
+const QseGeometry &QseAbstractPlot::lastGeometry() const
+{
+    return m_lastGeometry;
 }
 
 

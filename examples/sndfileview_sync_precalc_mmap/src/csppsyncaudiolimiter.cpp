@@ -14,23 +14,23 @@
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
 #include "csppsyncaudiolimiter.h"
-#include "qsesppgeometry.h"
+#include "qsegeometry.h"
 #include "csppsyncpeakdatasource.h"
 
 
 CSppSyncAudioLimiter::CSppSyncAudioLimiter(CSppSyncPeakDataSource *dataSource,
                                            QObject *parent)
-    : QseAbstractSppLimiter(parent)
+    : QseAbstractLimiter(parent)
 {
     m_dataSource = dataSource;
 }
 
-QseSppGeometry CSppSyncAudioLimiter::limit(const QseSppGeometry &geometry)
+QseGeometry CSppSyncAudioLimiter::limit(const QseGeometry &geometry)
 {
-    QseSppGeometry limitedGeometry = geometry;
+    QseGeometry limitedGeometry = geometry;
 
-    if (limitedGeometry.x() < m_dataSource->minIndex())
-        limitedGeometry.setX(m_dataSource->minIndex());
+    //if (limitedGeometry.x() < m_dataSource->minIndex())
+    //    limitedGeometry.setX(m_dataSource->minIndex());
 
     return limitedGeometry;
 }

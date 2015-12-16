@@ -17,10 +17,10 @@
 #define CSPPSYNCDATAPEAKSOURCE_H
 
 #include <QHash>
-#include "qseabstractsppsyncpeakdatasource.h"
+#include "qseabstractsignaldatasource.h"
 
 
-class CSppSyncPeakDataSource : public QseAbstractSppSyncPeakDataSource
+class CSppSyncPeakDataSource : public QseAbstractSignalDataSource
 {
     Q_OBJECT
 public:
@@ -32,19 +32,26 @@ public:
 
     inline float *samples() const;
     inline double sampleRate() const;
-    virtual QsePeakArray read(const QseSppPeakRequest &request);
+
+    virtual qint64 readAsPoints(double *points,
+                                qint64 index,
+                                qint64 count);
+
+    virtual qint64 readAsPeaks(double *minimums,
+                               double *maximums,
+                               qint64 index,
+                               qint64 spp,
+                               qint64 count);
 
 public slots:
     void setSamples(float *samples, qint64 count, double sampleRate);
 
 private:
     void clean();
-    QsePeakArray readAsLines(qint64 first, qint64 pps, int width);
-    QsePeakArray readAsPeaks(qint64 first, qint64 spp, int width, bool rightAligh = false);
 
 private:
-    QHash<qint64, float*> m_peakMinimums;
-    QHash<qint64, float*> m_peakMaximums;
+    QHash<qint64, float *> m_peakMinimums;
+    QHash<qint64, float *> m_peakMaximums;
     QHash<qint64, qint64> m_peakCount;
     float *m_samples;
     qint64 m_count;

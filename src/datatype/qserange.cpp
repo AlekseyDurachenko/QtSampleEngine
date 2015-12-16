@@ -86,20 +86,6 @@ QseRange QseRange::replaceLast(qint64 last) const
         return QseRange(m_first, last);
 }
 
-bool operator ==(const QseRange &l, const QseRange &r)
-{
-    return (l.first() == r.first()
-            && l.last() == r.last()
-            && l.isNull() == r.isNull());
-}
-
-bool operator !=(const QseRange &l, const QseRange &r)
-{
-    return (l.first() != r.first()
-            || l.last() != r.last()
-            || l.isNull() != r.isNull());
-}
-
 QDebug operator<<(QDebug dbg, const QseRange &range)
 {
     if (range.isNull()) {

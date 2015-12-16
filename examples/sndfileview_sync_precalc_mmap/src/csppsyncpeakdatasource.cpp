@@ -18,10 +18,8 @@
 #include <QDebug>
 
 CSppSyncPeakDataSource::CSppSyncPeakDataSource(QObject *parent)
-    : QseAbstractSppSyncPeakDataSource(parent)
+    : QseAbstractSignalDataSource(parent)
 {
-    setOptions(DontUseCacheOptimization);
-
     m_samples = 0;
     m_count = 0;
     m_sampleRate = 0.0;
@@ -125,65 +123,48 @@ void CSppSyncPeakDataSource::clean()
     m_sampleRate = 0.0;
 }
 
-QsePeakArray CSppSyncPeakDataSource::read(const QseSppPeakRequest &req)
+qint64 CSppSyncPeakDataSource::readAsPoints(double *points,
+                                            qint64 index,
+                                            qint64 count)
 {
-    if (!m_samples)
-        return QsePeakArray();
-
-    if (req.samplePerPixel() > 0)
-        return readAsPeaks(req.x(), req.samplePerPixel(), req.width(),
-                           req.rightAlign());
-    else
-        return readAsLines(req.x(), -req.samplePerPixel(), req.width());
-}
-
-QsePeakArray CSppSyncPeakDataSource::readAsLines(qint64 first,
-                                                 qint64 pps,
-                                                 int width)
-{
-    if (first >= m_count)
-        return QsePeakArray();
-
-    qint64 last = first + width / pps + ((width % pps) ? (1) : (0));
-    if (last >= m_count)
-        last = m_count - 1;
-
-    if (last < 0)
-        return QsePeakArray();
-
-    QVector<double> points(last - first + 1);
-    for (qint64 i = first; i <= last; ++i)
-        points[i - first] = m_samples[i];
-
-    return QsePeakArray(points);
-}
-
-QsePeakArray CSppSyncPeakDataSource::readAsPeaks(qint64 first,
-                                                 qint64 spp,
-                                                 int width,
-                                                 bool /*rightAligh*/)
-{
-    if (!m_peakCount.contains(spp))
-        return QsePeakArray();
-
-    if (first % spp)
-        return QsePeakArray();
-
-    float *minimums = m_peakMinimums.value(spp);
-    float *maximums = m_peakMaximums.value(spp);
-    qint64 count = m_peakCount.value(spp);
-
-    qint64 firstIndex = first / spp;
-    qint64 lastIndex = firstIndex + width;
-    if (lastIndex >= count)
-        lastIndex = count - 1;
-
-    QVector<double> arrMax(lastIndex - firstIndex + 1);
-    QVector<double> arrMin(lastIndex - firstIndex + 1);
-    for (int i = firstIndex; i <= lastIndex; ++i) {
-        arrMin[i - firstIndex] = minimums[i];
-        arrMax[i - firstIndex] = maximums[i];
+    if (index >= m_count) {
+        return 0;
     }
 
-    return QsePeakArray(arrMin, arrMax);
+    if (index + count > m_count) {
+        count = m_count - index;
+    }
+
+    for (qint64 i = 0; i < count; ++i) {
+        points[i] = m_samples[index + i];
+    }
+
+    return count;
+}
+
+qint64 CSppSyncPeakDataSource::readAsPeaks(double *minimums,
+                                           double *maximums,
+                                           qint64 index,
+                                           qint64 spp,
+                                           qint64 count)
+{
+    const qint64 sppPeakCount = m_peakCount.value(spp);
+    const qint64 sppPeakIndex = index / spp;
+    if (sppPeakIndex >= sppPeakCount) {
+        return 0;
+    }
+
+    if (sppPeakIndex + count > sppPeakCount) {
+        count = sppPeakCount - sppPeakIndex;
+    }
+
+    const float *sppPeakMinimums = m_peakMinimums.value(spp);
+    const float *sppPeakMaximums = m_peakMaximums.value(spp);
+
+    for (qint64 i = 0; i < count; ++i) {
+        minimums[i] = sppPeakMinimums[sppPeakIndex + i];
+        maximums[i] = sppPeakMaximums[sppPeakIndex + i];
+    }
+
+    return count;
 }

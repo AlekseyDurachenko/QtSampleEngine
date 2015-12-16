@@ -16,7 +16,11 @@
 #ifndef QSEABSTRACTMETRICPROVIDER_H
 #define QSEABSTRACTMETRICPROVIDER_H
 
+
+#include "qsemetricitem.h"
+#include "qsegeometry.h"
 #include <QObject>
+#include <QList>
 
 
 class QseAbstractMetricProvider : public QObject
@@ -29,6 +33,7 @@ public:
     void setMinimumStep(int step);
 
     virtual int maximumTextLenght() const = 0;
+    virtual QList<QseMetricItem> create(const QseGeometry &geometry, int size) const = 0;
 
 signals:
     void changed();
@@ -41,6 +46,7 @@ inline int QseAbstractMetricProvider::minimumStep() const
 {
     return m_minimumStep;
 }
+
 
 
 #endif // QSEABSTRACTMETRICPROVIDER_H

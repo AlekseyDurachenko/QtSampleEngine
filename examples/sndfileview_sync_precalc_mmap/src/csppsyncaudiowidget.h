@@ -18,22 +18,22 @@
 
 
 #include <QWidget>
-#include "qsesppwidget.h"
+#include "qsewidget.h"
 class QsePosition;
 class QseSelection;
-class QseSppPositionPlot;
-class QseSppSelectionPlot;
-class QseSppSignalCanvasPlot;
-class QseSppSyncSignalPlot;
-class QseSppAxisCanvasPlot;
-class QseSppAudacityController;
+class QsePositionPlot;
+class QseSelectionPlot;
+class QseSignalCanvasPlot;
+class QseSignalPlot;
+class QseAxisCanvasPlot;
+class QseAudacityController;
 class CSppSyncPeakDataSource;
 class CSppSyncAudioLimiter;
-class QseSppWidget;
-class QseSppSignalLinearPlotDelegate;
+class QseWidget;
+class QseSignalLinearPlotDelegate;
 
 
-class CSppSyncAudioWidget : public QseSppWidget
+class CSppSyncAudioWidget : public QseWidget
 {
     Q_OBJECT
 public:
@@ -42,10 +42,10 @@ public:
     inline QsePosition *playPosition() const;
     inline QsePosition *cursorPosition() const;
     inline QseSelection *selection() const;
-    inline QseSppAxisCanvasPlot *canvasPlot() const;
-    inline QseSppSignalCanvasPlot *signalCanvasPlot() const;
-    inline QseSppSyncSignalPlot *signalPlot() const;
-    inline QseSppAudacityController *controller() const;
+    inline QseAxisCanvasPlot *canvasPlot() const;
+    inline QseSignalCanvasPlot *signalCanvasPlot() const;
+    inline QseSignalPlot *signalPlot() const;
+    inline QseAudacityController *controller() const;
     inline CSppSyncPeakDataSource *dataSource() const;
     inline CSppSyncAudioLimiter *limiter() const;
 
@@ -54,25 +54,25 @@ private slots:
 
 private:
     QsePosition *m_playPosition;
-    QseSppPositionPlot *m_playPositionPlot;
+    QsePositionPlot *m_playPositionPlot;
 
     QsePosition *m_cursorPosition;
-    QseSppPositionPlot *m_cursorPositionPlot;
+    QsePositionPlot *m_cursorPositionPlot;
 
     QseSelection *m_selection;
-    QseSppSelectionPlot *m_selectionPlot;
+    QseSelectionPlot *m_selectionPlot;
 
-    QseSppAxisCanvasPlot *m_canvasPlot;
-    QseSppSignalCanvasPlot *m_signalCanvasPlot;
-    QseSppSyncSignalPlot *m_signalPlot;
-    QseSppSignalLinearPlotDelegate *m_plotDelegate;
+    QseAxisCanvasPlot *m_canvasPlot;
+    QseSignalCanvasPlot *m_signalCanvasPlot;
+    QseSignalPlot *m_signalPlot;
+    QseSignalLinearPlotDelegate *m_plotDelegate;
 
-    QseSppAudacityController *m_controller;
+    QseAudacityController *m_controller;
 
     CSppSyncAudioLimiter *m_limiter;
     CSppSyncPeakDataSource *m_dataSource;
 
-    QseSppWidget *m_sppWidget;
+    QseWidget *m_sppWidget;
 };
 
 QsePosition *CSppSyncAudioWidget::playPosition() const
@@ -90,22 +90,22 @@ QseSelection *CSppSyncAudioWidget::selection() const
     return m_selection;
 }
 
-QseSppAxisCanvasPlot *CSppSyncAudioWidget::canvasPlot() const
+QseAxisCanvasPlot *CSppSyncAudioWidget::canvasPlot() const
 {
     return m_canvasPlot;
 }
 
-QseSppSignalCanvasPlot *CSppSyncAudioWidget::signalCanvasPlot() const
+QseSignalCanvasPlot *CSppSyncAudioWidget::signalCanvasPlot() const
 {
     return m_signalCanvasPlot;
 }
 
-QseSppSyncSignalPlot *CSppSyncAudioWidget::signalPlot() const
+QseSignalPlot *CSppSyncAudioWidget::signalPlot() const
 {
     return m_signalPlot;
 }
 
-QseSppAudacityController *CSppSyncAudioWidget::controller() const
+QseAudacityController *CSppSyncAudioWidget::controller() const
 {
     return m_controller;
 }

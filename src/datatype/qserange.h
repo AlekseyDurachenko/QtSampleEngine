@@ -16,7 +16,6 @@
 #ifndef QSERANGE_H
 #define QSERANGE_H
 
-
 #include <QtGlobal>
 #include <QMetaType>
 
@@ -29,6 +28,7 @@ public:
 
     inline bool isNull() const;
     inline qint64 count() const;
+
     void setRange(qint64 first, qint64 last);
     void reset();
 
@@ -41,6 +41,10 @@ public:
     QseRange replaceFirst(qint64 first) const;
     QseRange replaceLast(qint64 last) const;
 
+    friend inline bool operator ==(const QseRange &l, const QseRange &r);
+    friend inline bool operator !=(const QseRange &l, const QseRange &r);
+    friend QDebug operator <<(QDebug dbg, const QseRange &range);
+
 private:
     bool m_isNull;
     qint64 m_first;
@@ -48,28 +52,39 @@ private:
 };
 Q_DECLARE_METATYPE(QseRange)
 
-bool operator ==(const QseRange &l, const QseRange &r);
-bool operator !=(const QseRange &l, const QseRange &r);
-QDebug operator <<(QDebug dbg, const QseRange &range);
 
-bool QseRange::isNull() const
+inline bool QseRange::isNull() const
 {
     return m_isNull;
 }
 
-qint64 QseRange::count() const
+inline qint64 QseRange::count() const
 {
     return m_last - m_first;
 }
 
-qint64 QseRange::first() const
+inline qint64 QseRange::first() const
 {
     return m_first;
 }
 
-qint64 QseRange::last() const
+inline qint64 QseRange::last() const
 {
     return m_last;
+}
+
+inline bool operator ==(const QseRange &l, const QseRange &r)
+{
+    return (l.m_first == r.m_first
+            && l.m_last == r.m_last
+            && l.m_isNull == r.m_isNull);
+}
+
+inline bool operator !=(const QseRange &l, const QseRange &r)
+{
+    return (l.m_first != r.m_first
+            || l.m_last != r.m_last
+            || l.m_isNull != r.m_isNull);
 }
 
 

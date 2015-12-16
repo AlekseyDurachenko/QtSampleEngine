@@ -16,6 +16,17 @@
 #include "qseabstractmetricprovider.h"
 
 
+/*!\fn QseAbstractMetricProvider::create()
+ *
+ * \brief create creates the metric points
+ *
+ * \param offset the offset from the corrdinate 0 (zero) in units
+ * \param unitPerPixel the coefficient wich shows how many
+ *        units placed at the one pixel
+ * \param minStep the minimum step between main (level 1) metrics
+ * \param size the width/height of the widget
+ */
+
 /*!\class QseAbstractMetricProvider
  *
  * \brief The QseAbstractMetricProvider class provides the metric model
@@ -49,8 +60,6 @@
  * the changes, in this case we emit the signal and connected
  * object MUST recall the data-provide method create()
  */
-
-
 QseAbstractMetricProvider::QseAbstractMetricProvider(QObject *parent)
     : QObject(parent)
 {
@@ -59,8 +68,7 @@ QseAbstractMetricProvider::QseAbstractMetricProvider(QObject *parent)
 
 void QseAbstractMetricProvider::setMinimumStep(int step)
 {
-    if (m_minimumStep != step)
-    {
+    if (m_minimumStep != step) {
         m_minimumStep = step;
         emit changed();
     }
