@@ -38,7 +38,7 @@ void QseStandardSelectionController::setSelection(QseSelection *selection)
     m_selection = selection;
     if (m_selection) {
         connect(m_selection, SIGNAL(destroyed()),
-                this, SLOT(position_destroyed()));
+                this, SLOT(selection_destroyed()));
     }
 }
 
