@@ -52,7 +52,7 @@ void QseAbstractControllerProxy::mouseMoveEvent(QMouseEvent *event,
                                                 const QRect &rect,
                                                 const QseGeometry &geometry)
 {
-    if (m_controller)
+    if (m_controller && m_controller->isEnabled())
         m_controller->mouseMoveEvent(event, rect, geometry);
 }
 
@@ -60,7 +60,7 @@ void QseAbstractControllerProxy::mousePressEvent(QMouseEvent *event,
                                                  const QRect &rect,
                                                  const QseGeometry &geometry)
 {
-    if (m_controller)
+    if (m_controller && m_controller->isEnabled())
         m_controller->mousePressEvent(event, rect, geometry);
 }
 
@@ -68,7 +68,7 @@ void QseAbstractControllerProxy::mouseReleaseEvent(QMouseEvent *event,
                                                    const QRect &rect,
                                                    const QseGeometry &geometry)
 {
-    if (m_controller)
+    if (m_controller && m_controller->isEnabled())
         m_controller->mouseReleaseEvent(event, rect, geometry);
 }
 
@@ -76,7 +76,7 @@ void QseAbstractControllerProxy::wheelEvent(QWheelEvent *event,
                                             const QRect &rect,
                                             const QseGeometry &geometry)
 {
-    if (m_controller)
+    if (m_controller && m_controller->isEnabled())
         m_controller->wheelEvent(event, rect, geometry);
 }
 
@@ -84,7 +84,7 @@ void QseAbstractControllerProxy::keyPressEvent(QKeyEvent *event,
                                                const QRect &rect,
                                                const QseGeometry &geometry)
 {
-    if (m_controller)
+    if (m_controller && m_controller->isEnabled())
         m_controller->keyPressEvent(event, rect, geometry);
 }
 
@@ -92,6 +92,6 @@ void QseAbstractControllerProxy::keyReleaseEvent(QKeyEvent *event,
                                                  const QRect &rect,
                                                  const QseGeometry &geometry)
 {
-    if (m_controller)
+    if (m_controller && m_controller->isEnabled())
         m_controller->keyReleaseEvent(event, rect, geometry);
 }

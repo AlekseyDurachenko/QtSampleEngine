@@ -37,6 +37,11 @@ public:
     virtual QCursor defaultCursor() const;
     void setDefaultCursor(const QCursor &cursor);
 
+    inline bool isEnabled() const;
+
+public slots:
+    void setEnabled(bool enabled);
+
 signals:
     void cursorChanged(const QCursor &cursor);
     void geometryChanged(const QseGeometry &geometry);
@@ -51,7 +56,13 @@ protected:
 
 private:
     QCursor m_defaultCursor;
+    bool m_enabled;
 };
+
+bool QseAbstractController::isEnabled() const
+{
+    return m_enabled;
+}
 
 
 #endif // QSEABSTRACTCONTROLLER_H

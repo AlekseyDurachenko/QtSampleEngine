@@ -20,6 +20,7 @@ QseAbstractController::QseAbstractController(QObject *parent)
     : QObject(parent)
 {
     m_defaultCursor = QCursor();
+    m_enabled = true;
 }
 
 QCursor QseAbstractController::defaultCursor() const
@@ -30,6 +31,11 @@ QCursor QseAbstractController::defaultCursor() const
 void QseAbstractController::setDefaultCursor(const QCursor &cursor)
 {
     m_defaultCursor = cursor;
+}
+
+void QseAbstractController::setEnabled(bool enabled)
+{
+    m_enabled = enabled;
 }
 
 void QseAbstractController::mouseMoveEvent(QMouseEvent */*event*/,

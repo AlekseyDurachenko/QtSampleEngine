@@ -119,36 +119,36 @@ void QseAbstractWidget::limiter_destroyed()
 
 void QseAbstractWidget::mouseMoveEvent(QMouseEvent *event)
 {
-    if (m_controller)
+    if (m_controller && m_controller->isEnabled())
         m_controller->mouseMoveEvent(event, rect(), geometry());
 }
 
 void QseAbstractWidget::mousePressEvent(QMouseEvent *event)
 {
-    if (m_controller)
+    if (m_controller && m_controller->isEnabled())
         m_controller->mousePressEvent(event, rect(), geometry());
 }
 
 void QseAbstractWidget::mouseReleaseEvent(QMouseEvent *event)
 {
-    if (m_controller)
+    if (m_controller && m_controller->isEnabled())
         m_controller->mouseReleaseEvent(event, rect(), geometry());
 }
 
 void QseAbstractWidget::wheelEvent(QWheelEvent *event)
 {
-    if (m_controller)
+    if (m_controller && m_controller->isEnabled())
         m_controller->wheelEvent(event, rect(), geometry());
 }
 
 void QseAbstractWidget::keyPressEvent(QKeyEvent *event)
 {
-    if (m_controller)
+    if (m_controller && m_controller->isEnabled())
         m_controller->keyPressEvent(event, rect(), geometry());
 }
 
 void QseAbstractWidget::keyReleaseEvent(QKeyEvent *event)
 {
-    if (m_controller)
+    if (m_controller && m_controller->isEnabled())
         m_controller->keyReleaseEvent(event, rect(), geometry());
 }

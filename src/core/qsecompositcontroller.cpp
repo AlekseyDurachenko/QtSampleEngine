@@ -72,7 +72,9 @@ void QseCompositController::mouseMoveEvent(QMouseEvent *event,
                                            const QseGeometry &geometry)
 {
     foreach (QseAbstractController *controller, m_controllers) {
-        controller->mouseMoveEvent(event, rect, geometry);
+        if (controller->isEnabled()) {
+            controller->mouseMoveEvent(event, rect, geometry);
+        }
     }
 }
 
@@ -81,7 +83,9 @@ void QseCompositController::mousePressEvent(QMouseEvent *event,
                                             const QseGeometry &geometry)
 {
     foreach (QseAbstractController *controller, m_controllers) {
-        controller->mousePressEvent(event, rect, geometry);
+        if (controller->isEnabled()) {
+            controller->mousePressEvent(event, rect, geometry);
+        }
     }
 }
 
@@ -90,7 +94,9 @@ void QseCompositController::mouseReleaseEvent(QMouseEvent *event,
                                               const QseGeometry &geometry)
 {
     foreach (QseAbstractController *controller, m_controllers) {
-        controller->mouseReleaseEvent(event, rect, geometry);
+        if (controller->isEnabled()) {
+            controller->mouseReleaseEvent(event, rect, geometry);
+        }
     }
 }
 
@@ -99,7 +105,9 @@ void QseCompositController::wheelEvent(QWheelEvent *event,
                                        const QseGeometry &geometry)
 {
     foreach (QseAbstractController *controller, m_controllers) {
-        controller->wheelEvent(event, rect, geometry);
+        if (controller->isEnabled()) {
+            controller->wheelEvent(event, rect, geometry);
+        }
     }
 }
 
@@ -108,7 +116,9 @@ void QseCompositController::keyPressEvent(QKeyEvent *event,
                                           const QseGeometry &geometry)
 {
     foreach (QseAbstractController *controller, m_controllers) {
-        controller->keyPressEvent(event, rect, geometry);
+        if (controller->isEnabled()) {
+            controller->keyPressEvent(event, rect, geometry);
+        }
     }
 }
 
@@ -117,6 +127,8 @@ void QseCompositController::keyReleaseEvent(QKeyEvent *event,
                                             const QseGeometry &geometry)
 {
     foreach (QseAbstractController *controller, m_controllers) {
-        controller->keyReleaseEvent(event, rect, geometry);
+        if (controller->isEnabled()) {
+            controller->keyReleaseEvent(event, rect, geometry);
+        }
     }
 }
