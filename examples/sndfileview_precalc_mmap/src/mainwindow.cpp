@@ -1,4 +1,4 @@
-// Copyright (C) 2015, Durachenko Aleksey V. <durachenko.aleksey@gmail.com>
+// Copyright 2015-2016, Durachenko Aleksey V. <durachenko.aleksey@gmail.com>
 //
 // This library is free software; you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public
@@ -13,25 +13,25 @@
 // You should have received a copy of the GNU Lesser General Public
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
-#include "cmainwindow.h"
-#include "ui_cmainwindow.h"
+#include "mainwindow.h"
+#include "ui_mainwindow.h"
+#include "complexmonoaudiowidget.h"
+#include "audiowidget.h"
+#include "signaldatasource.h"
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QTemporaryFile>
-#include <sndfile.h>
-#include "ccomplexmonoaudiowidget.h"
-#include "csppsyncaudiowidget.h"
-#include "csppsyncpeakdatasource.h"
 #include <QDebug>
+#include <sndfile.h>
 
 
-CMainWindow::CMainWindow(QWidget *parent) :
-    QMainWindow(parent), ui(new Ui::CMainWindow)
+MainWindow::MainWindow(QWidget *parent) :
+    QMainWindow(parent), ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
     setWindowTitle(tr("Sound File View"));
 
-    m_monoAudioWidget = new CComplexMonoAudioWidget(this);
+    m_monoAudioWidget = new ComplexMonoAudioWidget(this);
     setCentralWidget(m_monoAudioWidget);
 
     QString fileName = QDir::homePath() + QDir::separator() + "example.wav";
@@ -40,12 +40,12 @@ CMainWindow::CMainWindow(QWidget *parent) :
                                   Q_ARG(QString, fileName));
 }
 
-CMainWindow::~CMainWindow()
+MainWindow::~MainWindow()
 {
     delete ui;
 }
 
-void CMainWindow::on_action_Open_triggered()
+void MainWindow::on_action_Open_triggered()
 {
     QString fileName = QFileDialog::getOpenFileName(this,
                                                     tr("Open Sound File"), "", tr("Sound Files (* *.*)"));
@@ -56,12 +56,12 @@ void CMainWindow::on_action_Open_triggered()
     openSoundFile(fileName);
 }
 
-void CMainWindow::on_action_Quit_triggered()
+void MainWindow::on_action_Quit_triggered()
 {
     close();
 }
 
-void CMainWindow::openSoundFile(const QString &fileName)
+void MainWindow::openSoundFile(const QString &fileName)
 {
     float *data;
     qint64 count;
@@ -91,8 +91,8 @@ void CMainWindow::openSoundFile(const QString &fileName)
 }
 
 
-bool CMainWindow::readSoundFile(const QString &fileName,
-                                float **samples, qint64 *count, double *sampleRate)
+bool MainWindow::readSoundFile(const QString &fileName,
+                               float **samples, qint64 *count, double *sampleRate)
 {
     SNDFILE *infile;
     SF_INFO sfinfo;

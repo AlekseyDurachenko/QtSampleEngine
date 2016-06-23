@@ -1,4 +1,4 @@
-// Copyright 2015, Durachenko Aleksey V. <durachenko.aleksey@gmail.com>
+// Copyright 2015-2016, Durachenko Aleksey V. <durachenko.aleksey@gmail.com>
 //
 // This library is free software; you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public
@@ -13,11 +13,11 @@
 // You should have received a copy of the GNU Lesser General Public
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
-#include "csppsyncpeakdatasource.h"
+#include "signaldatasource.h"
 #include <QTemporaryFile>
 #include <QDebug>
 
-CSppSyncPeakDataSource::CSppSyncPeakDataSource(QObject *parent)
+SignalDataSource::SignalDataSource(QObject *parent)
     : QseAbstractSignalDataSource(parent)
 {
     m_samples = 0;
@@ -25,24 +25,24 @@ CSppSyncPeakDataSource::CSppSyncPeakDataSource(QObject *parent)
     m_sampleRate = 0.0;
 }
 
-qint64 CSppSyncPeakDataSource::count() const
+qint64 SignalDataSource::count() const
 {
     return m_count;
 }
 
-qint64 CSppSyncPeakDataSource::minIndex() const
+qint64 SignalDataSource::minIndex() const
 {
     return 0;
 }
 
-qint64 CSppSyncPeakDataSource::maxIndex() const
+qint64 SignalDataSource::maxIndex() const
 {
     return m_count;
 }
 
-void CSppSyncPeakDataSource::setSamples(float *samples,
-                                        qint64 count,
-                                        double sampleRate)
+void SignalDataSource::setSamples(float *samples,
+                                  qint64 count,
+                                  double sampleRate)
 {
     clean();
 
@@ -53,8 +53,8 @@ void CSppSyncPeakDataSource::setSamples(float *samples,
     qint64 spp = 2;
     while (m_count / spp > 0) {
         qint64 count = m_count / spp + ((m_count % spp) ? (1) : (0));
-        float *maximums;// = new float[count];
-        float *minimums;// = new float[count];
+        float *maximums;
+        float *minimums;
 
         {
             QTemporaryFile *file = new QTemporaryFile();
@@ -102,30 +102,20 @@ void CSppSyncPeakDataSource::setSamples(float *samples,
     emit dataChanged();
 }
 
-void CSppSyncPeakDataSource::clean()
+void SignalDataSource::clean()
 {
-//    if (m_samples)
-//        delete []m_samples;
-
-//    foreach (qint64 key, m_peakMinimums.keys())
-//        delete []m_peakMinimums[key];
-
-//    foreach (qint64 key, m_peakMaximums.keys())
-//        delete []m_peakMaximums[key];
-
     m_peakMinimums.clear();
     m_peakMaximums.clear();
     m_peakCount.clear();
-
 
     m_samples = 0;
     m_count = 0;
     m_sampleRate = 0.0;
 }
 
-qint64 CSppSyncPeakDataSource::readAsPoints(double *points,
-                                            qint64 index,
-                                            qint64 count)
+qint64 SignalDataSource::readAsPoints(double *points,
+                                      qint64 index,
+                                      qint64 count)
 {
     if (index >= m_count) {
         return 0;
@@ -142,11 +132,11 @@ qint64 CSppSyncPeakDataSource::readAsPoints(double *points,
     return count;
 }
 
-qint64 CSppSyncPeakDataSource::readAsPeaks(double *minimums,
-                                           double *maximums,
-                                           qint64 index,
-                                           qint64 spp,
-                                           qint64 count)
+qint64 SignalDataSource::readAsPeaks(double *minimums,
+                                     double *maximums,
+                                     qint64 index,
+                                     qint64 spp,
+                                     qint64 count)
 {
     const qint64 sppPeakCount = m_peakCount.value(spp);
     const qint64 sppPeakIndex = index / spp;

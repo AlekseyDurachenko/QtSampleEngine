@@ -1,4 +1,4 @@
-// Copyright 2015, Durachenko Aleksey V. <durachenko.aleksey@gmail.com>
+// Copyright 2015-2016, Durachenko Aleksey V. <durachenko.aleksey@gmail.com>
 //
 // This library is free software; you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public
@@ -13,7 +13,7 @@
 // You should have received a copy of the GNU Lesser General Public
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
-#include "csppsyncaudiowidget.h"
+#include "audiowidget.h"
 #include "qseposition.h"
 #include "qseselection.h"
 #include "qsepositionplot.h"
@@ -23,18 +23,18 @@
 #include "qseaxiscanvasplot.h"
 #include "qseaudacitycontroller.h"
 #include "qsesignallinearplotdelegate.h"
-#include "csppsyncpeakdatasource.h"
-#include "csppsyncaudiolimiter.h"
+#include "signaldatasource.h"
+#include "audiolimiter.h"
 
 
-CSppSyncAudioWidget::CSppSyncAudioWidget(QWidget *parent, Qt::WindowFlags f)
+AudioWidget::AudioWidget(QWidget *parent, Qt::WindowFlags f)
     : QseWidget(parent, f)
 {
-    m_dataSource = new CSppSyncPeakDataSource(this);
+    m_dataSource = new SignalDataSource(this);
     connect(m_dataSource, SIGNAL(dataChanged()),
             this, SLOT(dataSource_dataChanged()));
 
-    m_limiter = new CSppSyncAudioLimiter(m_dataSource, this);
+    m_limiter = new AudioLimiter(m_dataSource, this);
 
     m_playPosition = new QsePosition(this);
     m_playPositionPlot = new QsePositionPlot(this);
@@ -76,7 +76,7 @@ CSppSyncAudioWidget::CSppSyncAudioWidget(QWidget *parent, Qt::WindowFlags f)
     setLimiter(m_limiter);
 }
 
-void CSppSyncAudioWidget::dataSource_dataChanged()
+void AudioWidget::dataSource_dataChanged()
 {
     QseRange avaibleRange(m_dataSource->minIndex(), m_dataSource->maxIndex());
     m_playPosition->setAvailableRange(avaibleRange);

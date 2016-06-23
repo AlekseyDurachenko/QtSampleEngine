@@ -1,4 +1,4 @@
-// Copyright 2015, Durachenko Aleksey V. <durachenko.aleksey@gmail.com>
+// Copyright 2015-2016, Durachenko Aleksey V. <durachenko.aleksey@gmail.com>
 //
 // This library is free software; you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public
@@ -13,24 +13,37 @@
 // You should have received a copy of the GNU Lesser General Public
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
-#include "csppsyncaudiolimiter.h"
-#include "qsegeometry.h"
-#include "csppsyncpeakdatasource.h"
+#ifndef MAINWINDOW_H
+#define MAINWINDOW_H
 
 
-CSppSyncAudioLimiter::CSppSyncAudioLimiter(CSppSyncPeakDataSource *dataSource,
-                                           QObject *parent)
-    : QseAbstractLimiter(parent)
-{
-    m_dataSource = dataSource;
+#include <QMainWindow>
+class ComplexMonoAudioWidget;
+
+
+namespace Ui {
+class MainWindow;
 }
 
-QseGeometry CSppSyncAudioLimiter::limit(const QseGeometry &geometry)
+class MainWindow : public QMainWindow
 {
-    QseGeometry limitedGeometry = geometry;
+    Q_OBJECT
+public:
+    explicit MainWindow(QWidget *parent = 0);
+    virtual ~MainWindow();
 
-    //if (limitedGeometry.x() < m_dataSource->minIndex())
-    //    limitedGeometry.setX(m_dataSource->minIndex());
+private slots:
+    void on_action_Open_triggered();
+    void on_action_Quit_triggered();
+    void openSoundFile(const QString &fileName);
 
-    return limitedGeometry;
-}
+private:
+    bool readSoundFile(const QString &fileName, float **data, qint64 *count, double *sampleRage);
+
+private:
+    Ui::MainWindow *ui;
+    ComplexMonoAudioWidget *m_monoAudioWidget;
+};
+
+
+#endif // MAINWINDOW_H

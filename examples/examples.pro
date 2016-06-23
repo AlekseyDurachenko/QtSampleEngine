@@ -1,3 +1,3 @@
 TEMPLATE = subdirs
 
-SUBDIRS += sndfileview_sync sndfileview_async
+SUBDIRS += sndfileview_precalc_mmap

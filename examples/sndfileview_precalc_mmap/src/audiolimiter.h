@@ -1,4 +1,4 @@
-// Copyright 2015, Durachenko Aleksey V. <durachenko.aleksey@gmail.com>
+// Copyright 2015-2016, Durachenko Aleksey V. <durachenko.aleksey@gmail.com>
 //
 // This library is free software; you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public
@@ -13,24 +13,23 @@
 // You should have received a copy of the GNU Lesser General Public
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
-#include "csppsyncaudiolimiter.h"
-#include "qsesppgeometry.h"
-#include "csppsyncpeakdatasource.h"
+#ifndef AUDIOLIMITER_H
+#define AUDIOLIMITER_H
+
+#include "qseabstractlimiter.h"
+class SignalDataSource;
 
 
-CSppSyncAudioLimiter::CSppSyncAudioLimiter(CSppSyncPeakDataSource *dataSource,
-                                           QObject *parent)
-    : QseAbstractSppLimiter(parent)
+class AudioLimiter : public QseAbstractLimiter
 {
-    m_dataSource = dataSource;
-}
+public:
+    AudioLimiter(SignalDataSource *dataSource, QObject *parent = 0);
 
-QseSppGeometry CSppSyncAudioLimiter::limit(const QseSppGeometry &geometry)
-{
-    QseSppGeometry limitedGeometry = geometry;
+    virtual QseGeometry limit(const QseGeometry &geometry);
 
-    if (limitedGeometry.x() < m_dataSource->minIndex())
-        limitedGeometry.setX(m_dataSource->minIndex());
+private:
+    SignalDataSource *m_dataSource;
+};
 
-    return limitedGeometry;
-}
+
+#endif // AUDIOLIMITER_H

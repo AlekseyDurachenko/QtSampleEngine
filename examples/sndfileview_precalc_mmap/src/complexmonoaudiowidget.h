@@ -1,4 +1,4 @@
-// Copyright (C) 2015, Durachenko Aleksey V. <durachenko.aleksey@gmail.com>
+// Copyright 2015-2016, Durachenko Aleksey V. <durachenko.aleksey@gmail.com>
 //
 // This library is free software; you can redistribute it and/or
 // modify it under the terms of the GNU Lesser General Public
@@ -13,13 +13,13 @@
 // You should have received a copy of the GNU Lesser General Public
 // License along with this library; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301 USA
-#ifndef CCOMPLEXMONOAUDIOWIDGET_H
-#define CCOMPLEXMONOAUDIOWIDGET_H
+#ifndef COMPLEXMONOAUDIOWIDGET_H
+#define COMPLEXMONOAUDIOWIDGET_H
 
 #include <QWidget>
 #include "qsegeometry.h"
 class QScrollBar;
-class CSppSyncAudioWidget;
+class AudioWidget;
 class QseSignalLinearMetricProvider;
 class QseTimeMetricProvider;
 class QseStandardHorizontalController;
@@ -32,14 +32,14 @@ class QseHorizontalAxisWidget;
 class QseVerticalAxisWidget;
 
 
-class CComplexMonoAudioWidget : public QWidget
+class ComplexMonoAudioWidget : public QWidget
 {
     Q_OBJECT
 public:
-    explicit CComplexMonoAudioWidget(QWidget *parent = 0);
-    virtual ~CComplexMonoAudioWidget();
+    explicit ComplexMonoAudioWidget(QWidget *parent = 0);
+    virtual ~ComplexMonoAudioWidget();
 
-    inline CSppSyncAudioWidget *audioWidget() const;
+    inline AudioWidget *audioWidget() const;
 
 private slots:
     void dataSource_dataChanged();
@@ -50,7 +50,7 @@ protected:
     bool eventFilter(QObject *obj, QEvent *event);
 
 private:
-    CSppSyncAudioWidget *m_audioWidget;
+    AudioWidget *m_audioWidget;
     QseVerticalAxisWidget *m_amplitudeAxis;
     QseHorizontalAxisWidget *m_timeAxis;
     QseSignalLinearMetricProvider *m_amplitudeProvider;
@@ -65,10 +65,10 @@ private:
     QseHorizontalShiftControllerProxy *m_horizontalAxisZoomControllerProxy;
 };
 
-CSppSyncAudioWidget *CComplexMonoAudioWidget::audioWidget() const
+AudioWidget *ComplexMonoAudioWidget::audioWidget() const
 {
     return m_audioWidget;
 }
 
 
-#endif // CCOMPLEXMONOAUDIOWIDGET_H
+#endif // COMPLEXMONOAUDIOWIDGET_H
